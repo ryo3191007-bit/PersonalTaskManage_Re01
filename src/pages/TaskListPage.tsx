@@ -338,7 +338,8 @@ const FIELD_DEFS: { key: keyof TextExportFields; label: string }[] = [
   { key: 'duration', label: '所要時間' },
   { key: 'startFactor', label: '前倒し/遅延要因' },
   { key: 'durationFactor', label: '見積差異要因' },
-  { key: 'remarks', label: '備考' },
+  { key: 'remarks', label: '予定メモ' },
+  { key: 'actualMemo', label: '実績メモ' },
 ];
 
 function TextExportConfigDialog({ onClose, onExport }: {

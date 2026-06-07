@@ -99,6 +99,7 @@ export interface TextExportFields {
   startFactor: boolean;
   durationFactor: boolean;
   remarks: boolean;
+  actualMemo: boolean;
 }
 
 export const DEFAULT_TEXT_EXPORT_FIELDS: TextExportFields = {
@@ -109,6 +110,7 @@ export const DEFAULT_TEXT_EXPORT_FIELDS: TextExportFields = {
   startFactor: false,
   durationFactor: false,
   remarks: true,
+  actualMemo: true,
 };
 
 export function exportTodayTasksAsText(tasks: Task[], dateStr: string, fields: TextExportFields = DEFAULT_TEXT_EXPORT_FIELDS): string {
@@ -207,8 +209,13 @@ export function exportTodayTasksAsText(tasks: Task[], dateStr: string, fields: T
     }
 
     if (fields.remarks) {
-      const remarks = [t.actual_memo, t.notes].filter(s => s && s.trim()).join(' / ');
-      lines.push(`  備考          : ${remarks || '—'}`);
+      const remarks = t.notes && t.notes.trim() ? t.notes.trim() : '—';
+      lines.push(`  予定メモ      : ${remarks}`);
+    }
+
+    if (fields.actualMemo) {
+      const actualMemo = t.actual_memo && t.actual_memo.trim() ? t.actual_memo.trim() : '—';
+      lines.push(`  実績メモ      : ${actualMemo}`);
     }
 
     if (i < todayTasks.length - 1) lines.push('');

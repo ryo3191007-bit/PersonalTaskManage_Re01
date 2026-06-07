@@ -943,10 +943,10 @@ export default function TaskForm({ task, onClose, initialDatetime }: TaskFormPro
               </div>
             </div>
 
-            {/* 備考 */}
+            {/* 予定メモ */}
             <div>
-              <label className="form-label">備考</label>
-              <textarea value={form.notes} onChange={e => set('notes', e.target.value)} rows={2} className="form-input resize-none" placeholder="備考を入力" />
+              <label className="form-label">予定メモ</label>
+              <textarea value={form.notes} onChange={e => set('notes', e.target.value)} rows={2} className="form-input resize-none" placeholder="予定メモを入力" />
             </div>
 
             {/* 実績エリア：進行中以上で表示 */}
