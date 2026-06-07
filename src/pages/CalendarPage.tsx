@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { ChevronLeft, ChevronRight, Clock, Plus, PauseCircle, PlayCircle, X, Check } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Clock, Plus, PauseCircle, PlayCircle, X, Check, Trash2 } from 'lucide-react';
 import { useTasks } from '../contexts/TaskContext';
 import type { Task, TaskSession } from '../lib/types';
 import { STATUS_COLORS, STATUS_LABELS } from '../lib/types';
@@ -473,7 +473,7 @@ function CalCompleteDialog({ task, onClose, onSave }: {
 }
 
 // ─── DAY VIEW ────────────────────────────────────────────────────────────────
-function DayView({ date, tasks, sessions, onEdit, onCreateAt, onSuspend, onResume }: {
+function DayView({ date, tasks, sessions, onEdit, onCreateAt, onSuspend, onResume, onDelete }: {
   date: Date;
   tasks: Task[];
   sessions: TaskSession[];
@@ -481,9 +481,11 @@ function DayView({ date, tasks, sessions, onEdit, onCreateAt, onSuspend, onResum
   onCreateAt: (dt: string) => void;
   onSuspend: (t: Task) => void;
   onResume: (t: Task) => void;
+  onDelete: (id: string) => void;
 }) {
   const target = toDay(date);
   const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set());
+  const [deletingId, setDeletingId] = useState<string | null>(null);
   const [editingWorkHours, setEditingWorkHours] = useState(false);
   const [workHoursInput, setWorkHoursInput] = useState('');
   const { workHours: WORK_HOURS, setWorkHours } = useWorkHours();
@@ -741,7 +743,7 @@ function DayView({ date, tasks, sessions, onEdit, onCreateAt, onSuspend, onResum
                     }}
                     onDoubleClick={e => { e.stopPropagation(); if (hasChildren) onEdit(seg.task); }}
                     title={`${seg.task.title}${seg.isSuspended ? ' [中断中]' : seg.isResumed ? ' [再開]' : ''}`}
-                    className="absolute rounded border-l-2 px-1.5 text-left overflow-hidden hover:opacity-80 transition-opacity"
+                    className="absolute rounded border-l-2 px-1.5 text-left overflow-hidden hover:opacity-80 transition-opacity group"
                     style={{
                       top: `${top + 1}px`, height: `${height - 2}px`, left, width,
                       backgroundColor: s.bg, color: s.color, borderColor: s.border,
@@ -784,6 +786,19 @@ function DayView({ date, tasks, sessions, onEdit, onCreateAt, onSuspend, onResum
                         <PlayCircle className="w-3 h-3" />
                       </button>
                     )}
+                    {/* 削除ボタン */}
+                    <button
+                      onClick={e => {
+                        e.stopPropagation();
+                        if (deletingId === seg.task.id) { onDelete(seg.task.id); setDeletingId(null); }
+                        else setDeletingId(seg.task.id);
+                      }}
+                      onBlur={() => setDeletingId(null)}
+                      className={`absolute top-1 right-1 w-4 h-4 flex items-center justify-center rounded transition-colors ${deletingId === seg.task.id ? 'bg-red-500 text-white opacity-100' : 'bg-white/60 dark:bg-gray-900/60 text-gray-400 hover:text-red-500 opacity-0 group-hover:opacity-100'}`}
+                      title={deletingId === seg.task.id ? 'もう一度クリックで削除' : '削除'}
+                    >
+                      <Trash2 className="w-2.5 h-2.5" />
+                    </button>
                   </button>
                 </div>
               );
@@ -796,7 +811,7 @@ function DayView({ date, tasks, sessions, onEdit, onCreateAt, onSuspend, onResum
 }
 
 // ─── WEEK VIEW ───────────────────────────────────────────────────────────────
-function WeekView({ weekStart, tasks, sessions, onEdit, onCreateAt, onSuspend, onResume }: {
+function WeekView({ weekStart, tasks, sessions, onEdit, onCreateAt, onSuspend, onResume, onDelete }: {
   weekStart: Date;
   tasks: Task[];
   sessions: TaskSession[];
@@ -804,12 +819,14 @@ function WeekView({ weekStart, tasks, sessions, onEdit, onCreateAt, onSuspend, o
   onCreateAt: (dt: string) => void;
   onSuspend: (t: Task) => void;
   onResume: (t: Task) => void;
+  onDelete: (id: string) => void;
 }) {
   const days = Array.from({ length: 7 }, (_, i) => addDays(weekStart, i));
   const today = new Date();
   const wStart = toDay(weekStart);
   const wEnd = toDay(addDays(weekStart, 6));
   const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set());
+  const [deletingId, setDeletingId] = useState<string | null>(null);
 
   const parentIdsWithChildren = useMemo(() => {
     const ids = new Set<string>();
@@ -1066,7 +1083,7 @@ function WeekView({ weekStart, tasks, sessions, onEdit, onCreateAt, onSuspend, o
                             onClick={e => { e.stopPropagation(); hasChildren ? toggleExpand(seg.task.id) : onEdit(seg.task); }}
                             onDoubleClick={e => { e.stopPropagation(); if (hasChildren) onEdit(seg.task); }}
                             title={`${seg.task.title}${seg.isSuspended ? ' [中断中]' : seg.isResumed ? ' [再開]' : ''}`}
-                            className="absolute rounded border-l-2 px-1.5 text-left overflow-hidden hover:opacity-80 transition-opacity"
+                            className="absolute rounded border-l-2 px-1.5 text-left overflow-hidden hover:opacity-80 transition-opacity group"
                             style={{
                               top: `${top + 1}px`, height: `${height - 2}px`, left, width,
                               backgroundColor: s.bg, color: s.color, borderColor: s.border,
@@ -1103,6 +1120,19 @@ function WeekView({ weekStart, tasks, sessions, onEdit, onCreateAt, onSuspend, o
                                 <PlayCircle className="w-3 h-3" />
                               </button>
                             )}
+                            {/* 削除ボタン */}
+                            <button
+                              onClick={e => {
+                                e.stopPropagation();
+                                if (deletingId === seg.task.id) { onDelete(seg.task.id); setDeletingId(null); }
+                                else setDeletingId(seg.task.id);
+                              }}
+                              onBlur={() => setDeletingId(null)}
+                              className={`absolute top-1 right-1 w-4 h-4 flex items-center justify-center rounded transition-colors ${deletingId === seg.task.id ? 'bg-red-500 text-white opacity-100' : 'bg-white/60 dark:bg-gray-900/60 text-gray-400 hover:text-red-500 opacity-0 group-hover:opacity-100'}`}
+                              title={deletingId === seg.task.id ? 'もう一度クリックで削除' : '削除'}
+                            >
+                              <Trash2 className="w-2.5 h-2.5" />
+                            </button>
                           </button>
                         </div>
                       );
@@ -1119,12 +1149,13 @@ function WeekView({ weekStart, tasks, sessions, onEdit, onCreateAt, onSuspend, o
 }
 
 // ─── MONTH VIEW ───────────────────────────────────────────────────────────────
-function MonthViewWrapper({ viewDate, tasks, sessions, onEdit, onCreateAt }: {
+function MonthViewWrapper({ viewDate, tasks, sessions, onEdit, onCreateAt, onDelete }: {
   viewDate: Date;
   tasks: Task[];
   sessions: TaskSession[];
   onEdit: (t: Task) => void;
   onCreateAt: (dt: string) => void;
+  onDelete: (id: string) => void;
 }) {
   const year = viewDate.getFullYear();
   const month = viewDate.getMonth();
@@ -1133,6 +1164,7 @@ function MonthViewWrapper({ viewDate, tasks, sessions, onEdit, onCreateAt }: {
   const startPad = firstDay.getDay();
   const today = new Date();
   const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set());
+  const [deletingId, setDeletingId] = useState<string | null>(null);
 
   const parentIdsWithChildren = useMemo(() => {
     const ids = new Set<string>();
@@ -1314,12 +1346,24 @@ function MonthViewWrapper({ viewDate, tasks, sessions, onEdit, onCreateAt }: {
                             <button key={seg.segmentKey}
                               onClick={e => { e.stopPropagation(); hasChildren ? toggleExpand(seg.task.id) : onEdit(seg.task); }}
                               onDoubleClick={e => { e.stopPropagation(); if (hasChildren) onEdit(seg.task); }}
-                              className="w-full text-left px-1.5 py-0.5 rounded text-[11px] truncate font-medium hover:opacity-80 transition-opacity border-l-2 flex items-center gap-0.5"
+                              className="relative w-full text-left px-1.5 py-0.5 rounded text-[11px] truncate font-medium hover:opacity-80 transition-opacity border-l-2 flex items-center gap-0.5 group"
                               style={{ backgroundColor: s.bg, color: s.color, borderColor: s.border }}>
                               {hasChildren && <span className="mr-0.5 opacity-70 flex-shrink-0">{isExpanded ? '▼' : '▶'}</span>}
                               {seg.isSuspended && <PauseCircle className="w-2.5 h-2.5 flex-shrink-0 text-amber-500" />}
                               {seg.isResumed && !seg.isSuspended && <PlayCircle className="w-2.5 h-2.5 flex-shrink-0 text-blue-500" />}
-                              <span className="truncate">{seg.task.title}</span>
+                              <span className="truncate flex-1">{seg.task.title}</span>
+                              <button
+                                onClick={e => {
+                                  e.stopPropagation();
+                                  if (deletingId === seg.task.id) { onDelete(seg.task.id); setDeletingId(null); }
+                                  else setDeletingId(seg.task.id);
+                                }}
+                                onBlur={() => setDeletingId(null)}
+                                className={`flex-shrink-0 w-3.5 h-3.5 flex items-center justify-center rounded transition-colors ${deletingId === seg.task.id ? 'bg-red-500 text-white opacity-100' : 'text-gray-400 hover:text-red-500 opacity-0 group-hover:opacity-100'}`}
+                                title={deletingId === seg.task.id ? 'もう一度クリックで削除' : '削除'}
+                              >
+                                <Trash2 className="w-2.5 h-2.5" />
+                              </button>
                             </button>
                           );
                         })}
@@ -1338,7 +1382,7 @@ function MonthViewWrapper({ viewDate, tasks, sessions, onEdit, onCreateAt }: {
 
 // ─── MAIN ────────────────────────────────────────────────────────────────────
 export default function CalendarPage() {
-  const { tasks, sessions, suspendTask, resumeTask, updateTask } = useTasks();
+  const { tasks, sessions, suspendTask, resumeTask, updateTask, deleteTask } = useTasks();
   const [view, setView] = useState<CalView>('day');
   const [viewDate, setViewDate] = useState(new Date());
   const [editingTask, setEditingTask] = useState<Task | null | undefined>(undefined);
@@ -1449,6 +1493,7 @@ export default function CalendarPage() {
             date={viewDate} tasks={tasks} sessions={sessions}
             onEdit={setEditingTask} onCreateAt={handleCreateAt}
             onSuspend={setSuspendDialog} onResume={setResumeDialog}
+            onDelete={deleteTask}
           />
         )}
         {view === 'week' && (
@@ -1456,12 +1501,14 @@ export default function CalendarPage() {
             weekStart={weekStart} tasks={tasks} sessions={sessions}
             onEdit={setEditingTask} onCreateAt={handleCreateAt}
             onSuspend={setSuspendDialog} onResume={setResumeDialog}
+            onDelete={deleteTask}
           />
         )}
         {view === 'month' && (
           <MonthViewWrapper
             viewDate={viewDate} tasks={tasks} sessions={sessions}
             onEdit={setEditingTask} onCreateAt={handleCreateAt}
+            onDelete={deleteTask}
           />
         )}
       </div>
