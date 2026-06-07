@@ -195,19 +195,6 @@ export function TaskProvider({ children }: { children: React.ReactNode }) {
       .single();
     if (data) {
       setRecurrenceGroups(prev => prev.map(g => g.id === id ? data as RecurrenceGroup : g));
-
-      // track_actual が変更された場合、グループ内の未完了タスクにも反映
-      if (group.track_actual !== undefined) {
-        const targetIds = tasks
-          .filter(t => t.recurrence_group_id === id && t.status !== 'completed')
-          .map(t => t.id);
-        if (targetIds.length > 0) {
-          await supabase.from('tasks').update({ track_actual: group.track_actual }).in('id', targetIds);
-          setTasks(prev => prev.map(t =>
-            targetIds.includes(t.id) ? { ...t, track_actual: group.track_actual! } : t
-          ));
-        }
-      }
     }
   };
 

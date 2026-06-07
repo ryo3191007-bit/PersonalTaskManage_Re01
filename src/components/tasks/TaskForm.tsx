@@ -33,7 +33,6 @@ const defaultForm = {
   parent_task_id: '',
   notes: '',
   status: 'not_started' as TaskStatus,
-  track_actual: true,
   actual_time: 0,
   actual_memo: '',
   actual_start: '',
@@ -520,7 +519,6 @@ export default function TaskForm({ task, onClose, initialDatetime }: TaskFormPro
     return { ...defaultForm };
   });
   const [loading, setLoading] = useState(false);
-  const [actualOnlyMode, setActualOnlyMode] = useState(false);
   const [showCategoryDialog, setShowCategoryDialog] = useState(false);
   const [titleHistory] = useState<string[]>(loadTitleHistory);
   const [titleSuggestOpen, setTitleSuggestOpen] = useState(false);
@@ -554,7 +552,7 @@ export default function TaskForm({ task, onClose, initialDatetime }: TaskFormPro
         parent_task_id: task.parent_task_id ?? '',
         notes: task.notes,
         status: task.status,
-        track_actual: task.track_actual ?? true,
+        track_actual: true,
         actual_time: task.actual_time,
         actual_memo: task.actual_memo,
         actual_start: toLocalDatetimeValue(task.actual_start ?? null) || (task.status === 'not_started' ? scheduledStart : ''),
@@ -643,7 +641,7 @@ export default function TaskForm({ task, onClose, initialDatetime }: TaskFormPro
       parent_task_id: form.parent_task_id || null,
       notes: form.notes,
       status: form.status,
-      track_actual: form.track_actual,
+      track_actual: true,
       actual_time: childrenActualTimeMins != null ? childrenActualTimeMins : Number(form.actual_time),
       actual_memo: form.actual_memo,
       actual_start: form.actual_start ? new Date(form.actual_start).toISOString() : null,
@@ -707,50 +705,16 @@ export default function TaskForm({ task, onClose, initialDatetime }: TaskFormPro
     t.title.toLowerCase().includes(parentSearch.toLowerCase())
   );
   const selectedParentTask = parentOptions.find(t => t.id === form.parent_task_id);
-  const showActuals = form.track_actual && (actualOnlyMode || form.status === 'in_progress' || form.status === 'suspended' || form.status === 'completed');
-
-  const handleActualOnlyModeChange = (checked: boolean) => {
-    setActualOnlyMode(checked);
-    if (checked) {
-      setForm(prev => ({
-        ...prev,
-        status: 'completed',
-        track_actual: true,
-        scheduled_start: '',
-        scheduled_end: '',
-      }));
-    } else {
-      setForm(prev => ({
-        ...prev,
-        status: 'not_started',
-      }));
-    }
-  };
+  const showActuals = form.status === 'in_progress' || form.status === 'suspended' || form.status === 'completed';
 
   return (
     <>
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
         <div className="w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700">
           <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-gray-700 sticky top-0 bg-white dark:bg-gray-900 z-10">
-            <div className="flex items-center gap-3">
-              <h2 className="text-base font-semibold text-gray-900 dark:text-white">
-                {task ? 'タスクを編集' : '新規タスク'}
-              </h2>
-              {!task && (
-                <button
-                  type="button"
-                  onClick={() => handleActualOnlyModeChange(!actualOnlyMode)}
-                  className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border transition-all ${
-                    actualOnlyMode
-                      ? 'bg-amber-50 border-amber-300 text-amber-700 dark:bg-amber-900/30 dark:border-amber-600 dark:text-amber-400'
-                      : 'bg-gray-50 border-gray-200 text-gray-500 hover:border-gray-300 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-400 dark:hover:border-gray-500'
-                  }`}
-                >
-                  <span className={`w-1.5 h-1.5 rounded-full ${actualOnlyMode ? 'bg-amber-500' : 'bg-gray-300 dark:bg-gray-500'}`} />
-                  実績のみ登録
-                </button>
-              )}
-            </div>
+            <h2 className="text-base font-semibold text-gray-900 dark:text-white">
+              {task ? 'タスクを編集' : '新規タスク'}
+            </h2>
             <button onClick={onClose} className="w-8 h-8 flex items-center justify-center rounded-lg text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
               <X className="w-4 h-4" />
             </button>
@@ -898,7 +862,7 @@ export default function TaskForm({ task, onClose, initialDatetime }: TaskFormPro
             </div>
 
             {/* 優先度 / 難易度 / 数量 / 所要時間 — 4列 */}
-            <div className={`grid gap-3 ${actualOnlyMode ? 'grid-cols-1' : 'grid-cols-4'}`}>
+            <div className="grid gap-3 grid-cols-4">
               <div>
                 <label className="form-label">優先度</label>
                 <select value={form.priority} onChange={e => set('priority', e.target.value as TaskPriority)} className="form-input">
@@ -908,7 +872,6 @@ export default function TaskForm({ task, onClose, initialDatetime }: TaskFormPro
                 </select>
               </div>
 
-              {!actualOnlyMode && (
               <div>
                 <label className="form-label">難易度</label>
                 <select value={form.difficulty} onChange={e => set('difficulty', Number(e.target.value))} className="form-input">
@@ -918,9 +881,7 @@ export default function TaskForm({ task, onClose, initialDatetime }: TaskFormPro
                   ))}
                 </select>
               </div>
-              )}
 
-              {!actualOnlyMode && (
               <div>
                 <label className="form-label">数量</label>
                 <input
@@ -941,9 +902,7 @@ export default function TaskForm({ task, onClose, initialDatetime }: TaskFormPro
                   className="form-input"
                 />
               </div>
-              )}
 
-              {!actualOnlyMode && (
               <div>
                 <label className="form-label">所要時間（分）</label>
                 <input
@@ -964,11 +923,9 @@ export default function TaskForm({ task, onClose, initialDatetime }: TaskFormPro
                   className="form-input"
                 />
               </div>
-              )}
             </div>
 
             {/* 予定日時 */}
-            {!actualOnlyMode && (
             <div>
               <div className="flex items-center justify-between mb-2">
                 <span className="form-label mb-0">予定日時</span>
@@ -1021,22 +978,6 @@ export default function TaskForm({ task, onClose, initialDatetime }: TaskFormPro
                 </div>
               </div>
             </div>
-            )}
-
-            {/* 実績入力 要/不要 */}
-            {!actualOnlyMode && (
-            <div className="flex items-center gap-3 justify-end">
-              <label className="flex items-center gap-2 cursor-pointer select-none">
-                <div
-                  onClick={() => set('track_actual', !form.track_actual)}
-                  className={`relative w-9 h-5 rounded-full transition-colors ${form.track_actual ? 'bg-blue-600' : 'bg-gray-300 dark:bg-gray-600'}`}
-                >
-                  <span className={`absolute top-0.5 left-0.5 w-4 h-4 bg-white rounded-full shadow transition-transform ${form.track_actual ? 'translate-x-4' : ''}`} />
-                </div>
-                <span className="text-sm text-gray-700 dark:text-gray-300">実績入力あり</span>
-              </label>
-            </div>
-            )}
 
             {/* 備考 */}
             <div>
@@ -1044,7 +985,7 @@ export default function TaskForm({ task, onClose, initialDatetime }: TaskFormPro
               <textarea value={form.notes} onChange={e => set('notes', e.target.value)} rows={2} className="form-input resize-none" placeholder="備考を入力" />
             </div>
 
-            {/* 実績エリア：track_actual=true かつ 進行中以上で表示 */}
+            {/* 実績エリア：進行中以上で表示 */}
             {showActuals && <ActualsSection task={task} form={form} set={set} childrenActualTimeMins={childrenActualTimeMins} onEntriesChange={e => { entriesRef.current = e; }} />}
 
             <div className="flex gap-3 justify-end pt-2">

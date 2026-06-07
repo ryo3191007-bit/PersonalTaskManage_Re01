@@ -493,7 +493,7 @@ function formatPeriodLabel(ym: string): string {
 }
 
 export default function AnalyticsPage() {
-  const { tasks, categories, recurrenceGroups, sessions } = useTasks();
+  const { tasks, categories, sessions } = useTasks();
   const [tab, setTab] = useState<TabId>('overview');
 
   const currentMonthKey = useMemo(() => {
@@ -523,24 +523,10 @@ export default function AnalyticsPage() {
     return [...set].sort().reverse();
   }, [tasks, currentMonthKey]);
 
-  const groupTrackActualMap = useMemo(() => {
-    const map = new Map<string, boolean>();
-    for (const g of recurrenceGroups) map.set(g.id, g.track_actual ?? true);
-    return map;
-  }, [recurrenceGroups]);
-
   /** 実績分析対象（全期間） */
   const analysisTasks = useMemo(() =>
-    tasks.filter(t => {
-      if (t.status !== 'completed') return false;
-      if (!t.track_actual) return false;
-      if (t.recurrence_group_id) {
-        const groupTracked = groupTrackActualMap.get(t.recurrence_group_id);
-        if (groupTracked === false) return false;
-      }
-      return true;
-    }),
-    [tasks, groupTrackActualMap]
+    tasks.filter(t => t.status === 'completed'),
+    [tasks]
   );
 
   const workloadTasks = useMemo(() =>
@@ -566,9 +552,8 @@ export default function AnalyticsPage() {
   }, [workloadTasks, period]);
 
   const periodFilteredTrackTasks = useMemo(() => {
-    if (period === 'all') return tasks.filter(t => t.track_actual);
+    if (period === 'all') return tasks;
     return tasks.filter(t => {
-      if (!t.track_actual) return false;
       const ref = t.scheduled_start ?? t.actual_start ?? t.completed_at;
       return getMonthKey(ref) === period;
     });

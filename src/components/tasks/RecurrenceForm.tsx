@@ -23,7 +23,6 @@ const defaultForm = {
   period_start: '',
   period_end: '',
   notes: '',
-  track_actual: true,
 };
 
 function todayStr() {
@@ -90,7 +89,6 @@ export default function RecurrenceForm({ group, onClose }: RecurrenceFormProps) 
         period_start: group.period_start,
         period_end: group.period_end,
         notes: group.notes,
-        track_actual: group.track_actual ?? true,
       });
     } else {
       setForm(prev => ({
@@ -132,7 +130,7 @@ export default function RecurrenceForm({ group, onClose }: RecurrenceFormProps) 
       period_start: form.period_start,
       period_end: form.period_end,
       notes: form.notes,
-      track_actual: form.track_actual,
+      track_actual: true,
     };
 
     if (form.title.trim()) saveTitleHistory(form.title.trim());
@@ -366,21 +364,6 @@ export default function RecurrenceForm({ group, onClose }: RecurrenceFormProps) 
               className="form-input resize-none"
               placeholder="備考を入力"
             />
-          </div>
-
-          {/* 実績入力 */}
-          <div className="flex items-center justify-between py-1">
-            <div>
-              <span className="text-sm font-medium text-gray-700 dark:text-gray-300">実績入力あり</span>
-              <p className="text-xs text-gray-400 dark:text-gray-500 mt-0.5">開始・終了時刻の実績を記録します</p>
-            </div>
-            <button
-              type="button"
-              onClick={() => set('track_actual', !form.track_actual)}
-              className={`relative w-10 h-5 rounded-full transition-colors flex-shrink-0 ${form.track_actual ? 'bg-teal-600' : 'bg-gray-300 dark:bg-gray-600'}`}
-            >
-              <span className={`absolute top-0.5 left-0.5 w-4 h-4 bg-white rounded-full shadow transition-transform ${form.track_actual ? 'translate-x-5' : ''}`} />
-            </button>
           </div>
 
           {!group && (

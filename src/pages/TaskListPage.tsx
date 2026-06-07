@@ -686,29 +686,25 @@ export default function TaskListPage() {
     const prev = task.status;
     if (prev === next) return;
 
-    const trackActual = task.track_actual ?? true;
-
-    if (trackActual) {
-      if (prev === 'not_started' && next === 'in_progress') {
-        setStartDialog(task);
-        return;
-      }
-      if ((prev === 'in_progress' || prev === 'suspended') && next === 'completed') {
-        setEndDialog(task);
-        return;
-      }
-      if (prev === 'not_started' && next === 'completed') {
-        setFullActualDialog(task);
-        return;
-      }
-      if ((prev === 'in_progress' || prev === 'not_started') && next === 'suspended') {
-        setSuspendDialog(task);
-        return;
-      }
-      if (prev === 'suspended' && next === 'in_progress') {
-        setResumeDialog(task);
-        return;
-      }
+    if (prev === 'not_started' && next === 'in_progress') {
+      setStartDialog(task);
+      return;
+    }
+    if ((prev === 'in_progress' || prev === 'suspended') && next === 'completed') {
+      setEndDialog(task);
+      return;
+    }
+    if (prev === 'not_started' && next === 'completed') {
+      setFullActualDialog(task);
+      return;
+    }
+    if ((prev === 'in_progress' || prev === 'not_started') && next === 'suspended') {
+      setSuspendDialog(task);
+      return;
+    }
+    if (prev === 'suspended' && next === 'in_progress') {
+      setResumeDialog(task);
+      return;
     }
 
     const update: Partial<Task> = { status: next };
@@ -731,9 +727,7 @@ export default function TaskListPage() {
       start_early_factor: isEarly ? factor || null : null,
     });
     // セッション開始を記録（中断時に session_end を更新するために必要）
-    if (task.track_actual) {
-      await createSession(task.id, new Date(actualStart).toISOString(), null);
-    }
+    await createSession(task.id, new Date(actualStart).toISOString(), null);
     setStartDialog(null);
   };
 
