@@ -161,7 +161,7 @@ export default function RecurrenceForm({ group, onClose }: RecurrenceFormProps) 
               <RefreshCw className="w-3.5 h-3.5 text-teal-600 dark:text-teal-400" />
             </div>
             <h2 className="text-base font-semibold text-gray-900 dark:text-white">
-              {group ? '繰り返しグループを編集' : '繰り返しタスクを登録'}
+              {group ? '定常タスクを編集' : '繰り返しタスクを登録'}
             </h2>
           </div>
           <button onClick={onClose} className="w-8 h-8 flex items-center justify-center rounded-lg text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
