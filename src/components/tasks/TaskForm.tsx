@@ -29,7 +29,6 @@ const defaultForm = {
   time_per_unit: 0,
   scheduled_start: '',
   scheduled_end: '',
-  all_day: false,
   parent_task_id: '',
   notes: '',
   status: 'not_started' as TaskStatus,
@@ -548,7 +547,6 @@ export default function TaskForm({ task, onClose, initialDatetime }: TaskFormPro
         time_per_unit: task.time_per_unit,
         scheduled_start: scheduledStart,
         scheduled_end: scheduledEnd,
-        all_day: false,
         parent_task_id: task.parent_task_id ?? '',
         notes: task.notes,
         status: task.status,
@@ -596,19 +594,6 @@ export default function TaskForm({ task, onClose, initialDatetime }: TaskFormPro
     const end = new Date(start.getTime() + qty * tpu * 60 * 1000);
     const pad = (n: number) => String(n).padStart(2, '0');
     return `${end.getFullYear()}-${pad(end.getMonth() + 1)}-${pad(end.getDate())}T${pad(end.getHours())}:${pad(end.getMinutes())}`;
-  };
-
-  // 終日チェック：開始日から 00:00 〜 23:59 を自動設定
-  const handleAllDayChange = (checked: boolean) => {
-    setForm(prev => {
-      const next = { ...prev, all_day: checked };
-      if (checked && prev.scheduled_start) {
-        const date = prev.scheduled_start.slice(0, 10);
-        next.scheduled_start = `${date}T00:00`;
-        next.scheduled_end = `${date}T23:59`;
-      }
-      return next;
-    });
   };
 
   const handleCategoryChange = (val: string) => {
@@ -917,26 +902,15 @@ export default function TaskForm({ task, onClose, initialDatetime }: TaskFormPro
 
             {/* 予定日時 */}
             <div>
-              <div className="flex items-center justify-between mb-2">
-                <span className="form-label mb-0">予定日時</span>
-                <label className="flex items-center gap-1.5 cursor-pointer select-none">
-                  <input
-                    type="checkbox"
-                    checked={form.all_day}
-                    onChange={e => handleAllDayChange(e.target.checked)}
-                    className="w-3.5 h-3.5 rounded accent-blue-600"
-                  />
-                  <span className="text-xs text-gray-600 dark:text-gray-400">終日</span>
-                </label>
-              </div>
+              <span className="form-label mb-2 block">予定日時</span>
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <span className="text-xs text-gray-500 dark:text-gray-400 font-medium block mb-1">開始</span>
                   <input
-                    type={form.all_day ? 'date' : 'datetime-local'}
-                    value={form.all_day ? form.scheduled_start.slice(0, 10) : form.scheduled_start}
+                    type="datetime-local"
+                    value={form.scheduled_start}
                     onChange={e => {
-                      const val = form.all_day ? `${e.target.value}T00:00` : e.target.value;
+                      const val = e.target.value;
                       setForm(prev => {
                         const endVal = recalcEnd(val, prev.quantity, prev.time_per_unit);
                         const durFill = autofillDuration(val, prev.scheduled_end, prev.quantity, prev.time_per_unit);
@@ -954,10 +928,10 @@ export default function TaskForm({ task, onClose, initialDatetime }: TaskFormPro
                     )}
                   </span>
                   <input
-                    type={form.all_day ? 'date' : 'datetime-local'}
-                    value={form.all_day ? form.scheduled_end.slice(0, 10) : form.scheduled_end}
+                    type="datetime-local"
+                    value={form.scheduled_end}
                     onChange={e => {
-                      const val = form.all_day ? `${e.target.value}T23:59` : e.target.value;
+                      const val = e.target.value;
                       setForm(prev => {
                         const durFill = autofillDuration(prev.scheduled_start, val, prev.quantity, prev.time_per_unit);
                         return { ...prev, scheduled_end: val, ...(durFill ?? {}) };
