@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { Plus, Trash2, CreditCard as Edit2, Check, X } from 'lucide-react';
+import { Plus, Trash2, CreditCard as Edit2, Check, X, Bell, BellOff } from 'lucide-react';
 import { useTasks } from '../contexts/TaskContext';
 import type { TaskCategory } from '../lib/types';
 import { sortCategoriesByColor } from '../lib/utils';
@@ -20,6 +20,7 @@ export default function SettingsPage() {
   const [notifStatus, setNotifStatus] = useState<NotificationPermission | null>(
     'Notification' in window ? Notification.permission : null
   );
+  const [notifMessage, setNotifMessage] = useState<{ type: 'error' | 'info'; text: string } | null>(null);
 
   const handleCreate = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -44,8 +45,16 @@ export default function SettingsPage() {
 
   const requestNotification = async () => {
     if (!('Notification' in window)) return;
+    setNotifMessage(null);
     const perm = await Notification.requestPermission();
     setNotifStatus(perm);
+    if (perm === 'denied') {
+      setNotifMessage({ type: 'error', text: 'ブラウザに通知がブロックされています。ブラウザのサイト設定から通知を「許可」に変更してください。' });
+    }
+  };
+
+  const revokeNotification = () => {
+    setNotifMessage({ type: 'info', text: '通知の取り消しはブラウザの設定から行ってください。アドレスバー左のサイト情報アイコン（🔒 または ⓘ）をクリックし、「通知」を「ブロック」に変更してください。' });
   };
 
   return (
@@ -133,21 +142,44 @@ export default function SettingsPage() {
         <section className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-6">
           <h2 className="text-sm font-semibold text-gray-900 dark:text-white mb-2">ブラウザ通知</h2>
           <p className="text-xs text-gray-500 dark:text-gray-400 mb-4">
-            タスクの開始・終了予定時刻にブラウザ通知を受け取ります。通知を許可してください。
+            タスクの開始・終了予定時刻にブラウザ通知を受け取ります。
           </p>
+
           {notifStatus === null ? (
             <p className="text-sm text-gray-400">このブラウザは通知に対応していません</p>
           ) : notifStatus === 'granted' ? (
-            <div className="flex items-center gap-2 text-sm text-green-600 dark:text-green-400">
-              <Check className="w-4 h-4" />
-              通知が許可されています
+            <div className="space-y-3">
+              <div className="flex items-center gap-2 text-sm text-green-600 dark:text-green-400">
+                <Bell className="w-4 h-4" />
+                通知が許可されています
+              </div>
+              <button onClick={revokeNotification} className="btn-secondary flex items-center gap-1.5">
+                <BellOff className="w-3.5 h-3.5" />
+                許可しない
+              </button>
             </div>
           ) : notifStatus === 'denied' ? (
-            <p className="text-sm text-red-500 dark:text-red-400">通知がブロックされています。ブラウザの設定から許可してください。</p>
+            <div className="space-y-3">
+              <p className="text-sm text-red-500 dark:text-red-400">通知がブロックされています。</p>
+              <button onClick={requestNotification} className="btn-primary flex items-center gap-1.5">
+                <Bell className="w-3.5 h-3.5" />
+                許可する
+              </button>
+            </div>
           ) : (
-            <button onClick={requestNotification} className="btn-primary">
-              通知を許可する
+            <button onClick={requestNotification} className="btn-primary flex items-center gap-1.5">
+              <Bell className="w-3.5 h-3.5" />
+              許可する
             </button>
+          )}
+
+          {notifMessage && (
+            <div className={`mt-4 flex items-start gap-2 rounded-xl px-4 py-3 text-xs leading-relaxed ${notifMessage.type === 'error' ? 'bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300' : 'bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300'}`}>
+              <span className="flex-1">{notifMessage.text}</span>
+              <button onClick={() => setNotifMessage(null)} className="flex-shrink-0 text-current opacity-60 hover:opacity-100 transition-opacity">
+                <X className="w-3.5 h-3.5" />
+              </button>
+            </div>
           )}
         </section>
       </div>

@@ -1,4 +1,5 @@
-import { Sun, Moon, LogOut, Bell } from 'lucide-react';
+import { useState } from 'react';
+import { Sun, Moon, LogOut, Bell, BellOff, X } from 'lucide-react';
 import { useTheme } from '../../contexts/ThemeContext';
 import { useAuth } from '../../contexts/AuthContext';
 
@@ -17,26 +18,41 @@ interface HeaderProps {
 export default function Header({ currentPage }: HeaderProps) {
   const { theme, toggleTheme } = useTheme();
   const { user, signOut } = useAuth();
+  const [notifPerm, setNotifPerm] = useState<NotificationPermission | null>(
+    'Notification' in window ? Notification.permission : null
+  );
+  const [notifMsg, setNotifMsg] = useState<string | null>(null);
 
-  const requestNotificationPermission = async () => {
-    if ('Notification' in window && Notification.permission === 'default') {
-      await Notification.requestPermission();
+  const handleBellClick = async () => {
+    if (!('Notification' in window)) return;
+    setNotifMsg(null);
+    const current = Notification.permission;
+    if (current === 'granted') {
+      setNotifMsg('通知の取り消しはブラウザの設定から行ってください。アドレスバー左のサイト情報アイコン（🔒 または ⓘ）をクリックし、「通知」を「ブロック」に変更してください。');
+    } else {
+      const perm = await Notification.requestPermission();
+      setNotifPerm(perm);
+      if (perm === 'denied') {
+        setNotifMsg('ブラウザに通知がブロックされています。ブラウザのサイト設定から通知を「許可」に変更してください。');
+      }
     }
   };
 
+  const isGranted = notifPerm === 'granted';
+
   return (
-    <header className="h-14 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 flex items-center justify-between px-6 flex-shrink-0">
+    <header className="h-14 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 flex items-center justify-between px-6 flex-shrink-0 relative">
       <h1 className="text-base font-semibold text-gray-900 dark:text-white">
         {PAGE_TITLES[currentPage] ?? 'タスクマネージャー'}
       </h1>
 
       <div className="flex items-center gap-2">
         <button
-          onClick={requestNotificationPermission}
-          title="通知を許可"
-          className="w-8 h-8 flex items-center justify-center rounded-lg text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+          onClick={handleBellClick}
+          title={isGranted ? '通知を許可しない' : '通知を許可する'}
+          className={`w-8 h-8 flex items-center justify-center rounded-lg transition-colors ${isGranted ? 'text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/20' : 'text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800'}`}
         >
-          <Bell className="w-4 h-4" />
+          {isGranted ? <Bell className="w-4 h-4" /> : <BellOff className="w-4 h-4" />}
         </button>
         <button
           onClick={toggleTheme}
@@ -55,6 +71,15 @@ export default function Header({ currentPage }: HeaderProps) {
           <LogOut className="w-4 h-4" />
         </button>
       </div>
+
+      {notifMsg && (
+        <div className="absolute top-full right-4 mt-2 z-50 max-w-sm w-80 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl shadow-lg px-4 py-3 flex items-start gap-2">
+          <p className="flex-1 text-xs text-gray-700 dark:text-gray-300 leading-relaxed">{notifMsg}</p>
+          <button onClick={() => setNotifMsg(null)} className="flex-shrink-0 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors mt-0.5">
+            <X className="w-3.5 h-3.5" />
+          </button>
+        </div>
+      )}
     </header>
   );
 }
