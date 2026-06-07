@@ -761,8 +761,8 @@ export default function AnalyticsPage() {
         {/* KPI cards */}
         <div className="flex gap-4">
           {[
-            { label: '完了率', value: `${completionRate}%`, sub: '実績対象タスク中' },
-            { label: '総実績時間', value: `${totalActualHours}h`, sub: '実績なしは予定時間で代替' },
+            { label: '完了率', value: `${completionRate}%`, sub: '' },
+            { label: '総実績時間', value: `${totalActualHours}h`, sub: '' },
           ].map(stat => (
             <div key={stat.label} className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-5 min-w-[140px]">
               <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">{stat.label}</p>
@@ -793,10 +793,10 @@ export default function AnalyticsPage() {
         {tab === 'overview' && (
           <div className="space-y-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <SectionCard title="ステータス分布" subtitle="実績入力対象タスク">
+              <SectionCard title="ステータス分布">
                 <DonutChart segments={statusData} />
               </SectionCard>
-              <SectionCard title="分類別完了タスク数" subtitle="実績入力あり・完了のみ">
+              <SectionCard title="分類別完了タスク数">
                 {categoryBarData.length > 0
                   ? <BarChart data={categoryBarData} maxVal={maxCategoryCount} color="#3b82f6" />
                   : <p className="text-sm text-gray-400 dark:text-gray-500">分類データがありません</p>}
@@ -805,7 +805,6 @@ export default function AnalyticsPage() {
 
             <SectionCard
               title="分類別 所要時間"
-              subtitle="実績入力あり・完了タスクの実績時間合計（実績なしは予定時間で代替）"
             >
               <CategoryTimeBarChart data={categoryTimeData} />
             </SectionCard>
@@ -814,7 +813,7 @@ export default function AnalyticsPage() {
             {period !== 'all' ? (
               <SectionCard
                 title={`${formatPeriodLabel(period)} 日別作業時間`}
-                subtitle="単位: 時間 ／ 実績なしは予定時間で代替 ／ 差分 = 実績 − 予定（赤: 超過）"
+                subtitle="単位: 時間 ／ 差分 = 実績 − 予定（赤: 超過）"
               >
                 <div className="overflow-x-auto">
                   <div style={{ minWidth: `${dailyData.length * 36}px` }}>
@@ -825,7 +824,7 @@ export default function AnalyticsPage() {
             ) : drillMonth ? (
               <SectionCard
                 title={`${formatPeriodLabel(drillMonth)} 日別作業時間`}
-                subtitle="単位: 時間 ／ 実績なしは予定時間で代替 ／ 差分 = 実績 − 予定（赤: 超過）"
+                subtitle="単位: 時間 ／ 差分 = 実績 − 予定（赤: 超過）"
               >
                 <button
                   onClick={() => setDrillMonth(null)}
@@ -842,7 +841,7 @@ export default function AnalyticsPage() {
             ) : (
               <SectionCard
                 title="月別作業時間（過去1年）"
-                subtitle="単位: 時間 ／ 実績なしは予定時間で代替 ／ 差分 = 実績 − 予定（赤: 超過）"
+                subtitle="単位: 時間 ／ 差分 = 実績 − 予定（赤: 超過）"
               >
                 <DualBarChart
                   data={monthlyData}
