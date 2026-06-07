@@ -861,24 +861,14 @@ export default function TaskForm({ task, onClose, initialDatetime }: TaskFormPro
               </div>
             </div>
 
-            {/* 優先度 / 難易度 / 数量 / 所要時間 — 4列 */}
-            <div className="grid gap-3 grid-cols-4">
+            {/* 優先度 / 数量 / 所要時間 — 3列 */}
+            <div className="grid gap-3 grid-cols-3">
               <div>
                 <label className="form-label">優先度</label>
                 <select value={form.priority} onChange={e => set('priority', e.target.value as TaskPriority)} className="form-input">
                   <option value="high">高</option>
                   <option value="medium">中</option>
                   <option value="low">低</option>
-                </select>
-              </div>
-
-              <div>
-                <label className="form-label">難易度</label>
-                <select value={form.difficulty} onChange={e => set('difficulty', Number(e.target.value))} className="form-input">
-                  <option value={0}>－</option>
-                  {[1, 2, 3, 4, 5].map(n => (
-                    <option key={n} value={n}>{'★'.repeat(n)}</option>
-                  ))}
                 </select>
               </div>
 
