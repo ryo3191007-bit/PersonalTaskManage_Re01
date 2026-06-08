@@ -566,7 +566,8 @@ export default function TaskForm({ task, onClose, initialDatetime }: TaskFormPro
   const set = <K extends keyof typeof defaultForm>(key: K, value: (typeof defaultForm)[K]) =>
     setForm(prev => {
       const next = { ...prev, [key]: value };
-      // ステータスを完了に変更したとき、実績時間が未入力なら予定時間を自動コピー
+      // ステータスを完了に変更したとき、実績日時が未入力なら予定日時を自動コピー
+      // ※予定日時変更時の自動コピーは各 onChange ハンドラ内でも行う
       if (key === 'status' && value === 'completed') {
         if (!next.actual_start && next.scheduled_start) next.actual_start = next.scheduled_start;
         if (!next.actual_end && next.scheduled_end) next.actual_end = next.scheduled_end;
@@ -914,7 +915,12 @@ export default function TaskForm({ task, onClose, initialDatetime }: TaskFormPro
                       setForm(prev => {
                         const endVal = recalcEnd(val, prev.quantity, prev.time_per_unit);
                         const durFill = autofillDuration(val, prev.scheduled_end, prev.quantity, prev.time_per_unit);
-                        return { ...prev, scheduled_start: val, ...(endVal ? { scheduled_end: endVal } : {}), ...(durFill ?? {}) };
+                        const next: typeof prev = { ...prev, scheduled_start: val, ...(endVal ? { scheduled_end: endVal } : {}), ...(durFill ?? {}) };
+                        // 完了ステータスで実績開始が未入力なら自動コピー
+                        if (next.status === 'completed' && !next.actual_start && val) next.actual_start = val;
+                        // 完了ステータスで終了も自動計算された場合、実績終了が未入力なら自動コピー
+                        if (next.status === 'completed' && !next.actual_end && endVal) next.actual_end = endVal;
+                        return next;
                       });
                     }}
                     className="form-input"
@@ -934,7 +940,10 @@ export default function TaskForm({ task, onClose, initialDatetime }: TaskFormPro
                       const val = e.target.value;
                       setForm(prev => {
                         const durFill = autofillDuration(prev.scheduled_start, val, prev.quantity, prev.time_per_unit);
-                        return { ...prev, scheduled_end: val, ...(durFill ?? {}) };
+                        const next: typeof prev = { ...prev, scheduled_end: val, ...(durFill ?? {}) };
+                        // 完了ステータスで実績終了が未入力なら自動コピー
+                        if (next.status === 'completed' && !next.actual_end && val) next.actual_end = val;
+                        return next;
                       });
                     }}
                     className="form-input"
