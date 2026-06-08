@@ -284,15 +284,23 @@ function SuspendEntryRow({ entry, index, total, taskId, actualStart, onChange, o
   );
 }
 
+interface FormErrors {
+  actual_start?: string;
+  actual_end?: string;
+  suspend?: string;
+}
+
 interface ActualsSectionProps {
   task: import('../../lib/types').Task | null | undefined;
   form: typeof defaultForm;
   set: (key: string, val: unknown) => void;
   childrenActualTimeMins?: number | null;
   onEntriesChange?: (entries: SuspendEntry[]) => void;
+  errors?: FormErrors;
+  onClearError?: (key: keyof FormErrors) => void;
 }
 
-function ActualsSection({ task, form, set, childrenActualTimeMins, onEntriesChange }: ActualsSectionProps) {
+function ActualsSection({ task, form, set, childrenActualTimeMins, onEntriesChange, errors, onClearError }: ActualsSectionProps) {
   const { sessions, createSession } = useTasks();
   const taskSessions = task ? sessions.filter(s => s.task_id === task.id) : [];
 
@@ -304,9 +312,10 @@ function ActualsSection({ task, form, set, childrenActualTimeMins, onEntriesChan
     setEntries(prev => {
       const next = typeof updater === 'function' ? updater(prev) : updater;
       onEntriesChange?.(next);
+      if (next.some(e => e.suspendVal)) onClearError?.('suspend');
       return next;
     });
-  }, [onEntriesChange]);
+  }, [onEntriesChange, onClearError]);
 
   // セッションがロードされてきたら再初期化（初回ロード後にセッションが入ってくる場合）
   const initializedRef = useRef(false);
@@ -371,13 +380,16 @@ function ActualsSection({ task, form, set, childrenActualTimeMins, onEntriesChan
       <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">実績</h3>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <label className="form-label">開始実績日時</label>
+          <label className="form-label">開始実績日時 <span className="text-red-500">*</span></label>
           <input
             type="datetime-local"
             value={form.actual_start}
-            onChange={e => set('actual_start', e.target.value)}
-            className="form-input"
+            onChange={e => { set('actual_start', e.target.value); if (e.target.value) onClearError?.('actual_start'); }}
+            className={`form-input${errors?.actual_start ? ' border-red-500 dark:border-red-500' : ''}`}
           />
+          {errors?.actual_start && (
+            <p className="mt-1 text-xs text-red-500">{errors.actual_start}</p>
+          )}
         </div>
 
         {isStartLate && (
@@ -423,6 +435,9 @@ function ActualsSection({ task, form, set, childrenActualTimeMins, onEntriesChan
                 <Plus className="w-3.5 h-3.5" />
                 中断時間を追加
               </button>
+              {errors?.suspend && (
+                <p className="mt-1 text-xs text-red-500">{errors.suspend}</p>
+              )}
             </div>
           </>
         )}
@@ -431,13 +446,16 @@ function ActualsSection({ task, form, set, childrenActualTimeMins, onEntriesChan
           <>
             {childrenActualTimeMins == null && (
             <div>
-              <label className="form-label">終了実績日時</label>
+              <label className="form-label">終了実績日時 <span className="text-red-500">*</span></label>
               <input
                 type="datetime-local"
                 value={form.actual_end}
-                onChange={e => set('actual_end', e.target.value)}
-                className="form-input"
+                onChange={e => { set('actual_end', e.target.value); if (e.target.value) onClearError?.('actual_end'); }}
+                className={`form-input${errors?.actual_end ? ' border-red-500 dark:border-red-500' : ''}`}
               />
+              {errors?.actual_end && (
+                <p className="mt-1 text-xs text-red-500">{errors.actual_end}</p>
+              )}
             </div>
             )}
 
@@ -518,6 +536,7 @@ export default function TaskForm({ task, onClose, initialDatetime }: TaskFormPro
     return { ...defaultForm };
   });
   const [loading, setLoading] = useState(false);
+  const [formErrors, setFormErrors] = useState<FormErrors>({});
   const [showCategoryDialog, setShowCategoryDialog] = useState(false);
   const [titleHistory] = useState<string[]>(loadTitleHistory);
   const [titleSuggestOpen, setTitleSuggestOpen] = useState(false);
@@ -572,6 +591,7 @@ export default function TaskForm({ task, onClose, initialDatetime }: TaskFormPro
         if (!next.actual_start && next.scheduled_start) next.actual_start = next.scheduled_start;
         if (!next.actual_end && next.scheduled_end) next.actual_end = next.scheduled_end;
       }
+      if (key === 'status') setFormErrors({});
       return next;
     });
 
@@ -613,6 +633,23 @@ export default function TaskForm({ task, onClose, initialDatetime }: TaskFormPro
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.title.trim()) return;
+
+    const needsActuals = form.status === 'in_progress' || form.status === 'suspended' || form.status === 'completed';
+    const newErrors: FormErrors = {};
+    if (needsActuals && !form.actual_start) {
+      newErrors.actual_start = '開始実績日時は必須です';
+    }
+    if (form.status === 'completed' && !form.actual_end) {
+      newErrors.actual_end = '終了実績日時は必須です';
+    }
+    if (form.status === 'suspended' && !entriesRef.current.some(e => e.suspendVal)) {
+      newErrors.suspend = '中断時間を1件以上入力してください';
+    }
+    if (Object.keys(newErrors).length > 0) {
+      setFormErrors(newErrors);
+      return;
+    }
+    setFormErrors({});
     setLoading(true);
 
     const payload: Partial<Task> = {
@@ -959,7 +996,7 @@ export default function TaskForm({ task, onClose, initialDatetime }: TaskFormPro
             </div>
 
             {/* 実績エリア：進行中以上で表示 */}
-            {showActuals && <ActualsSection task={task} form={form} set={set} childrenActualTimeMins={childrenActualTimeMins} onEntriesChange={e => { entriesRef.current = e; }} />}
+            {showActuals && <ActualsSection task={task} form={form} set={set} childrenActualTimeMins={childrenActualTimeMins} onEntriesChange={e => { entriesRef.current = e; }} errors={formErrors} onClearError={key => setFormErrors(prev => { const next = { ...prev }; delete next[key]; return next; })} />}
 
             <div className="flex gap-3 justify-end pt-2">
               <button type="button" onClick={onClose} className="btn-secondary">キャンセル</button>
