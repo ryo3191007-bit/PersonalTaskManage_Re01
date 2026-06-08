@@ -600,8 +600,9 @@ export default function AnalyticsPage() {
       }
 
       const taskSessions = sessionsByTask.get(t.id) ?? [];
-      const actStart = t.actual_start ? new Date(t.actual_start) : t.scheduled_start ? new Date(t.scheduled_start) : null;
-      const actEnd = t.actual_end ? new Date(t.actual_end) : t.scheduled_end ? new Date(t.scheduled_end) : actStart;
+      if (!t.scheduled_start || !t.scheduled_end) continue;
+      const actStart = t.actual_start ? new Date(t.actual_start) : new Date(t.scheduled_start);
+      const actEnd = t.actual_end ? new Date(t.actual_end) : new Date(t.scheduled_end);
       if (!actStart) continue;
       const loopRef = actEnd && actEnd > actStart ? actEnd : actStart;
       if (actStart >= rangeEnd || loopRef < rangeStart) continue;
@@ -647,11 +648,12 @@ export default function AnalyticsPage() {
       let actualMins = 0;
 
       for (const t of workloadTasks) {
-        const ps = t.scheduled_start ? new Date(t.scheduled_start) : null;
-        const pe = t.scheduled_end ? new Date(t.scheduled_end) : null;
-        if (ps && ps < dayEnd && (!pe || pe > dayStart)) {
+        if (!t.scheduled_start || !t.scheduled_end) continue;
+        const ps = new Date(t.scheduled_start);
+        const pe = new Date(t.scheduled_end);
+        if (ps < dayEnd && pe > dayStart) {
           const cs = ps < dayStart ? dayStart : ps;
-          const ce = pe ? (pe > dayEnd ? dayEnd : pe) : dayEnd;
+          const ce = pe > dayEnd ? dayEnd : pe;
           if (ce > cs) plannedMins += (ce.getTime() - cs.getTime()) / 60000;
         }
         const taskSessions = sessionsByTask.get(t.id) ?? [];

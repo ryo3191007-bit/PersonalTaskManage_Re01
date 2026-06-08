@@ -294,6 +294,7 @@ export function getWorkloadMins(task: Task): number {
  * 未完了タスク: 予定時間
  */
 export function getWorkloadMinsForDay(task: Task, dayDate: Date, sessions?: import('./types').TaskSession[]): number {
+  if (!task.scheduled_start || !task.scheduled_end) return 0;
   const dayStart = new Date(dayDate.getFullYear(), dayDate.getMonth(), dayDate.getDate());
   const dayEnd = new Date(dayStart.getTime() + 24 * 60 * 60 * 1000);
 
