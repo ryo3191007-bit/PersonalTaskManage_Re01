@@ -11,7 +11,7 @@ import {
 import TaskCard from '../components/tasks/TaskCard';
 import TaskForm from '../components/tasks/TaskForm';
 import TaskFilters from '../components/tasks/TaskFilters';
-import { buildTree, exportToCSV, exportTodayTasksAsText, getWorkloadMinsForDay, DEFAULT_TEXT_EXPORT_FIELDS } from '../lib/utils';
+import { buildTree, exportToCSV, exportTodayTasksAsText, getWorkloadMinsForDay, getWorkloadTaskList, DEFAULT_TEXT_EXPORT_FIELDS } from '../lib/utils';
 import type { TextExportFields } from '../lib/utils';
 import { useWorkHours } from '../lib/useWorkHours';
 
@@ -639,7 +639,7 @@ export default function TaskListPage() {
   }, []);
   const todayLabel = `${todayDate.getMonth() + 1}/${todayDate.getDate()}`;
   const todayUsedHours = useMemo(() => {
-    const parentTasks = tasks.filter(t => t.parent_task_id === null);
+    const parentTasks = getWorkloadTaskList(tasks);
     const totalMins = parentTasks.reduce((sum, t) => sum + getWorkloadMinsForDay(t, todayDate, sessions), 0);
     return Math.round(totalMins / 60 * 10) / 10;
   }, [tasks, todayDate, sessions]);
