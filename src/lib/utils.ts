@@ -304,16 +304,15 @@ export function getWorkloadMinsForDay(task: Task, dayDate: Date, sessions?: impo
     let totalMins = 0;
     for (const s of sorted) {
       const sStart = new Date(s.session_start);
-      // session_end が null の場合は actual_end または actual_time で補完
+      // session_end が null の場合は actual_end または現在時刻で補完
+      // actual_time は複数セッションの累計なので open セッションの終端には使わない
       let sEnd: Date;
       if (s.session_end) {
         sEnd = new Date(s.session_end);
       } else if (task.actual_end) {
         sEnd = new Date(task.actual_end);
-      } else if (task.actual_time > 0) {
-        sEnd = new Date(sStart.getTime() + task.actual_time * 60000);
       } else {
-        continue;
+        sEnd = new Date();
       }
       // 当日にクリップ
       const cStart = sStart < dayStart ? dayStart : sStart;
