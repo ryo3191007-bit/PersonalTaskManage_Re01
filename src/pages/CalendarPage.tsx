@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { ChevronLeft, ChevronRight, Clock, Plus, PauseCircle, PlayCircle, X, Check, Trash2 } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Clock, Plus, PauseCircle, PlayCircle, X, Check, Trash2, CalendarX, CreditCard as Edit2 } from 'lucide-react';
 import { useTasks } from '../contexts/TaskContext';
 import type { Task, TaskSession } from '../lib/types';
 import { STATUS_COLORS, STATUS_LABELS } from '../lib/types';
@@ -1380,6 +1380,116 @@ function MonthViewWrapper({ viewDate, tasks, sessions, onEdit, onCreateAt, onDel
   );
 }
 
+// ─── UNSCHEDULED PANEL ───────────────────────────────────────────────────────
+function UnscheduledPanel({ tasks, onEdit, onDelete }: {
+  tasks: Task[];
+  onEdit: (t: Task) => void;
+  onDelete: (id: string) => void;
+}) {
+  const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [collapsed, setCollapsed] = useState(false);
+
+  const unscheduled = useMemo(() =>
+    tasks.filter(t =>
+      t.status !== 'completed' &&
+      (!t.scheduled_start || !t.scheduled_end)
+    ),
+    [tasks]
+  );
+
+  if (unscheduled.length === 0) return null;
+
+  return (
+    <div className="mt-4 bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 overflow-hidden">
+      <button
+        type="button"
+        onClick={() => setCollapsed(c => !c)}
+        className="w-full flex items-center gap-2 px-4 py-3 bg-gray-50 dark:bg-gray-800/50 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors text-left"
+      >
+        <CalendarX className="w-4 h-4 text-gray-400 dark:text-gray-500 flex-shrink-0" />
+        <span className="text-sm font-semibold text-gray-700 dark:text-gray-300 flex-1">未スケジュール</span>
+        <span className="text-xs text-gray-400 dark:text-gray-500 bg-gray-200 dark:bg-gray-700 rounded-full px-2 py-0.5 font-medium">
+          {unscheduled.length}件
+        </span>
+        <span className="text-gray-400 dark:text-gray-500 text-xs ml-1">{collapsed ? '▶' : '▼'}</span>
+      </button>
+
+      {!collapsed && (
+        <div className="divide-y divide-gray-100 dark:divide-gray-800">
+          {unscheduled.map(t => {
+            const s = taskStatusStyle(t);
+            return (
+              <div
+                key={t.id}
+                className="flex items-center gap-3 px-4 py-2.5 hover:bg-gray-50 dark:hover:bg-gray-800/40 transition-colors group"
+              >
+                <div className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ backgroundColor: s.border }} />
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-medium text-gray-900 dark:text-white truncate">{t.title}</p>
+                  <div className="flex items-center gap-2 mt-0.5 flex-wrap">
+                    {t.category && (
+                      <span
+                        className="text-[11px] px-1.5 py-px rounded-full font-medium text-white flex-shrink-0"
+                        style={{ backgroundColor: t.category.color }}
+                      >
+                        {t.category.name}
+                      </span>
+                    )}
+                    <span className={`text-[11px] px-1.5 py-px rounded-full font-medium flex-shrink-0 ${
+                      t.status === 'in_progress' ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300'
+                      : t.status === 'suspended' ? 'bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300'
+                      : 'bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-400'
+                    }`}>
+                      {t.status === 'in_progress' ? '進行中' : t.status === 'suspended' ? '中断' : '未着手'}
+                    </span>
+                    {!t.scheduled_start && !t.scheduled_end && (
+                      <span className="text-[11px] text-gray-400 dark:text-gray-500">予定日時なし</span>
+                    )}
+                    {t.scheduled_start && !t.scheduled_end && (
+                      <span className="text-[11px] text-gray-400 dark:text-gray-500">
+                        開始: {new Date(t.scheduled_start).toLocaleString('ja-JP', { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' })} （終了未定）
+                      </span>
+                    )}
+                    {!t.scheduled_start && t.scheduled_end && (
+                      <span className="text-[11px] text-gray-400 dark:text-gray-500">
+                        終了: {new Date(t.scheduled_end).toLocaleString('ja-JP', { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' })} （開始未定）
+                      </span>
+                    )}
+                  </div>
+                </div>
+                <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0">
+                  <button
+                    onClick={() => onEdit(t)}
+                    className="w-7 h-7 flex items-center justify-center rounded-lg text-gray-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/30 transition-colors"
+                    title="編集して予定日時を設定"
+                  >
+                    <Edit2 className="w-3.5 h-3.5" />
+                  </button>
+                  <button
+                    onClick={() => {
+                      if (deletingId === t.id) { onDelete(t.id); setDeletingId(null); }
+                      else setDeletingId(t.id);
+                    }}
+                    onBlur={() => setDeletingId(null)}
+                    className={`w-7 h-7 flex items-center justify-center rounded-lg transition-colors ${
+                      deletingId === t.id
+                        ? 'bg-red-500 text-white'
+                        : 'text-gray-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/30'
+                    }`}
+                    title={deletingId === t.id ? 'もう一度クリックで削除' : '削除'}
+                  >
+                    <Trash2 className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ─── MAIN ────────────────────────────────────────────────────────────────────
 export default function CalendarPage() {
   const { tasks, sessions, suspendTask, resumeTask, updateTask, deleteTask } = useTasks();
@@ -1511,6 +1621,12 @@ export default function CalendarPage() {
             onDelete={deleteTask}
           />
         )}
+
+        <UnscheduledPanel
+          tasks={tasks}
+          onEdit={setEditingTask}
+          onDelete={deleteTask}
+        />
       </div>
 
       {editingTask !== undefined && (
