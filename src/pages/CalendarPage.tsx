@@ -498,6 +498,7 @@ function DayView({ date, tasks, sessions, onEdit, onCreateAt, onSuspend, onResum
 
   const visibleTasks = useMemo(() => {
     return tasks.filter(t => {
+      if (t.status !== 'completed' && (!t.scheduled_start || !t.scheduled_end)) return false;
       if (t.parent_task_id === null) return true;
       return expandedIds.has(t.parent_task_id);
     });
@@ -835,7 +836,10 @@ function WeekView({ weekStart, tasks, sessions, onEdit, onCreateAt, onSuspend, o
   }, [tasks]);
 
   const visibleTasks = useMemo(() =>
-    tasks.filter(t => t.parent_task_id === null || expandedIds.has(t.parent_task_id)),
+    tasks.filter(t => {
+      if (t.status !== 'completed' && (!t.scheduled_start || !t.scheduled_end)) return false;
+      return t.parent_task_id === null || expandedIds.has(t.parent_task_id);
+    }),
     [tasks, expandedIds]
   );
 
@@ -1173,7 +1177,10 @@ function MonthViewWrapper({ viewDate, tasks, sessions, onEdit, onCreateAt, onDel
   }, [tasks]);
 
   const visibleTasks = useMemo(() =>
-    tasks.filter(t => t.parent_task_id === null || expandedIds.has(t.parent_task_id)),
+    tasks.filter(t => {
+      if (t.status !== 'completed' && (!t.scheduled_start || !t.scheduled_end)) return false;
+      return t.parent_task_id === null || expandedIds.has(t.parent_task_id);
+    }),
     [tasks, expandedIds]
   );
 
