@@ -498,8 +498,10 @@ export default function TaskListPage() {
     const today = new Date().toISOString().slice(0, 10);
     return { from: today, to: today };
   });
+  const [dateEndFilter, setDateEndFilter] = useState<{ from: string; to: string }>({ from: '', to: '' });
   const [priorityFilter, setPriorityFilter] = useState<TaskPriority | 'all'>('all');
   const [keywordFilter, setKeywordFilter] = useState('');
+  const [unscheduledOnly, setUnscheduledOnly] = useState(false);
 
   const [showRecurrenceForm, setShowRecurrenceForm] = useState(false);
   const [startDialog, setStartDialog] = useState<Task | null>(null);
@@ -587,9 +589,25 @@ export default function TaskListPage() {
           if (effEnd) return false;
         }
       }
+
+      // 予定終了日フィルタ
+      if (dateEndFilter.from || dateEndFilter.to) {
+        const endRangeStart = dateEndFilter.from ? new Date(dateEndFilter.from + 'T00:00:00') : null;
+        const endRangeEnd = dateEndFilter.to
+          ? new Date(new Date(dateEndFilter.to + 'T00:00:00').getTime() + 24 * 60 * 60 * 1000)
+          : null;
+        const schedEnd = t.scheduled_end ? new Date(t.scheduled_end) : null;
+        if (!schedEnd) return false;
+        if (endRangeStart && schedEnd < endRangeStart) return false;
+        if (endRangeEnd && schedEnd >= endRangeEnd) return false;
+      }
+
+      // 予定未入力フィルタ
+      if (unscheduledOnly && (t.scheduled_start || t.scheduled_end)) return false;
+
       return true;
     });
-  }, [tasks, sessions, statusFilter, priorityFilter, categoryFilter, dateFilter, keywordFilter]);
+  }, [tasks, sessions, statusFilter, priorityFilter, categoryFilter, dateFilter, dateEndFilter, keywordFilter, unscheduledOnly]);
 
   const sortedFilteredTasks = useMemo(() => {
     return [...filteredTasks].sort((a, b) => {
@@ -900,13 +918,18 @@ export default function TaskListPage() {
               categoryFilter={categoryFilter}
               dateFrom={dateFilter.from}
               dateTo={dateFilter.to}
+              dateEndFrom={dateEndFilter.from}
+              dateEndTo={dateEndFilter.to}
               priorityFilter={priorityFilter}
               keywordFilter={keywordFilter}
+              unscheduledOnly={unscheduledOnly}
               onStatusChange={setStatusFilter}
               onCategoryChange={setCategoryFilter}
               onDateChange={(from, to) => setDateFilter({ from, to })}
+              onDateEndChange={(from, to) => setDateEndFilter({ from, to })}
               onPriorityChange={setPriorityFilter}
               onKeywordChange={setKeywordFilter}
+              onUnscheduledOnlyChange={setUnscheduledOnly}
             />
           </div>
           {/* 区切り線 */}
