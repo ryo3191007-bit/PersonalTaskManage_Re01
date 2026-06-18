@@ -259,12 +259,31 @@ function assignTimeLanes(
   }
 
   const result: Record<string, { col: number; totalCols: number }> = {};
+  const visited = new Set<string>();
   for (const item of sorted) {
-    const overlapping = sorted.filter(
-      other => other.startMins < item.endMins && other.endMins > item.startMins
-    );
-    const maxCol = Math.max(...overlapping.map(o => colOf[o.id]));
-    result[item.id] = { col: colOf[item.id], totalCols: maxCol + 1 };
+    if (visited.has(item.id)) continue;
+    // BFS で連結成分（時間的に連鎖して重なるタスク群）を収集
+    const queue = [item.id];
+    const component: string[] = [];
+    while (queue.length > 0) {
+      const cur = queue.shift()!;
+      if (visited.has(cur)) continue;
+      visited.add(cur);
+      component.push(cur);
+      const curItem = sorted.find(s => s.id === cur)!;
+      sorted.forEach(other => {
+        if (!visited.has(other.id) &&
+            other.startMins < curItem.endMins &&
+            other.endMins > curItem.startMins) {
+          queue.push(other.id);
+        }
+      });
+    }
+    // 連結成分内の最大 col で totalCols を統一（全員が同じ幅で並ぶ）
+    const maxColInComponent = Math.max(...component.map(id => colOf[id]));
+    component.forEach(id => {
+      result[id] = { col: colOf[id], totalCols: maxColInComponent + 1 };
+    });
   }
   return result;
 }
