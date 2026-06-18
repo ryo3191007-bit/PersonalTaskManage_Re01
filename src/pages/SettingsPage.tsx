@@ -79,10 +79,6 @@ function CreateCategoryDialog({
                 />
               ))}
             </div>
-            <div className="flex items-center gap-2 mt-3">
-              <span className="w-4 h-4 rounded-full flex-shrink-0" style={{ backgroundColor: color }} />
-              <span className="text-xs text-gray-500 dark:text-gray-400">選択中：{color}</span>
-            </div>
           </div>
 
           <div className="flex justify-end gap-2 pt-1">
