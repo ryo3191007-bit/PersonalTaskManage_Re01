@@ -518,10 +518,9 @@ function DayView({ date, tasks, sessions, onEdit, onCreateAt, onSuspend, onResum
   const visibleTasks = useMemo(() => {
     return tasks.filter(t => {
       if (t.status !== 'completed' && (!t.scheduled_start || !t.scheduled_end)) return false;
-      if (t.parent_task_id === null) return true;
-      return expandedIds.has(t.parent_task_id);
+      return true;
     });
-  }, [tasks, expandedIds]);
+  }, [tasks]);
 
   const toggleExpand = (id: string) => {
     setExpandedIds(prev => {
@@ -864,9 +863,9 @@ function WeekView({ weekStart, tasks, sessions, onEdit, onCreateAt, onSuspend, o
   const visibleTasks = useMemo(() =>
     tasks.filter(t => {
       if (t.status !== 'completed' && (!t.scheduled_start || !t.scheduled_end)) return false;
-      return t.parent_task_id === null || expandedIds.has(t.parent_task_id);
+      return true;
     }),
-    [tasks, expandedIds]
+    [tasks]
   );
 
   const toggleExpand = (id: string) => {
@@ -1210,9 +1209,9 @@ function MonthViewWrapper({ viewDate, tasks, sessions, onEdit, onCreateAt, onDel
   const visibleTasks = useMemo(() =>
     tasks.filter(t => {
       if (t.status !== 'completed' && (!t.scheduled_start || !t.scheduled_end)) return false;
-      return t.parent_task_id === null || expandedIds.has(t.parent_task_id);
+      return true;
     }),
-    [tasks, expandedIds]
+    [tasks]
   );
 
   const toggleExpand = (id: string) => {
