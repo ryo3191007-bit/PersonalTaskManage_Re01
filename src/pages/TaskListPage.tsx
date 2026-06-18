@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { Plus, Download, X, Check, PauseCircle, PlayCircle, FileText, Copy, CheckCheck } from 'lucide-react';
+import { Plus, Download, X, Check, PauseCircle, PlayCircle, FileText, Copy, CheckCheck, Trash2 } from 'lucide-react';
 import { useTasks } from '../contexts/TaskContext';
 import type { Task, TaskStatus, TaskPriority } from '../lib/types';
 import RecurrenceForm from '../components/tasks/RecurrenceForm';
@@ -400,13 +400,16 @@ function TextExportConfigDialog({ onClose, onExport }: {
 }
 
 // ─── TaskRow ────────────────────────────────────────────────────────────────
-function TaskRow({ task, onEdit, depth = 0, onStatusChange, onSuspend, onResume }: {
+function TaskRow({ task, onEdit, depth = 0, onStatusChange, onSuspend, onResume, isSelecting, isSelected, onToggleSelect }: {
   task: Task;
   onEdit: (t: Task) => void;
   depth?: number;
   onStatusChange: (task: Task, next: TaskStatus) => void;
   onSuspend: (task: Task) => void;
   onResume: (task: Task) => void;
+  isSelecting: boolean;
+  isSelected: boolean;
+  onToggleSelect: (id: string) => void;
 }) {
   const [expanded, setExpanded] = useState(true);
   const hasChildren = task.children && task.children.length > 0;
@@ -425,6 +428,16 @@ function TaskRow({ task, onEdit, depth = 0, onStatusChange, onSuspend, onResume 
   return (
     <div className={depth > 0 ? 'ml-6 border-l-2 border-gray-200 dark:border-gray-700' : ''}>
       <div className={`flex items-start gap-1 pr-3 ${isOverdue ? 'bg-red-50 dark:bg-red-900/20' : ''}`}>
+        {isSelecting && (
+          <div className="flex items-center pt-3.5 pl-2 flex-shrink-0">
+            <input
+              type="checkbox"
+              checked={isSelected}
+              onChange={() => onToggleSelect(task.id)}
+              className="w-4 h-4 rounded border-gray-300 dark:border-gray-600 text-blue-500 focus:ring-blue-500 focus:ring-offset-0 cursor-pointer"
+            />
+          </div>
+        )}
         <div className="flex-1 min-w-0">
           <TaskCard task={task} onEdit={onEdit} />
         </div>
@@ -480,7 +493,7 @@ function TaskRow({ task, onEdit, depth = 0, onStatusChange, onSuspend, onResume 
       {hasChildren && expanded && (
         <div>
           {task.children!.map(child => (
-            <TaskRow key={child.id} task={child} onEdit={onEdit} depth={depth + 1} onStatusChange={onStatusChange} onSuspend={onSuspend} onResume={onResume} />
+            <TaskRow key={child.id} task={child} onEdit={onEdit} depth={depth + 1} onStatusChange={onStatusChange} onSuspend={onSuspend} onResume={onResume} isSelecting={isSelecting} isSelected={isSelected} onToggleSelect={onToggleSelect} />
           ))}
         </div>
       )}
@@ -490,7 +503,7 @@ function TaskRow({ task, onEdit, depth = 0, onStatusChange, onSuspend, onResume 
 
 // ─── Main ───────────────────────────────────────────────────────────────────
 export default function TaskListPage() {
-  const { tasks, sessions, loading, updateTask, suspendTask, resumeTask, createSession, updateSession } = useTasks();
+  const { tasks, sessions, loading, updateTask, deleteTask, suspendTask, resumeTask, createSession, updateSession } = useTasks();
   const [editingTask, setEditingTask] = useState<Task | null | undefined>(undefined);
   const [statusFilter, setStatusFilter] = useState<TaskStatus | 'all'>('all');
   const [categoryFilter, setCategoryFilter] = useState('');
@@ -504,6 +517,9 @@ export default function TaskListPage() {
   const [unscheduledOnly, setUnscheduledOnly] = useState(false);
 
   const [showRecurrenceForm, setShowRecurrenceForm] = useState(false);
+  const [isSelecting, setIsSelecting] = useState(false);
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+  const [confirmBulkDelete, setConfirmBulkDelete] = useState(false);
   const [startDialog, setStartDialog] = useState<Task | null>(null);
   const [endDialog, setEndDialog] = useState<Task | null>(null);
   const [fullActualDialog, setFullActualDialog] = useState<Task | null>(null);
@@ -699,6 +715,13 @@ export default function TaskListPage() {
       actual_memo: '',
       completed_at: actualEnd ?? new Date().toISOString(),
     });
+  };
+
+  const handleBulkDelete = async () => {
+    await Promise.all([...selectedIds].map(id => deleteTask(id)));
+    setSelectedIds(new Set());
+    setIsSelecting(false);
+    setConfirmBulkDelete(false);
   };
 
   const handleStatusChange = (task: Task, next: TaskStatus) => {
@@ -942,8 +965,7 @@ export default function TaskListPage() {
             <button onClick={() => exportToCSV(tasks)} className="btn-secondary flex items-center gap-1.5">
               <Download className="w-3.5 h-3.5" />CSV出力
             </button>
-            <button
-              onClick={() => setShowRecurrenceForm(true)}
+            <button onClick={() => setShowRecurrenceForm(true)}
               className="btn-primary flex items-center gap-1.5 bg-teal-600 hover:bg-teal-700"
             >
               <Plus className="w-3.5 h-3.5" />新規定常タスク
@@ -951,6 +973,52 @@ export default function TaskListPage() {
             <button onClick={() => setEditingTask(null)} className="btn-primary flex items-center gap-1.5">
               <Plus className="w-3.5 h-3.5" />新規タスク
             </button>
+            {!isSelecting ? (
+              <button
+                onClick={() => { setIsSelecting(true); setSelectedIds(new Set()); setConfirmBulkDelete(false); }}
+                className="btn-secondary flex items-center gap-1.5"
+              >
+                <Trash2 className="w-3.5 h-3.5" />一括削除
+              </button>
+            ) : (
+              <div className="flex items-center gap-1.5">
+                {confirmBulkDelete ? (
+                  <>
+                    <span className="text-xs text-red-600 dark:text-red-400 font-medium">{selectedIds.size}件を削除します</span>
+                    <button
+                      onClick={handleBulkDelete}
+                      disabled={selectedIds.size === 0}
+                      className="btn-secondary flex items-center gap-1.5 border-red-400 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 disabled:opacity-40"
+                    >
+                      <Trash2 className="w-3.5 h-3.5" />確定
+                    </button>
+                    <button
+                      onClick={() => setConfirmBulkDelete(false)}
+                      className="btn-secondary flex items-center gap-1.5"
+                    >
+                      <X className="w-3.5 h-3.5" />戻る
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <span className="text-xs text-gray-500 dark:text-gray-400">{selectedIds.size}件選択中</span>
+                    <button
+                      onClick={() => setConfirmBulkDelete(true)}
+                      disabled={selectedIds.size === 0}
+                      className="btn-secondary flex items-center gap-1.5 border-red-400 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 disabled:opacity-40"
+                    >
+                      <Trash2 className="w-3.5 h-3.5" />削除する
+                    </button>
+                    <button
+                      onClick={() => { setIsSelecting(false); setSelectedIds(new Set()); setConfirmBulkDelete(false); }}
+                      className="btn-secondary flex items-center gap-1.5"
+                    >
+                      <X className="w-3.5 h-3.5" />キャンセル
+                    </button>
+                  </>
+                )}
+              </div>
+            )}
           </div>
         </div>
 
@@ -976,6 +1044,13 @@ export default function TaskListPage() {
                 onStatusChange={handleStatusChange}
                 onSuspend={task => setSuspendDialog(task)}
                 onResume={task => setResumeDialog(task)}
+                isSelecting={isSelecting}
+                isSelected={selectedIds.has(task.id)}
+                onToggleSelect={id => setSelectedIds(prev => {
+                  const next = new Set(prev);
+                  next.has(id) ? next.delete(id) : next.add(id);
+                  return next;
+                })}
               />
             ))}
           </div>
