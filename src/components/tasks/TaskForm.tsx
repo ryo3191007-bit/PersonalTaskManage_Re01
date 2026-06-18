@@ -515,7 +515,7 @@ function ActualsSection({ task, form, set, childrenActualTimeMins, onEntriesChan
 }
 
 export default function TaskForm({ task, onClose, initialDatetime }: TaskFormProps) {
-  const { categories: rawCategories, tasks, createTask, updateTask } = useTasks();
+  const { categories: rawCategories, tasks, createTask, updateTask, createSession } = useTasks();
   const categories = useMemo(() => sortCategoriesByColor(rawCategories), [rawCategories]);
 
   // 子タスクを持つ親タスクの場合、子タスクの actual_time 合計を算出
@@ -696,7 +696,24 @@ export default function TaskForm({ task, onClose, initialDatetime }: TaskFormPro
     if (task) {
       await updateTask(task.id, payload);
     } else {
-      await createTask(payload);
+      const created = await createTask(payload);
+      // 新規作成後、入力済みの中断エントリをセッションとして保存する
+      if (created) {
+        const entries = entriesRef.current.filter(e => e.suspendVal);
+        for (let i = 0; i < entries.length; i++) {
+          const entry = entries[i];
+          const suspendIso = new Date(entry.suspendVal).toISOString();
+          // 中断前セッション: 前の再開時刻（または actual_start）→ 中断時刻
+          const sessionStart = i === 0
+            ? new Date(form.actual_start).toISOString()
+            : new Date(entries[i - 1].resumeVal || entry.suspendVal).toISOString();
+          await createSession(created.id, sessionStart, suspendIso);
+          // 再開後セッション: 再開時刻 → null（open）
+          if (entry.resumeVal) {
+            await createSession(created.id, new Date(entry.resumeVal).toISOString(), null);
+          }
+        }
+      }
     }
 
     setLoading(false);

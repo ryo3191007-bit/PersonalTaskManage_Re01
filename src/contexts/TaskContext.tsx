@@ -11,7 +11,7 @@ interface TaskContextValue {
   sessions: TaskSession[];
   loading: boolean;
   refetch: () => Promise<void>;
-  createTask: (task: Partial<Task>) => Promise<void>;
+  createTask: (task: Partial<Task>) => Promise<Task | null>;
   updateTask: (id: string, task: Partial<Task>) => Promise<void>;
   deleteTask: (id: string) => Promise<void>;
   createCategory: (cat: Partial<TaskCategory>) => Promise<TaskCategory | null>;
@@ -114,8 +114,8 @@ export function TaskProvider({ children }: { children: React.ReactNode }) {
     refetch();
   }, [refetch]);
 
-  const createTask = async (task: Partial<Task>) => {
-    if (!user) return;
+  const createTask = async (task: Partial<Task>): Promise<Task | null> => {
+    if (!user) return null;
     const { data } = await supabase
       .from('tasks')
       .insert({ ...task, user_id: user.id } as Task)
@@ -124,7 +124,9 @@ export function TaskProvider({ children }: { children: React.ReactNode }) {
     if (data) {
       setTasks(prev => [data as Task, ...prev]);
       scheduleNotification(data as Task);
+      return data as Task;
     }
+    return null;
   };
 
   const updateTask = async (id: string, task: Partial<Task>) => {
