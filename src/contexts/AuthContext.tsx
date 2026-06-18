@@ -57,8 +57,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const updateAccount = async (fields: { email?: string; password?: string }) => {
-    const { error } = await supabase.auth.updateUser(fields);
-    return { error };
+    const { data: { session } } = await supabase.auth.getSession();
+    const res = await fetch(
+      `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/update-account`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session?.access_token ?? ''}`,
+        },
+        body: JSON.stringify(fields),
+      }
+    );
+    const json = await res.json();
+    if (!res.ok) return { error: new Error(json.error ?? '更新に失敗しました') };
+    return { error: null };
   };
 
   return (
