@@ -847,7 +847,7 @@ export default function TaskListPage() {
         <div className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 px-4 py-3 mb-3">
           <div className="flex items-center gap-4 flex-wrap">
             <span className="text-xs font-semibold text-gray-500 dark:text-gray-400 whitespace-nowrap">
-              {todayLabel} の使用時間
+              今日の使用時間
             </span>
             <div className="flex items-center gap-1.5">
               <span className="text-[11px] text-gray-400 dark:text-gray-500">使用</span>
