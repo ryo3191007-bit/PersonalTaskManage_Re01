@@ -619,7 +619,7 @@ export default function TaskListPage() {
       }
 
       // 予定未入力フィルタ
-      if (unscheduledOnly && (t.scheduled_start || t.scheduled_end)) return false;
+      if (unscheduledOnly && t.scheduled_start && t.scheduled_end) return false;
 
       return true;
     });
