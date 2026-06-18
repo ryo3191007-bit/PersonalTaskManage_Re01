@@ -217,31 +217,16 @@ function taskGeometry(t: Task, dayDate: Date) {
 
 function assignTimeLanes(
   items: { id: string; startMins: number; endMins: number }[],
-  parentOf: Record<string, string> = {}
+  _parentOf: Record<string, string> = {}
 ): Record<string, { col: number; totalCols: number }> {
-  const depth = (id: string): number => {
-    let d = 0;
-    let cur = id;
-    while (parentOf[cur]) { cur = parentOf[cur]; d++; if (d > 20) break; }
-    return d;
-  };
-  const sorted = [...items].sort((a, b) => {
-    const da = depth(a.id), db = depth(b.id);
-    if (da !== db) return da - db;
-    return a.startMins - b.startMins;
-  });
+  const sorted = [...items].sort((a, b) => a.startMins - b.startMins);
 
   const cols: { endMins: number }[][] = [];
   const colOf: Record<string, number> = {};
 
   for (const item of sorted) {
-    const parentId = parentOf[item.id];
-    const minCol = parentId !== undefined && colOf[parentId] !== undefined
-      ? colOf[parentId] + 1
-      : 0;
-
     let placed = false;
-    for (let c = minCol; c < cols.length; c++) {
+    for (let c = 0; c < cols.length; c++) {
       const lastEnd = cols[c][cols[c].length - 1].endMins;
       if (item.startMins >= lastEnd) {
         cols[c].push({ endMins: item.endMins });
@@ -251,10 +236,8 @@ function assignTimeLanes(
       }
     }
     if (!placed) {
-      const targetCol = Math.max(cols.length, minCol);
-      while (cols.length <= targetCol) cols.push([]);
-      cols[targetCol].push({ endMins: item.endMins });
-      colOf[item.id] = targetCol;
+      cols.push([{ endMins: item.endMins }]);
+      colOf[item.id] = cols.length - 1;
     }
   }
 
