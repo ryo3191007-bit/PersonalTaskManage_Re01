@@ -602,7 +602,14 @@ function DayView({ date, tasks, sessions, onEdit, onCreateAt, onSuspend, onResum
       }
     });
 
-    const representativeSegs = daySegments.filter(seg => !seg.isConnector && seg.sessionIndex <= 0);
+    // タスクIDごとに代表セグメントを1つだけ選ぶ（前日からの継続タスクはsessionIndex>0になるため<=0フィルター不可）
+    const seenForRep = new Set<string>();
+    const representativeSegs = daySegments.filter(seg => {
+      if (seg.isConnector) return false;
+      if (seenForRep.has(seg.taskId)) return false;
+      seenForRep.add(seg.taskId);
+      return true;
+    });
     const items = representativeSegs.map(seg => ({
       id: seg.taskId,
       startMins: taskSpan[seg.taskId]?.startMins ?? 0,
@@ -953,11 +960,16 @@ function WeekView({ weekStart, tasks, sessions, onEdit, onCreateAt, onSuspend, o
         }
       });
 
-      const representativeSegs = segs.filter(seg => !seg.isConnector && seg.sessionIndex <= 0);
+      const seenForRepW = new Set<string>();
+      const representativeSegs = segs.filter(seg => {
+        if (seg.isConnector) return false;
+        if (seenForRepW.has(seg.taskId)) return false;
+        seenForRepW.add(seg.taskId);
+        return true;
+      });
       const taskParentOf: Record<string, string> = {};
       representativeSegs.forEach(seg => { if (seg.task.parent_task_id) taskParentOf[seg.taskId] = seg.task.parent_task_id; });
       const items = representativeSegs
-        .filter((seg, idx, arr) => arr.findIndex(s => s.taskId === seg.taskId) === idx)
         .map(seg => ({
           id: seg.taskId,
           startMins: taskSpan[seg.taskId]?.startMins ?? 0,
