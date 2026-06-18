@@ -1,4 +1,4 @@
-# タスクマネージャー
+﻿# タスクマネージャー
 
 業務の計画・実績を記録・分析する個人向けタスク管理 Web アプリです。
 予定と実績の比較、中断/再開セッションによる正確な実働時間の計測、遅延要因の統計分析など、自己改善を支援する機能を備えています。
@@ -39,7 +39,9 @@
 - 所要時間分析（超過 / 適切 / 短縮の要因ランキング）
 
 ### 設定
+- アカウント情報の変更（メールアドレス / パスワード）
 - カテゴリの作成・編集・削除（カラーピッカー付き）
+- カテゴリの色フィルタ・キーワード検索・一括削除
 - ブラウザ通知の許可設定
 
 ### 認証
@@ -74,7 +76,7 @@
 | ビルドツール | Vite 5 |
 | CSS | Tailwind CSS 3 |
 | アイコン | lucide-react |
-| バックエンド / DB | Supabase（PostgreSQL + Auth） |
+| バックエンド / DB | Supabase（PostgreSQL + Auth + Edge Functions） |
 | クライアント | @supabase/supabase-js v2 |
 
 ---
@@ -120,7 +122,9 @@ project/
 │       └── SettingsPage.tsx
 │
 ├── supabase/
-│   └── migrations/               # SQL マイグレーションファイル
+│   ├── migrations/               # SQL マイグレーションファイル
+│   └── functions/
+│       └── update-account/        # アカウント情報更新用 Edge Function
 │
 ├── .env                          # 環境変数（Git 管理外）
 ├── tailwind.config.js
@@ -143,6 +147,7 @@ VITE_SUPABASE_ANON_KEY=your-anon-key
 |---|---|---|
 | `VITE_SUPABASE_URL` | Supabase プロジェクトの URL | Supabase ダッシュボード > Project Settings > API |
 | `VITE_SUPABASE_ANON_KEY` | Supabase 匿名公開キー | 同上 |
+| `SUPABASE_SERVICE_ROLE_KEY` | `update-account` Edge Function がユーザーのメール/パスワードを更新するために使用するサービスロールキー。フロントエンドの `.env` には置かず、Supabase Functions の Secrets に設定する | Supabase ダッシュボード > Project Settings > API |
 
 ---
 
@@ -198,7 +203,18 @@ cp .env.example .env   # .env.example がない場合は直接 .env を作成
 | 10 | `20260508052021_fix_update_recurrence_groups_updated_at_security.sql` | グループトリガーセキュリティ修正 |
 | 11 | `20260512115920_add_task_sessions_and_suspended_status.sql` | task_sessions テーブル + suspended ステータス |
 
-### 6. 開発サーバーの起動
+### 6. Edge Function のセットアップ
+
+設定画面のアカウント情報変更機能は `supabase/functions/update-account` を使用する。Supabase CLI を使う場合は、Functions の Secrets に `SUPABASE_SERVICE_ROLE_KEY` を設定し、`update-account` をデプロイする。
+
+```bash
+supabase secrets set SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
+supabase functions deploy update-account
+```
+
+> `SUPABASE_SERVICE_ROLE_KEY` は管理権限を持つため、ブラウザに公開される `VITE_` 環境変数として設定しないこと。
+
+### 7. 開発サーバーの起動
 
 ```bash
 npm run dev
@@ -421,6 +437,15 @@ location / {
 
 サイドバーの「**設定**」を開く。
 
+#### アカウント情報の変更
+
+| 操作 | 手順 |
+|---|---|
+| メールアドレス変更 | 「メールアドレス」を編集 → 「保存」を押す |
+| パスワード変更 | 「新しいパスワード」と「パスワード（確認）」に同じ値を入力 → 「保存」を押す |
+
+> パスワードは 6 文字以上。メールアドレス・パスワードとも変更内容がない場合はエラーが表示される。更新処理は `update-account` Edge Function 経由で実行される。
+
 #### タスク分類（カテゴリ）の管理
 
 | 操作 | 手順 |
@@ -428,6 +453,9 @@ location / {
 | 追加 | 分類名を入力 → カラーを選択 → 「追加」ボタンを押す |
 | 編集 | 分類行の鉛筆アイコンをクリック → 名前・カラーを変更 → チェックマークで保存 |
 | 削除 | 分類行のゴミ箱アイコンをクリック（確認なしで即削除） |
+| 検索 | 「分類名で検索」にキーワードを入力して分類一覧を絞り込む |
+| 色フィルタ | 色の丸ボタンをクリックして、同じ色の分類だけを表示する。再クリックまたは × で解除 |
+| 一括削除 | 「一括削除」→ 削除対象をチェック → 「削除する」→ 「確定」を押す |
 
 > 分類名を入力せずに「追加」を押すとエラーメッセージが表示される。追加処理中はボタンが「追加中...」に変わり、完了後に入力欄がクリアされる。
 
@@ -469,6 +497,12 @@ location / {
 - 子タスクを持つ親タスクの所要時間は「子タスクの実績時間合計」で自動算出される。親タスクの実績時間を手動入力しても、子タスクが存在する場合は上書きされる。
 - **全ての子タスクが完了すると親タスクが自動的に完了になる**。子タスクの完了ステータスを取り消しても親タスクの完了は自動では取り消されない。
 
+### アカウント情報変更について
+
+- メールアドレスとパスワードの変更は Supabase Edge Function `update-account` 経由で行われる。
+- Edge Function はログイン中ユーザーのアクセストークンを検証し、サービスロール権限で本人の Auth ユーザー情報を更新する。
+- サービスロールキーは Supabase Functions の Secrets に保存し、フロントエンドへ公開しないこと。
+
 ### データの永続性・安全性について
 
 - データは Supabase（クラウド PostgreSQL）に保存される。ブラウザのキャッシュをクリアしてもデータは消えない。
@@ -494,3 +528,5 @@ location / {
 ## ライセンス
 
 要確認。
+
+
