@@ -511,7 +511,10 @@ export default function TaskListPage() {
     const today = new Date().toISOString().slice(0, 10);
     return { from: today, to: today };
   });
-  const [dateEndFilter, setDateEndFilter] = useState<{ from: string; to: string }>({ from: '', to: '' });
+  const [dateEndFilter, setDateEndFilter] = useState<{ from: string; to: string }>(() => {
+    const today = new Date().toISOString().slice(0, 10);
+    return { from: today, to: today };
+  });
   const [priorityFilter, setPriorityFilter] = useState<TaskPriority | 'all'>('all');
   const [keywordFilter, setKeywordFilter] = useState('');
   const [unscheduledOnly, setUnscheduledOnly] = useState(false);
