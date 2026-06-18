@@ -9,15 +9,104 @@ const PRESET_COLORS = [
   '#ec4899', '#06b6d4', '#f97316', '#14b8a6', '#6366f1',
 ];
 
+// ─── 分類追加ダイアログ ─────────────────────────────────────────────────────────
+function CreateCategoryDialog({
+  onClose,
+  onCreate,
+}: {
+  onClose: () => void;
+  onCreate: (name: string, color: string) => Promise<boolean>;
+}) {
+  const [name, setName] = useState('');
+  const [color, setColor] = useState(PRESET_COLORS[0]);
+  const [error, setError] = useState('');
+  const [saving, setSaving] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+    if (!name.trim()) {
+      setError('分類名を入力してください');
+      return;
+    }
+    setSaving(true);
+    const ok = await onCreate(name.trim(), color);
+    setSaving(false);
+    if (ok) {
+      onClose();
+    } else {
+      setError('保存に失敗しました。再度お試しください。');
+    }
+  };
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
+      <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-xl w-full max-w-sm mx-4 p-6">
+        <div className="flex items-center justify-between mb-5">
+          <h3 className="text-sm font-semibold text-gray-900 dark:text-white">分類を追加</h3>
+          <button
+            onClick={onClose}
+            className="w-7 h-7 flex items-center justify-center rounded-lg text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+          >
+            <X className="w-4 h-4" />
+          </button>
+        </div>
+
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="form-label">分類名</label>
+            <input
+              type="text"
+              value={name}
+              onChange={e => { setName(e.target.value); setError(''); }}
+              placeholder="分類名を入力"
+              className="form-input w-full mt-1"
+              autoFocus
+            />
+            {error && <p className="text-xs text-red-500 dark:text-red-400 mt-1">{error}</p>}
+          </div>
+
+          <div>
+            <label className="form-label">色</label>
+            <div className="flex items-center gap-2 mt-2 flex-wrap">
+              {PRESET_COLORS.map(c => (
+                <button
+                  key={c}
+                  type="button"
+                  onClick={() => setColor(c)}
+                  className={`w-7 h-7 rounded-full flex-shrink-0 transition-transform ${color === c ? 'scale-125 ring-2 ring-offset-2 ring-gray-400 dark:ring-offset-gray-900' : 'hover:scale-110'}`}
+                  style={{ backgroundColor: c }}
+                />
+              ))}
+            </div>
+            <div className="flex items-center gap-2 mt-3">
+              <span className="w-4 h-4 rounded-full flex-shrink-0" style={{ backgroundColor: color }} />
+              <span className="text-xs text-gray-500 dark:text-gray-400">選択中：{color}</span>
+            </div>
+          </div>
+
+          <div className="flex justify-end gap-2 pt-1">
+            <button type="button" onClick={onClose} className="btn-secondary">
+              キャンセル
+            </button>
+            <button type="submit" disabled={saving} className="btn-primary flex items-center gap-1.5">
+              <Plus className="w-3.5 h-3.5" />
+              {saving ? '追加中...' : '追加'}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+}
+
+// ─── メイン ────────────────────────────────────────────────────────────────────
 export default function SettingsPage() {
   const { categories, createCategory, updateCategory, deleteCategory } = useTasks();
   const sortedCategories = useMemo(() => sortCategoriesByColor(categories), [categories]);
 
-  // 新規作成
-  const [newName, setNewName] = useState('');
-  const [newColor, setNewColor] = useState(PRESET_COLORS[0]);
-  const [createError, setCreateError] = useState('');
-  const [creating, setCreating] = useState(false);
+  // ダイアログ
+  const [showCreateDialog, setShowCreateDialog] = useState(false);
 
   // 編集
   const [editId, setEditId] = useState<string | null>(null);
@@ -47,26 +136,9 @@ export default function SettingsPage() {
     });
   }, [sortedCategories, colorFilter, keyword]);
 
-  const handleCreate = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setCreateError('');
-    if (!newName.trim()) {
-      setCreateError('分類名を入力してください');
-      return;
-    }
-    setCreating(true);
-    try {
-      const result = await createCategory({ name: newName.trim(), color: newColor });
-      if (!result) {
-        setCreateError('保存に失敗しました。再度お試しください。');
-      } else {
-        setNewName('');
-      }
-    } catch {
-      setCreateError('保存に失敗しました。再度お試しください。');
-    } finally {
-      setCreating(false);
-    }
+  const handleCreate = async (name: string, color: string): Promise<boolean> => {
+    const result = await createCategory({ name, color });
+    return result !== null;
   };
 
   const startEdit = (cat: TaskCategory) => {
@@ -118,37 +190,6 @@ export default function SettingsPage() {
         <section className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-6">
           <h2 className="text-sm font-semibold text-gray-900 dark:text-white mb-4">タスク分類の管理</h2>
 
-          {/* 新規作成フォーム */}
-          <form onSubmit={handleCreate} className="mb-5 space-y-2">
-            <div className="flex items-center gap-2">
-              <input
-                type="text"
-                value={newName}
-                onChange={e => { setNewName(e.target.value); setCreateError(''); }}
-                placeholder="分類名を入力"
-                className="form-input flex-1"
-              />
-              <div className="flex gap-1">
-                {PRESET_COLORS.map(c => (
-                  <button
-                    key={c}
-                    type="button"
-                    onClick={() => setNewColor(c)}
-                    className={`w-5 h-5 rounded-full flex-shrink-0 transition-transform ${newColor === c ? 'scale-125 ring-2 ring-offset-1 ring-gray-400' : ''}`}
-                    style={{ backgroundColor: c }}
-                  />
-                ))}
-              </div>
-              <button type="submit" disabled={creating} className="btn-primary flex items-center gap-1.5 flex-shrink-0">
-                <Plus className="w-3.5 h-3.5" />
-                {creating ? '追加中...' : '追加'}
-              </button>
-            </div>
-            {createError && (
-              <p className="text-xs text-red-500 dark:text-red-400">{createError}</p>
-            )}
-          </form>
-
           {/* フィルタ行 */}
           <div className="flex items-center gap-3 mb-3 flex-wrap">
             {/* 色フィルタ */}
@@ -160,7 +201,7 @@ export default function SettingsPage() {
                   type="button"
                   onClick={() => setColorFilter(prev => prev === c ? null : c)}
                   title={c}
-                  className={`w-5 h-5 rounded-full flex-shrink-0 transition-transform ${colorFilter === c ? 'scale-125 ring-2 ring-offset-1 ring-gray-400' : 'opacity-60 hover:opacity-100'}`}
+                  className={`w-5 h-5 rounded-full flex-shrink-0 transition-transform ${colorFilter === c ? 'scale-125 ring-2 ring-offset-1 ring-gray-400 dark:ring-offset-gray-900' : 'opacity-60 hover:opacity-100'}`}
                   style={{ backgroundColor: c }}
                 />
               ))}
@@ -193,8 +234,18 @@ export default function SettingsPage() {
             </div>
           </div>
 
-          {/* 一括削除コントロール */}
-          <div className="flex items-center justify-end mb-2 min-h-[32px]">
+          {/* ボタン行（追加 + 一括削除） */}
+          <div className="flex items-center justify-end gap-2 mb-3 min-h-[32px]">
+            {!isSelecting && (
+              <button
+                type="button"
+                onClick={() => setShowCreateDialog(true)}
+                className="btn-primary flex items-center gap-1.5 text-xs py-1"
+              >
+                <Plus className="w-3.5 h-3.5" />追加
+              </button>
+            )}
+
             {!isSelecting ? (
               <button
                 type="button"
@@ -354,6 +405,13 @@ export default function SettingsPage() {
           )}
         </section>
       </div>
+
+      {showCreateDialog && (
+        <CreateCategoryDialog
+          onClose={() => setShowCreateDialog(false)}
+          onCreate={handleCreate}
+        />
+      )}
     </div>
   );
 }
