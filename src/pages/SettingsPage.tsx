@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react';
-import { Plus, Trash2, CreditCard as Edit2, Check, X, Bell, BellOff, Search } from 'lucide-react';
+import { Plus, Trash2, CreditCard as Edit2, Check, X, Bell, BellOff, Search, User, Mail, Lock, Eye, EyeOff } from 'lucide-react';
 import { useTasks } from '../contexts/TaskContext';
+import { useAuth } from '../contexts/AuthContext';
 import type { TaskCategory } from '../lib/types';
 import { sortCategoriesByColor } from '../lib/utils';
 
@@ -99,6 +100,7 @@ function CreateCategoryDialog({
 // ─── メイン ────────────────────────────────────────────────────────────────────
 export default function SettingsPage() {
   const { categories, createCategory, updateCategory, deleteCategory } = useTasks();
+  const { user, updateAccount } = useAuth();
   const sortedCategories = useMemo(() => sortCategoriesByColor(categories), [categories]);
 
   // ダイアログ
@@ -123,6 +125,52 @@ export default function SettingsPage() {
     'Notification' in window ? Notification.permission : null
   );
   const [notifMessage, setNotifMessage] = useState<{ type: 'error' | 'info'; text: string } | null>(null);
+
+  // アカウント情報変更
+  const [emailValue, setEmailValue] = useState(user?.email ?? '');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [showNewPass, setShowNewPass] = useState(false);
+  const [showConfirmPass, setShowConfirmPass] = useState(false);
+  const [accountSaving, setAccountSaving] = useState(false);
+  const [accountMessage, setAccountMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+
+  const handleAccountSave = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setAccountMessage(null);
+
+    const emailChanged = emailValue.trim() !== (user?.email ?? '');
+    const passwordChanged = newPassword.length > 0;
+
+    if (!emailChanged && !passwordChanged) {
+      setAccountMessage({ type: 'error', text: '変更内容がありません' });
+      return;
+    }
+    if (passwordChanged && newPassword.length < 6) {
+      setAccountMessage({ type: 'error', text: 'パスワードは6文字以上で入力してください' });
+      return;
+    }
+    if (passwordChanged && newPassword !== confirmPassword) {
+      setAccountMessage({ type: 'error', text: '新しいパスワードと確認用パスワードが一致しません' });
+      return;
+    }
+
+    setAccountSaving(true);
+    const fields: { email?: string; password?: string } = {};
+    if (emailChanged) fields.email = emailValue.trim();
+    if (passwordChanged) fields.password = newPassword;
+
+    const { error } = await updateAccount(fields);
+    setAccountSaving(false);
+
+    if (error) {
+      setAccountMessage({ type: 'error', text: `更新に失敗しました：${error.message}` });
+    } else {
+      setNewPassword('');
+      setConfirmPassword('');
+      setAccountMessage({ type: 'success', text: 'アカウント情報を更新しました' });
+    }
+  };
 
   const filteredCategories = useMemo(() => {
     return sortedCategories.filter(cat => {
@@ -183,6 +231,92 @@ export default function SettingsPage() {
   return (
     <div className="flex-1 overflow-auto">
       <div className="max-w-2xl mx-auto px-6 py-6 space-y-8">
+
+        {/* ─── アカウント情報 ─────────────────────────────────────── */}
+        <section className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-6">
+          <div className="flex items-center gap-2 mb-5">
+            <User className="w-4 h-4 text-gray-400" />
+            <h2 className="text-sm font-semibold text-gray-900 dark:text-white">アカウント情報</h2>
+          </div>
+
+          <form onSubmit={handleAccountSave} className="space-y-5">
+            {/* メールアドレス */}
+            <div>
+              <label className="form-label flex items-center gap-1.5">
+                <Mail className="w-3.5 h-3.5 text-gray-400" />メールアドレス
+              </label>
+              <input
+                type="email"
+                value={emailValue}
+                onChange={e => { setEmailValue(e.target.value); setAccountMessage(null); }}
+                className="form-input w-full mt-1"
+              />
+            </div>
+
+            {/* 新しいパスワード */}
+            <div>
+              <label className="form-label flex items-center gap-1.5">
+                <Lock className="w-3.5 h-3.5 text-gray-400" />新しいパスワード
+              </label>
+              <div className="relative mt-1">
+                <input
+                  type={showNewPass ? 'text' : 'password'}
+                  value={newPassword}
+                  onChange={e => { setNewPassword(e.target.value); setAccountMessage(null); }}
+                  placeholder="変更する場合のみ入力"
+                  className="form-input w-full pr-9"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowNewPass(v => !v)}
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                >
+                  {showNewPass ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                </button>
+              </div>
+            </div>
+
+            {/* パスワード確認 */}
+            <div>
+              <label className="form-label flex items-center gap-1.5">
+                <Lock className="w-3.5 h-3.5 text-gray-400" />パスワード（確認）
+              </label>
+              <div className="relative mt-1">
+                <input
+                  type={showConfirmPass ? 'text' : 'password'}
+                  value={confirmPassword}
+                  onChange={e => { setConfirmPassword(e.target.value); setAccountMessage(null); }}
+                  placeholder="新しいパスワードを再入力"
+                  className="form-input w-full pr-9"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowConfirmPass(v => !v)}
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                >
+                  {showConfirmPass ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                </button>
+              </div>
+            </div>
+
+            {/* メッセージ */}
+            {accountMessage && (
+              <div className={`flex items-start gap-2 rounded-xl px-4 py-3 text-xs leading-relaxed ${accountMessage.type === 'success' ? 'bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300' : 'bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300'}`}>
+                <span className="flex-1">{accountMessage.text}</span>
+                <button type="button" onClick={() => setAccountMessage(null)} className="flex-shrink-0 text-current opacity-60 hover:opacity-100 transition-opacity">
+                  <X className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            )}
+
+            <div className="flex justify-end">
+              <button type="submit" disabled={accountSaving} className="btn-primary flex items-center gap-1.5">
+                <Check className="w-3.5 h-3.5" />
+                {accountSaving ? '保存中...' : '保存'}
+              </button>
+            </div>
+          </form>
+        </section>
         <section className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-6">
           <h2 className="text-sm font-semibold text-gray-900 dark:text-white mb-4">タスク分類の管理</h2>
 
