@@ -5,7 +5,7 @@ import type { Task, TaskSession } from '../lib/types';
 import { STATUS_COLORS, STATUS_LABELS } from '../lib/types';
 import TaskForm from '../components/tasks/TaskForm';
 import RecurrenceForm from '../components/tasks/RecurrenceForm';
-import { getTotalMinutes, getWorkloadMinsForDay, getWorkloadTaskList } from '../lib/utils';
+import { getWorkloadMinsForDay, getWorkloadTaskList } from '../lib/utils';
 import { useWorkHours } from '../lib/useWorkHours';
 
 type CalView = 'day' | 'week' | 'month';
@@ -186,38 +186,8 @@ function getScheduledGeometry(t: Task, dayDate: Date): {
   };
 }
 
-function taskGeometry(t: Task, dayDate: Date) {
-  const thisDay = toDay(dayDate);
-  const { displayStart, displayEnd } = getDisplayTimes(t);
-  const start = new Date(displayStart);
-  const startDay = toDay(start);
-
-  const startMins = startDay < thisDay
-    ? 0
-    : start.getHours() * 60 + start.getMinutes();
-
-  let endMins: number;
-  if (displayEnd) {
-    const end = new Date(displayEnd);
-    const endDay = toDay(end);
-    if (endDay > thisDay) {
-      endMins = 24 * 60;
-    } else {
-      endMins = end.getHours() * 60 + end.getMinutes();
-      if (endMins <= startMins) endMins = startMins + 30;
-    }
-  } else {
-    endMins = startMins + 60;
-  }
-
-  const top = (startMins / 60) * HOUR_H;
-  const height = Math.max(((endMins - startMins) / 60) * HOUR_H, 20);
-  return { top, height };
-}
-
 function assignTimeLanes(
-  items: { id: string; startMins: number; endMins: number }[],
-  _parentOf: Record<string, string> = {}
+  items: { id: string; startMins: number; endMins: number }[]
 ): Record<string, { col: number; totalCols: number }> {
   const sorted = [...items].sort((a, b) => a.startMins - b.startMins);
 
@@ -286,6 +256,8 @@ interface TaskSegment {
    * false/undefined = 実際の作業帯（実線）
    */
   isConnector?: boolean;
+  /** 月ビュー用の集約表示。未指定時は従来どおり通常セグメントとして扱う。 */
+  isContainer?: boolean;
 }
 
 function buildTaskSegments(task: Task, sessions: TaskSession[]): TaskSegment[] {
@@ -598,9 +570,7 @@ function DayView({ date, tasks, sessions, onEdit, onCreateAt, onSuspend, onResum
       endMins: taskSpan[seg.taskId]?.endMins ?? 60,
     }));
     const uniqueItems = items.filter((item, idx) => items.findIndex(i => i.id === item.id) === idx);
-    const taskParentOf: Record<string, string> = {};
-    representativeSegs.forEach(seg => { if (seg.task.parent_task_id) taskParentOf[seg.taskId] = seg.task.parent_task_id; });
-    const laneResult = assignTimeLanes(uniqueItems, taskParentOf);
+    const laneResult = assignTimeLanes(uniqueItems);
 
     // 全セグメントにタスクIDベースのレーンを割り当て
     const result: Record<string, { col: number; totalCols: number }> = {};
@@ -949,15 +919,13 @@ function WeekView({ weekStart, tasks, sessions, onEdit, onCreateAt, onSuspend, o
         seenForRepW.add(seg.taskId);
         return true;
       });
-      const taskParentOf: Record<string, string> = {};
-      representativeSegs.forEach(seg => { if (seg.task.parent_task_id) taskParentOf[seg.taskId] = seg.task.parent_task_id; });
       const items = representativeSegs
         .map(seg => ({
           id: seg.taskId,
           startMins: taskSpan[seg.taskId]?.startMins ?? 0,
           endMins: taskSpan[seg.taskId]?.endMins ?? 60,
         }));
-      const laneResult = assignTimeLanes(items, taskParentOf);
+      const laneResult = assignTimeLanes(items);
 
       const result: Record<string, { col: number; totalCols: number }> = {};
       segs.forEach(seg => {
@@ -1097,7 +1065,11 @@ function WeekView({ weekStart, tasks, sessions, onEdit, onCreateAt, onSuspend, o
                       return (
                         <div key={seg.segmentKey} className="contents">
                           <button
-                            onClick={e => { e.stopPropagation(); hasChildren ? toggleExpand(seg.task.id) : onEdit(seg.task); }}
+                            onClick={e => {
+                              e.stopPropagation();
+                              if (hasChildren) toggleExpand(seg.task.id);
+                              else onEdit(seg.task);
+                            }}
                             onDoubleClick={e => { e.stopPropagation(); if (hasChildren) onEdit(seg.task); }}
                             title={`${seg.task.title}${seg.isSuspended ? ' [中断中]' : seg.isResumed ? ' [再開]' : ''}`}
                             className="absolute rounded border-l-2 px-1.5 text-left overflow-hidden hover:opacity-80 transition-opacity group"
@@ -1293,7 +1265,11 @@ function MonthViewWrapper({ viewDate, tasks, sessions, onEdit, onCreateAt, onDel
                     return (
                       <button
                         key={t.id}
-                        onClick={e => { e.stopPropagation(); hasChildren ? toggleExpand(t.id) : onEdit(t); }}
+                        onClick={e => {
+                          e.stopPropagation();
+                          if (hasChildren) toggleExpand(t.id);
+                          else onEdit(t);
+                        }}
                         onDoubleClick={e => { e.stopPropagation(); if (hasChildren) onEdit(t); }}
                         title={t.title}
                         className="absolute truncate text-[11px] font-medium px-1.5 rounded border-l-2 hover:opacity-80 transition-opacity text-left pointer-events-auto"
@@ -1350,7 +1326,11 @@ function MonthViewWrapper({ viewDate, tasks, sessions, onEdit, onCreateAt, onDel
                           if (seg.isContainer) {
                             return (
                               <button key={seg.segmentKey}
-                                onClick={e => { e.stopPropagation(); hasChildren ? toggleExpand(seg.task.id) : onEdit(seg.task); }}
+                                onClick={e => {
+                                  e.stopPropagation();
+                                  if (hasChildren) toggleExpand(seg.task.id);
+                                  else onEdit(seg.task);
+                                }}
                                 onDoubleClick={e => { e.stopPropagation(); if (hasChildren) onEdit(seg.task); }}
                                 title={seg.task.title}
                                 className="w-full text-left px-1.5 py-0.5 rounded text-[11px] truncate border-dashed border flex items-center gap-0.5"
@@ -1364,7 +1344,11 @@ function MonthViewWrapper({ viewDate, tasks, sessions, onEdit, onCreateAt, onDel
                           if (seg.isContainer === false) return null;
                           return (
                             <button key={seg.segmentKey}
-                              onClick={e => { e.stopPropagation(); hasChildren ? toggleExpand(seg.task.id) : onEdit(seg.task); }}
+                              onClick={e => {
+                                e.stopPropagation();
+                                if (hasChildren) toggleExpand(seg.task.id);
+                                else onEdit(seg.task);
+                              }}
                               onDoubleClick={e => { e.stopPropagation(); if (hasChildren) onEdit(seg.task); }}
                               className="relative w-full text-left px-1.5 py-0.5 rounded text-[11px] truncate font-medium hover:opacity-80 transition-opacity border-l-2 flex items-center gap-0.5 group"
                               style={{ backgroundColor: s.bg, color: s.color, borderColor: s.border }}>

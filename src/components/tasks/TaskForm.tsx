@@ -36,6 +36,7 @@ const defaultForm = {
   actual_memo: '',
   actual_start: '',
   actual_end: '',
+  track_actual: true,
   start_delay_factor: '',
   start_early_factor: '',
   duration_over_factor: '',
@@ -293,7 +294,7 @@ interface FormErrors {
 interface ActualsSectionProps {
   task: import('../../lib/types').Task | null | undefined;
   form: typeof defaultForm;
-  set: (key: string, val: unknown) => void;
+  set: <K extends keyof typeof defaultForm>(key: K, val: (typeof defaultForm)[K]) => void;
   childrenActualTimeMins?: number | null;
   onEntriesChange?: (entries: SuspendEntry[]) => void;
   errors?: FormErrors;
@@ -301,7 +302,7 @@ interface ActualsSectionProps {
 }
 
 function ActualsSection({ task, form, set, childrenActualTimeMins, onEntriesChange, errors, onClearError }: ActualsSectionProps) {
-  const { sessions, createSession } = useTasks();
+  const { sessions } = useTasks();
   const taskSessions = task ? sessions.filter(s => s.task_id === task.id) : [];
 
   const [entries, setEntries] = useState<SuspendEntry[]>(() =>
@@ -688,7 +689,7 @@ export default function TaskForm({ task, onClose, initialDatetime }: TaskFormPro
       payload.suspended_at = lastSuspendVal ? new Date(lastSuspendVal).toISOString() : null;
     } else {
       // 中断解除時は suspended_at をクリア
-      if (form.status !== 'suspended') payload.suspended_at = null;
+      payload.suspended_at = null;
     }
 
     if (form.title.trim()) saveTitleHistory(form.title.trim());

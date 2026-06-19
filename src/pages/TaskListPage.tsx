@@ -674,7 +674,6 @@ export default function TaskListPage() {
     d.setHours(0, 0, 0, 0);
     return d;
   }, []);
-  const todayLabel = `${todayDate.getMonth() + 1}/${todayDate.getDate()}`;
   const todayUsedHours = useMemo(() => {
     const parentTasks = getWorkloadTaskList(tasks);
     const totalMins = parentTasks.reduce((sum, t) => sum + getWorkloadMinsForDay(t, todayDate, sessions), 0);
@@ -753,8 +752,7 @@ export default function TaskListPage() {
     }
 
     const update: Partial<Task> = { status: next };
-    if (next === 'completed') update.completed_at = new Date().toISOString();
-    else if (next !== 'completed') update.completed_at = null;
+    update.completed_at = null;
     if (next === 'suspended') update.suspended_at = new Date().toISOString();
     else update.suspended_at = null;
     updateTask(task.id, update);
@@ -1051,7 +1049,8 @@ export default function TaskListPage() {
                 isSelected={selectedIds.has(task.id)}
                 onToggleSelect={id => setSelectedIds(prev => {
                   const next = new Set(prev);
-                  next.has(id) ? next.delete(id) : next.add(id);
+                  if (next.has(id)) next.delete(id);
+                  else next.add(id);
                   return next;
                 })}
               />

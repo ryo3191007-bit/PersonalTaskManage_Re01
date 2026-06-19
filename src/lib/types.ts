@@ -71,25 +71,71 @@ export interface TaskSession {
   created_at: string;
 }
 
+type DatabaseRecord<T> = { [K in keyof T]: T[K] };
+
 export type Database = {
   public: {
     Tables: {
       tasks: {
-        Row: Task;
-        Insert: Omit<Task, 'id' | 'created_at' | 'updated_at' | 'category' | 'children' | 'sessions'>;
-        Update: Partial<Omit<Task, 'id' | 'created_at' | 'updated_at' | 'category' | 'children' | 'sessions'>>;
+        Row: DatabaseRecord<Task>;
+        Insert: DatabaseRecord<Partial<Omit<Task, 'id' | 'created_at' | 'updated_at' | 'category' | 'children' | 'sessions'>> & Pick<Task, 'user_id' | 'title'>>;
+        Update: DatabaseRecord<Partial<Omit<Task, 'id' | 'created_at' | 'updated_at' | 'category' | 'children' | 'sessions'>>>;
+        Relationships: [
+          {
+            foreignKeyName: 'tasks_category_id_fkey';
+            columns: ['category_id'];
+            referencedRelation: 'task_categories';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'tasks_parent_task_id_fkey';
+            columns: ['parent_task_id'];
+            referencedRelation: 'tasks';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'tasks_recurrence_group_id_fkey';
+            columns: ['recurrence_group_id'];
+            referencedRelation: 'recurrence_groups';
+            referencedColumns: ['id'];
+          },
+        ];
       };
       task_categories: {
-        Row: TaskCategory;
-        Insert: Omit<TaskCategory, 'id' | 'created_at'>;
-        Update: Partial<Omit<TaskCategory, 'id' | 'created_at'>>;
+        Row: DatabaseRecord<TaskCategory>;
+        Insert: DatabaseRecord<Partial<Omit<TaskCategory, 'id' | 'created_at'>> & Pick<TaskCategory, 'user_id' | 'name'>>;
+        Update: DatabaseRecord<Partial<Omit<TaskCategory, 'id' | 'created_at'>>>;
+        Relationships: [];
       };
       task_sessions: {
-        Row: TaskSession;
-        Insert: Omit<TaskSession, 'id' | 'created_at'>;
-        Update: Partial<Omit<TaskSession, 'id' | 'created_at'>>;
+        Row: DatabaseRecord<TaskSession>;
+        Insert: DatabaseRecord<Partial<Omit<TaskSession, 'id' | 'created_at'>> & Pick<TaskSession, 'task_id' | 'user_id' | 'session_start'>>;
+        Update: DatabaseRecord<Partial<Omit<TaskSession, 'id' | 'created_at'>>>;
+        Relationships: [
+          {
+            foreignKeyName: 'task_sessions_task_id_fkey';
+            columns: ['task_id'];
+            referencedRelation: 'tasks';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      recurrence_groups: {
+        Row: DatabaseRecord<RecurrenceGroup>;
+        Insert: DatabaseRecord<Partial<Omit<RecurrenceGroup, 'id' | 'created_at' | 'updated_at' | 'category'>> & Pick<RecurrenceGroup, 'user_id' | 'title'>>;
+        Update: DatabaseRecord<Partial<Omit<RecurrenceGroup, 'id' | 'created_at' | 'updated_at' | 'category'>>>;
+        Relationships: [
+          {
+            foreignKeyName: 'recurrence_groups_category_id_fkey';
+            columns: ['category_id'];
+            referencedRelation: 'task_categories';
+            referencedColumns: ['id'];
+          },
+        ];
       };
     };
+    Views: { [_ in never]: never };
+    Functions: { [_ in never]: never };
   };
 };
 
