@@ -32,7 +32,7 @@ interface TaskContextValue {
 const TaskContext = createContext<TaskContextValue>({
   tasks: [], categories: [], recurrenceGroups: [], sessions: [], loading: false,
   refetch: async () => {},
-  createTask: async () => {},
+  createTask: async () => null,
   updateTask: async () => {},
   deleteTask: async () => {},
   createCategory: async () => null,
