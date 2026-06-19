@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import { ChevronLeft, ChevronDown } from 'lucide-react';
 import { useTasks } from '../contexts/TaskContext';
 import type { Task, TaskCategory } from '../lib/types';
-import { getWorkloadMinsForDay, getWorkloadTaskList } from '../lib/utils';
+import { getTotalMinutes, getWorkloadMinsForDay, getWorkloadTaskList } from '../lib/utils';
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -14,6 +14,38 @@ function getEffectiveMins(t: Task): number {
     return Math.max(0, diff / 60000);
   }
   return 0;
+}
+
+/**
+ * 指定日に配分する予定工数（分）を返す。
+ * 予定工数の総量は quantity × time_per_unit とし、日をまたぐ場合は
+ * scheduled_start〜scheduled_end の各日への重なり時間に応じて按分する。
+ */
+function getPlannedMinsForDay(t: Task, dayDate: Date): number {
+  if (!t.scheduled_start) return 0;
+
+  const totalPlannedMins = getTotalMinutes(t);
+  if (!Number.isFinite(totalPlannedMins) || totalPlannedMins <= 0) return 0;
+
+  const scheduledStart = new Date(t.scheduled_start);
+  if (Number.isNaN(scheduledStart.getTime())) return 0;
+
+  const dayStart = new Date(dayDate.getFullYear(), dayDate.getMonth(), dayDate.getDate());
+  const dayEnd = new Date(dayStart.getTime() + 24 * 60 * 60 * 1000);
+  const scheduledEnd = t.scheduled_end ? new Date(t.scheduled_end) : null;
+
+  // 終了日時がない、または開始以前の場合は開始日に予定工数の全量を計上する。
+  if (!scheduledEnd || Number.isNaN(scheduledEnd.getTime()) || scheduledEnd <= scheduledStart) {
+    return scheduledStart >= dayStart && scheduledStart < dayEnd ? totalPlannedMins : 0;
+  }
+
+  const clippedStart = scheduledStart < dayStart ? dayStart : scheduledStart;
+  const clippedEnd = scheduledEnd > dayEnd ? dayEnd : scheduledEnd;
+  if (clippedEnd <= clippedStart) return 0;
+
+  const totalRangeMins = (scheduledEnd.getTime() - scheduledStart.getTime()) / 60000;
+  const overlapMins = (clippedEnd.getTime() - clippedStart.getTime()) / 60000;
+  return totalPlannedMins * (overlapMins / totalRangeMins);
 }
 
 // ── Primitive charts ──────────────────────────────────────────────────────────
@@ -580,20 +612,18 @@ export default function AnalyticsPage() {
     const actual = new Map<string, number>(months.map(m => [m, 0]));
 
     for (const t of workloadTasks) {
-      if (t.scheduled_start && t.scheduled_end) {
+      if (t.scheduled_start) {
         const ps = new Date(t.scheduled_start);
-        const pe = new Date(t.scheduled_end);
-        if (ps < rangeEnd && pe > rangeStart) {
+        const rawEnd = t.scheduled_end ? new Date(t.scheduled_end) : null;
+        const pe = rawEnd && !Number.isNaN(rawEnd.getTime()) && rawEnd > ps ? rawEnd : ps;
+        if (ps < rangeEnd && pe >= rangeStart) {
           const loopStart = new Date(ps.getFullYear(), ps.getMonth(), ps.getDate());
           const loopEndDay = new Date(pe.getFullYear(), pe.getMonth(), pe.getDate() + 1);
           for (let d = new Date(loopStart); d < loopEndDay; d.setDate(d.getDate() + 1)) {
-            const dayStart = new Date(d);
-            const dayEnd = new Date(d.getTime() + 24 * 60 * 60 * 1000);
-            const cs = ps < dayStart ? dayStart : ps;
-            const ce = pe > dayEnd ? dayEnd : pe;
-            if (ce > cs) {
+            const mins = getPlannedMinsForDay(t, d);
+            if (mins > 0) {
               const mk = `${d.getFullYear()}/${String(d.getMonth() + 1).padStart(2, '0')}`;
-              if (planned.has(mk)) planned.set(mk, (planned.get(mk) ?? 0) + (ce.getTime() - cs.getTime()) / 60000);
+              if (planned.has(mk)) planned.set(mk, (planned.get(mk) ?? 0) + mins);
             }
           }
         }
@@ -641,21 +671,13 @@ export default function AnalyticsPage() {
 
     return Array.from({ length: daysInMonth }, (_, i) => {
       const dayDate = new Date(year, month - 1, i + 1);
-      const dayStart = dayDate;
-      const dayEnd = new Date(dayDate.getTime() + 24 * 60 * 60 * 1000);
 
       let plannedMins = 0;
       let actualMins = 0;
 
       for (const t of workloadTasks) {
+        plannedMins += getPlannedMinsForDay(t, dayDate);
         if (!t.scheduled_start || !t.scheduled_end) continue;
-        const ps = new Date(t.scheduled_start);
-        const pe = new Date(t.scheduled_end);
-        if (ps < dayEnd && pe > dayStart) {
-          const cs = ps < dayStart ? dayStart : ps;
-          const ce = pe > dayEnd ? dayEnd : pe;
-          if (ce > cs) plannedMins += (ce.getTime() - cs.getTime()) / 60000;
-        }
         const taskSessions = sessionsByTask.get(t.id) ?? [];
         actualMins += getWorkloadMinsForDay(t, dayDate, taskSessions);
       }
