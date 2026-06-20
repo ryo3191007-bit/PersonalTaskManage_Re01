@@ -336,8 +336,8 @@ function CalSuspendDialog({ task, onClose, onSave }: { task: Task; onClose: () =
     return `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}T${pad(now.getHours())}:${pad(now.getMinutes())}`;
   });
   return (
-    <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-      <div className="w-full max-w-sm bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 p-6 space-y-4">
+    <div className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center bg-black/50 backdrop-blur-sm p-2 sm:p-4">
+      <div className="w-full max-w-sm max-h-[calc(100dvh-1rem)] overflow-y-auto bg-white dark:bg-gray-900 rounded-t-2xl sm:rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 p-4 sm:p-6 space-y-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <PauseCircle className="w-4 h-4 text-amber-500" />
@@ -375,8 +375,8 @@ function CalResumeDialog({ task, onClose, onSave }: { task: Task; onClose: () =>
   const fmt = (mins: number) => mins < 60 ? `${mins}分` : `${Math.floor(mins / 60)}時間${mins % 60 > 0 ? `${mins % 60}分` : ''}`;
 
   return (
-    <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-      <div className="w-full max-w-sm bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 p-6 space-y-4">
+    <div className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center bg-black/50 backdrop-blur-sm p-2 sm:p-4">
+      <div className="w-full max-w-sm max-h-[calc(100dvh-1rem)] overflow-y-auto bg-white dark:bg-gray-900 rounded-t-2xl sm:rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 p-4 sm:p-6 space-y-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <PlayCircle className="w-4 h-4 text-blue-500" />
@@ -420,8 +420,8 @@ function CalCompleteDialog({ task, onClose, onSave }: {
   const [memo, setMemo] = useState(task.actual_memo ?? '');
 
   return (
-    <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-      <div className="w-full max-w-sm bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 p-6 space-y-4">
+    <div className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center bg-black/50 backdrop-blur-sm p-2 sm:p-4">
+      <div className="w-full max-w-sm max-h-[calc(100dvh-1rem)] overflow-y-auto bg-white dark:bg-gray-900 rounded-t-2xl sm:rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 p-4 sm:p-6 space-y-4">
         <div className="flex items-center justify-between">
           <h3 className="text-sm font-semibold text-gray-900 dark:text-white">タスクを完了</h3>
           <button onClick={onClose} className="w-7 h-7 flex items-center justify-center rounded-lg text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"><X className="w-4 h-4" /></button>
@@ -1461,10 +1461,10 @@ function UnscheduledPanel({ tasks, onEdit, onDelete }: {
                     )}
                   </div>
                 </div>
-                <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0">
+                <div className="flex items-center gap-1 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity flex-shrink-0">
                   <button
                     onClick={() => onEdit(t)}
-                    className="w-7 h-7 flex items-center justify-center rounded-lg text-gray-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/30 transition-colors"
+                    className="w-10 h-10 md:w-7 md:h-7 flex items-center justify-center rounded-lg text-gray-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/30 transition-colors"
                     title="編集して予定日時を設定"
                   >
                     <Edit2 className="w-3.5 h-3.5" />
@@ -1475,7 +1475,7 @@ function UnscheduledPanel({ tasks, onEdit, onDelete }: {
                       else setDeletingId(t.id);
                     }}
                     onBlur={() => setDeletingId(null)}
-                    className={`w-7 h-7 flex items-center justify-center rounded-lg transition-colors ${
+                    className={`w-10 h-10 md:w-7 md:h-7 flex items-center justify-center rounded-lg transition-colors ${
                       deletingId === t.id
                         ? 'bg-red-500 text-white'
                         : 'text-gray-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/30'
@@ -1565,36 +1565,36 @@ export default function CalendarPage() {
 
   return (
     <div className="flex-1 overflow-auto">
-      <div className="max-w-6xl mx-auto px-6 py-6">
-        <div className="flex items-center justify-between mb-6 flex-wrap gap-3">
-          <div className="flex items-center gap-3">
-            <button onClick={() => navigate(-1)} className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+      <div className="max-w-6xl mx-auto px-3 py-3 sm:px-6 sm:py-6">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3 sm:mb-6 gap-3">
+          <div className="flex items-center justify-between sm:justify-start gap-2 sm:gap-3 w-full sm:w-auto">
+            <button onClick={() => navigate(-1)} className="w-11 h-11 sm:w-8 sm:h-8 flex items-center justify-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
               <ChevronLeft className="w-4 h-4 text-gray-600 dark:text-gray-400" />
             </button>
             <h2 className="text-sm font-semibold text-gray-900 dark:text-white">{headerLabel()}</h2>
-            <button onClick={() => navigate(1)} className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+            <button onClick={() => navigate(1)} className="w-11 h-11 sm:w-8 sm:h-8 flex items-center justify-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
               <ChevronRight className="w-4 h-4 text-gray-600 dark:text-gray-400" />
             </button>
             <button onClick={() => setViewDate(new Date())} className="text-xs text-blue-600 hover:underline flex-shrink-0">今日</button>
           </div>
-          <div className="flex items-center gap-2 flex-wrap">
-            <div className="flex items-center gap-1.5 mr-1">
+          <div className="grid grid-cols-2 sm:flex sm:items-center gap-2 w-full sm:w-auto">
+            <div className="hidden lg:flex items-center gap-1.5 mr-1">
               {Object.entries(STATUS_LABELS).map(([key, label]) => (
                 <span key={key} className={`text-xs px-2 py-0.5 rounded-full font-medium ${STATUS_COLORS[key as keyof typeof STATUS_COLORS]}`}>
                   {label}
                 </span>
               ))}
             </div>
-            <button onClick={() => setShowRecurrenceForm(true)} className="btn-primary flex items-center gap-1.5 bg-teal-600 hover:bg-teal-700">
+            <button onClick={() => setShowRecurrenceForm(true)} className="btn-primary flex items-center justify-center gap-1.5 bg-teal-600 hover:bg-teal-700">
               <Plus className="w-3.5 h-3.5" />新規定常タスク
             </button>
-            <button onClick={() => { setEditingTask(null); setNewTaskDatetime(undefined); }} className="btn-primary flex items-center gap-1.5">
+            <button onClick={() => { setEditingTask(null); setNewTaskDatetime(undefined); }} className="btn-primary flex items-center justify-center gap-1.5">
               <Plus className="w-3.5 h-3.5" />新規タスク
             </button>
-            <div className="flex items-center gap-1 bg-gray-100 dark:bg-gray-800 rounded-lg p-1">
+            <div className="col-span-2 flex items-center gap-1 bg-gray-100 dark:bg-gray-800 rounded-lg p-1">
               {(['day', 'week', 'month'] as CalView[]).map(v => (
                 <button key={v} onClick={() => setView(v)}
-                  className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all ${view === v ? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm' : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'}`}>
+                  className={`flex-1 sm:flex-none min-h-10 px-3 py-1.5 text-xs font-medium rounded-md transition-all ${view === v ? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm' : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'}`}>
                   {v === 'day' ? '日' : v === 'week' ? '週' : '月'}
                 </button>
               ))}
@@ -1611,19 +1611,27 @@ export default function CalendarPage() {
           />
         )}
         {view === 'week' && (
+          <div className="-mx-3 overflow-x-auto px-3 sm:mx-0 sm:px-0">
+          <div className="min-w-[720px]">
           <WeekView
             weekStart={weekStart} tasks={tasks} sessions={sessions}
             onEdit={setEditingTask} onCreateAt={handleCreateAt}
             onSuspend={setSuspendDialog} onResume={setResumeDialog}
             onDelete={deleteTask}
           />
+          </div>
+          </div>
         )}
         {view === 'month' && (
+          <div className="-mx-3 overflow-x-auto px-3 sm:mx-0 sm:px-0">
+          <div className="min-w-[640px]">
           <MonthViewWrapper
             viewDate={viewDate} tasks={tasks} sessions={sessions}
             onEdit={setEditingTask} onCreateAt={handleCreateAt}
             onDelete={deleteTask}
           />
+          </div>
+          </div>
         )}
 
         <UnscheduledPanel

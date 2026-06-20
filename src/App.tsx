@@ -40,14 +40,14 @@ function AppShell() {
 
   return (
     <TaskProvider>
-      <div className="flex h-screen bg-gray-50 dark:bg-gray-950 overflow-hidden">
+      <div className="flex h-dvh bg-gray-50 dark:bg-gray-950 overflow-hidden">
         <Sidebar
           currentPage={page}
           onNavigate={p => setPage(p as Page)}
           collapsed={sidebarCollapsed}
           onToggleCollapse={() => setSidebarCollapsed(c => !c)}
         />
-        <div className="flex-1 flex flex-col min-w-0">
+        <div className="flex-1 flex flex-col min-w-0 pb-[calc(4rem+env(safe-area-inset-bottom))] md:pb-0">
           <Header currentPage={page} />
           {renderPage()}
         </div>

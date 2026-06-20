@@ -96,7 +96,6 @@ export interface TextExportFields {
   status: boolean;
   timeRange: boolean;
   duration: boolean;
-  startFactor: boolean;
   durationFactor: boolean;
   remarks: boolean;
   actualMemo: boolean;
@@ -107,7 +106,6 @@ export const DEFAULT_TEXT_EXPORT_FIELDS: TextExportFields = {
   status: true,
   timeRange: false,
   duration: true,
-  startFactor: false,
   durationFactor: false,
   remarks: true,
   actualMemo: true,
@@ -196,11 +194,6 @@ export function exportTodayTasksAsText(tasks: Task[], dateStr: string, fields: T
       })();
       const plannedMins = t.quantity * t.time_per_unit;
       lines.push(`  所要時間      : ${formatMins(actualMins)}（予定: ${formatMins(plannedMins)}）`);
-    }
-
-    if (fields.startFactor) {
-      const startFactorLabel = t.start_delay_factor ? `遅延: ${t.start_delay_factor}` : t.start_early_factor ? `前倒し: ${t.start_early_factor}` : null;
-      lines.push(`  前倒し/遅延要因: ${startFactorLabel ?? '—'}`);
     }
 
     if (fields.durationFactor) {

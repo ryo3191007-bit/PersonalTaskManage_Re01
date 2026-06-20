@@ -41,8 +41,8 @@ function CreateCategoryDialog({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
-      <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-xl w-full max-w-sm mx-4 p-6">
+    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/40 backdrop-blur-sm p-2 sm:p-4">
+      <div className="bg-white dark:bg-gray-900 rounded-t-2xl sm:rounded-2xl border border-gray-200 dark:border-gray-700 shadow-xl w-full max-w-sm max-h-[calc(100dvh-1rem)] overflow-y-auto p-4 sm:p-6">
         <div className="flex items-center justify-between mb-5">
           <h3 className="text-sm font-semibold text-gray-900 dark:text-white">分類を追加</h3>
           <button
@@ -231,10 +231,10 @@ export default function SettingsPage() {
 
   return (
     <div className="flex-1 overflow-auto">
-      <div className="max-w-2xl mx-auto px-6 py-6 space-y-8">
+      <div className="max-w-2xl mx-auto px-3 py-3 sm:px-6 sm:py-6 space-y-4 sm:space-y-8">
 
         {/* ─── アカウント情報 ─────────────────────────────────────── */}
-        <section className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-6">
+        <section className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-4 sm:p-6">
           <div className="flex items-center gap-2 mb-5">
             <User className="w-4 h-4 text-gray-400" />
             <h2 className="text-sm font-semibold text-gray-900 dark:text-white">アカウント情報</h2>
@@ -310,21 +310,21 @@ export default function SettingsPage() {
               </div>
             )}
 
-            <div className="flex justify-end">
-              <button type="submit" disabled={accountSaving} className="btn-primary flex items-center gap-1.5">
+            <div className="flex justify-stretch sm:justify-end">
+              <button type="submit" disabled={accountSaving} className="btn-primary w-full sm:w-auto flex items-center justify-center gap-1.5">
                 <Check className="w-3.5 h-3.5" />
                 {accountSaving ? '保存中...' : '保存'}
               </button>
             </div>
           </form>
         </section>
-        <section className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-6">
+        <section className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-4 sm:p-6">
           <h2 className="text-sm font-semibold text-gray-900 dark:text-white mb-4">タスク分類の管理</h2>
 
           {/* フィルタ行 */}
           <div className="flex items-center gap-3 mb-3 flex-wrap">
             {/* 色フィルタ */}
-            <div className="flex items-center gap-1.5">
+            <div className="flex flex-wrap items-center gap-1.5">
               <span className="text-xs text-gray-500 dark:text-gray-400 whitespace-nowrap">色：</span>
               {PRESET_COLORS.map(c => (
                 <button
@@ -332,7 +332,7 @@ export default function SettingsPage() {
                   type="button"
                   onClick={() => setColorFilter(prev => prev === c ? null : c)}
                   title={c}
-                  className={`w-5 h-5 rounded-full flex-shrink-0 transition-transform ${colorFilter === c ? 'scale-125 ring-2 ring-offset-1 ring-gray-400 dark:ring-offset-gray-900' : 'opacity-60 hover:opacity-100'}`}
+                  className={`w-7 h-7 sm:w-5 sm:h-5 rounded-full flex-shrink-0 transition-transform ${colorFilter === c ? 'scale-110 ring-2 ring-offset-1 ring-gray-400 dark:ring-offset-gray-900' : 'opacity-70 hover:opacity-100'}`}
                   style={{ backgroundColor: c }}
                 />
               ))}
@@ -366,7 +366,7 @@ export default function SettingsPage() {
           </div>
 
           {/* ボタン行（追加 + 一括削除） */}
-          <div className="flex items-center justify-end gap-2 mb-3 min-h-[32px]">
+          <div className="flex flex-wrap items-center justify-end gap-2 mb-3 min-h-[44px]">
             {!isSelecting && (
               <button
                 type="button"
@@ -492,7 +492,7 @@ export default function SettingsPage() {
           </div>
         </section>
 
-        <section className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-6">
+        <section className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-4 sm:p-6">
           <h2 className="text-sm font-semibold text-gray-900 dark:text-white mb-2">ブラウザ通知</h2>
           <p className="text-xs text-gray-500 dark:text-gray-400 mb-4">
             タスクの開始・終了予定時刻にブラウザ通知を受け取ります。

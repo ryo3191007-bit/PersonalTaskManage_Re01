@@ -153,23 +153,6 @@ export const STATUS_COLORS: Record<TaskStatus, string> = {
   completed: 'bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300',
 };
 
-export const START_DELAY_FACTORS = [
-  '前タスクの遅延',
-  '準備不足',
-  '予期しない割り込み',
-  '体調不良',
-  '情報収集に時間がかかった',
-  'その他',
-] as const;
-
-export const START_EARLY_FACTORS = [
-  '前タスクの早期完了',
-  '準備が整った',
-  '空き時間ができた',
-  'モチベーション向上',
-  'その他',
-] as const;
-
 export const DURATION_OVER_FACTORS = [
   '作業範囲の拡大',
   '予期しない問題の発生',

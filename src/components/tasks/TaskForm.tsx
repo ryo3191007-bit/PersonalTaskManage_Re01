@@ -3,7 +3,6 @@ import { X, Plus, Check, ChevronDown, Search, History, Trash2 } from 'lucide-rea
 import { loadTitleHistory, saveTitleHistory } from './titleHistory';
 import type { Task, TaskStatus, TaskPriority } from '../../lib/types';
 import {
-  START_DELAY_FACTORS, START_EARLY_FACTORS,
   DURATION_OVER_FACTORS, DURATION_SHORT_FACTORS,
 } from '../../lib/types';
 import { useTasks } from '../../contexts/TaskContext';
@@ -37,8 +36,6 @@ const defaultForm = {
   actual_start: '',
   actual_end: '',
   track_actual: true,
-  start_delay_factor: '',
-  start_early_factor: '',
   duration_over_factor: '',
   duration_short_factor: '',
 };
@@ -68,8 +65,8 @@ function CategoryDialog({ onClose, onCreate }: {
   };
 
   return (
-    <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-      <div className="w-full max-w-sm bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 p-6 space-y-4">
+    <div className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center bg-black/50 backdrop-blur-sm p-2 sm:p-4">
+      <div className="w-full max-w-sm max-h-[calc(100dvh-1rem)] overflow-y-auto bg-white dark:bg-gray-900 rounded-t-2xl sm:rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 p-4 sm:p-6 space-y-4">
         <div className="flex items-center justify-between">
           <h3 className="text-sm font-semibold text-gray-900 dark:text-white">新しい分類を追加</h3>
           <button onClick={onClose} className="w-7 h-7 flex items-center justify-center rounded-lg text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
@@ -363,11 +360,6 @@ function ActualsSection({ task, form, set, childrenActualTimeMins, onEntriesChan
     updateEntries(prev => [...prev, newEntry]);
   };
 
-  const scheduledStart = form.scheduled_start ? new Date(form.scheduled_start) : null;
-  const actualStartDate = form.actual_start ? new Date(form.actual_start) : null;
-  const isStartLate = !!(scheduledStart && actualStartDate && actualStartDate > scheduledStart);
-  const isStartEarly = !!(scheduledStart && actualStartDate && actualStartDate < scheduledStart);
-
   const plannedMins = form.scheduled_start && form.scheduled_end
     ? Math.round((new Date(form.scheduled_end).getTime() - new Date(form.scheduled_start).getTime()) / 60000)
     : null;
@@ -392,25 +384,6 @@ function ActualsSection({ task, form, set, childrenActualTimeMins, onEntriesChan
             <p className="mt-1 text-xs text-red-500">{errors.actual_start}</p>
           )}
         </div>
-
-        {isStartLate && (
-          <div>
-            <label className="form-label">遅延要因</label>
-            <select value={form.start_delay_factor} onChange={e => set('start_delay_factor', e.target.value)} className="form-input">
-              <option value="">選択してください</option>
-              {START_DELAY_FACTORS.map(f => <option key={f} value={f}>{f}</option>)}
-            </select>
-          </div>
-        )}
-        {isStartEarly && (
-          <div>
-            <label className="form-label">前倒し要因</label>
-            <select value={form.start_early_factor} onChange={e => set('start_early_factor', e.target.value)} className="form-input">
-              <option value="">選択してください</option>
-              {START_EARLY_FACTORS.map(f => <option key={f} value={f}>{f}</option>)}
-            </select>
-          </div>
-        )}
 
         {showSuspendArea && (
           <>
@@ -575,8 +548,6 @@ export default function TaskForm({ task, onClose, initialDatetime }: TaskFormPro
         actual_memo: task.actual_memo,
         actual_start: toLocalDatetimeValue(task.actual_start ?? null) || (task.status === 'not_started' ? scheduledStart : ''),
         actual_end: toLocalDatetimeValue(task.actual_end ?? null) || (task.status === 'not_started' ? scheduledEnd : ''),
-        start_delay_factor: task.start_delay_factor ?? '',
-        start_early_factor: task.start_early_factor ?? '',
         duration_over_factor: task.duration_over_factor ?? '',
         duration_short_factor: task.duration_short_factor ?? '',
       });
@@ -670,8 +641,6 @@ export default function TaskForm({ task, onClose, initialDatetime }: TaskFormPro
       actual_memo: form.actual_memo,
       actual_start: form.actual_start ? new Date(form.actual_start).toISOString() : null,
       actual_end: form.actual_end ? new Date(form.actual_end).toISOString() : null,
-      start_delay_factor: form.start_delay_factor || null,
-      start_early_factor: form.start_early_factor || null,
       duration_over_factor: form.duration_over_factor || null,
       duration_short_factor: form.duration_short_factor || null,
     };
@@ -750,18 +719,18 @@ export default function TaskForm({ task, onClose, initialDatetime }: TaskFormPro
 
   return (
     <>
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
-        <div className="w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700">
-          <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-gray-700 sticky top-0 bg-white dark:bg-gray-900 z-10">
+      <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/40 backdrop-blur-sm p-0 sm:p-4">
+        <div className="w-full max-w-2xl h-[100dvh] sm:h-auto max-h-[100dvh] sm:max-h-[90vh] overflow-y-auto bg-white dark:bg-gray-900 rounded-none sm:rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700">
+          <div className="flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4 border-b border-gray-200 dark:border-gray-700 sticky top-0 bg-white dark:bg-gray-900 z-10">
             <h2 className="text-base font-semibold text-gray-900 dark:text-white">
               {task ? 'タスクを編集' : '新規タスク'}
             </h2>
-            <button onClick={onClose} className="w-8 h-8 flex items-center justify-center rounded-lg text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+            <button onClick={onClose} className="w-11 h-11 sm:w-8 sm:h-8 flex items-center justify-center rounded-lg text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
               <X className="w-4 h-4" />
             </button>
           </div>
 
-          <form onSubmit={handleSubmit} className="p-6 space-y-4">
+          <form onSubmit={handleSubmit} className="p-4 sm:p-6 space-y-4 pb-[calc(1rem+env(safe-area-inset-bottom))]">
             {/* タスク名 */}
             <div ref={titleRef}>
               <label className="form-label">タスク名 <span className="text-red-500">*</span></label>
@@ -819,7 +788,7 @@ export default function TaskForm({ task, onClose, initialDatetime }: TaskFormPro
             </div>
 
             {/* 分類 / ステータス / 親タスク — 3列 */}
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <div>
                 <label className="form-label">分類</label>
                 <select value={form.category_id} onChange={e => handleCategoryChange(e.target.value)} className="form-input">
@@ -959,7 +928,7 @@ export default function TaskForm({ task, onClose, initialDatetime }: TaskFormPro
             {/* 予定日時 */}
             <div>
               <span className="form-label mb-2 block">予定日時</span>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <span className="text-xs text-gray-500 dark:text-gray-400 font-medium block mb-1">開始</span>
                   <input
@@ -1016,7 +985,7 @@ export default function TaskForm({ task, onClose, initialDatetime }: TaskFormPro
             {/* 実績エリア：進行中以上で表示 */}
             {showActuals && <ActualsSection task={task} form={form} set={set} childrenActualTimeMins={childrenActualTimeMins} onEntriesChange={e => { entriesRef.current = e; }} errors={formErrors} onClearError={key => setFormErrors(prev => { const next = { ...prev }; delete next[key]; return next; })} />}
 
-            <div className="flex gap-3 justify-end pt-2">
+            <div className="grid grid-cols-2 gap-3 sm:flex sm:justify-end pt-2">
               <button type="button" onClick={onClose} className="btn-secondary">キャンセル</button>
               <button type="submit" disabled={loading} className="btn-primary">
                 {loading ? '保存中...' : task ? '更新する' : '作成する'}

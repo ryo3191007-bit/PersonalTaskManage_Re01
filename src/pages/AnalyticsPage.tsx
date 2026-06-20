@@ -208,7 +208,7 @@ function BarChart({ data, maxVal, color }: { data: { label: string; value: numbe
         const barColor = d.color ?? color;
         return (
         <div key={d.label} className="flex items-center gap-3">
-          <div className="w-28 flex-shrink-0 flex items-center gap-1.5">
+          <div className="w-20 sm:w-28 flex-shrink-0 flex items-center gap-1.5">
             <span className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ backgroundColor: barColor }} />
             <span className="text-xs text-gray-500 dark:text-gray-400 truncate">{d.label}</span>
           </div>
@@ -247,7 +247,7 @@ function CategoryTimeBarChart({ data }: { data: { label: string; value: number; 
         const label = hours > 0 ? (mins > 0 ? `${hours}h${mins}m` : `${hours}h`) : `${mins}m`;
         return (
           <div key={d.label} className="flex items-center gap-3 group">
-            <div className="w-32 flex-shrink-0 flex items-center gap-1.5">
+            <div className="w-24 sm:w-32 flex-shrink-0 flex items-center gap-1.5">
               <span className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ backgroundColor: d.color }} />
               <span className="text-xs text-gray-600 dark:text-gray-400 truncate">{d.label}</span>
             </div>
@@ -261,7 +261,7 @@ function CategoryTimeBarChart({ data }: { data: { label: string; value: number; 
                 )}
               </div>
             </div>
-            <div className="flex items-center gap-1.5 w-20 flex-shrink-0 justify-end">
+            <div className="flex items-center gap-1.5 w-14 sm:w-20 flex-shrink-0 justify-end">
               {pct <= 20 && d.value > 0 && (
                 <span className="text-xs text-gray-600 dark:text-gray-400 tabular-nums font-medium">{label}</span>
               )}
@@ -284,17 +284,12 @@ function CategoryTimeBarChart({ data }: { data: { label: string; value: number; 
 
 // ── Data helpers ──────────────────────────────────────────────────────────────
 
-interface CategoryFactorRow {
+interface CategoryDurationFactorRow {
   category: TaskCategory | null;
   total: number;
-  delayCount: number;
-  earlyCount: number;
-  onTimeCount: number;
   overCount: number;
   shortCount: number;
   matchCount: number;
-  topDelayFactor: string | null;
-  topEarlyFactor: string | null;
   topOverFactor: string | null;
   topShortFactor: string | null;
 }
@@ -306,28 +301,22 @@ function topFactor(factors: string[]): string | null {
   return [...counts.entries()].sort((a, b) => b[1] - a[1])[0][0];
 }
 
-function buildCategoryFactorRows(analysisTasks: Task[], categories: TaskCategory[]): CategoryFactorRow[] {
-  type Acc = Omit<CategoryFactorRow, 'category'> & {
-    delayFactors: string[];
-    earlyFactors: string[];
+function buildCategoryDurationFactorRows(analysisTasks: Task[], categories: TaskCategory[]): CategoryDurationFactorRow[] {
+  type Acc = Omit<CategoryDurationFactorRow, 'category'> & {
     overFactors: string[];
     shortFactors: string[];
   };
   const map = new Map<string | null, Acc>();
   const blankAcc = (): Acc => ({
-    total: 0, delayCount: 0, earlyCount: 0, onTimeCount: 0,
-    overCount: 0, shortCount: 0, matchCount: 0,
-    topDelayFactor: null, topEarlyFactor: null, topOverFactor: null, topShortFactor: null,
-    delayFactors: [], earlyFactors: [], overFactors: [], shortFactors: [],
+    total: 0, overCount: 0, shortCount: 0, matchCount: 0,
+    topOverFactor: null, topShortFactor: null,
+    overFactors: [], shortFactors: [],
   });
   for (const t of analysisTasks) {
     const key = t.category_id ?? null;
     if (!map.has(key)) map.set(key, blankAcc());
     const acc = map.get(key)!;
     acc.total++;
-    if (t.start_delay_factor) { acc.delayCount++; acc.delayFactors.push(t.start_delay_factor); }
-    else if (t.start_early_factor) { acc.earlyCount++; acc.earlyFactors.push(t.start_early_factor); }
-    else if (t.actual_start) acc.onTimeCount++;
     if (t.duration_over_factor) { acc.overCount++; acc.overFactors.push(t.duration_over_factor); }
     else if (t.duration_short_factor) { acc.shortCount++; acc.shortFactors.push(t.duration_short_factor); }
     else if (t.actual_start && t.actual_end) acc.matchCount++;
@@ -337,10 +326,7 @@ function buildCategoryFactorRows(analysisTasks: Task[], categories: TaskCategory
     .map(([key, acc]) => ({
       category: key ? (catMap.get(key) ?? null) : null,
       total: acc.total,
-      delayCount: acc.delayCount, earlyCount: acc.earlyCount, onTimeCount: acc.onTimeCount,
       overCount: acc.overCount, shortCount: acc.shortCount, matchCount: acc.matchCount,
-      topDelayFactor: topFactor(acc.delayFactors),
-      topEarlyFactor: topFactor(acc.earlyFactors),
       topOverFactor: topFactor(acc.overFactors),
       topShortFactor: topFactor(acc.shortFactors),
     }))
@@ -351,7 +337,7 @@ function buildCategoryFactorRows(analysisTasks: Task[], categories: TaskCategory
 
 function SectionCard({ title, subtitle, children }: { title: string; subtitle?: string; children: React.ReactNode }) {
   return (
-    <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-6">
+    <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-4 sm:p-6">
       <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-0.5">{title}</h3>
       {subtitle && <p className="text-xs text-gray-400 dark:text-gray-500 mb-4">{subtitle}</p>}
       {!subtitle && <div className="mb-4" />}
@@ -369,66 +355,7 @@ function FactorBadge({ factor, color }: { factor: string | null; color: string }
   );
 }
 
-function StartFactorTable({ rows }: { rows: CategoryFactorRow[] }) {
-  if (rows.every(r => r.delayCount + r.earlyCount + r.onTimeCount === 0)) {
-    return <p className="text-sm text-gray-400 dark:text-gray-500">実績データがありません</p>;
-  }
-  return (
-    <div className="overflow-x-auto">
-      <table className="w-full text-xs">
-        <thead>
-          <tr className="border-b border-gray-100 dark:border-gray-800">
-            <th className="text-left pb-2 pr-3 font-medium text-gray-500 dark:text-gray-400">分類</th>
-            <th className="text-right pb-2 px-2 font-medium text-gray-500 dark:text-gray-400 whitespace-nowrap">完了数</th>
-            <th className="pb-2 px-2 font-medium text-gray-500 dark:text-gray-400 min-w-[140px]">開始タイミング</th>
-            <th className="text-left pb-2 px-2 font-medium text-orange-500 dark:text-orange-400 whitespace-nowrap">遅延 主因</th>
-            <th className="text-left pb-2 pl-2 font-medium text-teal-600 dark:text-teal-400 whitespace-nowrap">前倒し 主因</th>
-          </tr>
-        </thead>
-        <tbody className="divide-y divide-gray-50 dark:divide-gray-800">
-          {rows.map((row, i) => {
-            const startTotal = row.delayCount + row.earlyCount + row.onTimeCount;
-            return (
-              <tr key={i} className="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
-                <td className="py-2.5 pr-3">
-                  <div className="flex items-center gap-1.5">
-                    {row.category ? (
-                      <>
-                        <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: row.category.color }} />
-                        <span className="text-gray-700 dark:text-gray-300 truncate max-w-[80px]">{row.category.name}</span>
-                      </>
-                    ) : (
-                      <span className="text-gray-400 dark:text-gray-500">分類なし</span>
-                    )}
-                  </div>
-                </td>
-                <td className="py-2.5 px-2 text-right text-gray-600 dark:text-gray-400 font-medium">{row.total}</td>
-                <td className="py-2.5 px-2">
-                  <StackedBar total={startTotal} segments={[
-                    { label: '遅延', value: row.delayCount, color: '#f97316' },
-                    { label: '定刻', value: row.onTimeCount, color: '#22c55e' },
-                    { label: '前倒し', value: row.earlyCount, color: '#0d9488' },
-                  ]} />
-                  {startTotal > 0 && (
-                    <div className="flex gap-2 mt-1 text-[10px] text-gray-400">
-                      {row.delayCount > 0 && <span className="text-orange-500">遅延{row.delayCount}</span>}
-                      {row.onTimeCount > 0 && <span className="text-green-600">定刻{row.onTimeCount}</span>}
-                      {row.earlyCount > 0 && <span className="text-teal-600">前倒{row.earlyCount}</span>}
-                    </div>
-                  )}
-                </td>
-                <td className="py-2.5 px-2"><FactorBadge factor={row.topDelayFactor} color="#f97316" /></td>
-                <td className="py-2.5 pl-2"><FactorBadge factor={row.topEarlyFactor} color="#0d9488" /></td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-    </div>
-  );
-}
-
-function DurationFactorTable({ rows }: { rows: CategoryFactorRow[] }) {
+function DurationFactorTable({ rows }: { rows: CategoryDurationFactorRow[] }) {
   if (rows.every(r => r.overCount + r.shortCount + r.matchCount === 0)) {
     return <p className="text-sm text-gray-400 dark:text-gray-500">実績データがありません</p>;
   }
@@ -510,7 +437,7 @@ function FactorRanking({ factors, color }: { factors: string[]; color: string })
 
 // ── Main page ─────────────────────────────────────────────────────────────────
 
-type TabId = 'overview' | 'start' | 'duration';
+type TabId = 'overview' | 'duration';
 
 function getMonthKey(dateStr: string | null | undefined): string | null {
   if (!dateStr) return null;
@@ -710,13 +637,11 @@ export default function AnalyticsPage() {
     { label: '完了', value: periodFilteredAnalysisTasks.length, color: '#22c55e' },
   ], [periodFilteredTrackTasks, periodFilteredAnalysisTasks]);
 
-  const categoryFactorRows = useMemo(() =>
-    buildCategoryFactorRows(periodFilteredAnalysisTasks, categories),
+  const categoryDurationFactorRows = useMemo(() =>
+    buildCategoryDurationFactorRows(periodFilteredAnalysisTasks, categories),
     [periodFilteredAnalysisTasks, categories]
   );
 
-  const allDelayFactors = useMemo(() => periodFilteredAnalysisTasks.flatMap(t => t.start_delay_factor ? [t.start_delay_factor] : []), [periodFilteredAnalysisTasks]);
-  const allEarlyFactors = useMemo(() => periodFilteredAnalysisTasks.flatMap(t => t.start_early_factor ? [t.start_early_factor] : []), [periodFilteredAnalysisTasks]);
   const allOverFactors = useMemo(() => periodFilteredAnalysisTasks.flatMap(t => t.duration_over_factor ? [t.duration_over_factor] : []), [periodFilteredAnalysisTasks]);
   const allShortFactors = useMemo(() => periodFilteredAnalysisTasks.flatMap(t => t.duration_short_factor ? [t.duration_short_factor] : []), [periodFilteredAnalysisTasks]);
 
@@ -751,16 +676,15 @@ export default function AnalyticsPage() {
 
   const tabs: { id: TabId; label: string }[] = [
     { id: 'overview', label: '概要' },
-    { id: 'start', label: '開始タイミング分析' },
     { id: 'duration', label: '所要時間分析' },
   ];
 
   return (
     <div className="flex-1 overflow-auto">
-      <div className="max-w-5xl mx-auto px-6 py-6 space-y-6">
+      <div className="max-w-5xl mx-auto px-3 py-3 sm:px-6 sm:py-6 space-y-4 sm:space-y-6">
 
         {/* 期間フィルター */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
           <span className="text-sm font-medium text-gray-600 dark:text-gray-400 flex-shrink-0">表示期間</span>
           <div className="relative">
             <select
@@ -783,12 +707,12 @@ export default function AnalyticsPage() {
         </div>
 
         {/* KPI cards */}
-        <div className="flex gap-4">
+        <div className="grid grid-cols-2 gap-3 sm:flex sm:gap-4">
           {[
             { label: '完了率', value: `${completionRate}%`, sub: '' },
             { label: '総実績時間', value: `${totalActualHours}h`, sub: '' },
           ].map(stat => (
-            <div key={stat.label} className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-5 min-w-[140px]">
+            <div key={stat.label} className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-4 sm:p-5 sm:min-w-[140px]">
               <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">{stat.label}</p>
               <p className="text-2xl font-bold text-gray-900 dark:text-white">{stat.value}</p>
               <p className="text-[10px] text-gray-400 dark:text-gray-500 mt-0.5">{stat.sub}</p>
@@ -797,12 +721,12 @@ export default function AnalyticsPage() {
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-1 bg-gray-100 dark:bg-gray-800 rounded-xl p-1 w-fit">
+        <div className="flex gap-1 bg-gray-100 dark:bg-gray-800 rounded-xl p-1 w-full sm:w-fit">
           {tabs.map(t => (
             <button
               key={t.id}
               onClick={() => setTab(t.id)}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+              className={`flex-1 sm:flex-none min-h-11 px-3 sm:px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                 tab === t.id
                   ? 'bg-white dark:bg-gray-900 text-gray-900 dark:text-white shadow-sm'
                   : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
@@ -815,8 +739,8 @@ export default function AnalyticsPage() {
 
         {/* Overview tab */}
         {tab === 'overview' && (
-          <div className="space-y-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="space-y-4 sm:space-y-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
               <SectionCard title="ステータス分布">
                 <DonutChart segments={statusData} />
               </SectionCard>
@@ -887,30 +811,13 @@ export default function AnalyticsPage() {
           </div>
         )}
 
-        {/* Start timing tab */}
-        {tab === 'start' && (
-          <div className="space-y-6">
-            <SectionCard title="開始タイミング × 分類" subtitle="予定開始に対して遅延・定刻・前倒しの内訳と主要因">
-              <StartFactorTable rows={categoryFactorRows} />
-            </SectionCard>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <SectionCard title="遅延要因 ランキング" subtitle="全分類合算 TOP5">
-                <FactorRanking factors={allDelayFactors} color="#f97316" />
-              </SectionCard>
-              <SectionCard title="前倒し要因 ランキング" subtitle="全分類合算 TOP5">
-                <FactorRanking factors={allEarlyFactors} color="#0d9488" />
-              </SectionCard>
-            </div>
-          </div>
-        )}
-
         {/* Duration tab */}
         {tab === 'duration' && (
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             <SectionCard title="所要時間 × 分類" subtitle="予定所要時間に対して超過・一致・短縮の内訳と主要因">
-              <DurationFactorTable rows={categoryFactorRows} />
+              <DurationFactorTable rows={categoryDurationFactorRows} />
             </SectionCard>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
               <SectionCard title="見積超過要因 ランキング" subtitle="全分類合算 TOP5">
                 <FactorRanking factors={allOverFactors} color="#ef4444" />
               </SectionCard>
