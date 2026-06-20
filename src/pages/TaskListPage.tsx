@@ -5,7 +5,6 @@ import type { Task, TaskStatus, TaskPriority } from '../lib/types';
 import RecurrenceForm from '../components/tasks/RecurrenceForm';
 import {
   PRIORITY_ORDER,
-  START_DELAY_FACTORS, START_EARLY_FACTORS,
   DURATION_OVER_FACTORS, DURATION_SHORT_FACTORS,
 } from '../lib/types';
 import TaskCard from '../components/tasks/TaskCard';
@@ -32,22 +31,13 @@ function nowDatetime() {
 function StartDialog({ task, onClose, onSave }: {
   task: Task;
   onClose: () => void;
-  onSave: (actualStart: string, factor: string) => void;
+  onSave: (actualStart: string) => void;
 }) {
   const [value, setValue] = useState(() => nowDatetime());
-  const [factor, setFactor] = useState('');
-
-  const scheduledStart = task.scheduled_start ? new Date(task.scheduled_start) : null;
-  const actualStart = value ? new Date(value) : null;
-  const isLate = scheduledStart && actualStart && actualStart > scheduledStart;
-  const isEarly = scheduledStart && actualStart && actualStart < scheduledStart;
-
-  const factorOptions = isLate ? START_DELAY_FACTORS : isEarly ? START_EARLY_FACTORS : null;
-  const factorLabel = isLate ? '遅延要因' : isEarly ? '前倒し要因' : null;
 
   return (
-    <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-      <div className="w-full max-w-sm bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 p-6 space-y-4">
+    <div className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center bg-black/50 backdrop-blur-sm p-2 sm:p-4">
+      <div className="w-full max-w-sm max-h-[calc(100dvh-1rem)] overflow-y-auto bg-white dark:bg-gray-900 rounded-t-2xl sm:rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 p-4 sm:p-6 space-y-4">
         <div className="flex items-center justify-between">
           <h3 className="text-sm font-semibold text-gray-900 dark:text-white">開始実績時間を入力</h3>
           <button onClick={onClose} className="w-7 h-7 flex items-center justify-center rounded-lg text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
@@ -57,20 +47,11 @@ function StartDialog({ task, onClose, onSave }: {
         <p className="text-xs text-gray-500 dark:text-gray-400 truncate">{task.title}</p>
         <div>
           <label className="form-label">開始実績日時</label>
-          <input type="datetime-local" value={value} onChange={e => { setValue(e.target.value); setFactor(''); }} className="form-input" />
+          <input type="datetime-local" value={value} onChange={e => setValue(e.target.value)} className="form-input" />
         </div>
-        {factorOptions && (
-          <div>
-            <label className="form-label">{factorLabel}</label>
-            <select value={factor} onChange={e => setFactor(e.target.value)} className="form-input">
-              <option value="">選択してください</option>
-              {factorOptions.map(f => <option key={f} value={f}>{f}</option>)}
-            </select>
-          </div>
-        )}
         <div className="flex gap-2 justify-end">
           <button onClick={onClose} className="btn-secondary">キャンセル</button>
-          <button onClick={() => value && onSave(new Date(value).toISOString(), factor)} disabled={!value} className="btn-primary flex items-center gap-1.5">
+          <button onClick={() => value && onSave(new Date(value).toISOString())} disabled={!value} className="btn-primary flex items-center gap-1.5">
             <Check className="w-3.5 h-3.5" />OK
           </button>
         </div>
@@ -104,8 +85,8 @@ function EndDialog({ task, onClose, onSave }: {
   const factorLabel = isOver ? '見積超過要因' : isShort ? '見積短縮要因' : null;
 
   return (
-    <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-      <div className="w-full max-w-sm bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 p-6 space-y-4">
+    <div className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center bg-black/50 backdrop-blur-sm p-2 sm:p-4">
+      <div className="w-full max-w-sm max-h-[calc(100dvh-1rem)] overflow-y-auto bg-white dark:bg-gray-900 rounded-t-2xl sm:rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 p-4 sm:p-6 space-y-4">
         <div className="flex items-center justify-between">
           <h3 className="text-sm font-semibold text-gray-900 dark:text-white">終了実績時間を入力</h3>
           <button onClick={onClose} className="w-7 h-7 flex items-center justify-center rounded-lg text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
@@ -145,18 +126,12 @@ function EndDialog({ task, onClose, onSave }: {
 function FullActualDialog({ task, onClose, onSave }: {
   task: Task;
   onClose: () => void;
-  onSave: (actualStart: string, actualEnd: string, memo: string, startFactor: string, durationFactor: string) => void;
+  onSave: (actualStart: string, actualEnd: string, memo: string, durationFactor: string) => void;
 }) {
   const [startVal, setStartVal] = useState(() => toLocalInput(task.scheduled_start) || nowDatetime());
   const [endVal, setEndVal] = useState(() => toLocalInput(task.scheduled_end) || nowDatetime());
   const [memo, setMemo] = useState('');
-  const [startFactor, setStartFactor] = useState('');
   const [durationFactor, setDurationFactor] = useState('');
-
-  const scheduledStart = task.scheduled_start ? new Date(task.scheduled_start) : null;
-  const actualStart = startVal ? new Date(startVal) : null;
-  const isStartLate = scheduledStart && actualStart && actualStart > scheduledStart;
-  const isStartEarly = scheduledStart && actualStart && actualStart < scheduledStart;
 
   const plannedMins = task.scheduled_start && task.scheduled_end
     ? Math.round((new Date(task.scheduled_end).getTime() - new Date(task.scheduled_start).getTime()) / 60000)
@@ -167,14 +142,12 @@ function FullActualDialog({ task, onClose, onSave }: {
   const isDurationOver = plannedMins !== null && actualMins !== null && actualMins > plannedMins;
   const isDurationShort = plannedMins !== null && actualMins !== null && actualMins < plannedMins;
 
-  const startFactorOptions = isStartLate ? START_DELAY_FACTORS : isStartEarly ? START_EARLY_FACTORS : null;
-  const startFactorLabel = isStartLate ? '遅延要因' : isStartEarly ? '前倒し要因' : null;
   const durationFactorOptions = isDurationOver ? DURATION_OVER_FACTORS : isDurationShort ? DURATION_SHORT_FACTORS : null;
   const durationFactorLabel = isDurationOver ? '見積超過要因' : isDurationShort ? '見積短縮要因' : null;
 
   return (
-    <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-      <div className="w-full max-w-sm bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 p-6 space-y-4">
+    <div className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center bg-black/50 backdrop-blur-sm p-2 sm:p-4">
+      <div className="w-full max-w-sm max-h-[calc(100dvh-1rem)] overflow-y-auto bg-white dark:bg-gray-900 rounded-t-2xl sm:rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 p-4 sm:p-6 space-y-4">
         <div className="flex items-center justify-between">
           <h3 className="text-sm font-semibold text-gray-900 dark:text-white">実績時間を入力</h3>
           <button onClick={onClose} className="w-7 h-7 flex items-center justify-center rounded-lg text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
@@ -184,17 +157,8 @@ function FullActualDialog({ task, onClose, onSave }: {
         <p className="text-xs text-gray-500 dark:text-gray-400 truncate">{task.title}</p>
         <div>
           <label className="form-label">開始実績日時</label>
-          <input type="datetime-local" value={startVal} onChange={e => { setStartVal(e.target.value); setStartFactor(''); }} className="form-input" />
+          <input type="datetime-local" value={startVal} onChange={e => setStartVal(e.target.value)} className="form-input" />
         </div>
-        {startFactorOptions && (
-          <div>
-            <label className="form-label">{startFactorLabel}</label>
-            <select value={startFactor} onChange={e => setStartFactor(e.target.value)} className="form-input">
-              <option value="">選択してください</option>
-              {startFactorOptions.map(f => <option key={f} value={f}>{f}</option>)}
-            </select>
-          </div>
-        )}
         <div>
           <label className="form-label">終了実績日時</label>
           <input type="datetime-local" value={endVal} onChange={e => { setEndVal(e.target.value); setDurationFactor(''); }} className="form-input" />
@@ -215,7 +179,7 @@ function FullActualDialog({ task, onClose, onSave }: {
         <div className="flex gap-2 justify-end">
           <button onClick={onClose} className="btn-secondary">キャンセル</button>
           <button
-            onClick={() => startVal && endVal && onSave(new Date(startVal).toISOString(), new Date(endVal).toISOString(), memo, startFactor, durationFactor)}
+            onClick={() => startVal && endVal && onSave(new Date(startVal).toISOString(), new Date(endVal).toISOString(), memo, durationFactor)}
             disabled={!startVal || !endVal}
             className="btn-primary flex items-center gap-1.5"
           >
@@ -236,8 +200,8 @@ function SuspendDialog({ task, onClose, onSave }: {
   const [value, setValue] = useState(nowDatetime());
 
   return (
-    <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-      <div className="w-full max-w-sm bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 p-6 space-y-4">
+    <div className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center bg-black/50 backdrop-blur-sm p-2 sm:p-4">
+      <div className="w-full max-w-sm max-h-[calc(100dvh-1rem)] overflow-y-auto bg-white dark:bg-gray-900 rounded-t-2xl sm:rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 p-4 sm:p-6 space-y-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <PauseCircle className="w-4 h-4 text-amber-500" />
@@ -289,8 +253,8 @@ function ResumeDialog({ task, onClose, onSave }: {
   };
 
   return (
-    <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-      <div className="w-full max-w-sm bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 p-6 space-y-4">
+    <div className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center bg-black/50 backdrop-blur-sm p-2 sm:p-4">
+      <div className="w-full max-w-sm max-h-[calc(100dvh-1rem)] overflow-y-auto bg-white dark:bg-gray-900 rounded-t-2xl sm:rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 p-4 sm:p-6 space-y-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <PlayCircle className="w-4 h-4 text-blue-500" />
@@ -336,7 +300,6 @@ const FIELD_DEFS: { key: keyof TextExportFields; label: string }[] = [
   { key: 'status', label: 'ステータス' },
   { key: 'timeRange', label: '開始〜終了時間' },
   { key: 'duration', label: '所要時間' },
-  { key: 'startFactor', label: '前倒し/遅延要因' },
   { key: 'durationFactor', label: '見積差異要因' },
   { key: 'remarks', label: '予定メモ' },
   { key: 'actualMemo', label: '実績メモ' },
@@ -352,8 +315,8 @@ function TextExportConfigDialog({ onClose, onExport }: {
     setFields(prev => ({ ...prev, [key]: !prev[key] }));
 
   return (
-    <div className="fixed inset-0 z-[70] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-      <div className="w-full max-w-xs bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 flex flex-col">
+    <div className="fixed inset-0 z-[70] flex items-end sm:items-center justify-center bg-black/50 backdrop-blur-sm p-2 sm:p-4">
+      <div className="w-full max-w-xs max-h-[calc(100dvh-1rem)] overflow-y-auto bg-white dark:bg-gray-900 rounded-t-2xl sm:rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 flex flex-col">
         <div className="flex items-center justify-between px-5 py-4 border-b border-gray-200 dark:border-gray-700">
           <h3 className="text-sm font-semibold text-gray-900 dark:text-white">出力項目の選択</h3>
           <button
@@ -426,8 +389,8 @@ function TaskRow({ task, onEdit, depth = 0, onStatusChange, onSuspend, onResume,
   };
 
   return (
-    <div className={depth > 0 ? 'ml-6 border-l-2 border-gray-200 dark:border-gray-700' : ''}>
-      <div className={`flex items-start gap-1 pr-3 ${isOverdue ? 'bg-red-50 dark:bg-red-900/20' : ''}`}>
+    <div className={depth > 0 ? 'ml-3 sm:ml-6 border-l-2 border-gray-200 dark:border-gray-700' : ''}>
+      <div className={`flex flex-col sm:flex-row sm:items-start gap-1 pr-2 sm:pr-3 ${isOverdue ? 'bg-red-50 dark:bg-red-900/20' : ''}`}>
         {isSelecting && (
           <div className="flex items-center pt-3.5 pl-2 flex-shrink-0">
             <input
@@ -441,7 +404,7 @@ function TaskRow({ task, onEdit, depth = 0, onStatusChange, onSuspend, onResume,
         <div className="flex-1 min-w-0">
           <TaskCard task={task} onEdit={onEdit} />
         </div>
-        <div className="flex flex-col items-end gap-0.5 flex-shrink-0 pt-3 pb-2">
+        <div className="flex flex-row sm:flex-col items-center sm:items-end justify-end gap-1 flex-shrink-0 px-3 sm:px-0 pb-3 sm:pt-3 sm:pb-2">
           {isOverdue && (
             <span className="text-[10px] font-semibold text-red-500 dark:text-red-400 px-1.5 py-0.5 bg-red-100 dark:bg-red-900/40 rounded-full leading-tight">
               期限切れ
@@ -461,7 +424,7 @@ function TaskRow({ task, onEdit, depth = 0, onStatusChange, onSuspend, onResume,
               <button
                 onClick={() => onSuspend(task)}
                 title="中断"
-                className="w-6 h-6 flex items-center justify-center rounded-full text-amber-500 hover:bg-amber-50 dark:hover:bg-amber-900/30 transition-colors"
+                className="w-9 h-9 sm:w-6 sm:h-6 flex items-center justify-center rounded-full text-amber-500 hover:bg-amber-50 dark:hover:bg-amber-900/30 transition-colors"
               >
                 <PauseCircle className="w-4 h-4" />
               </button>
@@ -470,16 +433,16 @@ function TaskRow({ task, onEdit, depth = 0, onStatusChange, onSuspend, onResume,
               <button
                 onClick={() => onResume(task)}
                 title="再開"
-                className="w-6 h-6 flex items-center justify-center rounded-full text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/30 transition-colors"
+                className="w-9 h-9 sm:w-6 sm:h-6 flex items-center justify-center rounded-full text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/30 transition-colors"
               >
                 <PlayCircle className="w-4 h-4" />
               </button>
             )}
-            <span className="text-[11px] text-gray-400 dark:text-gray-500 whitespace-nowrap">ステータス：</span>
+            <span className="hidden sm:inline text-[11px] text-gray-400 dark:text-gray-500 whitespace-nowrap">ステータス：</span>
             <select
               value={task.status}
               onChange={e => onStatusChange(task, e.target.value as TaskStatus)}
-              className={`text-[11px] font-medium px-2 py-0.5 rounded-full border-0 cursor-pointer focus:outline-none focus:ring-1 focus:ring-blue-400 ${statusBg[task.status]}`}
+              className={`min-h-9 sm:min-h-0 text-xs sm:text-[11px] font-medium px-3 sm:px-2 py-1 sm:py-0.5 rounded-full border-0 cursor-pointer focus:outline-none focus:ring-1 focus:ring-blue-400 ${statusBg[task.status]}`}
             >
               <option value="not_started">未着手</option>
               <option value="in_progress">進行中</option>
@@ -758,16 +721,10 @@ export default function TaskListPage() {
     updateTask(task.id, update);
   };
 
-  const handleStartSave = async (task: Task, actualStart: string, factor: string) => {
-    const scheduledStart = task.scheduled_start ? new Date(task.scheduled_start) : null;
-    const actual = new Date(actualStart);
-    const isLate = scheduledStart && actual > scheduledStart;
-    const isEarly = scheduledStart && actual < scheduledStart;
+  const handleStartSave = async (task: Task, actualStart: string) => {
     await updateTask(task.id, {
       status: 'in_progress',
       actual_start: actualStart,
-      start_delay_factor: isLate ? factor || null : null,
-      start_early_factor: isEarly ? factor || null : null,
     });
     // セッション開始を記録（中断時に session_end を更新するために必要）
     await createSession(task.id, new Date(actualStart).toISOString(), null);
@@ -825,12 +782,8 @@ export default function TaskListPage() {
     setEndDialog(null);
   };
 
-  const handleFullActualSave = async (task: Task, actualStart: string, actualEnd: string, memo: string, startFactor: string, durationFactor: string) => {
+  const handleFullActualSave = async (task: Task, actualStart: string, actualEnd: string, memo: string, durationFactor: string) => {
     const actualTime = Math.round((new Date(actualEnd).getTime() - new Date(actualStart).getTime()) / 60000);
-    const scheduledStart = task.scheduled_start ? new Date(task.scheduled_start) : null;
-    const actual = new Date(actualStart);
-    const isStartLate = scheduledStart && actual > scheduledStart;
-    const isStartEarly = scheduledStart && actual < scheduledStart;
     const plannedMins = task.scheduled_start && task.scheduled_end
       ? Math.round((new Date(task.scheduled_end).getTime() - new Date(task.scheduled_start).getTime()) / 60000)
       : null;
@@ -843,8 +796,6 @@ export default function TaskListPage() {
       actual_memo: memo,
       actual_time: actualTime > 0 ? actualTime : 0,
       completed_at: actualEnd,
-      start_delay_factor: isStartLate ? startFactor || null : null,
-      start_early_factor: isStartEarly ? startFactor || null : null,
       duration_over_factor: isOver ? durationFactor || null : null,
       duration_short_factor: isShort ? durationFactor || null : null,
     };
@@ -865,11 +816,11 @@ export default function TaskListPage() {
 
   return (
     <div className="flex-1 overflow-auto">
-      <div className="max-w-4xl mx-auto px-6 py-6">
+      <div className="max-w-4xl mx-auto px-3 py-3 sm:px-6 sm:py-6">
 
         {/* 当日の使用工数サマリー（フィルタ上部・常時表示） */}
-        <div className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 px-4 py-3 mb-3">
-          <div className="flex items-center gap-4 flex-wrap">
+        <div className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 px-3 sm:px-4 py-3 mb-3">
+          <div className="flex items-center gap-x-3 gap-y-2 flex-wrap">
             <span className="text-xs font-semibold text-gray-500 dark:text-gray-400 whitespace-nowrap">
               今日の使用時間
             </span>
@@ -936,7 +887,7 @@ export default function TaskListPage() {
         {/* フィルタ＋ボタンカード */}
         <div className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 mb-3">
           {/* フィルタ行 */}
-          <div className="px-4 py-3">
+          <div className="px-3 sm:px-4 py-3">
             <TaskFilters
               statusFilter={statusFilter}
               categoryFilter={categoryFilter}
@@ -959,30 +910,30 @@ export default function TaskListPage() {
           {/* 区切り線 */}
           <div className="border-t border-gray-100 dark:border-gray-800" />
           {/* ボタン行（右詰め） */}
-          <div className="flex items-center justify-end gap-2 px-4 py-2.5">
-            <button onClick={() => setShowTextExportConfig(true)} className="btn-secondary flex items-center gap-1.5">
+          <div className="grid grid-cols-2 md:flex md:items-center md:justify-end gap-2 px-3 sm:px-4 py-2.5">
+            <button onClick={() => setShowTextExportConfig(true)} className="btn-secondary flex items-center justify-center gap-1.5">
               <FileText className="w-3.5 h-3.5" />テキスト出力
             </button>
-            <button onClick={() => exportToCSV(tasks)} className="btn-secondary flex items-center gap-1.5">
+            <button onClick={() => exportToCSV(tasks)} className="btn-secondary flex items-center justify-center gap-1.5">
               <Download className="w-3.5 h-3.5" />CSV出力
             </button>
             <button onClick={() => setShowRecurrenceForm(true)}
-              className="btn-primary flex items-center gap-1.5 bg-teal-600 hover:bg-teal-700"
+              className="btn-primary flex items-center justify-center gap-1.5 bg-teal-600 hover:bg-teal-700"
             >
               <Plus className="w-3.5 h-3.5" />新規定常タスク
             </button>
-            <button onClick={() => setEditingTask(null)} className="btn-primary flex items-center gap-1.5">
+            <button onClick={() => setEditingTask(null)} className="btn-primary flex items-center justify-center gap-1.5">
               <Plus className="w-3.5 h-3.5" />新規タスク
             </button>
             {!isSelecting ? (
               <button
                 onClick={() => { setIsSelecting(true); setSelectedIds(new Set()); setConfirmBulkDelete(false); }}
-                className="btn-secondary flex items-center gap-1.5"
+                className="btn-secondary col-span-2 md:col-span-1 flex items-center justify-center gap-1.5"
               >
                 <Trash2 className="w-3.5 h-3.5" />一括削除
               </button>
             ) : (
-              <div className="flex items-center gap-1.5">
+              <div className="col-span-2 flex flex-wrap items-center justify-end gap-1.5">
                 {confirmBulkDelete ? (
                   <>
                     <span className="text-xs text-red-600 dark:text-red-400 font-medium">{selectedIds.size}件を削除します</span>
@@ -1066,13 +1017,13 @@ export default function TaskListPage() {
         <RecurrenceForm onClose={() => setShowRecurrenceForm(false)} />
       )}
       {startDialog && (
-        <StartDialog task={startDialog} onClose={() => setStartDialog(null)} onSave={(s, f) => handleStartSave(startDialog, s, f)} />
+        <StartDialog task={startDialog} onClose={() => setStartDialog(null)} onSave={s => handleStartSave(startDialog, s)} />
       )}
       {endDialog && (
         <EndDialog task={endDialog} onClose={() => setEndDialog(null)} onSave={(e, m, df) => handleEndSave(endDialog, e, m, df)} />
       )}
       {fullActualDialog && (
-        <FullActualDialog task={fullActualDialog} onClose={() => setFullActualDialog(null)} onSave={(s, e, m, sf, df) => handleFullActualSave(fullActualDialog, s, e, m, sf, df)} />
+        <FullActualDialog task={fullActualDialog} onClose={() => setFullActualDialog(null)} onSave={(s, e, m, df) => handleFullActualSave(fullActualDialog, s, e, m, df)} />
       )}
       {suspendDialog && (
         <SuspendDialog task={suspendDialog} onClose={() => setSuspendDialog(null)} onSave={t => handleSuspendSave(suspendDialog, t)} />
@@ -1101,8 +1052,8 @@ export default function TaskListPage() {
         }));
         const text = exportTodayTasksAsText(tasksWithSessions, reportDate, textExportFields);
         return (
-          <div className="fixed inset-0 z-[70] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-            <div className="w-full max-w-2xl bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 flex flex-col max-h-[85vh]">
+          <div className="fixed inset-0 z-[70] flex items-end sm:items-center justify-center bg-black/50 backdrop-blur-sm p-2 sm:p-4">
+            <div className="w-full max-w-2xl bg-white dark:bg-gray-900 rounded-t-2xl sm:rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 flex flex-col max-h-[calc(100dvh-1rem)] sm:max-h-[85vh]">
               <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex-shrink-0">
                 <h2 className="text-sm font-semibold text-gray-900 dark:text-white">当日タスク実績レポート</h2>
                 <div className="flex items-center gap-2">

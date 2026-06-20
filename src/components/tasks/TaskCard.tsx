@@ -77,7 +77,7 @@ export default function TaskCard({ task, onEdit }: TaskCardProps) {
   };
 
   return (
-    <div className="group flex items-start gap-3 p-3 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+    <div className="group flex items-start gap-2 sm:gap-3 p-3 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
       <div className="mt-0.5 flex-shrink-0 w-5 h-5 flex items-center justify-center">
         <div className="w-1.5 h-1.5 rounded-full bg-gray-300 dark:bg-gray-600" />
       </div>
@@ -158,17 +158,17 @@ export default function TaskCard({ task, onEdit }: TaskCardProps) {
         )}
       </div>
 
-      <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0">
+      <div className="flex items-center gap-1 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity flex-shrink-0">
         <button
           onClick={() => onEdit(task)}
-          className="w-7 h-7 flex items-center justify-center rounded-lg text-gray-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/30 transition-colors"
+          className="w-9 h-9 md:w-7 md:h-7 flex items-center justify-center rounded-lg text-gray-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/30 transition-colors"
         >
           <Edit2 className="w-3.5 h-3.5" />
         </button>
         <button
           onClick={handleDelete}
           onBlur={() => setConfirmDelete(false)}
-          className={`w-7 h-7 flex items-center justify-center rounded-lg transition-colors ${
+          className={`w-9 h-9 md:w-7 md:h-7 flex items-center justify-center rounded-lg transition-colors ${
             confirmDelete
               ? 'text-white bg-red-500'
               : 'text-gray-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/30'

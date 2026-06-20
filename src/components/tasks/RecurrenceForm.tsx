@@ -153,9 +153,9 @@ export default function RecurrenceForm({ group, onClose }: RecurrenceFormProps) 
     (!isWeekly || form.days_of_week.length > 0);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
-      <div className="w-full max-w-lg max-h-[90vh] overflow-y-auto bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700">
-        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-gray-700 sticky top-0 bg-white dark:bg-gray-900 z-10">
+    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/40 backdrop-blur-sm p-0 sm:p-4">
+      <div className="w-full max-w-lg h-[100dvh] sm:h-auto max-h-[100dvh] sm:max-h-[90vh] overflow-y-auto bg-white dark:bg-gray-900 rounded-none sm:rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700">
+        <div className="flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4 border-b border-gray-200 dark:border-gray-700 sticky top-0 bg-white dark:bg-gray-900 z-10">
           <div className="flex items-center gap-2.5">
             <div className="w-7 h-7 rounded-lg bg-teal-100 dark:bg-teal-900/40 flex items-center justify-center">
               <RefreshCw className="w-3.5 h-3.5 text-teal-600 dark:text-teal-400" />
@@ -164,12 +164,12 @@ export default function RecurrenceForm({ group, onClose }: RecurrenceFormProps) 
               {group ? '定常タスクを編集' : '繰り返しタスクを登録'}
             </h2>
           </div>
-          <button onClick={onClose} className="w-8 h-8 flex items-center justify-center rounded-lg text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+          <button onClick={onClose} className="w-11 h-11 sm:w-8 sm:h-8 flex items-center justify-center rounded-lg text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
             <X className="w-4 h-4" />
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-6 space-y-5">
+        <form onSubmit={handleSubmit} className="p-4 sm:p-6 space-y-5 pb-[calc(1rem+env(safe-area-inset-bottom))]">
           {/* タスク名 */}
           <div ref={titleRef}>
             <label className="form-label">タスク名 <span className="text-red-500">*</span></label>
@@ -226,7 +226,7 @@ export default function RecurrenceForm({ group, onClose }: RecurrenceFormProps) 
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {/* 分類 */}
             <div>
               <label className="form-label">分類</label>
@@ -248,7 +248,7 @@ export default function RecurrenceForm({ group, onClose }: RecurrenceFormProps) 
           </div>
 
           {/* 時刻 */}
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="form-label">開始時刻 <span className="text-red-500">*</span></label>
               <input

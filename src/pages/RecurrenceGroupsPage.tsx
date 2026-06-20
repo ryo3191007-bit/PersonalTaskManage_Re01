@@ -44,8 +44,8 @@ function GroupCard({ group, pendingCount, onEdit, onDelete, onBulkUpdate }: Grou
   };
 
   return (
-    <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-5 hover:shadow-md transition-shadow">
-      <div className="flex items-start justify-between gap-3">
+    <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-4 sm:p-5 hover:shadow-md transition-shadow">
+      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
         <div className="flex items-start gap-3 min-w-0">
           <div className="w-9 h-9 rounded-xl bg-teal-100 dark:bg-teal-900/40 flex items-center justify-center flex-shrink-0 mt-0.5">
             <RefreshCw className="w-4 h-4 text-teal-600 dark:text-teal-400" />
@@ -84,7 +84,7 @@ function GroupCard({ group, pendingCount, onEdit, onDelete, onBulkUpdate }: Grou
           </div>
         </div>
 
-        <div className="flex items-center gap-1 flex-shrink-0">
+        <div className="flex items-center justify-end gap-1 flex-shrink-0">
           {pendingCount > 0 && (
             <button
               onClick={() => onBulkUpdate(group)}
@@ -96,14 +96,14 @@ function GroupCard({ group, pendingCount, onEdit, onDelete, onBulkUpdate }: Grou
           )}
           <button
             onClick={() => onEdit(group)}
-            className="w-8 h-8 flex items-center justify-center rounded-lg text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            className="w-11 h-11 sm:w-8 sm:h-8 flex items-center justify-center rounded-lg text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
           >
             <Pencil className="w-3.5 h-3.5" />
           </button>
           {!confirmDelete ? (
             <button
               onClick={() => setConfirmDelete(true)}
-              className="w-8 h-8 flex items-center justify-center rounded-lg text-gray-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
+              className="w-11 h-11 sm:w-8 sm:h-8 flex items-center justify-center rounded-lg text-gray-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
             >
               <Trash2 className="w-3.5 h-3.5" />
             </button>
@@ -144,8 +144,8 @@ interface BulkUpdateDialogProps {
 
 function BulkUpdateDialog({ group, onClose, onConfirm, pendingCount }: BulkUpdateDialogProps) {
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
-      <div className="w-full max-w-sm bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 p-6 space-y-4">
+    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/40 backdrop-blur-sm p-2 sm:p-4">
+      <div className="w-full max-w-sm max-h-[calc(100dvh-1rem)] overflow-y-auto bg-white dark:bg-gray-900 rounded-t-2xl sm:rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 p-4 sm:p-6 space-y-4">
         <div className="flex items-center gap-3">
           <div className="w-9 h-9 rounded-xl bg-teal-100 dark:bg-teal-900/40 flex items-center justify-center">
             <RefreshCw className="w-4 h-4 text-teal-600 dark:text-teal-400" />
@@ -206,9 +206,9 @@ export default function RecurrenceGroupsPage() {
 
   return (
     <div className="flex-1 overflow-auto">
-      <div className="max-w-3xl mx-auto px-6 py-6">
+      <div className="max-w-3xl mx-auto px-3 py-3 sm:px-6 sm:py-6">
         {/* ヘッダー */}
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center justify-between gap-3 mb-4 sm:mb-6">
           <div>
             <h1 className="text-lg font-bold text-gray-900 dark:text-white">定常タスク管理</h1>
             <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
@@ -217,7 +217,7 @@ export default function RecurrenceGroupsPage() {
           </div>
           <button
             onClick={() => { setEditingGroup(null); setShowForm(true); }}
-            className="btn-primary flex items-center gap-1.5 bg-teal-600 hover:bg-teal-700"
+            className="btn-primary flex items-center justify-center gap-1.5 bg-teal-600 hover:bg-teal-700"
           >
             <Plus className="w-3.5 h-3.5" />
             新規定常タスク

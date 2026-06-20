@@ -45,13 +45,13 @@ export default function TaskFilters({
   const categories = useMemo(() => sortCategoriesByColor(rawCategories), [rawCategories]);
   const keywordRef = useRef<HTMLInputElement>(null);
 
-  const selectCls = 'w-full text-xs border border-gray-200 dark:border-gray-700 rounded-lg px-2 py-1.5 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 h-8';
+  const selectCls = 'w-full text-sm md:text-xs border border-gray-200 dark:border-gray-700 rounded-lg px-2 py-1.5 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 h-11 md:h-8';
   const labelCls = 'block text-[10px] font-medium text-gray-400 dark:text-gray-500 mb-0.5';
 
   return (
     <div className="space-y-2">
       {/* 行1: ステータス・優先度・分類 */}
-      <div className="flex items-end gap-2">
+      <div className="grid grid-cols-3 items-end gap-2">
         <div className="flex-1">
           <span className={labelCls}>ステータス</span>
           <select
@@ -95,10 +95,10 @@ export default function TaskFilters({
       </div>
 
       {/* 行2: キーワード・開始日・終了日 */}
-      <div className="flex items-end gap-2">
-        <div className="flex-1">
+      <div className="grid grid-cols-1 md:grid-cols-3 items-end gap-2">
+        <div className="min-w-0">
           <span className={labelCls}>キーワード</span>
-          <div className="flex items-center gap-1.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg px-2.5 h-8">
+          <div className="flex items-center gap-1.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg px-2.5 h-11 md:h-8">
             <Search className="w-3 h-3 text-gray-400 flex-shrink-0" />
             <input
               ref={keywordRef}
@@ -106,7 +106,7 @@ export default function TaskFilters({
               value={keywordFilter}
               onChange={e => onKeywordChange(e.target.value)}
               placeholder="タイトル・メモ..."
-              className="text-xs bg-transparent outline-none text-gray-700 dark:text-gray-300 placeholder-gray-400 flex-1 min-w-0"
+              className="text-base md:text-xs bg-transparent outline-none text-gray-700 dark:text-gray-300 placeholder-gray-400 flex-1 min-w-0"
             />
             {keywordFilter && (
               <button onClick={() => onKeywordChange('')} className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 flex-shrink-0">
@@ -116,7 +116,7 @@ export default function TaskFilters({
           </div>
         </div>
 
-        <div className="flex-1">
+        <div className="min-w-0">
           <span className={labelCls}>予定開始日</span>
           <div className="flex items-center gap-1.5">
             <input
@@ -146,7 +146,7 @@ export default function TaskFilters({
           </div>
         </div>
 
-        <div className="flex-1">
+        <div className="min-w-0">
           <span className={labelCls}>予定終了日</span>
           <div className="flex items-center gap-1.5">
             <input
