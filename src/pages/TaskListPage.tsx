@@ -928,7 +928,7 @@ export default function TaskListPage() {
             {!isSelecting ? (
               <button
                 onClick={() => { setIsSelecting(true); setSelectedIds(new Set()); setConfirmBulkDelete(false); }}
-                className="btn-primary col-span-2 md:col-span-1 flex items-center justify-center gap-1.5 bg-red-600 hover:bg-red-700"
+                className="btn-secondary col-span-2 md:col-span-1 flex items-center justify-center gap-1.5"
               >
                 <Trash2 className="w-3.5 h-3.5" />一括削除
               </button>

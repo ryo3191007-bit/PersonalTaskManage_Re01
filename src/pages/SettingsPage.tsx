@@ -381,7 +381,7 @@ export default function SettingsPage() {
               <button
                 type="button"
                 onClick={() => { setIsSelecting(true); setSelectedIds(new Set()); setConfirmBulkDelete(false); }}
-                className="btn-primary flex items-center gap-1.5 text-xs py-1 bg-red-600 hover:bg-red-700"
+                className="btn-secondary flex items-center gap-1.5 text-xs py-1"
               >
                 <Trash2 className="w-3.5 h-3.5" />一括削除
               </button>

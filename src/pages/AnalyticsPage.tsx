@@ -1,19 +1,52 @@
 import { useMemo, useState } from 'react';
 import { ChevronLeft, ChevronDown } from 'lucide-react';
 import { useTasks } from '../contexts/TaskContext';
-import type { Task, TaskCategory, TaskSession } from '../lib/types';
-import {
-  getActualMinutes,
-  getActualMinutesForDay,
-  getActualMinutesForRange,
-  getDurationVariance,
-  getPlannedMinutes,
-  getPlannedMinutesForDay,
-  getPlannedMinutesForRange,
-  getWorkloadTaskList,
-} from '../lib/utils';
+import type { Task, TaskCategory } from '../lib/types';
+import { getTotalMinutes, getWorkloadMinsForDay, getWorkloadTaskList } from '../lib/utils';
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
+
+/** タスクの実績時間（分）を返す。actual_time > 0 があればそれを使い、なければ予定時間を使う */
+function getEffectiveMins(t: Task): number {
+  if (t.actual_time > 0) return t.actual_time;
+  if (t.scheduled_start && t.scheduled_end) {
+    const diff = new Date(t.scheduled_end).getTime() - new Date(t.scheduled_start).getTime();
+    return Math.max(0, diff / 60000);
+  }
+  return 0;
+}
+
+/**
+ * 指定日に配分する予定工数（分）を返す。
+ * 予定工数の総量は quantity × time_per_unit とし、日をまたぐ場合は
+ * scheduled_start〜scheduled_end の各日への重なり時間に応じて按分する。
+ */
+function getPlannedMinsForDay(t: Task, dayDate: Date): number {
+  if (!t.scheduled_start) return 0;
+
+  const totalPlannedMins = getTotalMinutes(t);
+  if (!Number.isFinite(totalPlannedMins) || totalPlannedMins <= 0) return 0;
+
+  const scheduledStart = new Date(t.scheduled_start);
+  if (Number.isNaN(scheduledStart.getTime())) return 0;
+
+  const dayStart = new Date(dayDate.getFullYear(), dayDate.getMonth(), dayDate.getDate());
+  const dayEnd = new Date(dayStart.getTime() + 24 * 60 * 60 * 1000);
+  const scheduledEnd = t.scheduled_end ? new Date(t.scheduled_end) : null;
+
+  // 終了日時がない、または開始以前の場合は開始日に予定工数の全量を計上する。
+  if (!scheduledEnd || Number.isNaN(scheduledEnd.getTime()) || scheduledEnd <= scheduledStart) {
+    return scheduledStart >= dayStart && scheduledStart < dayEnd ? totalPlannedMins : 0;
+  }
+
+  const clippedStart = scheduledStart < dayStart ? dayStart : scheduledStart;
+  const clippedEnd = scheduledEnd > dayEnd ? dayEnd : scheduledEnd;
+  if (clippedEnd <= clippedStart) return 0;
+
+  const totalRangeMins = (scheduledEnd.getTime() - scheduledStart.getTime()) / 60000;
+  const overlapMins = (clippedEnd.getTime() - clippedStart.getTime()) / 60000;
+  return totalPlannedMins * (overlapMins / totalRangeMins);
+}
 
 // ── Primitive charts ──────────────────────────────────────────────────────────
 
@@ -268,11 +301,7 @@ function topFactor(factors: string[]): string | null {
   return [...counts.entries()].sort((a, b) => b[1] - a[1])[0][0];
 }
 
-function buildCategoryDurationFactorRows(
-  analysisTasks: Task[],
-  categories: TaskCategory[],
-  sessionsByTask: Map<string, TaskSession[]>,
-): CategoryDurationFactorRow[] {
+function buildCategoryDurationFactorRows(analysisTasks: Task[], categories: TaskCategory[]): CategoryDurationFactorRow[] {
   type Acc = Omit<CategoryDurationFactorRow, 'category'> & {
     overFactors: string[];
     shortFactors: string[];
@@ -284,21 +313,13 @@ function buildCategoryDurationFactorRows(
     overFactors: [], shortFactors: [],
   });
   for (const t of analysisTasks) {
-    const variance = getDurationVariance(t, sessionsByTask.get(t.id) ?? []);
-    if (variance === 'unknown') continue;
     const key = t.category_id ?? null;
     if (!map.has(key)) map.set(key, blankAcc());
     const acc = map.get(key)!;
     acc.total++;
-    if (variance === 'over') {
-      acc.overCount++;
-      if (t.duration_over_factor) acc.overFactors.push(t.duration_over_factor);
-    } else if (variance === 'short') {
-      acc.shortCount++;
-      if (t.duration_short_factor) acc.shortFactors.push(t.duration_short_factor);
-    } else {
-      acc.matchCount++;
-    }
+    if (t.duration_over_factor) { acc.overCount++; acc.overFactors.push(t.duration_over_factor); }
+    else if (t.duration_short_factor) { acc.shortCount++; acc.shortFactors.push(t.duration_short_factor); }
+    else if (t.actual_start && t.actual_end) acc.matchCount++;
   }
   const catMap = new Map(categories.map(c => [c.id, c]));
   return [...map.entries()]
@@ -344,7 +365,7 @@ function DurationFactorTable({ rows }: { rows: CategoryDurationFactorRow[] }) {
         <thead>
           <tr className="border-b border-gray-100 dark:border-gray-800">
             <th className="text-left pb-2 pr-3 font-medium text-gray-500 dark:text-gray-400">分類</th>
-            <th className="text-right pb-2 px-2 font-medium text-gray-500 dark:text-gray-400 whitespace-nowrap">分析対象</th>
+            <th className="text-right pb-2 px-2 font-medium text-gray-500 dark:text-gray-400 whitespace-nowrap">完了数</th>
             <th className="pb-2 px-2 font-medium text-gray-500 dark:text-gray-400 min-w-[140px]">所要時間</th>
             <th className="text-left pb-2 px-2 font-medium text-red-500 dark:text-red-400 whitespace-nowrap">超過 主因</th>
             <th className="text-left pb-2 pl-2 font-medium text-blue-500 dark:text-blue-400 whitespace-nowrap">短縮 主因</th>
@@ -430,22 +451,6 @@ function formatPeriodLabel(ym: string): string {
   return `${y}年${Number(m)}月`;
 }
 
-function getMonthRange(ym: string): { start: Date; end: Date } {
-  const [year, month] = ym.split('/').map(Number);
-  return {
-    start: new Date(year, month - 1, 1),
-    end: new Date(year, month, 1),
-  };
-}
-
-function getTaskPeriodKey(task: Task): string | null {
-  return getMonthKey(task.scheduled_start);
-}
-
-function roundHours(minutes: number): number {
-  return Math.round(minutes / 60 * 10) / 10;
-}
-
 export default function AnalyticsPage() {
   const { tasks, categories, sessions } = useTasks();
   const [tab, setTab] = useState<TabId>('overview');
@@ -465,87 +470,116 @@ export default function AnalyticsPage() {
     setDrillMonth(null);
   };
 
-  const workloadTasks = useMemo(() => getWorkloadTaskList(tasks), [tasks]);
-
-  const sessionsByTask = useMemo(() => {
-    const map = new Map<string, TaskSession[]>();
-    for (const session of sessions) {
-      if (!map.has(session.task_id)) map.set(session.task_id, []);
-      map.get(session.task_id)!.push(session);
-    }
-    return map;
-  }, [sessions]);
-
-  /** 期間プルダウン用の月リスト。件数系指標は予定開始月を基準にする。 */
+  /** 期間プルダウン用の月リスト */
   const availablePeriods = useMemo(() => {
-    const set = new Set<string>([currentMonthKey]);
-    workloadTasks.forEach(task => {
-      const monthKey = getTaskPeriodKey(task);
-      if (monthKey) set.add(monthKey);
-      [task.actual_start, task.actual_end].forEach(value => {
-        const actualMonthKey = getMonthKey(value);
-        if (actualMonthKey) set.add(actualMonthKey);
-      });
-    });
-    sessions.forEach(session => {
-      [session.session_start, session.session_end].forEach(value => {
-        const sessionMonthKey = getMonthKey(value);
-        if (sessionMonthKey) set.add(sessionMonthKey);
-      });
-    });
+    const set = new Set<string>();
+    set.add(currentMonthKey);
+    for (const t of tasks) {
+      const ref = t.scheduled_start ?? t.actual_start ?? t.completed_at;
+      const mk = getMonthKey(ref);
+      if (mk) set.add(mk);
+    }
     return [...set].sort().reverse();
-  }, [workloadTasks, sessions, currentMonthKey]);
+  }, [tasks, currentMonthKey]);
 
-  const periodRange = useMemo(() => period === 'all' ? null : getMonthRange(period), [period]);
+  /** 実績分析対象（全期間） */
+  const analysisTasks = useMemo(() =>
+    tasks.filter(t => t.status === 'completed'),
+    [tasks]
+  );
 
-  /** 件数・完了率の母集団は、単独タスクと末端タスク。 */
-  const periodFilteredTrackTasks = useMemo(() => {
+  const workloadTasks = useMemo(() =>
+    getWorkloadTaskList(tasks).filter(t => !!t.scheduled_start || !!t.actual_start),
+    [tasks]
+  );
+
+  // ── 期間フィルター適用コレクション ──────────────────────────────────────
+  const periodFilteredAnalysisTasks = useMemo(() => {
+    if (period === 'all') return analysisTasks;
+    return analysisTasks.filter(t => {
+      const ref = t.scheduled_start ?? t.actual_start ?? t.completed_at;
+      return getMonthKey(ref) === period;
+    });
+  }, [analysisTasks, period]);
+
+  const periodFilteredWorkloadTasks = useMemo(() => {
     if (period === 'all') return workloadTasks;
-    return workloadTasks.filter(task => getTaskPeriodKey(task) === period);
+    return workloadTasks.filter(t => {
+      const ref = t.scheduled_start ?? t.actual_start;
+      return getMonthKey(ref) === period;
+    });
   }, [workloadTasks, period]);
 
-  const periodFilteredAnalysisTasks = useMemo(() =>
-    periodFilteredTrackTasks.filter(task => task.status === 'completed'),
-    [periodFilteredTrackTasks]
-  );
-
-  /** 所要時間差異は、実績追跡対象の完了タスクだけを対象にする。 */
-  const periodFilteredDurationTasks = useMemo(() =>
-    periodFilteredAnalysisTasks.filter(task => task.track_actual),
-    [periodFilteredAnalysisTasks]
-  );
+  const periodFilteredTrackTasks = useMemo(() => {
+    if (period === 'all') return tasks;
+    return tasks.filter(t => {
+      const ref = t.scheduled_start ?? t.actual_start ?? t.completed_at;
+      return getMonthKey(ref) === period;
+    });
+  }, [tasks, period]);
 
   // ── 月別工数（予定・実績） ────────────────────────────────────────────────
   const monthlyData = useMemo((): DualBarDatum[] => {
     const now = new Date();
     const months: string[] = [];
     for (let i = 11; i >= 0; i--) {
-      const date = new Date(now.getFullYear(), now.getMonth() - i, 1);
-      months.push(`${date.getFullYear()}/${String(date.getMonth() + 1).padStart(2, '0')}`);
+      const d = new Date(now); d.setMonth(d.getMonth() - i);
+      months.push(`${d.getFullYear()}/${String(d.getMonth() + 1).padStart(2, '0')}`);
+    }
+    const rangeStart = new Date(now); rangeStart.setFullYear(rangeStart.getFullYear() - 1);
+    const rangeEnd = new Date(now.getFullYear(), now.getMonth() + 1, 1);
+
+    const sessionsByTask = new Map<string, typeof sessions>();
+    for (const s of sessions) {
+      if (!sessionsByTask.has(s.task_id)) sessionsByTask.set(s.task_id, []);
+      sessionsByTask.get(s.task_id)!.push(s);
     }
 
-    return months.map(monthKey => {
-      const range = getMonthRange(monthKey);
-      let plannedMinutes = 0;
-      let actualMinutes = 0;
-      for (const task of workloadTasks) {
-        plannedMinutes += getPlannedMinutesForRange(task, range.start, range.end);
-        const actual = getActualMinutesForRange(
-          task,
-          sessionsByTask.get(task.id) ?? [],
-          range.start,
-          range.end,
-          now,
-        );
-        if (actual !== null) actualMinutes += actual;
+    const planned = new Map<string, number>(months.map(m => [m, 0]));
+    const actual = new Map<string, number>(months.map(m => [m, 0]));
+
+    for (const t of workloadTasks) {
+      if (t.scheduled_start) {
+        const ps = new Date(t.scheduled_start);
+        const rawEnd = t.scheduled_end ? new Date(t.scheduled_end) : null;
+        const pe = rawEnd && !Number.isNaN(rawEnd.getTime()) && rawEnd > ps ? rawEnd : ps;
+        if (ps < rangeEnd && pe >= rangeStart) {
+          const loopStart = new Date(ps.getFullYear(), ps.getMonth(), ps.getDate());
+          const loopEndDay = new Date(pe.getFullYear(), pe.getMonth(), pe.getDate() + 1);
+          for (let d = new Date(loopStart); d < loopEndDay; d.setDate(d.getDate() + 1)) {
+            const mins = getPlannedMinsForDay(t, d);
+            if (mins > 0) {
+              const mk = `${d.getFullYear()}/${String(d.getMonth() + 1).padStart(2, '0')}`;
+              if (planned.has(mk)) planned.set(mk, (planned.get(mk) ?? 0) + mins);
+            }
+          }
+        }
       }
-      return {
-        label: monthKey.slice(5) + '月',
-        planned: roundHours(plannedMinutes),
-        actual: roundHours(actualMinutes),
-      };
-    });
-  }, [workloadTasks, sessionsByTask]);
+
+      const taskSessions = sessionsByTask.get(t.id) ?? [];
+      if (!t.scheduled_start || !t.scheduled_end) continue;
+      const actStart = t.actual_start ? new Date(t.actual_start) : new Date(t.scheduled_start);
+      const actEnd = t.actual_end ? new Date(t.actual_end) : new Date(t.scheduled_end);
+      if (!actStart) continue;
+      const loopRef = actEnd && actEnd > actStart ? actEnd : actStart;
+      if (actStart >= rangeEnd || loopRef < rangeStart) continue;
+      const loopStartDay = new Date(actStart.getFullYear(), actStart.getMonth(), actStart.getDate());
+      const loopEndDay = new Date(loopRef.getFullYear(), loopRef.getMonth(), loopRef.getDate() + 1);
+      for (let d = new Date(loopStartDay); d < loopEndDay; d.setDate(d.getDate() + 1)) {
+        const mins = getWorkloadMinsForDay(t, new Date(d), taskSessions);
+        if (mins > 0) {
+          const mk = `${d.getFullYear()}/${String(d.getMonth() + 1).padStart(2, '0')}`;
+          if (actual.has(mk)) actual.set(mk, (actual.get(mk) ?? 0) + mins);
+        }
+      }
+    }
+
+    return months.map(m => ({
+      label: m.slice(5) + '月',
+      planned: Math.round((planned.get(m) ?? 0) / 60 * 10) / 10,
+      actual: Math.round((actual.get(m) ?? 0) / 60 * 10) / 10,
+    }));
+  }, [workloadTasks, sessions]);
 
   // ── 日別工数（特定月） ──────────────────────────────────────────────────
   // period !== 'all' のときはその月、'all' + drillMonth のときは drillMonth を使用
@@ -556,7 +590,11 @@ export default function AnalyticsPage() {
     const [year, month] = activeDailyYM.split('/').map(Number);
     const daysInMonth = new Date(year, month, 0).getDate();
 
-    const now = new Date();
+    const sessionsByTask = new Map<string, typeof sessions>();
+    for (const s of sessions) {
+      if (!sessionsByTask.has(s.task_id)) sessionsByTask.set(s.task_id, []);
+      sessionsByTask.get(s.task_id)!.push(s);
+    }
 
     return Array.from({ length: daysInMonth }, (_, i) => {
       const dayDate = new Date(year, month - 1, i + 1);
@@ -565,18 +603,19 @@ export default function AnalyticsPage() {
       let actualMins = 0;
 
       for (const t of workloadTasks) {
-        plannedMins += getPlannedMinutesForDay(t, dayDate);
-        const actual = getActualMinutesForDay(t, sessionsByTask.get(t.id) ?? [], dayDate, now);
-        if (actual !== null) actualMins += actual;
+        plannedMins += getPlannedMinsForDay(t, dayDate);
+        if (!t.scheduled_start || !t.scheduled_end) continue;
+        const taskSessions = sessionsByTask.get(t.id) ?? [];
+        actualMins += getWorkloadMinsForDay(t, dayDate, taskSessions);
       }
 
       return {
         label: `${i + 1}日`,
-        planned: roundHours(plannedMins),
-        actual: roundHours(actualMins),
+        planned: Math.round(plannedMins / 60 * 10) / 10,
+        actual: Math.round(actualMins / 60 * 10) / 10,
       };
     });
-  }, [activeDailyYM, workloadTasks, sessionsByTask]);
+  }, [activeDailyYM, workloadTasks, sessions]);
 
   // ── 派生データ（全て period フィルター済みコレクションを使用） ──────────
   const categoryData = useMemo(() => {
@@ -599,42 +638,29 @@ export default function AnalyticsPage() {
   ], [periodFilteredTrackTasks, periodFilteredAnalysisTasks]);
 
   const categoryDurationFactorRows = useMemo(() =>
-    buildCategoryDurationFactorRows(periodFilteredDurationTasks, categories, sessionsByTask),
-    [periodFilteredDurationTasks, categories, sessionsByTask]
+    buildCategoryDurationFactorRows(periodFilteredAnalysisTasks, categories),
+    [periodFilteredAnalysisTasks, categories]
   );
 
-  const allOverFactors = useMemo(() => periodFilteredDurationTasks.flatMap(task =>
-    getDurationVariance(task, sessionsByTask.get(task.id) ?? []) === 'over' && task.duration_over_factor
-      ? [task.duration_over_factor]
-      : []
-  ), [periodFilteredDurationTasks, sessionsByTask]);
-  const allShortFactors = useMemo(() => periodFilteredDurationTasks.flatMap(task =>
-    getDurationVariance(task, sessionsByTask.get(task.id) ?? []) === 'short' && task.duration_short_factor
-      ? [task.duration_short_factor]
-      : []
-  ), [periodFilteredDurationTasks, sessionsByTask]);
+  const allOverFactors = useMemo(() => periodFilteredAnalysisTasks.flatMap(t => t.duration_over_factor ? [t.duration_over_factor] : []), [periodFilteredAnalysisTasks]);
+  const allShortFactors = useMemo(() => periodFilteredAnalysisTasks.flatMap(t => t.duration_short_factor ? [t.duration_short_factor] : []), [periodFilteredAnalysisTasks]);
 
   const categoryTimeData = useMemo(() => {
     const map = new Map<string | null, number>();
-    for (const task of workloadTasks) {
-      const taskSessions = sessionsByTask.get(task.id) ?? [];
-      const actualMinutes = periodRange
-        ? getActualMinutesForRange(task, taskSessions, periodRange.start, periodRange.end)
-        : getActualMinutes(task, taskSessions);
-      if (actualMinutes === null || actualMinutes <= 0) continue;
-      const key = task.category_id ?? null;
-      map.set(key, (map.get(key) ?? 0) + actualMinutes);
+    for (const t of periodFilteredAnalysisTasks) {
+      const key = t.category_id ?? null;
+      map.set(key, (map.get(key) ?? 0) + getEffectiveMins(t));
     }
     const catMap = new Map(categories.map(c => [c.id, c]));
     return [...map.entries()]
       .map(([key, totalMins]) => ({
         label: key ? (catMap.get(key)?.name ?? '不明') : '分類なし',
-        value: roundHours(totalMins),
+        value: Math.round(totalMins / 60 * 10) / 10,
         color: key ? (catMap.get(key)?.color ?? '#9ca3af') : '#9ca3af',
       }))
       .filter(d => d.value > 0)
       .sort((a, b) => b.value - a.value);
-  }, [workloadTasks, sessionsByTask, periodRange, categories]);
+  }, [periodFilteredAnalysisTasks, categories]);
 
   const categoryBarData = categoryData.map(c => ({ label: c.name, value: c.count, color: c.color }));
   const maxCategoryCount = Math.max(...categoryBarData.map(d => d.value), 1);
@@ -643,30 +669,9 @@ export default function AnalyticsPage() {
     ? Math.round((periodFilteredAnalysisTasks.length / periodFilteredTrackTasks.length) * 100)
     : 0;
 
-  const totalActualHours = useMemo(() => {
-    let totalMinutes = 0;
-    for (const task of workloadTasks) {
-      const taskSessions = sessionsByTask.get(task.id) ?? [];
-      const actualMinutes = periodRange
-        ? getActualMinutesForRange(task, taskSessions, periodRange.start, periodRange.end)
-        : getActualMinutes(task, taskSessions);
-      if (actualMinutes !== null) totalMinutes += actualMinutes;
-    }
-    return roundHours(totalMinutes);
-  }, [workloadTasks, sessionsByTask, periodRange]);
-
-  const missingPlannedCount = useMemo(() =>
-    periodFilteredTrackTasks.filter(task => getPlannedMinutes(task) === null).length,
-    [periodFilteredTrackTasks]
-  );
-
-  const missingActualCount = useMemo(() =>
-    periodFilteredTrackTasks.filter(task =>
-      task.track_actual
-      && task.status !== 'not_started'
-      && getActualMinutes(task, sessionsByTask.get(task.id) ?? []) === null
-    ).length,
-    [periodFilteredTrackTasks, sessionsByTask]
+  const totalActualHours = useMemo(() =>
+    Math.round(periodFilteredWorkloadTasks.reduce((s, t) => s + getEffectiveMins(t), 0) / 60 * 10) / 10,
+    [periodFilteredWorkloadTasks]
   );
 
   const tabs: { id: TabId; label: string }[] = [
@@ -704,10 +709,8 @@ export default function AnalyticsPage() {
         {/* KPI cards */}
         <div className="grid grid-cols-2 gap-3 sm:flex sm:gap-4">
           {[
-            { label: '完了率', value: `${completionRate}%`, sub: '予定開始月基準' },
-            { label: '総実績時間', value: `${totalActualHours}h`, sub: '予定時間の代用なし' },
-            { label: '予定工数未入力', value: `${missingPlannedCount}件`, sub: '時間グラフ対象外' },
-            { label: '実績未入力', value: `${missingActualCount}件`, sub: '実績集計対象外' },
+            { label: '完了率', value: `${completionRate}%`, sub: '' },
+            { label: '総実績時間', value: `${totalActualHours}h`, sub: '' },
           ].map(stat => (
             <div key={stat.label} className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-4 sm:p-5 sm:min-w-[140px]">
               <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">{stat.label}</p>
@@ -749,7 +752,7 @@ export default function AnalyticsPage() {
             </div>
 
             <SectionCard
-              title="分類別 実績時間"
+              title="分類別 所要時間"
             >
               <CategoryTimeBarChart data={categoryTimeData} />
             </SectionCard>
@@ -811,7 +814,7 @@ export default function AnalyticsPage() {
         {/* Duration tab */}
         {tab === 'duration' && (
           <div className="space-y-4 sm:space-y-6">
-            <SectionCard title="所要時間 × 分類" subtitle="予定工数と実績工数を比較（±1分以内は一致）">
+            <SectionCard title="所要時間 × 分類" subtitle="予定所要時間に対して超過・一致・短縮の内訳と主要因">
               <DurationFactorTable rows={categoryDurationFactorRows} />
             </SectionCard>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
