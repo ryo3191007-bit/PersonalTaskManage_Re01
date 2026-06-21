@@ -284,8 +284,8 @@ Context メソッド（createTask, updateTask など）
 | `Task.quantity` | `number` | `1` | `0` をデフォルト値として設定 |
 | `Task.time_per_unit` | `number` | `0` | `0` をデフォルト値として設定 |
 | `Task.actual_time` | `number` | `0` | `0` をデフォルト値として設定 |
-| `Task.actual_memo` | `string` | `''` | `''` をデフォルト値として設定 |
-| `Task.notes` | `string` | `''` | `''` をデフォルト値として設定 |
+| `Task.actual_memo` | `string` | `''` | `''` をデフォルト値として設定。業務上限100文字 |
+| `Task.notes` | `string` | `''` | `''` をデフォルト値として設定。業務上限100文字 |
 | `Task.difficulty` | `number` | `0` | `0〜5` の整数 |
 
 `RecurrenceGroup.end_time` は **`string | null`** である（`string` ではない）。`bulkCreateTasksForGroup` 内で null チェックが必要。
@@ -296,7 +296,7 @@ Context メソッド（createTask, updateTask など）
 |---|---|---|
 | `id` | `string (UUID)` | PK |
 | `user_id` | `string` | auth.users の FK |
-| `title` | `string` | タスク名 |
+| `title` | `string` | タスク名（業務上限30文字） |
 | `category_id` | `string \| null` | カテゴリ FK |
 | `status` | `TaskStatus` | `not_started \| in_progress \| completed \| suspended` |
 | `priority` | `TaskPriority` | `low \| medium \| high` |
@@ -309,8 +309,8 @@ Context メソッド（createTask, updateTask など）
 | `actual_end` | `string \| null` | 実績終了日時（ISO） |
 | `actual_time` | `number` | 実績時間（分、デフォルト 0）。sessions がある場合は sessions から計算 |
 | `suspended_at` | `string \| null` | 中断日時（ISO） |
-| `actual_memo` | `string` | 実績メモ（デフォルト `''`） |
-| `notes` | `string` | 予定メモ（デフォルト `''`） |
+| `actual_memo` | `string` | 実績メモ（デフォルト `''`、業務上限100文字） |
+| `notes` | `string` | 予定メモ（デフォルト `''`、業務上限100文字） |
 | `parent_task_id` | `string \| null` | 親タスク FK（自己参照） |
 | `recurrence_group_id` | `string \| null` | 定常タスクグループ FK |
 | `track_actual` | `boolean` | 実績追跡フラグ。false の場合、分析対象外・実績フィールド非表示 |
@@ -375,7 +375,7 @@ not_started
 |---|---|---|
 | `id` | `string (UUID)` | PK |
 | `user_id` | `string` | auth.users FK |
-| `name` | `string` | カテゴリ名 |
+| `name` | `string` | カテゴリ名（業務上限30文字） |
 | `color` | `string` | カラーコード（`#RRGGBB`） |
 | `created_at` | `string` | 作成日時 |
 
@@ -442,7 +442,8 @@ DURATION_SHORT_FACTORS: readonly string[]      // 所要時間短縮要因の選
 - インラインステータス変更（ドロップダウン）
 - 中断・再開ボタンのインライン表示
 - 本日の作業負荷バー（`useWorkHours` の時間上限との比較）
-- CSV エクスポート / テキストレポートエクスポート
+- CSV エクスポート / テキストレポートエクスポート。CSVセルが `=`, `+`, `-`, `@` で始まる場合は先頭へアポストロフィを付加する
+- タスク一括削除は部分失敗時に成功分を確定し、失敗対象を表示する
 
 **インラインダイアログ（ページ内に定義）:**
 
@@ -489,8 +490,8 @@ DURATION_SHORT_FACTORS: readonly string[]      // 所要時間短縮要因の選
 
 - アカウント情報変更（メールアドレス / パスワード）。保存時は `AuthContext.updateAccount()` から `update-account` Edge Function を呼び出す
 - パスワード変更は 6 文字以上、新しいパスワードと確認用パスワードの一致を UI 側で検証
-- カテゴリ CRUD（色ピッカー付き）
-- カテゴリ一覧の色フィルタ・キーワード検索・一括削除
+- カテゴリ CRUD（色ピッカー付き）。要求仕様上のカテゴリ名上限は30文字だが、現行UIへの上限実装が必要
+- カテゴリ一覧の色フィルタ・キーワード検索・一括削除。要求仕様上は部分失敗時に成功分を確定して失敗対象を表示するが、現行実装への反映が必要
 - ブラウザ通知許可リクエスト
 - カテゴリ追加フォーム: 名前未入力時・Supabase エラー時にインラインエラーメッセージ表示。送信中はボタンを `disabled` にしてローディングテキストを表示
 
@@ -498,9 +499,9 @@ DURATION_SHORT_FACTORS: readonly string[]      // 所要時間短縮要因の選
 
 タスク作成・編集の主要モーダル。セクション構成:
 
-1. **基本情報**: タスク名（入力履歴オートコンプリート）・カテゴリ（インライン新規作成可）・ステータス・親タスク
-2. **計画情報**: 優先度・作業量・1単位あたり時間・予定日時・予定メモ（※難易度プルダウンは削除済み、終日チェックボックスは削除済み）
-3. **実績情報**: `track_actual = true` かつ `status >= in_progress` の場合のみ表示。実績開始/終了・所要時間差異要因・セッション管理・実績メモ
+1. **基本情報**: タスク名（入力履歴オートコンプリート）・カテゴリ（インライン新規作成可）・ステータス・親タスク。要求仕様上のタスク名上限は30文字だが現行UIへの反映が必要
+2. **計画情報**: 優先度・作業量・1単位あたり時間・予定日時・予定メモ（要求仕様上限100文字、現行UIへの反映が必要。※難易度プルダウンは削除済み、終日チェックボックスは削除済み）
+3. **実績情報**: `track_actual = true` かつ `status >= in_progress` の場合のみ表示。実績開始/終了・所要時間差異要因・セッション管理・実績メモ（要求仕様上限100文字、現行UIへの反映が必要）
 
 **バリデーション（保存時）:**
 - ステータスが `in_progress` / `suspended` / `completed` の場合 → 開始実績日時（`actual_start`）が必須
@@ -549,7 +550,7 @@ DURATION_SHORT_FACTORS: readonly string[]      // 所要時間短縮要因の選
 | `formatDate` | `(date: string \| null, includeTime?: boolean) => string` | ISO 文字列を日本語フォーマットに変換。null または無効値は `'—'` を返す |
 | `toLocalDatetimeValue` | `(date: string \| null) => string` | ISO → `<input type="datetime-local">` 用ローカル文字列。無効値は `''` を返す |
 | `sortCategoriesByColor` | `(categories: TaskCategory[]) => TaskCategory[]` | HSL 色相でカテゴリをソート |
-| `exportToCSV` | `(tasks: Task[]) => void` | BOM 付き CSV ファイルをダウンロード（Excel/日本語対応） |
+| `exportToCSV` | `(tasks: Task[]) => void` | BOM付きCSVをダウンロードする。要求仕様では`= + - @`開始セルへ先頭アポストロフィを付加するが、現行実装は引用符エスケープのみ |
 | `exportTodayTasksAsText` | `(tasks: Task[], dateStr: string, fields?: TextExportFields) => string` | 日付別テキストレポートを生成して文字列で返す。`TextExportFields` は `taskName`, `status`, `timeRange`, `duration`, `durationFactor`, `remarks`（予定メモ）, `actualMemo`（実績メモ）の 7 フィールドを持つ |
 | `scheduleNotification` | `(task: Task) => void` | 対象タスクの古い予約を取り消し、未着手の開始通知と未完了の終了通知を `setTimeout` で再予約。過去時刻は通知しない |
 | `cancelTaskNotifications` | `(taskId: string) => void` | タスクIDに紐づく開始・終了タイマーを取り消す |
@@ -651,7 +652,7 @@ DURATION_SHORT_FACTORS: readonly string[]      // 所要時間短縮要因の選
 |---|---|---|
 | Unit Test | なし | `utils.ts` の時間計算関数（特に `getWorkloadMinsForDay`）を優先 |
 | Integration Test | なし | Context の CRUD 操作 |
-| E2E Test | なし | タスクの作成〜完了フロー・中断再開フロー |
+| E2E Test | なし | 全画面・全機能の主要経路を少なくとも1回通す |
 
 UI の動作確認は手動で行う。変更後は以下のフローを必ず手動確認すること:
 

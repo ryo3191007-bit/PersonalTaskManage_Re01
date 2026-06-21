@@ -1507,7 +1507,7 @@ function UnscheduledPanel({ tasks, onEdit, onDelete }: {
 
 // ─── MAIN ────────────────────────────────────────────────────────────────────
 export default function CalendarPage() {
-  const { tasks, sessions, suspendTask, resumeTask, updateTask, deleteTask } = useTasks();
+  const { tasks, sessions, suspendTask, resumeTask, updateTask, updateSession, deleteTask } = useTasks();
   const [view, setView] = useState<CalView>('day');
   const [viewDate, setViewDate] = useState(nowAsJstWallClockDate());
   const [editingTask, setEditingTask] = useState<Task | null | undefined>(undefined);
@@ -1559,10 +1559,18 @@ export default function CalendarPage() {
   };
 
   const handleComplete = async (task: Task, actualEnd: string, memo: string) => {
-    const sessionMins = task.actual_start
-      ? Math.max(0, Math.round((new Date(actualEnd).getTime() - new Date(task.actual_start).getTime()) / 60000))
-      : 0;
-    const totalActualTime = (task.actual_time ?? 0) + sessionMins;
+    const taskSessions = sessions.filter(session => session.task_id === task.id);
+    const completionTime = new Date(actualEnd).getTime();
+    const totalActualTime = taskSessions.length > 0
+      ? taskSessions.reduce((total, session) => {
+          const start = new Date(session.session_start).getTime();
+          const end = session.session_end ? new Date(session.session_end).getTime() : completionTime;
+          return total + Math.max(0, Math.round((end - start) / 60000));
+        }, 0)
+      : task.actual_start
+        ? Math.max(0, Math.round((completionTime - new Date(task.actual_start).getTime()) / 60000))
+        : task.actual_time;
+
     await updateTask(task.id, {
       status: 'completed',
       actual_end: actualEnd,
@@ -1571,6 +1579,10 @@ export default function CalendarPage() {
       completed_at: actualEnd,
       suspended_at: null,
     });
+
+    const openSessions = taskSessions.filter(session => session.session_end === null);
+    await Promise.all(openSessions.map(session => updateSession(session.id, { session_end: actualEnd })));
+
     setCompleteDialog(null);
   };
 

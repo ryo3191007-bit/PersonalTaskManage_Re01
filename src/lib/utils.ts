@@ -385,7 +385,14 @@ function getTaskSessions(task: Task, sessions: TaskSession[]): TaskSession[] {
 function sessionEnd(task: Task, session: TaskSession, now: Date): Date | null {
   const closedAt = validDate(session.session_end);
   if (closedAt) return closedAt;
-  return task.status === 'in_progress' ? now : null;
+  if (task.status === 'in_progress') return now;
+
+  // Legacy calendar completions did not close the active session. Treat the
+  // task completion time as that session's end so existing actuals are not
+  // dropped from analytics. New completions close the session explicitly.
+  if (task.status === 'completed') return validDate(task.actual_end);
+
+  return null;
 }
 
 /**
@@ -512,6 +519,12 @@ export function getWorkloadMins(task: Task): number {
  * 未完了タスク: 予定時間
  */
 export function getWorkloadMinsForDay(task: Task, dayDate: Date, sessions?: import('./types').TaskSession[]): number {
+  // Completed workload is actual work. Use the same canonical calculation as
+  // analytics so the calendar and daily chart cannot diverge.
+  if (task.status === 'completed') {
+    return getActualMinutesForDay(task, sessions ?? [], dayDate) ?? 0;
+  }
+
   if (!task.scheduled_start || !task.scheduled_end) return 0;
   const dateKey = `${dayDate.getFullYear()}-${String(dayDate.getMonth() + 1).padStart(2, '0')}-${String(dayDate.getDate()).padStart(2, '0')}`;
   const dayRange = getJstDayRange(dateKey);
@@ -520,7 +533,7 @@ export function getWorkloadMinsForDay(task: Task, dayDate: Date, sessions?: impo
 
   // セッションデータがある場合は、当日に重なるセッションの作業時間を正確に合計する
   const taskSessions = sessions?.filter(s => s.task_id === task.id) ?? [];
-  if (taskSessions.length > 0 && (task.status === 'completed' || task.status === 'suspended' || task.status === 'in_progress')) {
+  if (taskSessions.length > 0 && (task.status === 'suspended' || task.status === 'in_progress')) {
     const sorted = [...taskSessions].sort((a, b) => new Date(a.session_start).getTime() - new Date(b.session_start).getTime());
     let totalMins = 0;
     for (const s of sorted) {
@@ -551,7 +564,7 @@ export function getWorkloadMinsForDay(task: Task, dayDate: Date, sessions?: impo
   let rangeStart: Date | null = null;
   let rangeEnd: Date | null = null;
 
-  if ((task.status === 'completed' || task.status === 'suspended' || task.status === 'in_progress') && task.actual_start) {
+  if ((task.status === 'suspended' || task.status === 'in_progress') && task.actual_start) {
     rangeStart = new Date(task.actual_start);
     if (task.actual_end) {
       rangeEnd = new Date(task.actual_end);
