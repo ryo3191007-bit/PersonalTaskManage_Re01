@@ -12,6 +12,7 @@ import {
   getPlannedMinutesForRange,
   getWorkloadTaskList,
 } from '../lib/utils';
+import { getJstMonthKey, getJstMonthRange } from '../lib/dateTime';
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -420,9 +421,7 @@ type TabId = 'overview' | 'duration';
 
 function getMonthKey(dateStr: string | null | undefined): string | null {
   if (!dateStr) return null;
-  const d = new Date(dateStr);
-  if (isNaN(d.getTime())) return null;
-  return `${d.getFullYear()}/${String(d.getMonth() + 1).padStart(2, '0')}`;
+  return getJstMonthKey(dateStr) || null;
 }
 
 function formatPeriodLabel(ym: string): string {
@@ -431,11 +430,9 @@ function formatPeriodLabel(ym: string): string {
 }
 
 function getMonthRange(ym: string): { start: Date; end: Date } {
-  const [year, month] = ym.split('/').map(Number);
-  return {
-    start: new Date(year, month - 1, 1),
-    end: new Date(year, month, 1),
-  };
+  const range = getJstMonthRange(ym);
+  if (!range) throw new Error(`Invalid month key: ${ym}`);
+  return range;
 }
 
 function getTaskPeriodKey(task: Task): string | null {
@@ -451,8 +448,7 @@ export default function AnalyticsPage() {
   const [tab, setTab] = useState<TabId>('overview');
 
   const currentMonthKey = useMemo(() => {
-    const now = new Date();
-    return `${now.getFullYear()}/${String(now.getMonth() + 1).padStart(2, '0')}`;
+    return getJstMonthKey();
   }, []);
 
   /** 全体期間フィルター: 'all' | 'YYYY/MM' */
@@ -519,9 +515,10 @@ export default function AnalyticsPage() {
   const monthlyData = useMemo((): DualBarDatum[] => {
     const now = new Date();
     const months: string[] = [];
+    const [currentYear, currentMonth] = currentMonthKey.split('/').map(Number);
     for (let i = 11; i >= 0; i--) {
-      const date = new Date(now.getFullYear(), now.getMonth() - i, 1);
-      months.push(`${date.getFullYear()}/${String(date.getMonth() + 1).padStart(2, '0')}`);
+      const date = new Date(Date.UTC(currentYear, currentMonth - 1 - i, 1));
+      months.push(`${date.getUTCFullYear()}/${String(date.getUTCMonth() + 1).padStart(2, '0')}`);
     }
 
     return months.map(monthKey => {
@@ -545,7 +542,7 @@ export default function AnalyticsPage() {
         actual: roundHours(actualMinutes),
       };
     });
-  }, [workloadTasks, sessionsByTask]);
+  }, [workloadTasks, sessionsByTask, currentMonthKey]);
 
   // ── 日別工数（特定月） ──────────────────────────────────────────────────
   // period !== 'all' のときはその月、'all' + drillMonth のときは drillMonth を使用
@@ -793,11 +790,11 @@ export default function AnalyticsPage() {
                   onBarClick={label => {
                     // label は "MM月" 形式 → YYYY/MM に変換
                     const mm = label.replace('月', '').padStart(2, '0');
-                    const now = new Date();
+                    const [currentYear, currentMonth] = currentMonthKey.split('/').map(Number);
                     for (let i = 11; i >= 0; i--) {
-                      const d = new Date(now); d.setMonth(d.getMonth() - i);
-                      if (String(d.getMonth() + 1).padStart(2, '0') === mm) {
-                        setDrillMonth(`${d.getFullYear()}/${String(d.getMonth() + 1).padStart(2, '0')}`);
+                      const d = new Date(Date.UTC(currentYear, currentMonth - 1 - i, 1));
+                      if (String(d.getUTCMonth() + 1).padStart(2, '0') === mm) {
+                        setDrillMonth(`${d.getUTCFullYear()}/${String(d.getUTCMonth() + 1).padStart(2, '0')}`);
                         break;
                       }
                     }

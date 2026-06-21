@@ -23,7 +23,7 @@ function periodLabel(group: RecurrenceGroup): string {
 
 function timeLabel(group: RecurrenceGroup): string {
   if (!group.end_time) return group.start_time;
-  return `${group.start_time} 〜 ${group.end_time}`;
+  return `${group.start_time} 〜 ${group.end_time}${group.ends_next_day ? '（翌日）' : ''}`;
 }
 
 interface GroupCardProps {
@@ -188,12 +188,7 @@ export default function RecurrenceGroupsPage() {
 
   const handleBulkUpdate = async () => {
     if (!bulkUpdateTarget) return;
-    await bulkUpdateTasksForGroup(bulkUpdateTarget.id, {
-      title: bulkUpdateTarget.title,
-      category_id: bulkUpdateTarget.category_id,
-      priority: bulkUpdateTarget.priority,
-      notes: bulkUpdateTarget.notes,
-    });
+    await bulkUpdateTasksForGroup(bulkUpdateTarget);
     setBulkUpdateTarget(null);
   };
 

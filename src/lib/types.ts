@@ -10,6 +10,7 @@ export interface RecurrenceGroup {
   priority: TaskPriority;
   start_time: string;
   end_time: string | null;
+  ends_next_day: boolean;
   recurrence_type: RecurrenceType;
   days_of_week: number[] | null;
   period_start: string;

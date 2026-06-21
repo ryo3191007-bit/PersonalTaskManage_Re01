@@ -7,6 +7,15 @@ import TaskForm from '../components/tasks/TaskForm';
 import RecurrenceForm from '../components/tasks/RecurrenceForm';
 import { getWorkloadMinsForDay, getWorkloadTaskList } from '../lib/utils';
 import { useWorkHours } from '../lib/useWorkHours';
+import {
+  BUSINESS_TIME_ZONE,
+  formatJstDateTimeLocal,
+  isJstMidnight,
+  jstDateTimeToIso,
+  nowAsJstWallClockDate,
+  parseJstDateTime,
+  toJstWallClockDate,
+} from '../lib/dateTime';
 
 type CalView = 'day' | 'week' | 'month';
 
@@ -24,6 +33,10 @@ function toDay(date: Date) {
   return new Date(date.getFullYear(), date.getMonth(), date.getDate());
 }
 
+function calendarDate(value: string | Date): Date {
+  return toJstWallClockDate(value) ?? new Date(Number.NaN);
+}
+
 function addDays(date: Date, n: number) {
   const d = new Date(date);
   d.setDate(d.getDate() + n);
@@ -31,7 +44,9 @@ function addDays(date: Date, n: number) {
 }
 
 function diffDays(a: Date, b: Date) {
-  return Math.round((b.getTime() - a.getTime()) / 86400000);
+  const aUtc = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
+  const bUtc = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
+  return Math.round((bUtc - aUtc) / 86400000);
 }
 
 function assignLanes(
@@ -142,29 +157,29 @@ function getScheduledGeometry(t: Task, dayDate: Date): {
   if (!hasActual || !t.scheduled_start) return { hasDiff: false };
   const thisDay = toDay(dayDate);
 
-  const sStart = new Date(t.scheduled_start);
+  const sStart = calendarDate(t.scheduled_start);
   const sStartDay = toDay(sStart);
   // scheduled が完全に thisDay より前（前日以前に終わっている）なら点線不要
-  if (t.scheduled_end && toDay(new Date(t.scheduled_end)) < thisDay) return { hasDiff: false };
+  if (t.scheduled_end && toDay(calendarDate(t.scheduled_end)) < thisDay) return { hasDiff: false };
   const sStartMins = sStartDay < thisDay ? 0 : sStart.getHours() * 60 + sStart.getMinutes();
   let sEndMins: number;
   if (t.scheduled_end) {
-    const sEnd = new Date(t.scheduled_end);
+    const sEnd = calendarDate(t.scheduled_end);
     sEndMins = toDay(sEnd) > thisDay ? 24 * 60 : sEnd.getHours() * 60 + sEnd.getMinutes();
     if (sEndMins <= sStartMins) sEndMins = sStartMins + 30;
   } else {
     sEndMins = sStartMins + 60;
   }
 
-  const aStart = new Date(t.actual_start!);
+  const aStart = calendarDate(t.actual_start!);
   const aStartDay = toDay(aStart);
   const aStartMins = aStartDay < thisDay ? 0 : aStart.getHours() * 60 + aStart.getMinutes();
   let aEndMins: number;
   if (t.actual_end) {
-    const aEnd = new Date(t.actual_end);
+    const aEnd = calendarDate(t.actual_end);
     aEndMins = toDay(aEnd) > thisDay ? 24 * 60 : aEnd.getHours() * 60 + aEnd.getMinutes();
   } else if (t.suspended_at && t.status === 'suspended') {
-    const sAt = new Date(t.suspended_at);
+    const sAt = calendarDate(t.suspended_at);
     aEndMins = toDay(sAt) > thisDay ? 24 * 60 : sAt.getHours() * 60 + sAt.getMinutes();
   } else if (t.actual_time > 0) {
     aEndMins = aStartMins + t.actual_time;
@@ -331,9 +346,7 @@ function buildTaskSegments(task: Task, sessions: TaskSession[]): TaskSegment[] {
 // ─── 中断ダイアログ（カレンダー用） ──────────────────────────────────────
 function CalSuspendDialog({ task, onClose, onSave }: { task: Task; onClose: () => void; onSave: (t: string) => void }) {
   const [value, setValue] = useState(() => {
-    const now = new Date();
-    const pad = (n: number) => String(n).padStart(2, '0');
-    return `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}T${pad(now.getHours())}:${pad(now.getMinutes())}`;
+    return formatJstDateTimeLocal(new Date());
   });
   return (
     <div className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center bg-black/50 backdrop-blur-sm p-2 sm:p-4">
@@ -353,7 +366,7 @@ function CalSuspendDialog({ task, onClose, onSave }: { task: Task; onClose: () =
         <p className="text-xs text-gray-400 dark:text-gray-500">中断中の時間は所要時間に含まれません。</p>
         <div className="flex gap-2 justify-end">
           <button onClick={onClose} className="btn-secondary">キャンセル</button>
-          <button onClick={() => value && onSave(new Date(value).toISOString())} disabled={!value} className="btn-primary flex items-center gap-1.5 bg-amber-600 hover:bg-amber-700">
+          <button onClick={() => { const iso = jstDateTimeToIso(value); if (iso) onSave(iso); }} disabled={!value} className="btn-primary flex items-center gap-1.5 bg-amber-600 hover:bg-amber-700">
             <PauseCircle className="w-3.5 h-3.5" />中断
           </button>
         </div>
@@ -365,12 +378,10 @@ function CalSuspendDialog({ task, onClose, onSave }: { task: Task; onClose: () =
 // ─── 再開ダイアログ（カレンダー用） ──────────────────────────────────────
 function CalResumeDialog({ task, onClose, onSave }: { task: Task; onClose: () => void; onSave: (t: string) => void }) {
   const [value, setValue] = useState(() => {
-    const now = new Date();
-    const pad = (n: number) => String(n).padStart(2, '0');
-    return `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}T${pad(now.getHours())}:${pad(now.getMinutes())}`;
+    return formatJstDateTimeLocal(new Date());
   });
   const suspendedAt = task.suspended_at ? new Date(task.suspended_at) : null;
-  const resumeAt = value ? new Date(value) : null;
+  const resumeAt = value ? parseJstDateTime(value) : null;
   const suspendMins = suspendedAt && resumeAt ? Math.round((resumeAt.getTime() - suspendedAt.getTime()) / 60000) : null;
   const fmt = (mins: number) => mins < 60 ? `${mins}分` : `${Math.floor(mins / 60)}時間${mins % 60 > 0 ? `${mins % 60}分` : ''}`;
 
@@ -387,7 +398,7 @@ function CalResumeDialog({ task, onClose, onSave }: { task: Task; onClose: () =>
         <p className="text-xs text-gray-500 dark:text-gray-400 truncate">{task.title}</p>
         {suspendedAt && (
           <div className="text-xs text-gray-500 dark:text-gray-400 bg-amber-50 dark:bg-amber-900/20 rounded-lg px-3 py-2">
-            中断日時: {suspendedAt.toLocaleString('ja-JP', { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
+            中断日時: {suspendedAt.toLocaleString('ja-JP', { timeZone: BUSINESS_TIME_ZONE, month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
           </div>
         )}
         <div>
@@ -399,7 +410,7 @@ function CalResumeDialog({ task, onClose, onSave }: { task: Task; onClose: () =>
         )}
         <div className="flex gap-2 justify-end">
           <button onClick={onClose} className="btn-secondary">キャンセル</button>
-          <button onClick={() => value && onSave(new Date(value).toISOString())} disabled={!value} className="btn-primary flex items-center gap-1.5">
+          <button onClick={() => { const iso = jstDateTimeToIso(value); if (iso) onSave(iso); }} disabled={!value} className="btn-primary flex items-center gap-1.5">
             <PlayCircle className="w-3.5 h-3.5" />再開
           </button>
         </div>
@@ -415,8 +426,7 @@ function CalCompleteDialog({ task, onClose, onSave }: {
   onSave: (actualEnd: string, memo: string) => void;
 }) {
   const now = new Date();
-  const pad = (n: number) => String(n).padStart(2, '0');
-  const [value, setValue] = useState(`${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}T${pad(now.getHours())}:${pad(now.getMinutes())}`);
+  const [value, setValue] = useState(formatJstDateTimeLocal(now));
   const [memo, setMemo] = useState(task.actual_memo ?? '');
 
   return (
@@ -437,7 +447,7 @@ function CalCompleteDialog({ task, onClose, onSave }: {
         </div>
         <div className="flex gap-2 justify-end">
           <button onClick={onClose} className="btn-secondary">キャンセル</button>
-          <button onClick={() => value && onSave(new Date(value).toISOString(), memo)} disabled={!value} className="btn-primary flex items-center gap-1.5">
+          <button onClick={() => { const iso = jstDateTimeToIso(value); if (iso) onSave(iso, memo); }} disabled={!value} className="btn-primary flex items-center gap-1.5">
             <Check className="w-3.5 h-3.5" />完了
           </button>
         </div>
@@ -492,14 +502,14 @@ function DayView({ date, tasks, sessions, onEdit, onCreateAt, onSuspend, onResum
       const segs = buildTaskSegments(t, sessions);
       for (const seg of segs) {
         if (!seg.displayStart) continue;
-        const segStart = toDay(new Date(seg.displayStart));
+        const segStart = toDay(calendarDate(seg.displayStart));
         if (segStart.getTime() === target.getTime()) {
           result.push(seg);
           continue;
         }
         if (seg.displayEnd) {
-          const segEnd = new Date(seg.displayEnd);
-          if (segEnd.getHours() === 0 && segEnd.getMinutes() === 0 && segEnd.getSeconds() === 0) continue;
+          const segEnd = calendarDate(seg.displayEnd);
+          if (isJstMidnight(seg.displayEnd)) continue;
           const segEndDay = toDay(segEnd);
           if (segStart < target && target <= segEndDay) result.push(seg);
         }
@@ -509,14 +519,14 @@ function DayView({ date, tasks, sessions, onEdit, onCreateAt, onSuspend, onResum
   }, [visibleTasks, sessions, target.getTime()]);
 
   const usedHours = useMemo(() => {
-    const dayEnd = new Date(target.getTime() + 24 * 60 * 60 * 1000);
+    const dayEnd = addDays(target, 1);
     // 子タスクを持つ親タスクは除外し、子タスクを集計対象とする
     const workloadList = getWorkloadTaskList(tasks);
     const eligibleTasks = workloadList.filter(t => {
       const { displayStart, displayEnd } = getDisplayTimes(t);
       if (!displayStart) return false;
-      const s = new Date(displayStart);
-      const e = displayEnd ? new Date(displayEnd) : new Date(s.getTime() + 60 * 60000);
+      const s = calendarDate(displayStart);
+      const e = displayEnd ? calendarDate(displayEnd) : new Date(s.getTime() + 60 * 60000);
       return s < dayEnd && e > target;
     });
     // getWorkloadMinsForDay で当日分のみ切り出す（セッションで正確に按分）
@@ -538,12 +548,12 @@ function DayView({ date, tasks, sessions, onEdit, onCreateAt, onSuspend, onResum
     const taskSpan: Record<string, { startMins: number; endMins: number }> = {};
     daySegments.forEach(seg => {
       if (seg.isConnector) return;
-      const start = new Date(seg.displayStart);
+      const start = calendarDate(seg.displayStart);
       const startDay = toDay(start);
       const startMins = startDay < target ? 0 : start.getHours() * 60 + start.getMinutes();
       let endMins: number;
       if (seg.displayEnd) {
-        const end = new Date(seg.displayEnd);
+        const end = calendarDate(seg.displayEnd);
         endMins = toDay(end) > target ? 24 * 60 : Math.max(end.getHours() * 60 + end.getMinutes(), startMins + 30);
       } else {
         endMins = startMins + 60;
@@ -651,12 +661,12 @@ function DayView({ date, tasks, sessions, onEdit, onCreateAt, onSuspend, onResum
               />
             ))}
             {daySegments.map(seg => {
-              const start = new Date(seg.displayStart);
+              const start = calendarDate(seg.displayStart);
               const startDay = toDay(start);
               const startMins = startDay < target ? 0 : start.getHours() * 60 + start.getMinutes();
               let endMins: number;
               if (seg.displayEnd) {
-                const end = new Date(seg.displayEnd);
+                const end = calendarDate(seg.displayEnd);
                 endMins = toDay(end) > target ? 24 * 60 : Math.max(end.getHours() * 60 + end.getMinutes(), startMins + 30);
               } else {
                 endMins = startMins + 60;
@@ -672,7 +682,7 @@ function DayView({ date, tasks, sessions, onEdit, onCreateAt, onSuspend, onResum
               const hasChildren = parentIdsWithChildren.has(seg.task.id);
               const isExpanded = expandedIds.has(seg.task.id);
               const isContinued = startDay < target;
-              const fmtTime = (iso: string) => new Date(iso).toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit' });
+              const fmtTime = (iso: string) => new Date(iso).toLocaleTimeString('ja-JP', { timeZone: BUSINESS_TIME_ZONE, hour: '2-digit', minute: '2-digit' });
               const diff = getScheduledGeometry(seg.task, date);
               const left = `calc(${col * widthPct}% + 1px)`;
               const width = `calc(${widthPct}% - 3px)`;
@@ -741,7 +751,7 @@ function DayView({ date, tasks, sessions, onEdit, onCreateAt, onSuspend, onResum
                     {height > 32 && (
                       <span className="text-[10px] opacity-70 leading-tight block truncate">
                         {isContinued
-                          ? `〜 ${new Date(seg.displayStart).toLocaleDateString('ja-JP', { month: 'numeric', day: 'numeric' })} から`
+                          ? `〜 ${new Date(seg.displayStart).toLocaleDateString('ja-JP', { timeZone: BUSINESS_TIME_ZONE, month: 'numeric', day: 'numeric' })} から`
                           : fmtTime(seg.displayStart)}
                         {seg.displayEnd && ` 〜 ${fmtTime(seg.displayEnd)}`}
                       </span>
@@ -801,7 +811,7 @@ function WeekView({ weekStart, tasks, sessions, onEdit, onCreateAt, onSuspend, o
   onDelete: (id: string) => void;
 }) {
   const days = Array.from({ length: 7 }, (_, i) => addDays(weekStart, i));
-  const today = new Date();
+  const today = nowAsJstWallClockDate();
   const wStart = toDay(weekStart);
   const wEnd = toDay(addDays(weekStart, 6));
   const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set());
@@ -831,19 +841,17 @@ function WeekView({ weekStart, tasks, sessions, onEdit, onCreateAt, onSuspend, o
 
   const isWeekMultiDay = (t: Task) => {
     if (!t.scheduled_start || !t.scheduled_end) return false;
-    const e = new Date(t.scheduled_end);
-    const s = toDay(new Date(t.scheduled_start));
-    const eDay = toDay(e);
-    if (eDay <= s) return false;
-    if (e.getHours() === 0 && e.getMinutes() === 0 && e.getSeconds() === 0) return false;
-    return true;
+    const s = toDay(calendarDate(t.scheduled_start));
+    const e = calendarDate(t.scheduled_end);
+    const lastOccupiedDay = toDay(isJstMidnight(t.scheduled_end) ? addDays(e, -1) : e);
+    return lastOccupiedDay > s;
   };
 
   const multiDayTasks = useMemo(() => {
     return visibleTasks.filter(t => {
       if (!isWeekMultiDay(t)) return false;
-      const s = toDay(new Date(t.scheduled_start!));
-      const e = toDay(new Date(t.scheduled_end!));
+      const s = toDay(calendarDate(t.scheduled_start!));
+      const e = toDay(isJstMidnight(t.scheduled_end!) ? addDays(calendarDate(t.scheduled_end!), -1) : calendarDate(t.scheduled_end!));
       return s <= wEnd && e >= wStart;
     });
   }, [visibleTasks, wStart.getTime(), wEnd.getTime()]);
@@ -852,8 +860,8 @@ function WeekView({ weekStart, tasks, sessions, onEdit, onCreateAt, onSuspend, o
     const parentOf: Record<string, string> = {};
     multiDayTasks.forEach(t => { if (t.parent_task_id) parentOf[t.id] = t.parent_task_id; });
     const items = multiDayTasks.map(t => {
-      const s = toDay(new Date(t.scheduled_start!));
-      const e = toDay(new Date(t.scheduled_end!));
+      const s = toDay(calendarDate(t.scheduled_start!));
+      const e = toDay(isJstMidnight(t.scheduled_end!) ? addDays(calendarDate(t.scheduled_end!), -1) : calendarDate(t.scheduled_end!));
       const colStart = Math.max(0, diffDays(wStart, s));
       const colEnd = Math.min(6, diffDays(wStart, e));
       return { id: t.id, colStart, colEnd };
@@ -877,7 +885,7 @@ function WeekView({ weekStart, tasks, sessions, onEdit, onCreateAt, onSuspend, o
         const segs = buildTaskSegments(t, sessions);
         for (const seg of segs) {
           if (!seg.displayStart) continue;
-          const segStart = toDay(new Date(seg.displayStart));
+          const segStart = toDay(calendarDate(seg.displayStart));
           if (segStart.getTime() === target.getTime()) {
             result.push(seg);
           }
@@ -895,11 +903,11 @@ function WeekView({ weekStart, tasks, sessions, onEdit, onCreateAt, onSuspend, o
       const taskSpan: Record<string, { startMins: number; endMins: number }> = {};
       segs.forEach(seg => {
         if (seg.isConnector) return;
-        const start = new Date(seg.displayStart);
+        const start = calendarDate(seg.displayStart);
         const startMins = start.getHours() * 60 + start.getMinutes();
         let endMins: number;
         if (seg.displayEnd) {
-          const end = new Date(seg.displayEnd);
+          const end = calendarDate(seg.displayEnd);
           endMins = toDay(end) > target ? 24 * 60 : Math.max(end.getHours() * 60 + end.getMinutes(), startMins + 30);
         } else {
           endMins = startMins + 60;
@@ -1019,11 +1027,11 @@ function WeekView({ weekStart, tasks, sessions, onEdit, onCreateAt, onSuspend, o
                       />
                     ))}
                     {segmentsByDay[di].map(seg => {
-                      const start = new Date(seg.displayStart);
+                      const start = calendarDate(seg.displayStart);
                       const startMins = start.getHours() * 60 + start.getMinutes();
                       let endMins: number;
                       if (seg.displayEnd) {
-                        const end = new Date(seg.displayEnd);
+                        const end = calendarDate(seg.displayEnd);
                         endMins = toDay(end) > target ? 24 * 60 : Math.max(end.getHours() * 60 + end.getMinutes(), startMins + 30);
                       } else {
                         endMins = startMins + 60;
@@ -1037,7 +1045,7 @@ function WeekView({ weekStart, tasks, sessions, onEdit, onCreateAt, onSuspend, o
                       const widthPct = 100 / totalCols;
                       const hasChildren = parentIdsWithChildren.has(seg.task.id);
                       const isExpanded = expandedIds.has(seg.task.id);
-                      const fmtTime = (iso: string) => new Date(iso).toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit' });
+                      const fmtTime = (iso: string) => new Date(iso).toLocaleTimeString('ja-JP', { timeZone: BUSINESS_TIME_ZONE, hour: '2-digit', minute: '2-digit' });
                       const left = `calc(${col * widthPct}% + 1px)`;
                       const width = `calc(${widthPct}% - 3px)`;
                       const suspendedStyle = seg.isSuspended
@@ -1151,7 +1159,7 @@ function MonthViewWrapper({ viewDate, tasks, sessions, onEdit, onCreateAt, onDel
   const firstDay = new Date(year, month, 1);
   const lastDay = new Date(year, month + 1, 0);
   const startPad = firstDay.getDay();
-  const today = new Date();
+  const today = nowAsJstWallClockDate();
   const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set());
   const [deletingId, setDeletingId] = useState<string | null>(null);
 
@@ -1191,7 +1199,10 @@ function MonthViewWrapper({ viewDate, tasks, sessions, onEdit, onCreateAt, onDel
 
   const isMultiDay = (t: Task) => {
     if (!t.scheduled_start || !t.scheduled_end) return false;
-    return toDay(new Date(t.scheduled_end)) > toDay(new Date(t.scheduled_start));
+    if (isJstMidnight(t.scheduled_end)) {
+      return toDay(addDays(calendarDate(t.scheduled_end), -1)) > toDay(calendarDate(t.scheduled_start));
+    }
+    return toDay(calendarDate(t.scheduled_end)) > toDay(calendarDate(t.scheduled_start));
   };
 
   const LANE_H = 20;
@@ -1203,13 +1214,13 @@ function MonthViewWrapper({ viewDate, tasks, sessions, onEdit, onCreateAt, onDel
       const rowEnd = [...row].reverse().find(d => d !== null)!;
       const mdTasksInRow = visibleTasks.filter(t => {
         if (!isMultiDay(t)) return false;
-        const s = toDay(new Date(t.scheduled_start!));
-        const e = toDay(new Date(t.scheduled_end!));
+        const s = toDay(calendarDate(t.scheduled_start!));
+        const e = toDay(isJstMidnight(t.scheduled_end!) ? addDays(calendarDate(t.scheduled_end!), -1) : calendarDate(t.scheduled_end!));
         return s <= toDay(rowEnd) && e >= toDay(rowStart);
       });
       const mdItems = mdTasksInRow.map(t => {
-        const s = toDay(new Date(t.scheduled_start!));
-        const e = toDay(new Date(t.scheduled_end!));
+        const s = toDay(calendarDate(t.scheduled_start!));
+        const e = toDay(isJstMidnight(t.scheduled_end!) ? addDays(calendarDate(t.scheduled_end!), -1) : calendarDate(t.scheduled_end!));
         const colStart = Math.max(0, diffDays(toDay(rowStart), s));
         const colEnd = Math.min(6, diffDays(toDay(rowStart), e));
         return { id: t.id, colStart, colEnd, task: t };
@@ -1229,7 +1240,7 @@ function MonthViewWrapper({ viewDate, tasks, sessions, onEdit, onCreateAt, onDel
       const segs = buildTaskSegments(t, sessions);
       for (const seg of segs) {
         if (!seg.displayStart) continue;
-        const d = toDay(new Date(seg.displayStart));
+        const d = toDay(calendarDate(seg.displayStart));
         const key = `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
         if (!map.has(key)) map.set(key, []);
         map.get(key)!.push(seg);
@@ -1451,12 +1462,12 @@ function UnscheduledPanel({ tasks, onEdit, onDelete }: {
                     )}
                     {t.scheduled_start && !t.scheduled_end && (
                       <span className="text-[11px] text-gray-400 dark:text-gray-500">
-                        開始: {new Date(t.scheduled_start).toLocaleString('ja-JP', { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' })} （終了未定）
+                        開始: {new Date(t.scheduled_start).toLocaleString('ja-JP', { timeZone: BUSINESS_TIME_ZONE, month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' })} （終了未定）
                       </span>
                     )}
                     {!t.scheduled_start && t.scheduled_end && (
                       <span className="text-[11px] text-gray-400 dark:text-gray-500">
-                        終了: {new Date(t.scheduled_end).toLocaleString('ja-JP', { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' })} （開始未定）
+                        終了: {new Date(t.scheduled_end).toLocaleString('ja-JP', { timeZone: BUSINESS_TIME_ZONE, month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' })} （開始未定）
                       </span>
                     )}
                   </div>
@@ -1498,7 +1509,7 @@ function UnscheduledPanel({ tasks, onEdit, onDelete }: {
 export default function CalendarPage() {
   const { tasks, sessions, suspendTask, resumeTask, updateTask, deleteTask } = useTasks();
   const [view, setView] = useState<CalView>('day');
-  const [viewDate, setViewDate] = useState(new Date());
+  const [viewDate, setViewDate] = useState(nowAsJstWallClockDate());
   const [editingTask, setEditingTask] = useState<Task | null | undefined>(undefined);
   const [newTaskDatetime, setNewTaskDatetime] = useState<string | undefined>(undefined);
   const [showRecurrenceForm, setShowRecurrenceForm] = useState(false);
@@ -1575,7 +1586,7 @@ export default function CalendarPage() {
             <button onClick={() => navigate(1)} className="w-11 h-11 sm:w-8 sm:h-8 flex items-center justify-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
               <ChevronRight className="w-4 h-4 text-gray-600 dark:text-gray-400" />
             </button>
-            <button onClick={() => setViewDate(new Date())} className="text-xs text-blue-600 hover:underline flex-shrink-0">今日</button>
+            <button onClick={() => setViewDate(nowAsJstWallClockDate())} className="text-xs text-blue-600 hover:underline flex-shrink-0">今日</button>
           </div>
           <div className="grid grid-cols-2 sm:flex sm:items-center gap-2 w-full sm:w-auto">
             <div className="hidden lg:flex items-center gap-1.5 mr-1">
