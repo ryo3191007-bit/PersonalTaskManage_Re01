@@ -466,11 +466,15 @@ DURATION_SHORT_FACTORS: readonly string[]      // 所要時間短縮要因の選
 
 ### AnalyticsPage（`src/pages/AnalyticsPage.tsx`）
 
-- 集計対象: `track_actual = true` かつ `parent_task_id = null` のタスクのみ
+- 集計対象: 単独タスクと末端の子タスク（子を持つ親は除外）。`track_actual = false` は件数・完了率に含め、実績時間・差異分析から除外
 - 期間セレクター（全期間・月次ドロップダウン）
 - タブ構成:
-  1. **概要**: KPI（完了率・実績時間合計）、ドーナツチャート（ステータス分布）、カテゴリ別バーチャート、月次作業量（計画 vs 実績 2 本棒グラフ）
-  2. **所要時間分析**: 超過/適切/短縮の積み上げ棒グラフ・要因ランキング
+  1. **概要**: KPI（完了率・実績時間合計・予定工数未入力・実績未入力）、ドーナツチャート（ステータス分布）、カテゴリ別実績時間、月次作業量（計画 vs 実績）
+  2. **所要時間分析**: 予定工数と実績工数の差が +1 分超=超過、-1 分未満=短縮、±1 分以内=一致。要因ランキングは判定結果の補足
+- 予定工数は `quantity × time_per_unit` を正とし、予定日時は日別・月別への按分にのみ使用する
+- 実績工数はセッション、`actual_time`、実績区間の順で採用し、予定工数では代用しない
+- 月次件数・完了率は予定開始月へ所属させ、予定・実績時間は対象期間との重複時間だけを計上する
+- 内部計算は丸め前の分で行い、表示時だけ時間を小数第1位、割合を整数へ丸める
 
 ### RecurrenceGroupsPage（`src/pages/RecurrenceGroupsPage.tsx`）
 
@@ -525,6 +529,11 @@ DURATION_SHORT_FACTORS: readonly string[]      // 所要時間短縮要因の選
 | `getWorkloadMinsForDay` | `(task: Task, dayDate: Date, sessions?: TaskSession[]) => number` | 指定日のタスク作業負荷（分）を返す。**第3引数の `sessions` は必ず渡すこと**（省略するとセッションベースの正確な計算が行われない）。`scheduled_start` または `scheduled_end` が未入力のタスクは 0 を返す |
 | `getWorkloadMins` | `(task: Task) => number` | タスクの総工数分数を返す（完了は実績、未完了は予定。日跨ぎのクリップなし） |
 | `getWorkloadTaskList` | `(allTasks: Task[]) => Task[]` | 子タスクを持つ親タスクを除外（二重計上防止）した配列を返す |
+| `getPlannedMinutes` | `(task: Task) => number \| null` | `quantity × time_per_unit` による正式な予定工数。0・未入力は `null` |
+| `getPlannedMinutesForRange` | `(task: Task, rangeStart: Date, rangeEnd: Date) => number \| null` | 予定区間と対象期間の重複比率で予定工数を按分。予定工数または予定区間がない場合は `null` |
+| `getActualMinutes` | `(task: Task, sessions?: TaskSession[], now?: Date) => number \| null` | セッション、`actual_time`、実績区間の優先順で実績工数を返す。`track_actual = false`・実績未入力は `null` |
+| `getActualMinutesForRange` | `(task: Task, sessions: TaskSession[], rangeStart: Date, rangeEnd: Date, now?: Date) => number \| null` | セッションまたは実績区間が対象期間と重なる分だけ実績工数を返す |
+| `getDurationVariance` | `(plannedMinutes: number \| null, actualMinutes: number \| null, toleranceMinutes?: number) => DurationVariance` | 予定と実績を比較し、既定の ±1 分許容差で超過・一致・短縮・対象外を判定 |
 | `getTotalMinutes` | `(task: Task) => number` | `quantity × time_per_unit` の合計分数（計画値） |
 | `formatDate` | `(date: string \| null, includeTime?: boolean) => string` | ISO 文字列を日本語フォーマットに変換。null または無効値は `'—'` を返す |
 | `toLocalDatetimeValue` | `(date: string \| null) => string` | ISO → `<input type="datetime-local">` 用ローカル文字列。無効値は `''` を返す |
@@ -537,7 +546,7 @@ DURATION_SHORT_FACTORS: readonly string[]      // 所要時間短縮要因の選
 | `syncTaskNotifications` | `(tasks: Task[]) => void` | 全タイマーを破棄し、最新タスク一覧から通知予約を再構築する |
 | `hasChildTasks` | `(taskId: string, allTasks: Task[]) => boolean` | タスクに子タスクが存在するか確認 |
 
-> `getWorkloadMinsForMonth` という関数は**存在しない**。月次集計は `AnalyticsPage` が日次ループで自前実装している。
+> `getWorkloadMins` / `getWorkloadMinsForDay` は一覧・カレンダーの運用表示用。分析画面では予定と実績を混在させず、上記の分析専用関数を使用する。
 
 ---
 
