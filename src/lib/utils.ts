@@ -1,4 +1,5 @@
 import type { Task, TaskCategory, TaskSession } from './types';
+import { BUSINESS_TIME_ZONE, formatJstDateTimeLocal, getJstDateKey, getJstDateParts, getJstDayRange } from './dateTime';
 
 /** hex色コード → 色相(0-360) */
 function hexToHue(hex: string): number {
@@ -28,15 +29,11 @@ export function formatDate(date: string | null, includeTime = false): string {
   const opts: Intl.DateTimeFormatOptions = includeTime
     ? { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }
     : { year: 'numeric', month: '2-digit', day: '2-digit' };
-  return d.toLocaleString('ja-JP', opts);
+  return d.toLocaleString('ja-JP', { ...opts, timeZone: BUSINESS_TIME_ZONE });
 }
 
 export function toLocalDatetimeValue(date: string | null): string {
-  if (!date) return '';
-  const d = new Date(date);
-  if (isNaN(d.getTime())) return '';
-  const pad = (n: number) => String(n).padStart(2, '0');
-  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+  return formatJstDateTimeLocal(date);
 }
 
 export function buildTree(tasks: Task[]): Task[] {
@@ -86,7 +83,7 @@ export function exportToCSV(tasks: Task[]): void {
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = `tasks_${new Date().toISOString().slice(0, 10)}.csv`;
+  a.download = `tasks_${getJstDateKey()}.csv`;
   a.click();
   URL.revokeObjectURL(url);
 }
@@ -116,8 +113,8 @@ export function exportTodayTasksAsText(tasks: Task[], dateStr: string, fields: T
 
   const formatTime = (iso: string | null): string => {
     if (!iso) return '—';
-    const d = new Date(iso);
-    return `${pad(d.getHours())}:${pad(d.getMinutes())}`;
+    const parts = getJstDateParts(iso);
+    return parts ? `${pad(parts.hour)}:${pad(parts.minute)}` : '—';
   };
 
   const formatMins = (mins: number): string => {
@@ -138,8 +135,9 @@ export function exportTodayTasksAsText(tasks: Task[], dateStr: string, fields: T
   lines.push(`■ 当日タスク実績レポート（${dateStr}）`);
   lines.push('─'.repeat(48));
 
-  const dayStart = new Date(dateStr + 'T00:00:00');
-  const dayEnd = new Date(dayStart.getTime() + 24 * 60 * 60 * 1000);
+  const dayRange = getJstDayRange(dateStr);
+  if (!dayRange) return lines.join('\n');
+  const { start: dayStart, end: dayEnd } = dayRange;
 
   const todayTasks = tasks.filter(t => {
     const starts = [t.actual_start, t.scheduled_start].filter(Boolean) as string[];
@@ -375,9 +373,9 @@ export function getPlannedMinutesForRange(task: Task, rangeStart: Date, rangeEnd
 
 /** 指定日の予定工数。内部計算では丸めない。 */
 export function getPlannedMinutesForDay(task: Task, dayDate: Date): number {
-  const dayStart = new Date(dayDate.getFullYear(), dayDate.getMonth(), dayDate.getDate());
-  const dayEnd = new Date(dayStart.getFullYear(), dayStart.getMonth(), dayStart.getDate() + 1);
-  return getPlannedMinutesForRange(task, dayStart, dayEnd);
+  const dateKey = `${dayDate.getFullYear()}-${String(dayDate.getMonth() + 1).padStart(2, '0')}-${String(dayDate.getDate()).padStart(2, '0')}`;
+  const range = getJstDayRange(dateKey);
+  return range ? getPlannedMinutesForRange(task, range.start, range.end) : 0;
 }
 
 function getTaskSessions(task: Task, sessions: TaskSession[]): TaskSession[] {
@@ -473,9 +471,9 @@ export function getActualMinutesForDay(
   dayDate: Date,
   now = new Date(),
 ): number | null {
-  const dayStart = new Date(dayDate.getFullYear(), dayDate.getMonth(), dayDate.getDate());
-  const dayEnd = new Date(dayStart.getFullYear(), dayStart.getMonth(), dayStart.getDate() + 1);
-  return getActualMinutesForRange(task, sessions, dayStart, dayEnd, now);
+  const dateKey = `${dayDate.getFullYear()}-${String(dayDate.getMonth() + 1).padStart(2, '0')}-${String(dayDate.getDate()).padStart(2, '0')}`;
+  const range = getJstDayRange(dateKey);
+  return range ? getActualMinutesForRange(task, sessions, range.start, range.end, now) : null;
 }
 
 /** 予定工数と実績工数を1分の許容差で比較する。 */
@@ -515,8 +513,10 @@ export function getWorkloadMins(task: Task): number {
  */
 export function getWorkloadMinsForDay(task: Task, dayDate: Date, sessions?: import('./types').TaskSession[]): number {
   if (!task.scheduled_start || !task.scheduled_end) return 0;
-  const dayStart = new Date(dayDate.getFullYear(), dayDate.getMonth(), dayDate.getDate());
-  const dayEnd = new Date(dayStart.getTime() + 24 * 60 * 60 * 1000);
+  const dateKey = `${dayDate.getFullYear()}-${String(dayDate.getMonth() + 1).padStart(2, '0')}-${String(dayDate.getDate()).padStart(2, '0')}`;
+  const dayRange = getJstDayRange(dateKey);
+  if (!dayRange) return 0;
+  const { start: dayStart, end: dayEnd } = dayRange;
 
   // セッションデータがある場合は、当日に重なるセッションの作業時間を正確に合計する
   const taskSessions = sessions?.filter(s => s.task_id === task.id) ?? [];
@@ -544,7 +544,7 @@ export function getWorkloadMinsForDay(task: Task, dayDate: Date, sessions?: impo
       const cEnd = sEnd > dayEnd ? dayEnd : sEnd;
       if (cEnd > cStart) totalMins += (cEnd.getTime() - cStart.getTime()) / 60000;
     }
-    return Math.round(totalMins);
+    return totalMins;
   }
 
   // セッションなし: actual_start/actual_end または scheduled で計算

@@ -8,6 +8,7 @@ import {
   scheduleNotification,
   syncTaskNotifications,
 } from '../lib/utils';
+import { addJstDays, getJstDateKey, getJstWeekday, jstDateTimeToIso } from '../lib/dateTime';
 
 interface TaskContextValue {
   tasks: Task[];
@@ -26,7 +27,7 @@ interface TaskContextValue {
   updateRecurrenceGroup: (id: string, group: Partial<RecurrenceGroup>) => Promise<void>;
   deleteRecurrenceGroup: (id: string) => Promise<void>;
   bulkCreateTasksForGroup: (group: RecurrenceGroup) => Promise<void>;
-  bulkUpdateTasksForGroup: (groupId: string, updates: Partial<Task>) => Promise<void>;
+  bulkUpdateTasksForGroup: (group: RecurrenceGroup) => Promise<void>;
   suspendTask: (task: Task, suspendedAt: string) => Promise<void>;
   resumeTask: (task: Task, resumedAt: string) => Promise<void>;
   updateSession: (id: string, fields: { session_start?: string; session_end?: string }) => Promise<void>;
@@ -55,20 +56,18 @@ const TaskContext = createContext<TaskContextValue>({
   deleteSession: async () => {},
 });
 
-/** グループ設定から対象日付一覧を生成 */
-function generateDates(group: RecurrenceGroup): Date[] {
-  const dates: Date[] = [];
-  const start = new Date(group.period_start + 'T00:00:00');
-  const end = new Date(group.period_end + 'T00:00:00');
-  const cur = new Date(start);
-  while (cur <= end) {
-    const dow = cur.getDay();
+/** グループ設定からJST暦日の対象日一覧を生成（開始日・終了日を含む）。 */
+function generateDateKeys(group: RecurrenceGroup): string[] {
+  const dates: string[] = [];
+  let current = group.period_start;
+  while (current && current <= group.period_end) {
+    const dow = getJstWeekday(current);
     if (group.recurrence_type === 'daily') {
-      dates.push(new Date(cur));
-    } else if (group.recurrence_type === 'weekly' && group.days_of_week?.includes(dow)) {
-      dates.push(new Date(cur));
+      dates.push(current);
+    } else if (group.recurrence_type === 'weekly' && dow !== null && group.days_of_week?.includes(dow)) {
+      dates.push(current);
     }
-    cur.setDate(cur.getDate() + 1);
+    current = addJstDays(current, 1);
   }
   return dates;
 }
@@ -221,15 +220,14 @@ export function TaskProvider({ children }: { children: React.ReactNode }) {
   /** グループの設定に基づきタスクを一括生成 */
   const bulkCreateTasksForGroup = async (group: RecurrenceGroup) => {
     if (!user) return;
-    const dates = generateDates(group);
+    const dates = generateDateKeys(group);
     if (dates.length === 0) return;
 
-    const inserts = dates.map(date => {
-      const pad = (n: number) => String(n).padStart(2, '0');
-      const dateStr = `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
-      const scheduledStart = new Date(`${dateStr}T${group.start_time}:00`).toISOString();
+    const inserts = dates.map(dateStr => {
+      const scheduledStart = jstDateTimeToIso(`${dateStr}T${group.start_time}`);
+      const endDateStr = group.ends_next_day ? addJstDays(dateStr, 1) : dateStr;
       const scheduledEnd = group.end_time
-        ? new Date(`${dateStr}T${group.end_time}:00`).toISOString()
+        ? jstDateTimeToIso(`${endDateStr}T${group.end_time}`)
         : null;
       return {
         user_id: user.id,
@@ -262,13 +260,26 @@ export function TaskProvider({ children }: { children: React.ReactNode }) {
   };
 
   /** グループの未完了タスクを一括更新 */
-  const bulkUpdateTasksForGroup = async (groupId: string, updates: Partial<Task>) => {
-    const targetIds = tasks
-      .filter(t => t.recurrence_group_id === groupId && t.status !== 'completed')
-      .map(t => t.id);
-    if (targetIds.length === 0) return;
+  const bulkUpdateTasksForGroup = async (group: RecurrenceGroup) => {
+    const targetTasks = tasks.filter(t => t.recurrence_group_id === group.id && t.status !== 'completed');
+    if (targetTasks.length === 0) return;
 
-    await supabase.from('tasks').update(updates as Task).in('id', targetIds);
+    await Promise.all(targetTasks.map(task => {
+      const dateKey = task.scheduled_start ? getJstDateKey(task.scheduled_start) : '';
+      const scheduledStart = dateKey ? jstDateTimeToIso(`${dateKey}T${group.start_time}`) : task.scheduled_start;
+      const endDateKey = dateKey && group.ends_next_day ? addJstDays(dateKey, 1) : dateKey;
+      const scheduledEnd = group.end_time && endDateKey
+        ? jstDateTimeToIso(`${endDateKey}T${group.end_time}`)
+        : null;
+      return supabase.from('tasks').update({
+        title: group.title,
+        category_id: group.category_id,
+        priority: group.priority,
+        notes: group.notes,
+        scheduled_start: scheduledStart,
+        scheduled_end: scheduledEnd,
+      } as Task).eq('id', task.id);
+    }));
     // カテゴリJOINが必要なので refetch で最新データを取得
     await refetch();
   };

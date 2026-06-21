@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useMemo } from 'react';
 import { X, Check, RefreshCw, History } from 'lucide-react';
 import { loadTitleHistory, saveTitleHistory } from './titleHistory';
 import { sortCategoriesByColor } from '../../lib/utils';
+import { addJstDays, addJstMonths, getJstDateKey, getJstWeekday } from '../../lib/dateTime';
 import type { RecurrenceGroup, TaskPriority, RecurrenceType } from '../../lib/types';
 import { useTasks } from '../../contexts/TaskContext';
 
@@ -18,6 +19,7 @@ const defaultForm = {
   priority: 'medium' as TaskPriority,
   start_time: '09:00',
   end_time: '',
+  ends_next_day: false,
   recurrence_type: 'daily' as RecurrenceType,
   days_of_week: [] as number[],
   period_start: '',
@@ -26,31 +28,25 @@ const defaultForm = {
 };
 
 function todayStr() {
-  const d = new Date();
-  const pad = (n: number) => String(n).padStart(2, '0');
-  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+  return getJstDateKey();
 }
 
 function addMonthStr(base: string, months: number) {
-  const d = new Date(base + 'T00:00:00');
-  d.setMonth(d.getMonth() + months);
-  const pad = (n: number) => String(n).padStart(2, '0');
-  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+  return addJstMonths(base, months);
 }
 
 function countDates(form: typeof defaultForm): number {
   if (!form.period_start || !form.period_end) return 0;
-  const start = new Date(form.period_start + 'T00:00:00');
-  const end = new Date(form.period_end + 'T00:00:00');
   let count = 0;
-  const cur = new Date(start);
-  while (cur <= end) {
+  let current = form.period_start;
+  while (current && current <= form.period_end) {
+    const weekday = getJstWeekday(current);
     if (form.recurrence_type === 'daily') {
       count++;
-    } else if (form.recurrence_type === 'weekly' && form.days_of_week.includes(cur.getDay())) {
+    } else if (form.recurrence_type === 'weekly' && weekday !== null && form.days_of_week.includes(weekday)) {
       count++;
     }
-    cur.setDate(cur.getDate() + 1);
+    current = addJstDays(current, 1);
   }
   return count;
 }
@@ -84,6 +80,7 @@ export default function RecurrenceForm({ group, onClose }: RecurrenceFormProps) 
         priority: group.priority,
         start_time: group.start_time,
         end_time: group.end_time ?? '',
+        ends_next_day: group.ends_next_day ?? false,
         recurrence_type: group.recurrence_type,
         days_of_week: group.days_of_week ?? [],
         period_start: group.period_start,
@@ -117,6 +114,7 @@ export default function RecurrenceForm({ group, onClose }: RecurrenceFormProps) 
     e.preventDefault();
     if (!form.title.trim() || !form.period_start || !form.period_end) return;
     if (form.recurrence_type === 'weekly' && form.days_of_week.length === 0) return;
+    if (form.end_time && !form.ends_next_day && form.end_time <= form.start_time) return;
     setLoading(true);
 
     const payload: Partial<RecurrenceGroup> = {
@@ -125,6 +123,7 @@ export default function RecurrenceForm({ group, onClose }: RecurrenceFormProps) 
       priority: form.priority,
       start_time: form.start_time,
       end_time: form.end_time || null,
+      ends_next_day: form.end_time ? form.ends_next_day : false,
       recurrence_type: form.recurrence_type,
       days_of_week: form.recurrence_type === 'weekly' ? form.days_of_week : null,
       period_start: form.period_start,
@@ -149,8 +148,9 @@ export default function RecurrenceForm({ group, onClose }: RecurrenceFormProps) 
   };
 
   const isWeekly = form.recurrence_type === 'weekly';
+  const hasInvalidSameDayEnd = !!form.end_time && !form.ends_next_day && form.end_time <= form.start_time;
   const canSubmit = form.title.trim() && form.period_start && form.period_end &&
-    (!isWeekly || form.days_of_week.length > 0);
+    (!isWeekly || form.days_of_week.length > 0) && !hasInvalidSameDayEnd;
 
   return (
     <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/40 backdrop-blur-sm p-0 sm:p-4">
@@ -264,11 +264,24 @@ export default function RecurrenceForm({ group, onClose }: RecurrenceFormProps) 
               <input
                 type="time"
                 value={form.end_time}
-                onChange={e => set('end_time', e.target.value)}
+                onChange={e => setForm(prev => ({ ...prev, end_time: e.target.value, ...(e.target.value ? {} : { ends_next_day: false }) }))}
                 className="form-input"
               />
             </div>
           </div>
+          <label className={`flex items-center gap-2 text-sm ${form.end_time ? 'text-gray-700 dark:text-gray-300' : 'text-gray-400'}`}>
+            <input
+              type="checkbox"
+              checked={form.ends_next_day}
+              disabled={!form.end_time}
+              onChange={e => set('ends_next_day', e.target.checked)}
+              className="rounded border-gray-300 text-teal-600 focus:ring-teal-500"
+            />
+            翌日に終了
+          </label>
+          {hasInvalidSameDayEnd && (
+            <p className="text-xs text-red-500">同日終了の場合、終了時刻は開始時刻より後にしてください。</p>
+          )}
 
           {/* 繰り返し種別 */}
           <div>

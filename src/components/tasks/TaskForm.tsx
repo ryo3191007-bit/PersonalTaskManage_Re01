@@ -7,6 +7,7 @@ import {
 } from '../../lib/types';
 import { useTasks } from '../../contexts/TaskContext';
 import { toLocalDatetimeValue, sortCategoriesByColor } from '../../lib/utils';
+import { formatJstDateTimeLocal, jstDateTimeToIso, parseJstDateTime } from '../../lib/dateTime';
 
 interface TaskFormProps {
   task?: Task | null;
@@ -42,8 +43,7 @@ const defaultForm = {
 
 /** datetime-local string → ISO string or null */
 function localToISO(val: string): string | null {
-  if (!val) return null;
-  return new Date(val).toISOString();
+  return val ? jstDateTimeToIso(val) : null;
 }
 
 
@@ -154,9 +154,9 @@ function buildEntriesFromSessions(
   // 最初のセッション開始が actual_start より後 → 中断時刻不明として補完
   if (sorted.length >= 1 && actualStart) {
     const firstStart = new Date(sorted[0].session_start);
-    const actStart = new Date(actualStart);
+    const actStart = parseJstDateTime(actualStart);
     const alreadyCovered = entries.some(e => e.resumeSessionId === sorted[0].id);
-    if (!alreadyCovered && firstStart > actStart) {
+    if (!alreadyCovered && actStart && firstStart > actStart) {
       entries.unshift({
         localId: nextLocalId(),
         suspendVal: '',
@@ -172,8 +172,11 @@ function buildEntriesFromSessions(
 
 function calcSuspendMins(suspendVal: string, resumeVal: string): number {
   if (!suspendVal || !resumeVal) return 0;
+  const suspendAt = parseJstDateTime(suspendVal);
+  const resumeAt = parseJstDateTime(resumeVal);
+  if (!suspendAt || !resumeAt) return 0;
   return Math.max(0, Math.round(
-    (new Date(resumeVal).getTime() - new Date(suspendVal).getTime()) / 60000
+    (resumeAt.getTime() - suspendAt.getTime()) / 60000
   ));
 }
 
@@ -204,19 +207,23 @@ function SuspendEntryRow({ entry, index, total, taskId, actualStart, onChange, o
 
   const handleSuspendBlur = async () => {
     if (!entry.suspendVal) return;
-    const iso = new Date(entry.suspendVal).toISOString();
+    const iso = localToISO(entry.suspendVal);
+    if (!iso) return;
     if (entry.suspendSessionId) {
       await updateSession(entry.suspendSessionId, { session_end: iso });
     } else if (taskId && actualStart) {
       // 前のセッション（actual_start → この中断）がなければ作成
-      const created = await createSession(taskId, new Date(actualStart).toISOString(), iso);
+      const actualStartIso = localToISO(actualStart);
+      if (!actualStartIso) return;
+      const created = await createSession(taskId, actualStartIso, iso);
       if (created) onChange(entry.localId, { suspendSessionId: created.id });
     }
   };
 
   const handleResumeBlur = async () => {
     if (!entry.resumeVal) return;
-    const iso = new Date(entry.resumeVal).toISOString();
+    const iso = localToISO(entry.resumeVal);
+    if (!iso) return;
     if (entry.resumeSessionId) {
       await updateSession(entry.resumeSessionId, { session_start: iso });
     } else if (taskId && entry.suspendVal) {
@@ -330,8 +337,8 @@ function ActualsSection({ task, form, set, childrenActualTimeMins, onEntriesChan
     (sum, e) => sum + calcSuspendMins(e.suspendVal, e.resumeVal), 0
   );
 
-  const formActualStartISO = form.actual_start ? new Date(form.actual_start).toISOString() : null;
-  const formActualEndISO = form.actual_end ? new Date(form.actual_end).toISOString() : null;
+  const formActualStartISO = localToISO(form.actual_start);
+  const formActualEndISO = localToISO(form.actual_end);
   const grossMins = formActualStartISO && formActualEndISO
     ? Math.max(0, Math.round(
         (new Date(formActualEndISO).getTime() - new Date(formActualStartISO).getTime()) / 60000
@@ -361,7 +368,7 @@ function ActualsSection({ task, form, set, childrenActualTimeMins, onEntriesChan
   };
 
   const plannedMins = form.scheduled_start && form.scheduled_end
-    ? Math.round((new Date(form.scheduled_end).getTime() - new Date(form.scheduled_start).getTime()) / 60000)
+    ? Math.round(((parseJstDateTime(form.scheduled_end)?.getTime() ?? 0) - (parseJstDateTime(form.scheduled_start)?.getTime() ?? 0)) / 60000)
     : null;
   const isDurationOver = plannedMins !== null && netMins !== null && netMins > plannedMins;
   const isDurationShort = plannedMins !== null && netMins !== null && netMins < plannedMins;
@@ -571,9 +578,9 @@ export default function TaskForm({ task, onClose, initialDatetime }: TaskFormPro
   const autofillDuration = (startVal: string, endVal: string, qty: number, tpu: number) => {
     if (qty > 0 && tpu > 0) return null; // 既に入力済み
     if (!startVal || !endVal) return null;
-    const s = new Date(startVal);
-    const e = new Date(endVal);
-    if (isNaN(s.getTime()) || isNaN(e.getTime())) return null;
+    const s = parseJstDateTime(startVal);
+    const e = parseJstDateTime(endVal);
+    if (!s || !e) return null;
     const diffMins = Math.round((e.getTime() - s.getTime()) / 60000);
     if (diffMins <= 0) return null;
     return { quantity: 1, time_per_unit: diffMins };
@@ -582,11 +589,10 @@ export default function TaskForm({ task, onClose, initialDatetime }: TaskFormPro
   // 開始日時が変わったとき quantity/time_per_unit があれば終了を即時自動計算
   const recalcEnd = (startVal: string, qty: number, tpu: number) => {
     if (!startVal || qty <= 0 || tpu <= 0) return null;
-    const start = new Date(startVal);
-    if (isNaN(start.getTime())) return null;
+    const start = parseJstDateTime(startVal);
+    if (!start) return null;
     const end = new Date(start.getTime() + qty * tpu * 60 * 1000);
-    const pad = (n: number) => String(n).padStart(2, '0');
-    return `${end.getFullYear()}-${pad(end.getMonth() + 1)}-${pad(end.getDate())}T${pad(end.getHours())}:${pad(end.getMinutes())}`;
+    return formatJstDateTimeLocal(end);
   };
 
   const handleCategoryChange = (val: string) => {
@@ -639,8 +645,8 @@ export default function TaskForm({ task, onClose, initialDatetime }: TaskFormPro
       track_actual: true,
       actual_time: childrenActualTimeMins != null ? childrenActualTimeMins : Number(form.actual_time),
       actual_memo: form.actual_memo,
-      actual_start: form.actual_start ? new Date(form.actual_start).toISOString() : null,
-      actual_end: form.actual_end ? new Date(form.actual_end).toISOString() : null,
+      actual_start: localToISO(form.actual_start),
+      actual_end: localToISO(form.actual_end),
       duration_over_factor: form.duration_over_factor || null,
       duration_short_factor: form.duration_short_factor || null,
     };
@@ -655,7 +661,7 @@ export default function TaskForm({ task, onClose, initialDatetime }: TaskFormPro
     if (form.status === 'suspended') {
       const suspendEntries = entriesRef.current;
       const lastSuspendVal = [...suspendEntries].reverse().find(e => e.suspendVal)?.suspendVal ?? null;
-      payload.suspended_at = lastSuspendVal ? new Date(lastSuspendVal).toISOString() : null;
+      payload.suspended_at = lastSuspendVal ? localToISO(lastSuspendVal) : null;
     } else {
       // 中断解除時は suspended_at をクリア
       payload.suspended_at = null;
@@ -672,15 +678,18 @@ export default function TaskForm({ task, onClose, initialDatetime }: TaskFormPro
         const entries = entriesRef.current.filter(e => e.suspendVal);
         for (let i = 0; i < entries.length; i++) {
           const entry = entries[i];
-          const suspendIso = new Date(entry.suspendVal).toISOString();
+          const suspendIso = localToISO(entry.suspendVal);
+          if (!suspendIso) continue;
           // 中断前セッション: 前の再開時刻（または actual_start）→ 中断時刻
           const sessionStart = i === 0
-            ? new Date(form.actual_start).toISOString()
-            : new Date(entries[i - 1].resumeVal || entry.suspendVal).toISOString();
+            ? localToISO(form.actual_start)
+            : localToISO(entries[i - 1].resumeVal || entry.suspendVal);
+          if (!sessionStart) continue;
           await createSession(created.id, sessionStart, suspendIso);
           // 再開後セッション: 再開時刻 → null（open）
           if (entry.resumeVal) {
-            await createSession(created.id, new Date(entry.resumeVal).toISOString(), null);
+            const resumeIso = localToISO(entry.resumeVal);
+            if (resumeIso) await createSession(created.id, resumeIso, null);
           }
         }
       }

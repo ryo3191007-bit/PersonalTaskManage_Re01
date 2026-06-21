@@ -13,14 +13,18 @@ import TaskFilters from '../components/tasks/TaskFilters';
 import { buildTree, exportToCSV, exportTodayTasksAsText, getWorkloadMinsForDay, getWorkloadTaskList, DEFAULT_TEXT_EXPORT_FIELDS } from '../lib/utils';
 import type { TextExportFields } from '../lib/utils';
 import { useWorkHours } from '../lib/useWorkHours';
+import {
+  BUSINESS_TIME_ZONE,
+  formatJstDateTimeLocal,
+  getJstDateKey,
+  getJstDayRange,
+  jstDateTimeToIso,
+  parseJstDateTime,
+} from '../lib/dateTime';
 
 /** ISO文字列またはnullを datetime-local 文字列に変換 */
 function toLocalInput(iso: string | null | undefined): string {
-  if (!iso) return '';
-  const d = new Date(iso);
-  if (isNaN(d.getTime())) return '';
-  const pad = (n: number) => String(n).padStart(2, '0');
-  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+  return formatJstDateTimeLocal(iso);
 }
 
 function nowDatetime() {
@@ -51,7 +55,7 @@ function StartDialog({ task, onClose, onSave }: {
         </div>
         <div className="flex gap-2 justify-end">
           <button onClick={onClose} className="btn-secondary">キャンセル</button>
-          <button onClick={() => value && onSave(new Date(value).toISOString())} disabled={!value} className="btn-primary flex items-center gap-1.5">
+          <button onClick={() => { const iso = jstDateTimeToIso(value); if (iso) onSave(iso); }} disabled={!value} className="btn-primary flex items-center gap-1.5">
             <Check className="w-3.5 h-3.5" />OK
           </button>
         </div>
@@ -75,7 +79,7 @@ function EndDialog({ task, onClose, onSave }: {
     ? Math.round((new Date(task.scheduled_end).getTime() - new Date(task.scheduled_start).getTime()) / 60000)
     : null;
   const actualMins = task.actual_start && value
-    ? Math.round((new Date(value).getTime() - new Date(task.actual_start).getTime()) / 60000)
+    ? Math.round(((parseJstDateTime(value)?.getTime() ?? 0) - new Date(task.actual_start).getTime()) / 60000)
     : null;
 
   const isOver = plannedMins !== null && actualMins !== null && actualMins > plannedMins;
@@ -113,7 +117,7 @@ function EndDialog({ task, onClose, onSave }: {
         </div>
         <div className="flex gap-2 justify-end">
           <button onClick={onClose} className="btn-secondary">キャンセル</button>
-          <button onClick={() => value && onSave(new Date(value).toISOString(), memo, durationFactor)} disabled={!value} className="btn-primary flex items-center gap-1.5">
+          <button onClick={() => { const iso = jstDateTimeToIso(value); if (iso) onSave(iso, memo, durationFactor); }} disabled={!value} className="btn-primary flex items-center gap-1.5">
             <Check className="w-3.5 h-3.5" />OK
           </button>
         </div>
@@ -137,7 +141,7 @@ function FullActualDialog({ task, onClose, onSave }: {
     ? Math.round((new Date(task.scheduled_end).getTime() - new Date(task.scheduled_start).getTime()) / 60000)
     : null;
   const actualMins = startVal && endVal
-    ? Math.round((new Date(endVal).getTime() - new Date(startVal).getTime()) / 60000)
+    ? Math.round(((parseJstDateTime(endVal)?.getTime() ?? 0) - (parseJstDateTime(startVal)?.getTime() ?? 0)) / 60000)
     : null;
   const isDurationOver = plannedMins !== null && actualMins !== null && actualMins > plannedMins;
   const isDurationShort = plannedMins !== null && actualMins !== null && actualMins < plannedMins;
@@ -179,7 +183,11 @@ function FullActualDialog({ task, onClose, onSave }: {
         <div className="flex gap-2 justify-end">
           <button onClick={onClose} className="btn-secondary">キャンセル</button>
           <button
-            onClick={() => startVal && endVal && onSave(new Date(startVal).toISOString(), new Date(endVal).toISOString(), memo, durationFactor)}
+            onClick={() => {
+              const startIso = jstDateTimeToIso(startVal);
+              const endIso = jstDateTimeToIso(endVal);
+              if (startIso && endIso) onSave(startIso, endIso, memo, durationFactor);
+            }}
             disabled={!startVal || !endVal}
             className="btn-primary flex items-center gap-1.5"
           >
@@ -220,7 +228,7 @@ function SuspendDialog({ task, onClose, onSave }: {
         <div className="flex gap-2 justify-end">
           <button onClick={onClose} className="btn-secondary">キャンセル</button>
           <button
-            onClick={() => value && onSave(new Date(value).toISOString())}
+            onClick={() => { const iso = jstDateTimeToIso(value); if (iso) onSave(iso); }}
             disabled={!value}
             className="btn-primary flex items-center gap-1.5 bg-amber-600 hover:bg-amber-700"
           >
@@ -241,7 +249,7 @@ function ResumeDialog({ task, onClose, onSave }: {
   const [value, setValue] = useState(nowDatetime());
 
   const suspendedAt = task.suspended_at ? new Date(task.suspended_at) : null;
-  const resumeAt = value ? new Date(value) : null;
+  const resumeAt = value ? parseJstDateTime(value) : null;
   const suspendMins = suspendedAt && resumeAt
     ? Math.round((resumeAt.getTime() - suspendedAt.getTime()) / 60000)
     : null;
@@ -267,7 +275,7 @@ function ResumeDialog({ task, onClose, onSave }: {
         <p className="text-xs text-gray-500 dark:text-gray-400 truncate">{task.title}</p>
         {suspendedAt && (
           <div className="text-xs text-gray-500 dark:text-gray-400 bg-amber-50 dark:bg-amber-900/20 rounded-lg px-3 py-2">
-            中断日時: {suspendedAt.toLocaleString('ja-JP', { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
+            中断日時: {suspendedAt.toLocaleString('ja-JP', { timeZone: BUSINESS_TIME_ZONE, month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
           </div>
         )}
         <div>
@@ -282,7 +290,7 @@ function ResumeDialog({ task, onClose, onSave }: {
         <div className="flex gap-2 justify-end">
           <button onClick={onClose} className="btn-secondary">キャンセル</button>
           <button
-            onClick={() => value && onSave(new Date(value).toISOString())}
+            onClick={() => { const iso = jstDateTimeToIso(value); if (iso) onSave(iso); }}
             disabled={!value}
             className="btn-primary flex items-center gap-1.5"
           >
@@ -471,11 +479,11 @@ export default function TaskListPage() {
   const [statusFilter, setStatusFilter] = useState<TaskStatus | 'all'>('all');
   const [categoryFilter, setCategoryFilter] = useState('');
   const [dateFilter, setDateFilter] = useState<{ from: string; to: string }>(() => {
-    const today = new Date().toISOString().slice(0, 10);
+    const today = getJstDateKey();
     return { from: today, to: today };
   });
   const [dateEndFilter, setDateEndFilter] = useState<{ from: string; to: string }>(() => {
-    const today = new Date().toISOString().slice(0, 10);
+    const today = getJstDateKey();
     return { from: today, to: today };
   });
   const [priorityFilter, setPriorityFilter] = useState<TaskPriority | 'all'>('all');
@@ -504,15 +512,14 @@ export default function TaskListPage() {
       if (categoryFilter && t.category_id !== categoryFilter) return false;
       if (kw && !t.title.toLowerCase().includes(kw) && !(t.notes ?? '').toLowerCase().includes(kw)) return false;
       if (dateFilter.from || dateFilter.to) {
-        const rangeStart = dateFilter.from ? new Date(dateFilter.from + 'T00:00:00') : null;
-        const rangeEnd = dateFilter.to
-          ? new Date(new Date(dateFilter.to + 'T00:00:00').getTime() + 24 * 60 * 60 * 1000)
-          : null;
+        const rangeStart = dateFilter.from ? getJstDayRange(dateFilter.from)?.start ?? null : null;
+        const rangeEnd = dateFilter.to ? getJstDayRange(dateFilter.to)?.end ?? null : null;
 
         const inRange = (start: Date, end: Date | null) => {
-          if (rangeStart && (!end || end <= rangeStart)) return false;
-          if (rangeEnd && start >= rangeEnd) return false;
-          return true;
+          if (!end) return inRangeByStartOnly(start);
+          const overlapStart = rangeStart && start < rangeStart ? rangeStart : start;
+          const overlapEnd = rangeEnd && end > rangeEnd ? rangeEnd : end;
+          return overlapEnd.getTime() - overlapStart.getTime() >= 60_000;
         };
 
         const inRangeByStartOnly = (start: Date) => {
@@ -530,7 +537,7 @@ export default function TaskListPage() {
           if (taskSessions.length > 0) {
             const hitsSession = taskSessions.some(s => {
               const sStart = new Date(s.session_start);
-              const sEnd = s.session_end ? new Date(s.session_end) : null;
+              const sEnd = s.session_end ? new Date(s.session_end) : (t.status === 'in_progress' ? new Date() : null);
               return inRange(sStart, sEnd);
             });
             if (hitsSession) return true;
@@ -574,10 +581,8 @@ export default function TaskListPage() {
 
       // 予定終了日フィルタ
       if (dateEndFilter.from || dateEndFilter.to) {
-        const endRangeStart = dateEndFilter.from ? new Date(dateEndFilter.from + 'T00:00:00') : null;
-        const endRangeEnd = dateEndFilter.to
-          ? new Date(new Date(dateEndFilter.to + 'T00:00:00').getTime() + 24 * 60 * 60 * 1000)
-          : null;
+        const endRangeStart = dateEndFilter.from ? getJstDayRange(dateEndFilter.from)?.start ?? null : null;
+        const endRangeEnd = dateEndFilter.to ? getJstDayRange(dateEndFilter.to)?.end ?? null : null;
         const schedEnd = t.scheduled_end ? new Date(t.scheduled_end) : null;
         if (!schedEnd) return false;
         if (endRangeStart && schedEnd < endRangeStart) return false;
@@ -1045,7 +1050,7 @@ export default function TaskListPage() {
       )}
 
       {showTextReport && (() => {
-        const reportDate = dateFilter.from || new Date().toISOString().slice(0, 10);
+        const reportDate = dateFilter.from || getJstDateKey();
         const tasksWithSessions = sortedFilteredTasks.map(t => ({
           ...t,
           sessions: sessions.filter(s => s.task_id === t.id),
