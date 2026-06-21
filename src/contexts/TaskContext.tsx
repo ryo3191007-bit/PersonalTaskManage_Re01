@@ -2,7 +2,12 @@ import { createContext, useContext, useEffect, useState, useCallback } from 'rea
 import { supabase } from '../lib/supabase';
 import type { Task, TaskCategory, RecurrenceGroup, TaskSession } from '../lib/types';
 import { useAuth } from './AuthContext';
-import { scheduleNotification } from '../lib/utils';
+import {
+  cancelTaskNotifications,
+  clearAllTaskNotifications,
+  scheduleNotification,
+  syncTaskNotifications,
+} from '../lib/utils';
 
 interface TaskContextValue {
   tasks: Task[];
@@ -106,12 +111,13 @@ export function TaskProvider({ children }: { children: React.ReactNode }) {
     setCategories(catsData ?? []);
     setRecurrenceGroups((groupsData as RecurrenceGroup[]) ?? []);
     setSessions((sessionsData as TaskSession[]) ?? []);
-    fetchedTasks.forEach(t => scheduleNotification(t));
+    syncTaskNotifications(fetchedTasks);
     setLoading(false);
   }, [user]);
 
   useEffect(() => {
     refetch();
+    return () => clearAllTaskNotifications();
   }, [refetch]);
 
   const createTask = async (task: Partial<Task>): Promise<Task | null> => {
@@ -144,6 +150,7 @@ export function TaskProvider({ children }: { children: React.ReactNode }) {
 
   const deleteTask = async (id: string) => {
     await supabase.from('tasks').delete().eq('id', id);
+    cancelTaskNotifications(id);
     setTasks(prev => prev.filter(t => t.id !== id));
     setSessions(prev => prev.filter(s => s.task_id !== id));
   };
@@ -201,8 +208,12 @@ export function TaskProvider({ children }: { children: React.ReactNode }) {
   };
 
   const deleteRecurrenceGroup = async (id: string) => {
+    const deletedTaskIds = tasks
+      .filter(t => t.recurrence_group_id === id)
+      .map(t => t.id);
     await supabase.from('tasks').delete().eq('recurrence_group_id', id);
     await supabase.from('recurrence_groups').delete().eq('id', id);
+    deletedTaskIds.forEach(cancelTaskNotifications);
     setRecurrenceGroups(prev => prev.filter(g => g.id !== id));
     setTasks(prev => prev.filter(t => t.recurrence_group_id !== id));
   };

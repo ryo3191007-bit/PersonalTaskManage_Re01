@@ -218,24 +218,97 @@ export function exportTodayTasksAsText(tasks: Task[], dateStr: string, fields: T
   return lines.join('\n');
 }
 
-export function scheduleNotification(task: Task): void {
-  if (task.status === 'completed') return;
-  if (!task.scheduled_start && !task.scheduled_end) return;
-  if (!('Notification' in window)) return;
+type TaskNotificationKind = 'start' | 'end';
 
-  const schedule = (dateStr: string, label: string) => {
-    const time = new Date(dateStr).getTime() - Date.now();
-    if (time > 0 && time < 7 * 24 * 60 * 60 * 1000) {
-      setTimeout(() => {
-        if (Notification.permission === 'granted') {
-          new Notification(`タスク: ${task.title}`, { body: label });
-        }
-      }, time);
+const notificationTimers = new Map<string, number>();
+const MAX_TIMER_DELAY = 2_147_000_000;
+
+function notificationTimerKey(taskId: string, kind: TaskNotificationKind): string {
+  return `${taskId}:${kind}`;
+}
+
+/** タスクに紐づく開始・終了通知を取り消す。 */
+export function cancelTaskNotifications(taskId: string): void {
+  (['start', 'end'] as const).forEach(kind => {
+    const key = notificationTimerKey(taskId, kind);
+    const timerId = notificationTimers.get(key);
+    if (timerId !== undefined) {
+      window.clearTimeout(timerId);
+      notificationTimers.delete(key);
     }
+  });
+}
+
+/** ログアウト・全件再取得時に、現在の通知予約をすべて取り消す。 */
+export function clearAllTaskNotifications(): void {
+  notificationTimers.forEach(timerId => window.clearTimeout(timerId));
+  notificationTimers.clear();
+}
+
+function scheduleAt(key: string, scheduledAt: number, notify: () => void): void {
+  const scheduleNext = () => {
+    const remaining = scheduledAt - Date.now();
+    if (remaining <= 0) {
+      notificationTimers.delete(key);
+      notify();
+      return;
+    }
+
+    const timerId = window.setTimeout(scheduleNext, Math.min(remaining, MAX_TIMER_DELAY));
+    notificationTimers.set(key, timerId);
   };
 
-  if (task.scheduled_start) schedule(task.scheduled_start, '開始予定時刻になりました');
-  if (task.scheduled_end) schedule(task.scheduled_end, '終了予定時刻になりました');
+  scheduleNext();
+}
+
+function notificationBody(task: Task, kind: TaskNotificationKind): string {
+  if (kind === 'start') {
+    return `「${task.title}」の開始予定時刻になりました`;
+  }
+  if (task.status === 'not_started') {
+    return `「${task.title}」の終了予定時刻です。まだ開始されていません`;
+  }
+  if (task.status === 'suspended') {
+    return `「${task.title}」の終了予定時刻です。現在中断中です`;
+  }
+  return `「${task.title}」の終了予定時刻になりました`;
+}
+
+function scheduleTaskNotification(task: Task, kind: TaskNotificationKind, dateStr: string): void {
+  const scheduledAt = new Date(dateStr).getTime();
+  if (!Number.isFinite(scheduledAt) || scheduledAt <= Date.now()) return;
+
+  const key = notificationTimerKey(task.id, kind);
+  scheduleAt(key, scheduledAt, () => {
+    if (Notification.permission === 'granted') {
+      new Notification('タスクマネージャー', {
+        body: notificationBody(task, kind),
+        tag: key,
+      });
+    }
+  });
+}
+
+/**
+ * タスクの最新状態に合わせ、既存予約を取り消してから開始・終了通知を再予約する。
+ * 通知はタブを開いている間のみ有効で、過去時刻は遡及通知しない。
+ */
+export function scheduleNotification(task: Task): void {
+  cancelTaskNotifications(task.id);
+  if (!('Notification' in window)) return;
+
+  if (task.status === 'not_started' && task.scheduled_start) {
+    scheduleTaskNotification(task, 'start', task.scheduled_start);
+  }
+  if (task.status !== 'completed' && task.scheduled_end) {
+    scheduleTaskNotification(task, 'end', task.scheduled_end);
+  }
+}
+
+/** 全タスクの最新状態を基準に通知予約を再構築する。 */
+export function syncTaskNotifications(tasks: Task[]): void {
+  clearAllTaskNotifications();
+  tasks.forEach(scheduleNotification);
 }
 
 export function getTotalMinutes(task: Task): number {
