@@ -46,6 +46,9 @@ export default function TaskFilters({
   const keywordRef = useRef<HTMLInputElement>(null);
 
   const selectCls = 'w-full text-sm md:text-xs border border-gray-200 dark:border-gray-700 rounded-lg px-2 py-1.5 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 h-11 md:h-8';
+  const dateInputCls = 'w-full min-w-0 text-sm md:text-xs border border-gray-200 dark:border-gray-700 rounded-lg px-1.5 py-1.5 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 h-11 md:h-8';
+  const dateRangeCls = 'grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)_1.25rem] items-center gap-1.5';
+  const clearDateButtonCls = 'w-5 h-8 flex items-center justify-center text-gray-400 hover:text-gray-600 dark:hover:text-gray-200';
   const labelCls = 'block text-[10px] font-medium text-gray-400 dark:text-gray-500 mb-0.5';
 
   return (
@@ -118,12 +121,12 @@ export default function TaskFilters({
 
         <div className="min-w-0">
           <span className={labelCls}>予定開始日</span>
-          <div className="flex items-center gap-1.5">
+          <div className={dateRangeCls}>
             <input
               type="date"
               value={dateFrom}
               onChange={e => onDateChange(e.target.value, dateTo)}
-              className={selectCls}
+              className={dateInputCls}
             />
             <span className="text-xs text-gray-400 dark:text-gray-500 flex-shrink-0">〜</span>
             <input
@@ -131,29 +134,30 @@ export default function TaskFilters({
               value={dateTo}
               min={dateFrom}
               onChange={e => onDateChange(dateFrom, e.target.value)}
-              className={selectCls}
+              className={dateInputCls}
             />
             {(dateFrom || dateTo) ? (
               <button
                 onClick={() => onDateChange('', '')}
-                className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 flex-shrink-0"
+                className={clearDateButtonCls}
+                aria-label="予定開始日フィルタをクリア"
               >
                 <X className="w-3.5 h-3.5" />
               </button>
             ) : (
-              <div className="w-3.5 flex-shrink-0" />
+              <div className="w-5 h-8" />
             )}
           </div>
         </div>
 
         <div className="min-w-0">
           <span className={labelCls}>予定終了日</span>
-          <div className="flex items-center gap-1.5">
+          <div className={dateRangeCls}>
             <input
               type="date"
               value={dateEndFrom}
               onChange={e => onDateEndChange(e.target.value, dateEndTo)}
-              className={selectCls}
+              className={dateInputCls}
             />
             <span className="text-xs text-gray-400 dark:text-gray-500 flex-shrink-0">〜</span>
             <input
@@ -161,17 +165,18 @@ export default function TaskFilters({
               value={dateEndTo}
               min={dateEndFrom}
               onChange={e => onDateEndChange(dateEndFrom, e.target.value)}
-              className={selectCls}
+              className={dateInputCls}
             />
             {(dateEndFrom || dateEndTo) ? (
               <button
                 onClick={() => onDateEndChange('', '')}
-                className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 flex-shrink-0"
+                className={clearDateButtonCls}
+                aria-label="予定終了日フィルタをクリア"
               >
                 <X className="w-3.5 h-3.5" />
               </button>
             ) : (
-              <div className="w-3.5 flex-shrink-0" />
+              <div className="w-5 h-8" />
             )}
           </div>
         </div>

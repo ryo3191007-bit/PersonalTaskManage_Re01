@@ -287,6 +287,8 @@ function buildTaskSegments(task: Task, sessions: TaskSession[]): TaskSegment[] {
     const end = task.status === 'suspended'
       ? (task.suspended_at ?? displayEnd)
       : displayEnd;
+    if (!start) return [];
+    if (end && calendarDate(end).getTime() <= calendarDate(start).getTime()) return [];
     return [{
       taskId: task.id,
       segmentKey: task.id,
@@ -303,28 +305,33 @@ function buildTaskSegments(task: Task, sessions: TaskSession[]): TaskSegment[] {
 
   // 各セッション帯（実線）+ セッション間コネクター（点線）
   taskSessions.forEach((session, idx) => {
+    const sessionStart = calendarDate(session.session_start);
+    if (Number.isNaN(sessionStart.getTime())) return;
     const isLast = idx === taskSessions.length - 1;
     const isSuspended = isLast && task.status === 'suspended';
     // session_end が null の最終セッションは actual_end（完了）または suspended_at（中断）で補完
     const segEnd = session.session_end
       ?? (isLast ? (isSuspended ? task.suspended_at : task.actual_end) : null);
-    result.push({
-      taskId: task.id,
-      segmentKey: `${task.id}_seg${idx}`,
-      task,
-      displayStart: session.session_start,
-      displayEnd: segEnd,
-      isSuspended,
-      isResumed: idx > 0,
-      sessionIndex: idx,
-      isConnector: false,
-    });
+    const segEndDate = segEnd ? calendarDate(segEnd) : null;
+    if (!segEndDate || segEndDate.getTime() > sessionStart.getTime()) {
+      result.push({
+        taskId: task.id,
+        segmentKey: `${task.id}_seg${idx}`,
+        task,
+        displayStart: session.session_start,
+        displayEnd: segEnd,
+        isSuspended,
+        isResumed: idx > 0,
+        sessionIndex: idx,
+        isConnector: false,
+      });
+    }
 
     // 次のセッションがある場合、中断～再開のコネクターを追加
     if (!isLast) {
       const nextSession = taskSessions[idx + 1];
       const connectorEnd = session.session_end;
-      if (connectorEnd) {
+      if (connectorEnd && calendarDate(nextSession.session_start).getTime() > calendarDate(connectorEnd).getTime()) {
         result.push({
           taskId: task.id,
           segmentKey: `${task.id}_conn${idx}`,
@@ -540,14 +547,8 @@ function DayView({ date, tasks, sessions, onEdit, onCreateAt, onSuspend, onResum
   const usedPct = Math.min(100, Math.round((usedHours / WORK_HOURS) * 100));
 
   const timeLaneMap = useMemo(() => {
-    const parentOf: Record<string, string> = {};
-    daySegments.forEach(seg => { if (seg.task.parent_task_id) parentOf[seg.segmentKey] = seg.task.parent_task_id; });
-
-    // レーン競合計算: タスク単位で代表セグメント（sessionIndex=0 or 単独）のみ使用
-    // タスクの全セッション範囲を span として計算
-    const taskSpan: Record<string, { startMins: number; endMins: number }> = {};
-    daySegments.forEach(seg => {
-      if (seg.isConnector) return;
+    const items = daySegments.flatMap(seg => {
+      if (seg.isConnector) return [];
       const start = calendarDate(seg.displayStart);
       const startDay = toDay(start);
       const startMins = startDay < target ? 0 : start.getHours() * 60 + start.getMinutes();
@@ -558,39 +559,26 @@ function DayView({ date, tasks, sessions, onEdit, onCreateAt, onSuspend, onResum
       } else {
         endMins = startMins + 60;
       }
-      if (!taskSpan[seg.taskId]) {
-        taskSpan[seg.taskId] = { startMins, endMins };
-      } else {
-        taskSpan[seg.taskId].startMins = Math.min(taskSpan[seg.taskId].startMins, startMins);
-        taskSpan[seg.taskId].endMins = Math.max(taskSpan[seg.taskId].endMins, endMins);
-      }
+      return [{ id: seg.segmentKey, startMins, endMins }];
     });
+    const laneResult = assignTimeLanes(items);
 
-    // タスクIDごとに代表セグメントを1つだけ選ぶ（前日からの継続タスクはsessionIndex>0になるため<=0フィルター不可）
-    const seenForRep = new Set<string>();
-    const representativeSegs = daySegments.filter(seg => {
-      if (seg.isConnector) return false;
-      if (seenForRep.has(seg.taskId)) return false;
-      seenForRep.add(seg.taskId);
-      return true;
-    });
-    const items = representativeSegs.map(seg => ({
-      id: seg.taskId,
-      startMins: taskSpan[seg.taskId]?.startMins ?? 0,
-      endMins: taskSpan[seg.taskId]?.endMins ?? 60,
-    }));
-    const uniqueItems = items.filter((item, idx) => items.findIndex(i => i.id === item.id) === idx);
-    const laneResult = assignTimeLanes(uniqueItems);
-
-    // 全セグメントにタスクIDベースのレーンを割り当て
+    // 実作業帯はセグメント単位で配置し、コネクターは直前の作業帯の列に合わせる
     const result: Record<string, { col: number; totalCols: number }> = {};
     daySegments.forEach(seg => {
-      result[seg.segmentKey] = laneResult[seg.taskId] ?? { col: 0, totalCols: 1 };
+      if (!seg.isConnector) {
+        result[seg.segmentKey] = laneResult[seg.segmentKey] ?? { col: 0, totalCols: 1 };
+        return;
+      }
+      const connMatch = seg.segmentKey.match(/_conn(\d+)$/);
+      const previousKey = connMatch ? `${seg.taskId}_seg${connMatch[1]}` : `${seg.taskId}_seg0`;
+      result[seg.segmentKey] = laneResult[previousKey] ?? { col: 0, totalCols: 1 };
     });
     return result;
   }, [daySegments]);
 
   const totalH = HOUR_H * 24;
+  const renderedDiffTaskIds = new Set<string>();
 
   return (
     <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 overflow-hidden">
@@ -684,6 +672,10 @@ function DayView({ date, tasks, sessions, onEdit, onCreateAt, onSuspend, onResum
               const isContinued = startDay < target;
               const fmtTime = (iso: string) => new Date(iso).toLocaleTimeString('ja-JP', { timeZone: BUSINESS_TIME_ZONE, hour: '2-digit', minute: '2-digit' });
               const diff = getScheduledGeometry(seg.task, date);
+              const shouldRenderDiff = diff.hasDiff && !renderedDiffTaskIds.has(seg.taskId);
+              if (shouldRenderDiff) {
+                renderedDiffTaskIds.add(seg.taskId);
+              }
               const left = `calc(${col * widthPct}% + 1px)`;
               const width = `calc(${widthPct}% - 3px)`;
 
@@ -715,7 +707,7 @@ function DayView({ date, tasks, sessions, onEdit, onCreateAt, onSuspend, onResum
 
               return (
                 <div key={seg.segmentKey} className="contents">
-                  {diff.hasDiff && (
+                  {shouldRenderDiff && (
                     <div
                       className="absolute rounded pointer-events-none"
                       style={{
@@ -737,8 +729,8 @@ function DayView({ date, tasks, sessions, onEdit, onCreateAt, onSuspend, onResum
                       top: `${top + 1}px`, height: `${height - 2}px`, left, width,
                       backgroundColor: s.bg, color: s.color, borderColor: s.border,
                       ...suspendedStyle,
-                      boxShadow: hasChildren ? `inset 3px 0 0 ${s.border}` : diff.hasDiff ? `2px 2px 0 ${s.border}55` : undefined,
-                      outline: diff.hasDiff ? `1.5px solid ${s.border}` : undefined,
+                      boxShadow: hasChildren ? `inset 3px 0 0 ${s.border}` : shouldRenderDiff ? `2px 2px 0 ${s.border}55` : undefined,
+                      outline: shouldRenderDiff ? `1.5px solid ${s.border}` : undefined,
                       outlineOffset: '-1px',
                     }}
                   >

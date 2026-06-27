@@ -30,7 +30,7 @@ interface TaskContextValue {
   bulkUpdateTasksForGroup: (group: RecurrenceGroup) => Promise<void>;
   suspendTask: (task: Task, suspendedAt: string) => Promise<void>;
   resumeTask: (task: Task, resumedAt: string) => Promise<void>;
-  updateSession: (id: string, fields: { session_start?: string; session_end?: string }) => Promise<void>;
+  updateSession: (id: string, fields: { session_start?: string; session_end?: string | null }) => Promise<void>;
   createSession: (taskId: string, sessionStart: string, sessionEnd: string | null) => Promise<TaskSession | null>;
   deleteSession: (id: string) => Promise<void>;
 }
@@ -393,7 +393,7 @@ export function TaskProvider({ children }: { children: React.ReactNode }) {
     return null;
   };
 
-  const updateSession = async (id: string, fields: { session_start?: string; session_end?: string }) => {
+  const updateSession = async (id: string, fields: { session_start?: string; session_end?: string | null }) => {
     const { data } = await supabase
       .from('task_sessions')
       .update(fields)
