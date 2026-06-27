@@ -194,51 +194,12 @@ interface SuspendEntryRowProps {
   entry: SuspendEntry;
   index: number;
   total: number;
-  taskId: string;
-  actualStart: string;
   onChange: (localId: number, patch: Partial<SuspendEntry>) => void;
   onDelete: (localId: number) => void;
 }
 
-function SuspendEntryRow({ entry, index, total, taskId, actualStart, onChange, onDelete }: SuspendEntryRowProps) {
-  const { updateSession, createSession, deleteSession } = useTasks();
-
+function SuspendEntryRow({ entry, index, total, onChange, onDelete }: SuspendEntryRowProps) {
   const mins = calcSuspendMins(entry.suspendVal, entry.resumeVal);
-
-  const handleSuspendBlur = async () => {
-    if (!entry.suspendVal) return;
-    const iso = localToISO(entry.suspendVal);
-    if (!iso) return;
-    if (entry.suspendSessionId) {
-      await updateSession(entry.suspendSessionId, { session_end: iso });
-    } else if (taskId && actualStart) {
-      // 前のセッション（actual_start → この中断）がなければ作成
-      const actualStartIso = localToISO(actualStart);
-      if (!actualStartIso) return;
-      const created = await createSession(taskId, actualStartIso, iso);
-      if (created) onChange(entry.localId, { suspendSessionId: created.id });
-    }
-  };
-
-  const handleResumeBlur = async () => {
-    if (!entry.resumeVal) return;
-    const iso = localToISO(entry.resumeVal);
-    if (!iso) return;
-    if (entry.resumeSessionId) {
-      await updateSession(entry.resumeSessionId, { session_start: iso });
-    } else if (taskId && entry.suspendVal) {
-      // 再開後のセッション（この再開 → 次の中断 or actual_end）を作成
-      const created = await createSession(taskId, iso, null);
-      if (created) onChange(entry.localId, { resumeSessionId: created.id });
-    }
-  };
-
-  const handleDelete = async () => {
-    // 関連するDBセッションを削除
-    if (entry.suspendSessionId) await deleteSession(entry.suspendSessionId);
-    if (entry.resumeSessionId) await deleteSession(entry.resumeSessionId);
-    onDelete(entry.localId);
-  };
 
   return (
     <div className="sm:col-span-2 rounded-xl bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 px-4 py-3 space-y-2">
@@ -248,7 +209,7 @@ function SuspendEntryRow({ entry, index, total, taskId, actualStart, onChange, o
         </p>
         <button
           type="button"
-          onClick={handleDelete}
+          onClick={() => onDelete(entry.localId)}
           className="p-1 rounded-lg text-amber-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
           title="この中断を削除"
         >
@@ -263,7 +224,6 @@ function SuspendEntryRow({ entry, index, total, taskId, actualStart, onChange, o
             value={entry.suspendVal}
             max={entry.resumeVal || undefined}
             onChange={e => onChange(entry.localId, { suspendVal: e.target.value })}
-            onBlur={handleSuspendBlur}
             className="form-input text-xs py-1"
           />
         </div>
@@ -274,7 +234,6 @@ function SuspendEntryRow({ entry, index, total, taskId, actualStart, onChange, o
             value={entry.resumeVal}
             min={entry.suspendVal || undefined}
             onChange={e => onChange(entry.localId, { resumeVal: e.target.value })}
-            onBlur={handleResumeBlur}
             className="form-input text-xs py-1"
           />
         </div>
@@ -293,6 +252,97 @@ interface FormErrors {
   actual_start?: string;
   actual_end?: string;
   suspend?: string;
+}
+
+interface DesiredSession {
+  existingId?: string;
+  sessionStart: string;
+  sessionEnd: string | null;
+}
+
+function buildDesiredSessions(
+  entries: SuspendEntry[],
+  actualStart: string,
+  actualEnd: string,
+  status: TaskStatus
+): { sessions: DesiredSession[]; suspendedAt: string | null; actualTime: number | null; error?: string } {
+  const actualStartIso = localToISO(actualStart);
+  const actualEndIso = localToISO(actualEnd);
+  if (!actualStartIso) return { sessions: [], suspendedAt: null, actualTime: null };
+
+  const normalized = entries
+    .filter(e => e.suspendVal || e.resumeVal)
+    .map(e => ({
+      entry: e,
+      suspendIso: localToISO(e.suspendVal),
+      resumeIso: localToISO(e.resumeVal),
+    }))
+    .sort((a, b) => {
+      const aTime = a.suspendIso ?? a.resumeIso ?? '';
+      const bTime = b.suspendIso ?? b.resumeIso ?? '';
+      return aTime.localeCompare(bTime);
+    });
+
+  if (status === 'suspended' && normalized.length === 0) {
+    return { sessions: [], suspendedAt: null, actualTime: null, error: '中断時間を1件以上入力してください' };
+  }
+
+  const sessions: DesiredSession[] = [];
+  let currentStart = actualStartIso;
+  let currentSessionId: string | undefined;
+  let lastSuspendIso: string | null = null;
+
+  for (let i = 0; i < normalized.length; i++) {
+    const { entry, suspendIso, resumeIso } = normalized[i];
+    const isLast = i === normalized.length - 1;
+    if (!suspendIso) return { sessions: [], suspendedAt: null, actualTime: null, error: '中断時刻を入力してください' };
+    if (new Date(suspendIso).getTime() <= new Date(currentStart).getTime()) {
+      return { sessions: [], suspendedAt: null, actualTime: null, error: '中断時刻は直前の開始・再開時刻より後にしてください' };
+    }
+
+    sessions.push({
+      existingId: entry.suspendSessionId ?? currentSessionId,
+      sessionStart: currentStart,
+      sessionEnd: suspendIso,
+    });
+    lastSuspendIso = suspendIso;
+
+    if (resumeIso) {
+      if (new Date(resumeIso).getTime() <= new Date(suspendIso).getTime()) {
+        return { sessions: [], suspendedAt: null, actualTime: null, error: '再開時刻は中断時刻より後にしてください' };
+      }
+      if (status === 'suspended' && isLast) {
+        return { sessions: [], suspendedAt: null, actualTime: null, error: '中断中のタスクでは最後の再開時刻を空にしてください' };
+      }
+      currentStart = resumeIso;
+      currentSessionId = entry.resumeSessionId;
+    } else if (status !== 'suspended' || !isLast) {
+      return { sessions: [], suspendedAt: null, actualTime: null, error: '再開時刻を入力してください' };
+    }
+  }
+
+  if (status === 'completed') {
+    if (!actualEndIso) return { sessions: [], suspendedAt: null, actualTime: null, error: '終了実績日時は必須です' };
+    if (new Date(actualEndIso).getTime() <= new Date(currentStart).getTime()) {
+      return { sessions: [], suspendedAt: null, actualTime: null, error: '終了実績日時は開始・再開時刻より後にしてください' };
+    }
+    sessions.push({ existingId: currentSessionId, sessionStart: currentStart, sessionEnd: actualEndIso });
+  } else if (status === 'in_progress') {
+    sessions.push({ existingId: currentSessionId, sessionStart: currentStart, sessionEnd: null });
+  }
+
+  const actualTime = sessions.reduce((sum, session) => {
+    if (!session.sessionEnd) return sum;
+    return sum + Math.max(0, Math.round(
+      (new Date(session.sessionEnd).getTime() - new Date(session.sessionStart).getTime()) / 60000
+    ));
+  }, 0);
+
+  return {
+    sessions,
+    suspendedAt: status === 'suspended' ? lastSuspendIso : null,
+    actualTime,
+  };
 }
 
 interface ActualsSectionProps {
@@ -400,8 +450,6 @@ function ActualsSection({ task, form, set, childrenActualTimeMins, onEntriesChan
                 entry={entry}
                 index={i}
                 total={entries.length}
-                taskId={task?.id ?? ''}
-                actualStart={form.actual_start}
                 onChange={handleEntryChange}
                 onDelete={handleEntryDelete}
               />
@@ -496,7 +544,7 @@ function ActualsSection({ task, form, set, childrenActualTimeMins, onEntriesChan
 }
 
 export default function TaskForm({ task, onClose, initialDatetime }: TaskFormProps) {
-  const { categories: rawCategories, tasks, createTask, updateTask, createSession } = useTasks();
+  const { categories: rawCategories, tasks, sessions, createTask, updateTask, createSession, updateSession, deleteSession } = useTasks();
   const categories = useMemo(() => sortCategoriesByColor(rawCategories), [rawCategories]);
 
   // 子タスクを持つ親タスクの場合、子タスクの actual_time 合計を算出
@@ -523,6 +571,8 @@ export default function TaskForm({ task, onClose, initialDatetime }: TaskFormPro
   const [titleSuggestOpen, setTitleSuggestOpen] = useState(false);
   const [titleSuggestQuery, setTitleSuggestQuery] = useState('');
   const titleRef = useRef<HTMLDivElement>(null);
+  const actualStartEditedRef = useRef(false);
+  const actualEndEditedRef = useRef(false);
 
   useEffect(() => {
     const handler = (e: MouseEvent) => {
@@ -563,16 +613,33 @@ export default function TaskForm({ task, onClose, initialDatetime }: TaskFormPro
 
   const set = <K extends keyof typeof defaultForm>(key: K, value: (typeof defaultForm)[K]) =>
     setForm(prev => {
+      if (key === 'actual_start') actualStartEditedRef.current = true;
+      if (key === 'actual_end') actualEndEditedRef.current = true;
       const next = { ...prev, [key]: value };
-      // ステータスを完了に変更したとき、実績日時が未入力なら予定日時を自動コピー
+      // 新規登録で完了ステータスに変更したとき、実績日時を予定日時から自動コピー
       // ※予定日時変更時の自動コピーは各 onChange ハンドラ内でも行う
       if (key === 'status' && value === 'completed') {
-        if (!next.actual_start && next.scheduled_start) next.actual_start = next.scheduled_start;
-        if (!next.actual_end && next.scheduled_end) next.actual_end = next.scheduled_end;
+        if (!task && !actualStartEditedRef.current && next.scheduled_start) next.actual_start = next.scheduled_start;
+        if (!task && !actualEndEditedRef.current && next.scheduled_end) next.actual_end = next.scheduled_end;
       }
       if (key === 'status') setFormErrors({});
       return next;
     });
+
+  useEffect(() => {
+    if (task || form.status !== 'completed') return;
+
+    setForm(prev => {
+      const next = { ...prev };
+      if (!actualStartEditedRef.current && prev.scheduled_start && prev.actual_start !== prev.scheduled_start) {
+        next.actual_start = prev.scheduled_start;
+      }
+      if (!actualEndEditedRef.current && prev.scheduled_end && prev.actual_end !== prev.scheduled_end) {
+        next.actual_end = prev.scheduled_end;
+      }
+      return next === prev || (next.actual_start === prev.actual_start && next.actual_end === prev.actual_end) ? prev : next;
+    });
+  }, [task, form.status, form.scheduled_start, form.scheduled_end]);
 
   // 開始・終了が揃っていて所要時間未入力のとき、差分を time_per_unit に自動セット
   const autofillDuration = (startVal: string, endVal: string, qty: number, tpu: number) => {
@@ -612,16 +679,29 @@ export default function TaskForm({ task, onClose, initialDatetime }: TaskFormPro
     e.preventDefault();
     if (!form.title.trim()) return;
 
+    const effectiveActualStart =
+      !task && form.status === 'completed' && !actualStartEditedRef.current && form.scheduled_start
+        ? form.scheduled_start
+        : form.actual_start;
+    const effectiveActualEnd =
+      !task && form.status === 'completed' && !actualEndEditedRef.current && form.scheduled_end
+        ? form.scheduled_end
+        : form.actual_end;
+    const desiredSessionResult = buildDesiredSessions(entriesRef.current, effectiveActualStart, effectiveActualEnd, form.status);
+
     const needsActuals = form.status === 'in_progress' || form.status === 'suspended' || form.status === 'completed';
     const newErrors: FormErrors = {};
-    if (needsActuals && !form.actual_start) {
+    if (needsActuals && !effectiveActualStart) {
       newErrors.actual_start = '開始実績日時は必須です';
     }
-    if (form.status === 'completed' && !form.actual_end) {
+    if (form.status === 'completed' && !effectiveActualEnd) {
       newErrors.actual_end = '終了実績日時は必須です';
     }
     if (form.status === 'suspended' && !entriesRef.current.some(e => e.suspendVal)) {
       newErrors.suspend = '中断時間を1件以上入力してください';
+    }
+    if (desiredSessionResult.error) {
+      newErrors.suspend = desiredSessionResult.error;
     }
     if (Object.keys(newErrors).length > 0) {
       setFormErrors(newErrors);
@@ -643,10 +723,12 @@ export default function TaskForm({ task, onClose, initialDatetime }: TaskFormPro
       notes: form.notes,
       status: form.status,
       track_actual: true,
-      actual_time: childrenActualTimeMins != null ? childrenActualTimeMins : Number(form.actual_time),
+      actual_time: childrenActualTimeMins != null
+        ? childrenActualTimeMins
+        : desiredSessionResult.actualTime ?? Number(form.actual_time),
       actual_memo: form.actual_memo,
-      actual_start: localToISO(form.actual_start),
-      actual_end: localToISO(form.actual_end),
+      actual_start: localToISO(effectiveActualStart),
+      actual_end: localToISO(effectiveActualEnd),
       duration_over_factor: form.duration_over_factor || null,
       duration_short_factor: form.duration_short_factor || null,
     };
@@ -659,9 +741,7 @@ export default function TaskForm({ task, onClose, initialDatetime }: TaskFormPro
 
     // status=suspended のとき、entries の最後の中断時刻を suspended_at として保存する
     if (form.status === 'suspended') {
-      const suspendEntries = entriesRef.current;
-      const lastSuspendVal = [...suspendEntries].reverse().find(e => e.suspendVal)?.suspendVal ?? null;
-      payload.suspended_at = lastSuspendVal ? localToISO(lastSuspendVal) : null;
+      payload.suspended_at = desiredSessionResult.suspendedAt;
     } else {
       // 中断解除時は suspended_at をクリア
       payload.suspended_at = null;
@@ -671,26 +751,33 @@ export default function TaskForm({ task, onClose, initialDatetime }: TaskFormPro
 
     if (task) {
       await updateTask(task.id, payload);
+      if (needsActuals) {
+        const taskSessions = sessions.filter(s => s.task_id === task.id);
+        const desiredIds = new Set<string>();
+        for (const desired of desiredSessionResult.sessions) {
+          if (desired.existingId) {
+            desiredIds.add(desired.existingId);
+            await updateSession(desired.existingId, {
+              session_start: desired.sessionStart,
+              session_end: desired.sessionEnd,
+            });
+          } else {
+            const created = await createSession(task.id, desired.sessionStart, desired.sessionEnd);
+            if (created) desiredIds.add(created.id);
+          }
+        }
+        await Promise.all(
+          taskSessions
+            .filter(s => !desiredIds.has(s.id))
+            .map(s => deleteSession(s.id))
+        );
+      }
     } else {
       const created = await createTask(payload);
       // 新規作成後、入力済みの中断エントリをセッションとして保存する
       if (created) {
-        const entries = entriesRef.current.filter(e => e.suspendVal);
-        for (let i = 0; i < entries.length; i++) {
-          const entry = entries[i];
-          const suspendIso = localToISO(entry.suspendVal);
-          if (!suspendIso) continue;
-          // 中断前セッション: 前の再開時刻（または actual_start）→ 中断時刻
-          const sessionStart = i === 0
-            ? localToISO(form.actual_start)
-            : localToISO(entries[i - 1].resumeVal || entry.suspendVal);
-          if (!sessionStart) continue;
-          await createSession(created.id, sessionStart, suspendIso);
-          // 再開後セッション: 再開時刻 → null（open）
-          if (entry.resumeVal) {
-            const resumeIso = localToISO(entry.resumeVal);
-            if (resumeIso) await createSession(created.id, resumeIso, null);
-          }
+        for (const desired of desiredSessionResult.sessions) {
+          await createSession(created.id, desired.sessionStart, desired.sessionEnd);
         }
       }
     }
@@ -949,10 +1036,9 @@ export default function TaskForm({ task, onClose, initialDatetime }: TaskFormPro
                         const endVal = recalcEnd(val, prev.quantity, prev.time_per_unit);
                         const durFill = autofillDuration(val, prev.scheduled_end, prev.quantity, prev.time_per_unit);
                         const next: typeof prev = { ...prev, scheduled_start: val, ...(endVal ? { scheduled_end: endVal } : {}), ...(durFill ?? {}) };
-                        // 完了ステータスで実績開始が未入力なら自動コピー
-                        if (next.status === 'completed' && !next.actual_start && val) next.actual_start = val;
-                        // 完了ステータスで終了も自動計算された場合、実績終了が未入力なら自動コピー
-                        if (next.status === 'completed' && !next.actual_end && endVal) next.actual_end = endVal;
+                        // 新規登録の完了ステータスでは、手動編集されるまで予定日時を実績日時へ同期する
+                        if (!task && next.status === 'completed' && !actualStartEditedRef.current) next.actual_start = val;
+                        if (!task && next.status === 'completed' && !actualEndEditedRef.current && endVal) next.actual_end = endVal;
                         return next;
                       });
                     }}
@@ -974,8 +1060,8 @@ export default function TaskForm({ task, onClose, initialDatetime }: TaskFormPro
                       setForm(prev => {
                         const durFill = autofillDuration(prev.scheduled_start, val, prev.quantity, prev.time_per_unit);
                         const next: typeof prev = { ...prev, scheduled_end: val, ...(durFill ?? {}) };
-                        // 完了ステータスで実績終了が未入力なら自動コピー
-                        if (next.status === 'completed' && !next.actual_end && val) next.actual_end = val;
+                        // 新規登録の完了ステータスでは、手動編集されるまで予定終了を実績終了へ同期する
+                        if (!task && next.status === 'completed' && !actualEndEditedRef.current) next.actual_end = val;
                         return next;
                       });
                     }}
