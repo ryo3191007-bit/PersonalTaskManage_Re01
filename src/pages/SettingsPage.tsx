@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useRef } from 'react';
 import { Plus, Trash2, CreditCard as Edit2, Check, X, Bell, BellOff, Search, User, Mail, Lock, Eye, EyeOff } from 'lucide-react';
 import { useTasks } from '../contexts/TaskContext';
 import { useAuth } from '../contexts/AuthContext';
@@ -9,6 +9,8 @@ const PRESET_COLORS = [
   '#3b82f6', '#ef4444', '#22c55e', '#f59e0b', '#8b5cf6',
   '#ec4899', '#06b6d4', '#f97316', '#14b8a6', '#6366f1',
 ];
+
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 // ─── 分類追加ダイアログ ─────────────────────────────────────────────────────────
 function CreateCategoryDialog({
@@ -22,21 +24,28 @@ function CreateCategoryDialog({
   const [color, setColor] = useState(PRESET_COLORS[0]);
   const [error, setError] = useState('');
   const [saving, setSaving] = useState(false);
+  const savingRef = useRef(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (savingRef.current) return;
     setError('');
     if (!name.trim()) {
       setError('分類名を入力してください');
       return;
     }
+    savingRef.current = true;
     setSaving(true);
-    const ok = await onCreate(name.trim(), color);
-    setSaving(false);
-    if (ok) {
-      onClose();
-    } else {
-      setError('保存に失敗しました。再度お試しください。');
+    try {
+      const ok = await onCreate(name.trim(), color);
+      if (ok) {
+        onClose();
+      } else {
+        setError('保存に失敗しました。再度お試しください。');
+      }
+    } finally {
+      savingRef.current = false;
+      setSaving(false);
     }
   };
 
@@ -144,6 +153,10 @@ export default function SettingsPage() {
 
     if (!emailChanged && !passwordChanged) {
       setAccountMessage({ type: 'error', text: '変更内容がありません' });
+      return;
+    }
+    if (emailChanged && !EMAIL_PATTERN.test(emailValue.trim())) {
+      setAccountMessage({ type: 'error', text: 'メールアドレスの形式が正しくありません' });
       return;
     }
     if (passwordChanged && newPassword.length < 6) {

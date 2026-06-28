@@ -57,21 +57,25 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const updateAccount = async (fields: { email?: string; password?: string }) => {
-    const { data: { session } } = await supabase.auth.getSession();
-    const res = await fetch(
-      `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/update-account`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${session?.access_token ?? ''}`,
-        },
-        body: JSON.stringify(fields),
-      }
-    );
-    const json = await res.json();
-    if (!res.ok) return { error: new Error(json.error ?? '更新に失敗しました') };
-    return { error: null };
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      const res = await fetch(
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/update-account`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${session?.access_token ?? ''}`,
+          },
+          body: JSON.stringify(fields),
+        }
+      );
+      const json = await res.json().catch(() => ({}));
+      if (!res.ok) return { error: new Error(json.error ?? '更新に失敗しました') };
+      return { error: null };
+    } catch {
+      return { error: new Error('通信に失敗しました。ネットワーク接続を確認してください') };
+    }
   };
 
   return (

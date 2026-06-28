@@ -74,8 +74,14 @@ export function exportToCSV(tasks: Task[]): void {
     t.notes,
   ]);
 
+  const escapeCsvCell = (cell: unknown): string => {
+    let value = String(cell);
+    if (/^[=+\-@]/.test(value)) value = `'${value}`;
+    return `"${value.replace(/"/g, '""')}"`;
+  };
+
   const csv = [headers, ...rows].map(row =>
-    row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(',')
+    row.map(escapeCsvCell).join(',')
   ).join('\n');
 
   const bom = '\uFEFF';
