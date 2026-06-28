@@ -1,0 +1,5522 @@
+{
+  "config": {
+    "argv": [
+      "C:\\Users\\ryo31\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\node\\bin\\node.exe",
+      "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\node_modules\\@playwright\\test\\cli.js",
+      "test",
+      "--config",
+      "playwright.config.cjs",
+      "--reporter=json",
+      "--max-failures=10"
+    ],
+    "configFile": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\playwright.config.cjs",
+    "rootDir": "C:/Users/ryo31/OneDrive/ドキュメント/PersonalTaskManage_テスト管理/PersonalTaskManage_Re01/tests/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 10,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Users/ryo31/OneDrive/ドキュメント/PersonalTaskManage_テスト管理/PersonalTaskManage_Re01/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "C:/Users/ryo31/OneDrive/ドキュメント/PersonalTaskManage_テスト管理/PersonalTaskManage_Re01/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 45000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 6,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "personal-taskmanage.e2e.spec.cjs",
+      "file": "personal-taskmanage.e2e.spec.cjs",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "TC-E2E-001 TD006 タスクの作成、再表示、編集、削除がSupabaseへ永続化されること 分割01",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6723,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:46:08.308Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-587efbdfd393230c3fdf",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-002 TD006 タスクの作成、再表示、編集、削除がSupabaseへ永続化されること 分割02",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4207,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:46:15.169Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-1572f934d189b1496229",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-003 TD006 タスクの作成、再表示、編集、削除がSupabaseへ永続化されること 分割03",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3345,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:46:19.397Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-a4ed0abe7d9514b1e73a",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-004 TD006 タスクの作成、再表示、編集、削除がSupabaseへ永続化されること 分割04",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3492,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:46:22.774Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-1d92e6440eb7df9bae71",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-005 TD007 新規タスクのステータス未着手、優先度中、数量1が適用されること 分割01",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2399,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:46:26.281Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-4709b32b35672a77fd0a",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-006 TD007 新規タスクのステータス未着手、優先度中、数量1が適用されること 分割02",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2720,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:46:28.694Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-a7e8a0ea43bdf2655685",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-007 TD007 新規タスクのステータス未着手、優先度中、数量1が適用されること 分割03",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2606,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:46:31.428Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-6d37c07b765b965e6983",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-008 TD007 新規タスクのステータス未着手、優先度中、数量1が適用されること 分割04",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2517,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:46:34.047Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-d4754bbe75fe1275a73e",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-009 TD007 新規タスクのステータス未着手、優先度中、数量1が適用されること 分割05",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2621,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:46:36.578Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-485feebf2374cc7ea75c",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-010 TD007 新規タスクのステータス未着手、優先度中、数量1が適用されること 分割06",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3087,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:46:39.214Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-d22c4e6e667472f84f2f",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-011 TD007 新規タスクのステータス未着手、優先度中、数量1が適用されること 分割07",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2457,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:46:42.316Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-36c5fcbfc25221c25aff",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-012 TD007 新規タスクのステータス未着手、優先度中、数量1が適用されること 分割08",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3657,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:46:44.789Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-125e56067418c1e1d959",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-013 TD008 キャンセル",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1835,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:46:48.457Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-1d8844b8a153bc267abf",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-014 TD008 失敗",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1798,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:46:50.309Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-0869aed63f2980a87c04",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-015 TD008 再試行",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1758,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:46:52.127Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-7b7f887cb05edda07a1a",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-016 TD010 登録・編集・状態変更・削除が再読込後も同じ結果であること 分割01",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3619,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:46:53.898Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-0e7f44d861dac543c074",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-017 TD010 登録・編集・状態変更・削除が再読込後も同じ結果であること 分割02",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3673,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:46:57.530Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-2e1c43b742ef508af778",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-018 TD010 登録・編集・状態変更・削除が再読込後も同じ結果であること 分割03",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3706,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:47:01.216Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-d999d29ec59cffef6f97",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-019 TD010 登録・編集・状態変更・削除が再読込後も同じ結果であること 分割04",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4097,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:47:04.936Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-e3243d8dc03c8d2ca253",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-020 TD017 毎日と曜日指定で、JST暦日の期間開始日・終了日を含む対象日だけタスクを生成すること 分割01",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1440,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:47:09.049Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-325bfb611fe01cbab81a",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-021 TD017 毎日と曜日指定で、JST暦日の期間開始日・終了日を含む対象日だけタスクを生成すること 分割02",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1560,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:47:10.502Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-db9342ae88f275cf923c",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-022 TD017 毎日と曜日指定で、JST暦日の期間開始日・終了日を含む対象日だけタスクを生成すること 分割03",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2262,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:47:12.074Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-3a37a08bb5b1c4ce5d89",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-023 TD017 毎日と曜日指定で、JST暦日の期間開始日・終了日を含む対象日だけタスクを生成すること 分割04",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1444,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:47:14.346Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-fa8dd8ccb60d996fd124",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-024 TD017 毎日と曜日指定で、JST暦日の期間開始日・終了日を含む対象日だけタスクを生成すること 分割05",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1554,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:47:15.800Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-032d4780806ec4744501",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-025 TD017 毎日と曜日指定で、JST暦日の期間開始日・終了日を含む対象日だけタスクを生成すること 分割06",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1456,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:47:17.365Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-ea5fdbc95bfcbee91eb5",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-026 TD017 毎日と曜日指定で、JST暦日の期間開始日・終了日を含む対象日だけタスクを生成すること 分割07",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1467,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:47:18.832Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-967cb7b7cb8b4d2bd855",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-027 TD017 毎日と曜日指定で、JST暦日の期間開始日・終了日を含む対象日だけタスクを生成すること 分割08",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1508,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:47:20.312Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-1905b5ee3b23b25c7782",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-028 TD017 毎日と曜日指定で、JST暦日の期間開始日・終了日を含む対象日だけタスクを生成すること 分割09",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1483,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:47:21.834Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-f727e1b7600c9e10d1f3",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-029 TD017 毎日と曜日指定で、JST暦日の期間開始日・終了日を含む対象日だけタスクを生成すること 分割10",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1494,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:47:23.329Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-c3e55cc52dda368eadb8",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-030 TD019 曜日指定未選択、期間終了<開始、同日終了で終了<=開始を拒否すること 分割01",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1520,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:47:24.834Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-59fb375c503fd3424d83",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-031 TD019 曜日指定未選択、期間終了<開始、同日終了で終了<=開始を拒否すること 分割02",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1472,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:47:26.365Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-d2ca4f0c887fdebcd1fa",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-032 TD019 曜日指定未選択、期間終了<開始、同日終了で終了<=開始を拒否すること 分割03",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1440,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:47:27.847Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-f3c12ca4ade2f6ae719e",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-033 TD019 曜日指定未選択、期間終了<開始、同日終了で終了<=開始を拒否すること 分割04",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1454,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:47:29.300Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-e60c8dd2d6ffc3573959",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-034 TD020 翌日終了ありでは終了日を1日進め、なしでは同日内の時刻順序を保持すること 分割01",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1506,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:47:30.764Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-984e9e2539a158c4ceb9",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-035 TD020 翌日終了ありでは終了日を1日進め、なしでは同日内の時刻順序を保持すること 分割02",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1567,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:47:32.283Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-a97c1fd65c2502665a83",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-036 TD020 翌日終了ありでは終了日を1日進め、なしでは同日内の時刻順序を保持すること 分割03",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1438,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:47:33.862Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-3f0ca00007b987edf20e",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-037 TD020 翌日終了ありでは終了日を1日進め、なしでは同日内の時刻順序を保持すること 分割04",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1443,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:47:35.313Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-b0cd628aa8a7509b54f2",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-038 TD023 日・週・月の各ビューに予定、実績、セッションがJSTで表示されること 分割01",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1404,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:47:36.767Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-85c4f925b90ab8625c52",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-039 TD023 日・週・月の各ビューに予定、実績、セッションがJSTで表示されること 分割02",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1408,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:47:38.182Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-132d8dafc5a15f06f64b",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-040 TD023 日・週・月の各ビューに予定、実績、セッションがJSTで表示されること 分割03",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1415,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:47:39.601Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-64fa29fe62178efe3ef1",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-041 TD025 日",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1459,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:47:41.027Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-b9eeaa1cd8842c23e858",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-042 TD025 週",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1663,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:47:42.499Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-2183a720f5cf0e1a118b",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-043 TD025 月",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1390,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:47:44.176Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-8bf069352e3c08e40222",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-044 TD025 前",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1401,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:47:45.579Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-83b22ad204473e306359",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-045 TD025 次",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1424,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:47:46.992Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-f973db3c32bc98c346c3",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-046 TD026 開始欠落",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1410,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:47:48.427Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-5f122f57e648057d2f69",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-047 TD026 終了欠落",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1425,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:47:49.848Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-8ed271e0aa281ce15888",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-048 TD026 両方欠落",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1860,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:47:51.283Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-dfa0fc51c301c4c72f9e",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-049 TD026 完了",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1417,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:47:53.153Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-862ae9ca29dac28dc765",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-050 TD049 CSVがBOM付きUTF-8で全タスクと選択項目を正しい列順で出力すること 分割01",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1421,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:47:54.581Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-51c9c81189f0aade843b",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-051 TD049 CSVがBOM付きUTF-8で全タスクと選択項目を正しい列順で出力すること 分割02",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1382,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:47:56.013Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-ee97cb7dcc9a8f09dedd",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-052 TD049 CSVがBOM付きUTF-8で全タスクと選択項目を正しい列順で出力すること 分割03",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1364,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:47:57.406Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-4145310f5dbbb8066fa3",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-053 TD050 日本語、カンマ、引用符、改行、絵文字をCSV/テキストで欠損なくエスケープすること 分割01",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1434,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:47:58.782Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-037f72b2616736f76c70",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-054 TD050 日本語、カンマ、引用符、改行、絵文字をCSV/テキストで欠損なくエスケープすること 分割02",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1461,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:48:00.225Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-b263ef8d581f9e085306",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-055 TD050 日本語、カンマ、引用符、改行、絵文字をCSV/テキストで欠損なくエスケープすること 分割03",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1358,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:48:01.696Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-3fd5a5be9d96fa831a8e",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-056 TD050 日本語、カンマ、引用符、改行、絵文字をCSV/テキストで欠損なくエスケープすること 分割04",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1433,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:48:03.066Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-f2c1e76f70d82bbbb3b4",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-057 TD050 日本語、カンマ、引用符、改行、絵文字をCSV/テキストで欠損なくエスケープすること 分割05",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1412,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:48:04.509Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-65ee93d3e19a7e24945e",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-058 TD051 3状態",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1471,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:48:05.933Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-eebb8278a7a2b219b6d1",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-059 TD051 3状態派生01",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1558,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:48:07.415Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-b4fa780ecb03db24b1a5",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-060 TD051 3状態派生02",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1551,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:48:08.989Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-b1b14c8b541cf62cf2a8",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-061 TD073 AC001のタスク登録が一覧表示と再読込後の保持まで成功すること。代表条件1件を独立判定する 分割01",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2772,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:48:10.557Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-d7e2863b97d47886fb5c",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-062 TD074 AC002のタスク編集が表示反映と再読込後の保持まで成功すること。代表条件1件を独立判定する 分割01",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3012,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:48:13.344Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-19460e430ccbc469c862",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-063 TD075 AC003の主要状態遷移と実績情報の保存・表示が成功すること。代表条件1件を独立判定する 分割01",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1423,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:48:16.371Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-c2b8eec2bf0631318afd",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-064 TD076 AC004のJSTカレンダー表示と日時境界が成功すること。代表条件1件を独立判定する 分割01",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1490,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:48:17.805Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-8c3c21b7825a140a943c",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-065 TD077 AC005の予定・実績・完了率が集計仕様と一致すること。代表条件1件を独立判定する 分割01",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1607,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:48:19.307Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-13269367ae72fdc56c2b",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-066 TD078 AC006の代表設定変更が機能へ反映され、再読込後も保持されること。代表条件1件を独立判定する 分割01",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1476,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:48:20.925Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-63bdeff876d46ed32b7b",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-067 TD088 単独全件＋日付",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2566,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:48:22.413Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-2f60180e1e28fc3daf87",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-068 TD088 状態",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2601,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:48:24.992Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-f9c4e70b621d759093d8",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-069 TD088 未スケジュール",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2576,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:48:27.604Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-42e8300b45e7eee01b95",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-070 TD088 重複0分",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2480,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:48:30.192Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-9ec47f785df0be37e2a5",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-071 TD088 1分",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2691,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:48:32.683Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-c7b3d9aaf2240b94b330",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-072 TD088 1分派生01",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2488,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:48:35.384Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-1c1b95a8b9baee62e88c",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-073 TD088 1分派生02",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2489,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:48:37.883Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-2b315c9337f67acb951b",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-074 TD088 1分派生03",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2775,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:48:40.382Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-444e2aba87bf7fdb9dcc",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-075 TD088 1分派生04",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2665,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:48:43.170Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-232287dcc7755d9794be",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-076 TD088 1分派生05",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2547,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:48:45.846Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-1a9e5e7034d54b24dc2e",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-077 TD088 1分派生06",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2740,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:48:48.405Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-08d4fb2e2e3cbe2e7a32",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-078 TD088 1分派生07",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2535,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:48:51.157Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-05759b1a9069eda8233f",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-079 TD088 1分派生08",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2792,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:48:53.704Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-8ebac45420093ef0e7c1",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-080 TD088 1分派生09",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2620,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:48:56.507Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-3f9dc7194502ff7a673d",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-081 TD088 1分派生10",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2549,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:48:59.138Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-1e9c73439c779f909d43",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-082 TD068 S001 ログイン画面 主要経路",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 998,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:49:01.701Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-e556e9c731ec9709d49f",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-083 TD068 S101 タスク一覧画面 主要経路",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1438,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:49:02.711Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-15fe17e4882101001030",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-084 TD068 S102 新規タスク作成ダイアログ 主要経路",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3087,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:49:04.159Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-f9f26a1096a429d99e64",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-085 TD068 S103 新規定常タスク作成ダイアログ 主要経路",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1500,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:49:07.260Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-2159009a3a770bcfa839",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-086 TD068 S104 タスク編集ダイアログ 主要経路",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3122,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:49:08.774Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-a1b7eae152a059317573",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-087 TD068 S105 新しい分類を追加ダイアログ 主要経路",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1496,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:49:11.911Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-2bb64c856ba51edc8cef",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-088 TD068 S106 開始実績時間入力ダイアログ 主要経路",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1466,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:49:13.426Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-f8602b131b6c44b8d287",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-089 TD068 S107 タスク中断ダイアログ 主要経路",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1492,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:49:14.908Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-bc679cfa03756b24230f",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-090 TD068 S108 タスク再開ダイアログ 主要経路",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1655,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:49:16.414Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-45dc0b35e283b42e3743",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-091 TD068 S109 終了実績時間入力ダイアログ 主要経路",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1430,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:49:18.080Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-8887b764b432da366e03",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-092 TD068 S110 出力項目選択ダイアログ 主要経路",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1484,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:49:19.522Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-4f8daf919e37117808d5",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-093 TD068 S111 当日タスク実績レポートダイアログ 主要経路",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1457,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:49:21.023Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-7f50a767042a9c77616a",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-094 TD068 S112 タスク削除確認ダイアログ 主要経路",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1501,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:49:22.495Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-3b49640149b883c83d86",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-095 TD068 S113 定常タスク削除確認ダイアログ 主要経路",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1519,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:49:24.006Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-b0a8d251c40d669a5ade",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-096 TD068 S114 タスク一括削除確認エリア 主要経路",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1516,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:49:25.538Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-422739a473a3ef51e72f",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-097 TD068 S200 カレンダー画面 主要経路",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1557,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:49:27.069Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-05382d00101ae0379d28",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-098 TD068 S201 日カレンダータブ 主要経路",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1467,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:49:28.638Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-3d25664a83cadfa30d69",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-099 TD068 S202 週カレンダータブ 主要経路",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1732,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:49:30.116Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-582ee89fae3d12a46d9b",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-100 TD068 S203 月カレンダータブ 主要経路",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1472,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:49:31.861Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-3807d62c2269ad53333b",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-101 TD068 S301 定常タスク管理画面 主要経路",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1500,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:49:33.342Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-255ac58922c51f6b5f13",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-102 TD068 S302 定常タスク編集ダイアログ 主要経路",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3227,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:49:34.852Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-b36b92cc2e99d33c3732",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-103 TD068 S303 未完了タスク一括更新ダイアログ 主要経路",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1490,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:49:38.089Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-06ec5c114d8dd2cb996b",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-104 TD068 S400 分析画面 主要経路",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1566,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:49:39.595Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-13df2e362491c63c6f7a",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-105 TD068 S401 概要分析タブ 主要経路",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1445,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:49:41.170Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-e147e53cfdb5d8d46c23",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-106 TD068 S403 所要時間分析タブ 主要経路",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1586,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:49:42.625Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-5568a294b17040257124",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-107 TD068 S501 設定画面 主要経路",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1501,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:49:44.220Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-476533581573852b8a38",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-108 TD068 S502 アカウント情報セクション 主要経路",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1436,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:49:45.732Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-f037ce05063e9ad23dd4",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-109 TD068 S503 タスク分類検索・色フィルタエリア 主要経路",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1393,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:49:47.182Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-dfe40f563db454be957f",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-110 TD068 S504 タスク分類一括削除確認エリア 主要経路",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1430,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:49:48.590Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-7242d6b8f98b17ac6691",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-111 TD068 F001 ログイン 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1449,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:49:50.032Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-e60aa0f58e7d97f03dd9",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-112 TD068 F002 サインアップ 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2054,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:49:51.494Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-d6396cf3ef5b50f18646",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-113 TD068 F101 タスク一覧表示 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1370,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:49:53.558Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-151f646b7ac8a31ac137",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-114 TD068 F102 タスク作成 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1394,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:49:54.939Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-f61cd97c4019bab4e26a",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-115 TD068 F103 タスク編集 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3134,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:49:56.345Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-2ab16622461bf1c886ce",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-116 TD068 F104 タスク削除 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1431,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:49:59.491Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-c8557899d47ae0a6b3ba",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-117 TD068 F105 新しい分類追加 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1369,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:50:00.933Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-4c9e76ed9d819372c707",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-118 TD068 F106 親子タスク設定 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1501,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:50:02.313Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-2f23362d85754a6781b6",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-119 TD068 F107 ステータス変更 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1412,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:50:03.825Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-a4cc717733720af0ce71",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-120 TD068 F108 開始実績時間入力 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1465,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:50:05.249Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-db7f46746901a92f66e1",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-121 TD068 F109 タスク中断時間入力 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1439,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:50:06.723Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-a5d042ab27bcb438ac7a",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-122 TD068 F110 タスク再開時間入力 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1417,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:50:08.173Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-4586e3affdb63984e532",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-123 TD068 F111 終了実績時間入力 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1402,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:50:09.600Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-6c0ac95135b5f02512d3",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-124 TD068 F112 テキスト出力項目選択 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1596,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:50:11.014Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-de3111df6755ffb66317",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-125 TD068 F113 タスクキーワード検索 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1423,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:50:12.622Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-448f06e90d0627811141",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-126 TD068 F114 タスクフィルタ 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1396,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:50:14.056Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-c3a1d827893f2efb24b7",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-127 TD068 F115 作業負荷表示 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1381,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:50:15.463Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-33cf2a58e0f0af41e44a",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-128 TD068 F116 CSV出力 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1379,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:50:16.853Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-5707bd2c8ad74af5dbf1",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-129 TD068 F117 テキスト出力 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1453,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:50:18.242Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-ac3030613ed962194abc",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-130 TD068 F118 タスク一括削除 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1460,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:50:19.711Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-99b56a2243494c746709",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-131 TD068 F119 予定時刻ブラウザ通知 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2040,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:50:21.184Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-218b4404b2ccf0666ed8",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-132 TD068 F201 日カレンダー表示 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1627,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:50:23.235Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-3593adcd3849bae2a8a1",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-133 TD068 F202 週カレンダー表示 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1682,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:50:24.876Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-620a6a5d4935471e3880",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-134 TD068 F203 月カレンダー表示 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1658,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:50:26.573Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-26add980fd5592188676",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-135 TD068 F204 前後切り替え 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1537,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:50:28.249Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-a5ee9ef509d17cd70fe7",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-136 TD068 F205 当日表示 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1478,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:50:29.806Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-a3d7a6f2d5177c789f0b",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-137 TD068 F206 未スケジュールタスク表示 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1486,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:50:31.299Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-ebb610a00132eba03d74",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-138 TD068 F301 定常タスク作成 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1454,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:50:32.797Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-1e2e3eeeb3ba575026e9",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-139 TD068 F302 定常タスク編集 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3093,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:50:34.262Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-fbce5f62ee58eb23b2fd",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-140 TD068 F303 定常タスク一括更新 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2028,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:50:37.366Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-2cba45f5cc6b33419ebf",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-141 TD068 F304 定常タスク削除 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1424,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:50:39.405Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-24b54d4e96f7f8e8b0bc",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-142 TD068 F401 完了率表示 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1354,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:50:40.839Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-4696cb7861362ac329f1",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-143 TD068 F402 総実績時間表示 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1439,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:50:42.203Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-e335f25e126209539a0b",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-144 TD068 F403 ステータス分布表示 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1627,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:50:43.656Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-89f024f4fe7aa04ccedc",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-145 TD068 F404 分類別完了タスク数表示 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1391,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:50:45.299Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-38d17496a131d5cc39fe",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-146 TD068 F405 分類別実績時間表示 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1412,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:50:46.701Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-633fd2fdf83c4f38c140",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-147 TD068 F406 作業時間表示 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1433,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:50:48.123Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-641ef54db77e35ccea15",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-148 TD068 F410 所要時間分析 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1692,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:50:49.569Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-0cef211d75eda4a89f05",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-149 TD068 F411 見積超過要因ランキング表示 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1405,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:50:51.275Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-1b5223f9b66ff9ef3314",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-150 TD068 F412 見積短縮要因ランキング表示 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1459,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:50:52.690Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-366c9a70e7ff35b961d8",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-151 TD068 F413 表示期間切り替え 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1406,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:50:54.160Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-a5490aa0e2be40eaaecc",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-152 TD068 F501 タスク分類表示 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1399,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:50:55.578Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-ad5d0545d6e6e99f7e6f",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-153 TD068 F502 タスク分類追加 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1387,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:50:56.989Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-f702f1653e005935989d",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-154 TD068 F503 タスク分類編集 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3127,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:50:58.386Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-c4737f0a7a3cac5025ee",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-155 TD068 F504 タスク分類削除 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1404,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:51:01.524Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-02b1ff372e2607f743b1",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-156 TD068 F505 ブラウザ通知許可設定変更 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1531,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:51:02.939Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-cb3319d906bae15293d3",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-157 TD068 F506 タスク分類検索・色フィルタ 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1425,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:51:04.482Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-dd752fb6df6643639a63",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-158 TD068 F507 タスク分類一括削除 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1396,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:51:05.917Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-6b792effdeae3b952f08",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-159 TD068 F508 メールアドレス変更 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1429,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:51:07.324Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-498931968990e6d041fb",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-160 TD068 F509 パスワード変更 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1460,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:51:08.767Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-8ac0594c45758dd8046d",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-06-28T07:46:07.674Z",
+    "duration": 303779.382,
+    "expected": 160,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

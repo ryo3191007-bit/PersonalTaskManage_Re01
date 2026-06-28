@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>まだ実行していないテストケース</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f7f7f4;
+      --panel: #ffffff;
+      --text: #202124;
+      --muted: #666b73;
+      --border: #d9ddd6;
+      --accent: #0f766e;
+      --danger: #b42318;
+      --warn: #b7791f;
+      --ok: #16794c;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Segoe UI", "Meiryo", sans-serif;
+      line-height: 1.65;
+    }
+    header, main {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+    header {
+      padding-top: 32px;
+      border-bottom: 1px solid var(--border);
+    }
+    h1 { margin: 0 0 8px; font-size: 32px; }
+    h2 { margin-top: 32px; font-size: 24px; border-left: 5px solid var(--accent); padding-left: 10px; }
+    h3 { margin-top: 24px; font-size: 18px; }
+    p { margin: 8px 0; }
+    a { color: #075985; }
+    code {
+      background: #eef2f0;
+      border: 1px solid #d7ddda;
+      border-radius: 4px;
+      padding: 1px 4px;
+      font-family: Consolas, monospace;
+    }
+    pre {
+      overflow: auto;
+      background: #111827;
+      color: #f9fafb;
+      border-radius: 8px;
+      padding: 14px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin: 16px 0;
+    }
+    .metric {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+    }
+    .metric .label { color: var(--muted); font-size: 13px; }
+    .metric .value { font-size: 26px; font-weight: 700; margin-top: 4px; }
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--panel);
+      margin: 12px 0;
+    }
+    table { width: 100%; border-collapse: collapse; min-width: 720px; }
+    th, td { border-bottom: 1px solid var(--border); padding: 8px 10px; text-align: left; vertical-align: top; }
+    th { background: #eef2f0; white-space: nowrap; }
+    tr:last-child td { border-bottom: 0; }
+    .pill { display: inline-block; border-radius: 999px; padding: 2px 8px; font-weight: 700; font-size: 12px; }
+    .pass { color: var(--ok); }
+    .fail { color: var(--danger); }
+    .na { color: var(--warn); }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>まだ実行していないテストケース</h1>
+  <p>件数: <strong>58</strong></p>
+  <p><a href="../index.html">テスト実行レポートへ戻る</a></p>
+</header>
+<main>
+  <div class="table-wrap"><table><thead><tr><th>テストケースID</th><th>区分</th><th>優先度</th><th>テストケース名</th><th>状態</th><th>関連質問ID</th><th>リンク</th></tr></thead><tbody><tr><td>TC-MAN-001</td><td>人間実行</td><td>高</td><td>TD079 初期表示時間基準内</td><td>作成済み</td><td>なし</td><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E4%BA%BA%E9%96%93%E5%AE%9F%E8%A1%8C.html">テストケース_人間実行.md</a></td></tr>
+<tr><td>TC-MAN-002</td><td>人間実行</td><td>高</td><td>TD079 初期表示時間境界値</td><td>作成済み</td><td>なし</td><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E4%BA%BA%E9%96%93%E5%AE%9F%E8%A1%8C.html">テストケース_人間実行.md</a></td></tr>
+<tr><td>TC-MAN-003</td><td>人間実行</td><td>高</td><td>TD079 初期表示時間境界超過</td><td>作成済み</td><td>なし</td><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E4%BA%BA%E9%96%93%E5%AE%9F%E8%A1%8C.html">テストケース_人間実行.md</a></td></tr>
+<tr><td>TC-MAN-004</td><td>人間実行</td><td>高</td><td>TD079 タスク登録応答基準内</td><td>作成済み</td><td>なし</td><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E4%BA%BA%E9%96%93%E5%AE%9F%E8%A1%8C.html">テストケース_人間実行.md</a></td></tr>
+<tr><td>TC-MAN-005</td><td>人間実行</td><td>高</td><td>TD079 タスク登録応答境界値</td><td>作成済み</td><td>なし</td><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E4%BA%BA%E9%96%93%E5%AE%9F%E8%A1%8C.html">テストケース_人間実行.md</a></td></tr>
+<tr><td>TC-MAN-006</td><td>人間実行</td><td>高</td><td>TD079 タスク登録応答境界超過</td><td>作成済み</td><td>なし</td><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E4%BA%BA%E9%96%93%E5%AE%9F%E8%A1%8C.html">テストケース_人間実行.md</a></td></tr>
+<tr><td>TC-MAN-007</td><td>人間実行</td><td>高</td><td>TD079 カレンダー描画基準内</td><td>作成済み</td><td>なし</td><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E4%BA%BA%E9%96%93%E5%AE%9F%E8%A1%8C.html">テストケース_人間実行.md</a></td></tr>
+<tr><td>TC-MAN-008</td><td>人間実行</td><td>高</td><td>TD079 カレンダー描画境界値</td><td>作成済み</td><td>なし</td><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E4%BA%BA%E9%96%93%E5%AE%9F%E8%A1%8C.html">テストケース_人間実行.md</a></td></tr>
+<tr><td>TC-MAN-009</td><td>人間実行</td><td>高</td><td>TD079 カレンダー描画境界超過</td><td>作成済み</td><td>なし</td><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E4%BA%BA%E9%96%93%E5%AE%9F%E8%A1%8C.html">テストケース_人間実行.md</a></td></tr>
+<tr><td>TC-MAN-010</td><td>人間実行</td><td>高</td><td>TD079 分析集計基準内</td><td>作成済み</td><td>なし</td><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E4%BA%BA%E9%96%93%E5%AE%9F%E8%A1%8C.html">テストケース_人間実行.md</a></td></tr>
+<tr><td>TC-MAN-011</td><td>人間実行</td><td>高</td><td>TD079 分析集計境界値</td><td>作成済み</td><td>なし</td><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E4%BA%BA%E9%96%93%E5%AE%9F%E8%A1%8C.html">テストケース_人間実行.md</a></td></tr>
+<tr><td>TC-MAN-012</td><td>人間実行</td><td>高</td><td>TD079 分析集計境界超過</td><td>作成済み</td><td>なし</td><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E4%BA%BA%E9%96%93%E5%AE%9F%E8%A1%8C.html">テストケース_人間実行.md</a></td></tr>
+<tr><td>TC-MAN-013</td><td>人間実行</td><td>高</td><td>TD079 一括削除応答基準内</td><td>作成済み</td><td>なし</td><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E4%BA%BA%E9%96%93%E5%AE%9F%E8%A1%8C.html">テストケース_人間実行.md</a></td></tr>
+<tr><td>TC-MAN-014</td><td>人間実行</td><td>高</td><td>TD079 一括削除応答境界値</td><td>作成済み</td><td>なし</td><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E4%BA%BA%E9%96%93%E5%AE%9F%E8%A1%8C.html">テストケース_人間実行.md</a></td></tr>
+<tr><td>TC-MAN-015</td><td>人間実行</td><td>高</td><td>TD079 一括削除応答境界超過</td><td>作成済み</td><td>なし</td><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E4%BA%BA%E9%96%93%E5%AE%9F%E8%A1%8C.html">テストケース_人間実行.md</a></td></tr>
+<tr><td>TC-MAN-016</td><td>人間実行</td><td>高</td><td>TD080 14:59</td><td>作成済み</td><td>なし</td><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E4%BA%BA%E9%96%93%E5%AE%9F%E8%A1%8C.html">テストケース_人間実行.md</a></td></tr>
+<tr><td>TC-MAN-017</td><td>人間実行</td><td>高</td><td>TD080 15:00</td><td>作成済み</td><td>なし</td><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E4%BA%BA%E9%96%93%E5%AE%9F%E8%A1%8C.html">テストケース_人間実行.md</a></td></tr>
+<tr><td>TC-MAN-018</td><td>人間実行</td><td>高</td><td>TD080 15:01</td><td>作成済み</td><td>なし</td><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E4%BA%BA%E9%96%93%E5%AE%9F%E8%A1%8C.html">テストケース_人間実行.md</a></td></tr>
+<tr><td>TC-MAN-019</td><td>人間実行</td><td>高</td><td>TD080 15:01派生01</td><td>作成済み</td><td>なし</td><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E4%BA%BA%E9%96%93%E5%AE%9F%E8%A1%8C.html">テストケース_人間実行.md</a></td></tr>
+<tr><td>TC-MAN-020</td><td>人間実行</td><td>高</td><td>TD080 15:01派生02</td><td>作成済み</td><td>なし</td><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E4%BA%BA%E9%96%93%E5%AE%9F%E8%A1%8C.html">テストケース_人間実行.md</a></td></tr>
+<tr><td>TC-MAN-021</td><td>人間実行</td><td>高</td><td>TD080 15:01派生03</td><td>作成済み</td><td>なし</td><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E4%BA%BA%E9%96%93%E5%AE%9F%E8%A1%8C.html">テストケース_人間実行.md</a></td></tr>
+<tr><td>TC-MAN-022</td><td>人間実行</td><td>高</td><td>TD081 同じデータプロファイルで画面切替・再計算を反復しても操作不能、メモリ増加、重複結果が発生しないこと 分割01</td><td>作成済み</td><td>なし</td><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E4%BA%BA%E9%96%93%E5%AE%9F%E8%A1%8C.html">テストケース_人間実行.md</a></td></tr>
+<tr><td>TC-MAN-023</td><td>人間実行</td><td>高</td><td>TD081 同じデータプロファイルで画面切替・再計算を反復しても操作不能、メモリ増加、重複結果が発生しないこと 分割02</td><td>作成済み</td><td>なし</td><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E4%BA%BA%E9%96%93%E5%AE%9F%E8%A1%8C.html">テストケース_人間実行.md</a></td></tr>
+<tr><td>TC-MAN-024</td><td>人間実行</td><td>高</td><td>TD081 同じデータプロファイルで画面切替・再計算を反復しても操作不能、メモリ増加、重複結果が発生しないこと 分割03</td><td>作成済み</td><td>なし</td><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E4%BA%BA%E9%96%93%E5%AE%9F%E8%A1%8C.html">テストケース_人間実行.md</a></td></tr>
+<tr><td>TC-MAN-025</td><td>人間実行</td><td>高</td><td>TD016 同じUTC保存値をJST/UTC/米国TZ端末で操作しても実績分数が一致すること 分割01</td><td>作成済み</td><td>なし</td><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E4%BA%BA%E9%96%93%E5%AE%9F%E8%A1%8C.html">テストケース_人間実行.md</a></td></tr>
+<tr><td>TC-MAN-026</td><td>人間実行</td><td>高</td><td>TD016 同じUTC保存値をJST/UTC/米国TZ端末で操作しても実績分数が一致すること 分割02</td><td>作成済み</td><td>なし</td><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E4%BA%BA%E9%96%93%E5%AE%9F%E8%A1%8C.html">テストケース_人間実行.md</a></td></tr>
+<tr><td>TC-MAN-027</td><td>人間実行</td><td>高</td><td>TD016 同じUTC保存値をJST/UTC/米国TZ端末で操作しても実績分数が一致すること 分割03</td><td>作成済み</td><td>なし</td><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E4%BA%BA%E9%96%93%E5%AE%9F%E8%A1%8C.html">テストケース_人間実行.md</a></td></tr>
+<tr><td>TC-MAN-028</td><td>人間実行</td><td>中</td><td>TD027 23:59直前</td><td>作成済み</td><td>なし</td><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E4%BA%BA%E9%96%93%E5%AE%9F%E8%A1%8C.html">テストケース_人間実行.md</a></td></tr>
+<tr><td>TC-MAN-029</td><td>人間実行</td><td>中</td><td>TD027 00:00境界</td><td>作成済み</td><td>なし</td><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E4%BA%BA%E9%96%93%E5%AE%9F%E8%A1%8C.html">テストケース_人間実行.md</a></td></tr>
+<tr><td>TC-MAN-030</td><td>人間実行</td><td>中</td><td>TD027 00:01直後</td><td>作成済み</td><td>なし</td><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E4%BA%BA%E9%96%93%E5%AE%9F%E8%A1%8C.html">テストケース_人間実行.md</a></td></tr>
+<tr><td>TC-MAN-031</td><td>人間実行</td><td>高</td><td>TD057 通知権限default/granted/denied/API非対応でクラッシュせず適切な案内を行うこと 分割01</td><td>作成済み</td><td>なし</td><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E4%BA%BA%E9%96%93%E5%AE%9F%E8%A1%8C.html">テストケース_人間実行.md</a></td></tr>
+<tr><td>TC-MAN-032</td><td>人間実行</td><td>高</td><td>TD057 通知権限default/granted/denied/API非対応でクラッシュせず適切な案内を行うこと 分割02</td><td>作成済み</td><td>なし</td><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E4%BA%BA%E9%96%93%E5%AE%9F%E8%A1%8C.html">テストケース_人間実行.md</a></td></tr>
+<tr><td>TC-MAN-033</td><td>人間実行</td><td>高</td><td>TD057 通知権限default/granted/denied/API非対応でクラッシュせず適切な案内を行うこと 分割03</td><td>作成済み</td><td>なし</td><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E4%BA%BA%E9%96%93%E5%AE%9F%E8%A1%8C.html">テストケース_人間実行.md</a></td></tr>
+<tr><td>TC-MAN-034</td><td>人間実行</td><td>高</td><td>TD057 通知権限default/granted/denied/API非対応でクラッシュせず適切な案内を行うこと 分割04</td><td>作成済み</td><td>なし</td><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E4%BA%BA%E9%96%93%E5%AE%9F%E8%A1%8C.html">テストケース_人間実行.md</a></td></tr>
+<tr><td>TC-MAN-035</td><td>人間実行</td><td>高</td><td>TD059 Android Chrome相当360×800縦エミュレーションを正式判定とし、Chrome/Edge desktopを補助確認すること 分割01</td><td>作成済み</td><td>なし</td><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E4%BA%BA%E9%96%93%E5%AE%9F%E8%A1%8C.html">テストケース_人間実行.md</a></td></tr>
+<tr><td>TC-MAN-036</td><td>人間実行</td><td>高</td><td>TD059 Android Chrome相当360×800縦エミュレーションを正式判定とし、Chrome/Edge desktopを補助確認すること 分割02</td><td>作成済み</td><td>なし</td><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E4%BA%BA%E9%96%93%E5%AE%9F%E8%A1%8C.html">テストケース_人間実行.md</a></td></tr>
+<tr><td>TC-MAN-037</td><td>人間実行</td><td>高</td><td>TD059 Android Chrome相当360×800縦エミュレーションを正式判定とし、Chrome/Edge desktopを補助確認すること 分割03</td><td>作成済み</td><td>なし</td><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E4%BA%BA%E9%96%93%E5%AE%9F%E8%A1%8C.html">テストケース_人間実行.md</a></td></tr>
+<tr><td>TC-MAN-038</td><td>人間実行</td><td>高</td><td>TD060 359</td><td>作成済み</td><td>なし</td><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E4%BA%BA%E9%96%93%E5%AE%9F%E8%A1%8C.html">テストケース_人間実行.md</a></td></tr>
+<tr><td>TC-MAN-039</td><td>人間実行</td><td>高</td><td>TD060 360</td><td>作成済み</td><td>なし</td><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E4%BA%BA%E9%96%93%E5%AE%9F%E8%A1%8C.html">テストケース_人間実行.md</a></td></tr>
+<tr><td>TC-MAN-040</td><td>人間実行</td><td>高</td><td>TD060 767</td><td>作成済み</td><td>なし</td><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E4%BA%BA%E9%96%93%E5%AE%9F%E8%A1%8C.html">テストケース_人間実行.md</a></td></tr>
+<tr><td>TC-MAN-041</td><td>人間実行</td><td>高</td><td>TD060 768</td><td>作成済み</td><td>なし</td><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E4%BA%BA%E9%96%93%E5%AE%9F%E8%A1%8C.html">テストケース_人間実行.md</a></td></tr>
+<tr><td>TC-MAN-042</td><td>人間実行</td><td>高</td><td>TD060 769px</td><td>作成済み</td><td>なし</td><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E4%BA%BA%E9%96%93%E5%AE%9F%E8%A1%8C.html">テストケース_人間実行.md</a></td></tr>
+<tr><td>TC-MAN-043</td><td>人間実行</td><td>高</td><td>TD061 モバイルの主要操作領域が44px以上で、全画面フォームとダイアログを内部スクロールできること 分割01</td><td>作成済み</td><td>なし</td><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E4%BA%BA%E9%96%93%E5%AE%9F%E8%A1%8C.html">テストケース_人間実行.md</a></td></tr>
+<tr><td>TC-MAN-044</td><td>人間実行</td><td>高</td><td>TD061 モバイルの主要操作領域が44px以上で、全画面フォームとダイアログを内部スクロールできること 分割02</td><td>作成済み</td><td>なし</td><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E4%BA%BA%E9%96%93%E5%AE%9F%E8%A1%8C.html">テストケース_人間実行.md</a></td></tr>
+<tr><td>TC-MAN-045</td><td>人間実行</td><td>高</td><td>TD061 モバイルの主要操作領域が44px以上で、全画面フォームとダイアログを内部スクロールできること 分割03</td><td>作成済み</td><td>なし</td><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E4%BA%BA%E9%96%93%E5%AE%9F%E8%A1%8C.html">テストケース_人間実行.md</a></td></tr>
+<tr><td>TC-MAN-046</td><td>人間実行</td><td>高</td><td>TD061 モバイルの主要操作領域が44px以上で、全画面フォームとダイアログを内部スクロールできること 分割04</td><td>作成済み</td><td>なし</td><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E4%BA%BA%E9%96%93%E5%AE%9F%E8%A1%8C.html">テストケース_人間実行.md</a></td></tr>
+<tr><td>TC-MAN-047</td><td>人間実行</td><td>高</td><td>TD063 ライト/ダークテーマで文字、ボタン、グラフ、選択・エラー状態が判別できること 分割01</td><td>作成済み</td><td>なし</td><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E4%BA%BA%E9%96%93%E5%AE%9F%E8%A1%8C.html">テストケース_人間実行.md</a></td></tr>
+<tr><td>TC-MAN-048</td><td>人間実行</td><td>高</td><td>TD063 ライト/ダークテーマで文字、ボタン、グラフ、選択・エラー状態が判別できること 分割02</td><td>作成済み</td><td>なし</td><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E4%BA%BA%E9%96%93%E5%AE%9F%E8%A1%8C.html">テストケース_人間実行.md</a></td></tr>
+<tr><td>TC-MAN-049</td><td>人間実行</td><td>高</td><td>TD063 ライト/ダークテーマで文字、ボタン、グラフ、選択・エラー状態が判別できること 分割03</td><td>作成済み</td><td>なし</td><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E4%BA%BA%E9%96%93%E5%AE%9F%E8%A1%8C.html">テストケース_人間実行.md</a></td></tr>
+<tr><td>TC-MAN-050</td><td>人間実行</td><td>高</td><td>TD063 ライト/ダークテーマで文字、ボタン、グラフ、選択・エラー状態が判別できること 分割04</td><td>作成済み</td><td>なし</td><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E4%BA%BA%E9%96%93%E5%AE%9F%E8%A1%8C.html">テストケース_人間実行.md</a></td></tr>
+<tr><td>TC-MAN-051</td><td>人間実行</td><td>高</td><td>TD064 360×800エミュレーションでソフトキーボード相当の表示領域縮小とsafe areaを再現し、固定ナビが入力欄を隠さないこと 分割01</td><td>作成済み</td><td>なし</td><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E4%BA%BA%E9%96%93%E5%AE%9F%E8%A1%8C.html">テストケース_人間実行.md</a></td></tr>
+<tr><td>TC-MAN-052</td><td>人間実行</td><td>高</td><td>TD064 360×800エミュレーションでソフトキーボード相当の表示領域縮小とsafe areaを再現し、固定ナビが入力欄を隠さないこと 分割02</td><td>作成済み</td><td>なし</td><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E4%BA%BA%E9%96%93%E5%AE%9F%E8%A1%8C.html">テストケース_人間実行.md</a></td></tr>
+<tr><td>TC-MAN-053</td><td>人間実行</td><td>高</td><td>TD064 360×800エミュレーションでソフトキーボード相当の表示領域縮小とsafe areaを再現し、固定ナビが入力欄を隠さないこと 分割03</td><td>作成済み</td><td>なし</td><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E4%BA%BA%E9%96%93%E5%AE%9F%E8%A1%8C.html">テストケース_人間実行.md</a></td></tr>
+<tr><td>TC-MAN-054</td><td>人間実行</td><td>高</td><td>TD062 キーボード操作、フォーカス順、ラベル、エラー通知、色以外の状態識別が成立すること 分割01</td><td>作成済み</td><td>なし</td><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E4%BA%BA%E9%96%93%E5%AE%9F%E8%A1%8C.html">テストケース_人間実行.md</a></td></tr>
+<tr><td>TC-MAN-055</td><td>人間実行</td><td>高</td><td>TD062 キーボード操作、フォーカス順、ラベル、エラー通知、色以外の状態識別が成立すること 分割02</td><td>作成済み</td><td>なし</td><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E4%BA%BA%E9%96%93%E5%AE%9F%E8%A1%8C.html">テストケース_人間実行.md</a></td></tr>
+<tr><td>TC-MAN-056</td><td>人間実行</td><td>高</td><td>TD062 キーボード操作、フォーカス順、ラベル、エラー通知、色以外の状態識別が成立すること 分割03</td><td>作成済み</td><td>なし</td><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E4%BA%BA%E9%96%93%E5%AE%9F%E8%A1%8C.html">テストケース_人間実行.md</a></td></tr>
+<tr><td>TC-MAN-057</td><td>人間実行</td><td>高</td><td>TD062 キーボード操作、フォーカス順、ラベル、エラー通知、色以外の状態識別が成立すること 分割04</td><td>作成済み</td><td>なし</td><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E4%BA%BA%E9%96%93%E5%AE%9F%E8%A1%8C.html">テストケース_人間実行.md</a></td></tr>
+<tr><td>TC-MAN-058</td><td>人間実行</td><td>高</td><td>TD062 キーボード操作、フォーカス順、ラベル、エラー通知、色以外の状態識別が成立すること 分割05</td><td>作成済み</td><td>なし</td><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E4%BA%BA%E9%96%93%E5%AE%9F%E8%A1%8C.html">テストケース_人間実行.md</a></td></tr></tbody></table></div>
+</main>
+
+</body>
+</html>

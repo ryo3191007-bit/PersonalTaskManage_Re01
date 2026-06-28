@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>未実装テストケース（コードベース）</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f7f7f4;
+      --panel: #ffffff;
+      --text: #202124;
+      --muted: #666b73;
+      --border: #d9ddd6;
+      --accent: #0f766e;
+      --danger: #b42318;
+      --warn: #b7791f;
+      --ok: #16794c;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Segoe UI", "Meiryo", sans-serif;
+      line-height: 1.65;
+    }
+    header, main {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+    header {
+      padding-top: 32px;
+      border-bottom: 1px solid var(--border);
+    }
+    h1 { margin: 0 0 8px; font-size: 32px; }
+    h2 { margin-top: 32px; font-size: 24px; border-left: 5px solid var(--accent); padding-left: 10px; }
+    h3 { margin-top: 24px; font-size: 18px; }
+    p { margin: 8px 0; }
+    a { color: #075985; }
+    code {
+      background: #eef2f0;
+      border: 1px solid #d7ddda;
+      border-radius: 4px;
+      padding: 1px 4px;
+      font-family: Consolas, monospace;
+    }
+    pre {
+      overflow: auto;
+      background: #111827;
+      color: #f9fafb;
+      border-radius: 8px;
+      padding: 14px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin: 16px 0;
+    }
+    .metric {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+    }
+    .metric .label { color: var(--muted); font-size: 13px; }
+    .metric .value { font-size: 26px; font-weight: 700; margin-top: 4px; }
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--panel);
+      margin: 12px 0;
+    }
+    table { width: 100%; border-collapse: collapse; min-width: 720px; }
+    th, td { border-bottom: 1px solid var(--border); padding: 8px 10px; text-align: left; vertical-align: top; }
+    th { background: #eef2f0; white-space: nowrap; }
+    tr:last-child td { border-bottom: 0; }
+    .pill { display: inline-block; border-radius: 999px; padding: 2px 8px; font-weight: 700; font-size: 12px; }
+    .pass { color: var(--ok); }
+    .fail { color: var(--danger); }
+    .na { color: var(--warn); }
+  </style>
+</head>
+<body>
+<p>﻿# 未実装テストケース（コードベース）</p>
+<h3>1. 対象</h3>
+<ul>
+<li>対象テストケース: <code>テスト成果物/テストケース_コードベース.md</code></li>
+<li>今回までの実装対象: <code>src/lib/dateTime.ts</code>, <code>src/lib/utils.ts</code>, <code>src/lib/useWorkHours.ts</code>, <code>src/lib/supabase.ts</code>, <code>src/contexts/AuthContext.tsx</code>, <code>src/contexts/TaskContext.tsx</code>, <code>src/components/tasks/TaskForm.tsx</code>, <code>src/components/tasks/titleHistory.ts</code>, <code>src/pages/SettingsPage.tsx</code>, <code>supabase/migrations/*.sql</code>, <code>supabase/functions/update-account/index.ts</code>, <code>package.json</code>, <code>.gitignore</code>, <code>.env.example</code></li>
+<li>実装済み: 359件</li>
+<li>未実装: 0件</li>
+<li>TC単位の再分類台帳: <code>テスト成果物/未実装テストケース_コードベース_再分類.md</code></li>
+</ul>
+<h3>2. 参照資料</h3>
+<ul>
+<li><code>テスト成果物/テストケース_コードベース.md</code></li>
+<li><code>テスト成果物/テスト設計.md</code></li>
+<li><code>src/lib/dateTime.ts</code></li>
+<li><code>src/lib/utils.ts</code></li>
+<li><code>src/lib/useWorkHours.ts</code></li>
+<li><code>src/contexts/TaskContext.tsx</code></li>
+<li><code>src/components/tasks/TaskForm.tsx</code></li>
+<li><code>package.json</code></li>
+<li><code>テスト成果物/未実装テストケース_コードベース_再分類.md</code></li>
+</ul>
+<h3>3. 未実装テストケース</h3>
+<p>該当なし。TC-CB-001〜TC-CB-359 は実装済み。</p>
+<h3>4. 実装に必要な確認・対応</h3>
+<ul>
+<li>追加対応なし。</li>
+</ul>
+<h3>5. トレーサビリティ確認</h3>
+<ul>
+<li>質問待ち、対象外、追加具体化待ちとして残すコードベースTCはない。</li>
+<li>実装済み359件は <code>テストコード実装結果.md</code> に記録した。</li>
+<li>今回実装済みに移動したID: TC-CB-001〜TC-CB-005、TC-CB-201〜TC-CB-205、TC-CB-210。</li>
+<li>今回実装済みに移動したID: TC-CB-097〜TC-CB-100、TC-CB-109〜TC-CB-112、TC-CB-220〜TC-CB-221。</li>
+<li>今回実装済みに移動したID: TC-CB-152〜TC-CB-164、TC-CB-166〜TC-CB-172、TC-CB-174〜TC-CB-181、TC-CB-305〜TC-CB-309。</li>
+<li>今回実装済みに移動したID: TC-CB-084〜TC-CB-087、TC-CB-091〜TC-CB-096、TC-CB-140〜TC-CB-142、TC-CB-149〜TC-CB-150、TC-CB-182〜TC-CB-185、TC-CB-255〜TC-CB-264。</li>
+</ul>
+<ul>
+<li>今回実装済みに移動したID: TC-CB-027、TC-CB-029〜TC-CB-034、TC-CB-036、TC-CB-038〜TC-CB-062、TC-CB-064〜TC-CB-069、TC-CB-071〜TC-CB-073、TC-CB-075〜TC-CB-077、TC-CB-079〜TC-CB-082、TC-CB-144〜TC-CB-148、TC-CB-304。</li>
+<li>今回実装済みに移動したID: TC-CB-101〜TC-CB-108、TC-CB-113〜TC-CB-137、TC-CB-187〜TC-CB-188、TC-CB-193〜TC-CB-195、TC-CB-272〜TC-CB-281、TC-CB-322〜TC-CB-324。</li>
+<li>今回実装済みに移動したID: TC-CB-189〜TC-CB-192、TC-CB-196〜TC-CB-200、TC-CB-206〜TC-CB-209、TC-CB-341〜TC-CB-344。</li>
+<li>今回実装済みに移動したID: TC-CB-329〜TC-CB-332。</li>
+<li>今回実装済みに移動したID: TC-CB-223〜TC-CB-254、TC-CB-289〜TC-CB-300、TC-CB-310〜TC-CB-321。</li>
+<li>今回実装済みに移動したID: TC-CB-265〜TC-CB-267、TC-CB-269〜TC-CB-271、TC-CB-301〜TC-CB-303、TC-CB-333〜TC-CB-334、TC-CB-336〜TC-CB-337、TC-CB-345〜TC-CB-348。</li>
+<li>今回実装済みに移動したID: TC-CB-325〜TC-CB-328、TC-CB-338〜TC-CB-340、TC-CB-349〜TC-CB-352、TC-CB-357〜TC-CB-359。</li>
+<li>今回実装済みに移動したID: TC-CB-143、TC-CB-151、TC-CB-186、TC-CB-268、TC-CB-335。</li>
+<li>今回実装済みに移動したID: TC-CB-353〜TC-CB-356。</li>
+<li>今回実装済みに移動したID: TC-CB-022〜TC-CB-024、TC-CB-211〜TC-CB-219、TC-CB-222、TC-CB-282〜TC-CB-288。</li>
+</ul>
+</body>
+</html>

@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>テスト計画レビュー</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f7f7f4;
+      --panel: #ffffff;
+      --text: #202124;
+      --muted: #666b73;
+      --border: #d9ddd6;
+      --accent: #0f766e;
+      --danger: #b42318;
+      --warn: #b7791f;
+      --ok: #16794c;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Segoe UI", "Meiryo", sans-serif;
+      line-height: 1.65;
+    }
+    header, main {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+    header {
+      padding-top: 32px;
+      border-bottom: 1px solid var(--border);
+    }
+    h1 { margin: 0 0 8px; font-size: 32px; }
+    h2 { margin-top: 32px; font-size: 24px; border-left: 5px solid var(--accent); padding-left: 10px; }
+    h3 { margin-top: 24px; font-size: 18px; }
+    p { margin: 8px 0; }
+    a { color: #075985; }
+    code {
+      background: #eef2f0;
+      border: 1px solid #d7ddda;
+      border-radius: 4px;
+      padding: 1px 4px;
+      font-family: Consolas, monospace;
+    }
+    pre {
+      overflow: auto;
+      background: #111827;
+      color: #f9fafb;
+      border-radius: 8px;
+      padding: 14px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin: 16px 0;
+    }
+    .metric {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+    }
+    .metric .label { color: var(--muted); font-size: 13px; }
+    .metric .value { font-size: 26px; font-weight: 700; margin-top: 4px; }
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--panel);
+      margin: 12px 0;
+    }
+    table { width: 100%; border-collapse: collapse; min-width: 720px; }
+    th, td { border-bottom: 1px solid var(--border); padding: 8px 10px; text-align: left; vertical-align: top; }
+    th { background: #eef2f0; white-space: nowrap; }
+    tr:last-child td { border-bottom: 0; }
+    .pill { display: inline-block; border-radius: 999px; padding: 2px 8px; font-weight: 700; font-size: 12px; }
+    .pass { color: var(--ok); }
+    .fail { color: var(--danger); }
+    .na { color: var(--warn); }
+  </style>
+</head>
+<body>
+<h2>テスト計画レビュー結果</h2>
+<h3>1. レビュー対象</h3>
+<ul>
+<li>レビュー対象: <code>テスト成果物/テスト計画書.md</code></li>
+<li>レビュー結果: <code>テスト成果物/テスト計画レビュー結果.md</code></li>
+</ul>
+<h3>2. 参照資料</h3>
+<ul>
+<li><code>README.md</code></li>
+<li><code>FUNCTION_LIST.md</code></li>
+<li><code>SCREEN_LIST.md</code></li>
+<li><code>package.json</code></li>
+<li><code>src/App.tsx</code></li>
+<li><code>src/contexts/AuthContext.tsx</code></li>
+<li><code>src/contexts/TaskContext.tsx</code></li>
+<li><code>src/lib/types.ts</code></li>
+<li><code>src/pages/*.tsx</code></li>
+<li><code>src/components/tasks/*.tsx</code></li>
+<li><code>supabase/migrations/*.sql</code></li>
+</ul>
+<h3>3. レビュー観点</h3>
+<ul>
+<li>テスト目的の妥当性</li>
+<li>仕様・機能・画面・実装とのトレーサビリティ</li>
+<li>リスク分析とスコアリングの妥当性</li>
+<li>テストスコープ、対象外、残リスクの明確性</li>
+<li>テストアプローチの適切性</li>
+<li>ユースケース/シナリオ戦略</li>
+<li>汎用 QA 観点の計画レベルでの網羅性</li>
+<li>後続のテスト分析/設計へ渡す深さの十分性</li>
+<li>終了条件と品質ゲートの判断可能性</li>
+<li>未決事項の集約</li>
+<li>実行経路、証跡、既存テスト資産の扱い</li>
+</ul>
+<h3>4. レビュー・修正サマリー</h3>
+<h4>1回目レビュー</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>優先度</th><th>観点</th><th>問題</th><th>場所</th><th>影響</th><th>修正方針</th></tr></thead>
+<tbody>
+<tr><td>P1</td><td>Security/Privacy</td><td>Supabase RLS 以外のセキュリティ/プライバシー観点が薄く、個人タスク情報・自由入力値・エクスポート・ブラウザ保存・依存関係のリスクが高リスクとして扱われていなかった</td><td><code>## 3. テストアイテム</code>, <code>## 6. プロダクトリスク</code>, <code>## 7. テストアプローチ</code></td><td>個人の業務/学習タスクやメモが漏えい・過剰露出・不正表示されるリスクを後続工程で拾いにくい</td><td>R015 と TA017 を追加し、非機能テストアイテム、品質ゲート、主要シナリオへ反映</td></tr>
+</tbody></table></div>
+<h4>修正内容</h4>
+<ul>
+<li><code>## 3. テストアイテム</code> の非機能項目にセキュリティ/プライバシーを追加。</li>
+<li><code>## 6. プロダクトリスク</code> に <code>R015</code> を追加。</li>
+<li><code>## 7. テストアプローチ</code> に <code>TA017</code> を追加。</li>
+<li><code>## 11. 後続成果物の品質ゲート</code> の高リスク対象に <code>R015</code> を追加。</li>
+<li><code>## 12. 対象ユースケース/主要シナリオ</code> のエクスポートシナリオに <code>R015</code> を関連付け。</li>
+</ul>
+<h4>2回目レビュー</h4>
+<p>P0/P1 の修正対象は残っていないことを確認した。</p>
+<h4>回答反映後レビュー</h4>
+<ul>
+<li>受入判断者、P2許容基準、AC001～AC006を終了条件へ反映した。</li>
+<li>正式E2E対象をローカルURL、正式合否環境を360×800 Android Chrome相当エミュレーションへ確定した。</li>
+<li>専用Supabaseは用意せず、シナリオ内で一意なユーザー・データを作成・削除する方針へ確定した。</li>
+<li>自動化範囲を全画面・全機能の主要経路、性能条件を10件/日・150件/月・カテゴリ50件・半年・操作15分以内へ確定した。</li>
+<li>R016/R017とTA018/TA019、文字数上限、CSV式注入防止、一括削除部分失敗を追加した。</li>
+<li><code>.env.example</code>を追加し、未決事項をすべて解消した。</li>
+</ul>
+<h3>5. 最終レビュー結果</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>優先度</th><th>観点</th><th>問題</th><th>場所</th><th>影響</th><th>修正方針</th></tr></thead>
+<tbody>
+<tr><td>なし</td><td>P0/P1/P2</td><td>修正対象の欠落・矛盾は残っていない</td><td>全体</td><td>テスト分析・設計へ進められる</td><td>なし</td></tr>
+</tbody></table></div>
+<p>必要十分性の確認:</p>
+<ul>
+<li>高リスク領域は、認証/RLS、タスク CRUD、中断/再開、分析集計、入力境界、テスト環境、自動テスト不在、セキュリティ/プライバシー、アカウント更新、一括削除として整理されている。</li>
+<li>主要ユーザーシナリオは <code>UC001</code>〜<code>UC008</code>、受入必須成功シナリオは<code>AC001</code>～<code>AC006</code>として示されている。</li>
+<li>後続分析/設計で深掘りすべき観点は、境界値、状態遷移、複数ユーザー、複数セッション、空データ、大量データ、削除時参照関係、日時/タイムゾーン、セキュリティ/プライバシーとして示されている。</li>
+<li>既存自動テスト/CI が見当たらない点は、リスク・アプローチ・未決事項に反映されている。</li>
+<li>対象外や制限付き範囲は、実機固有差、Supabase外部障害、バックグラウンド通知として明記されている。</li>
+<li>実行経路は静的コマンド、ローカルURL、360×800エミュレーション、シナリオ内テストデータ作成として確定している。</li>
+</ul>
+<h3>6. 残課題</h3>
+<p>テスト計画書上の未決事項はない。新たに確定した仕様と現行実装の差異は <code>テスト分析レビュー結果.md</code> で管理する。</p>
+<p>最終判定: **テスト計画書は後続のテスト設計へ進めてよい。P0/P1/P2 の修正対象は残っていない。**</p>
+</body>
+</html>

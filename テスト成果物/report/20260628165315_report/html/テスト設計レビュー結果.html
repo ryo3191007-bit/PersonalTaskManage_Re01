@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>テスト設計レビュー</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f7f7f4;
+      --panel: #ffffff;
+      --text: #202124;
+      --muted: #666b73;
+      --border: #d9ddd6;
+      --accent: #0f766e;
+      --danger: #b42318;
+      --warn: #b7791f;
+      --ok: #16794c;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Segoe UI", "Meiryo", sans-serif;
+      line-height: 1.65;
+    }
+    header, main {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+    header {
+      padding-top: 32px;
+      border-bottom: 1px solid var(--border);
+    }
+    h1 { margin: 0 0 8px; font-size: 32px; }
+    h2 { margin-top: 32px; font-size: 24px; border-left: 5px solid var(--accent); padding-left: 10px; }
+    h3 { margin-top: 24px; font-size: 18px; }
+    p { margin: 8px 0; }
+    a { color: #075985; }
+    code {
+      background: #eef2f0;
+      border: 1px solid #d7ddda;
+      border-radius: 4px;
+      padding: 1px 4px;
+      font-family: Consolas, monospace;
+    }
+    pre {
+      overflow: auto;
+      background: #111827;
+      color: #f9fafb;
+      border-radius: 8px;
+      padding: 14px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin: 16px 0;
+    }
+    .metric {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+    }
+    .metric .label { color: var(--muted); font-size: 13px; }
+    .metric .value { font-size: 26px; font-weight: 700; margin-top: 4px; }
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--panel);
+      margin: 12px 0;
+    }
+    table { width: 100%; border-collapse: collapse; min-width: 720px; }
+    th, td { border-bottom: 1px solid var(--border); padding: 8px 10px; text-align: left; vertical-align: top; }
+    th { background: #eef2f0; white-space: nowrap; }
+    tr:last-child td { border-bottom: 0; }
+    .pill { display: inline-block; border-radius: 999px; padding: 2px 8px; font-weight: 700; font-size: 12px; }
+    .pass { color: var(--ok); }
+    .fail { color: var(--danger); }
+    .na { color: var(--warn); }
+  </style>
+</head>
+<body>
+<h2>テスト設計レビュー結果</h2>
+<h3>1. レビュー対象</h3>
+<ul>
+<li>テスト設計: <code>テスト成果物/テスト設計.md</code></li>
+<li>設計質問票: <code>テスト成果物/テスト設計_質問票.md</code></li>
+<li>レビュー結果: <code>テスト成果物/テスト設計レビュー結果.md</code></li>
+</ul>
+<h3>2. 参照資料</h3>
+<ul>
+<li><code>テスト成果物/テスト分析.md</code></li>
+<li><code>テスト成果物/テスト分析_質問票.md</code></li>
+<li><code>テスト成果物/テスト分析_質問票_回答.md</code></li>
+<li><code>テスト成果物/テスト計画書.md</code></li>
+<li><code>README.md</code>、<code>FUNCTION_LIST.md</code>、<code>SCREEN_LIST.md</code>、<code>CLAUDE.md</code></li>
+<li><code>src/</code>、<code>supabase/migrations/*.sql</code>、<code>supabase/functions/update-account/index.ts</code>、<code>package.json</code></li>
+</ul>
+<h3>3. レビュー観点</h3>
+<p>トレーサビリティ、観点網羅、必要十分性、高リスク設計密度、分析ヒントの消費、有限集合・境界値、設計技法、圧縮防止、Expected Case Yield、テストレベル/タイプ、実施方法、期待結果、質問待ち、実行可能性、参照成果物、上流整合性、保守性を確認した。</p>
+<h3>4. レビュー・修正サマリー</h3>
+<h4>第1回レビュー</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>優先度</th><th>観点</th><th>問題</th><th>場所</th><th>影響</th><th>修正方針</th></tr></thead>
+<tbody>
+<tr><td>P1</td><td>有限集合・境界値</td><td>SSIに定義された具体値が一部TDの条件欄から直接確認できず、後続ケース作成時に上流参照が必要だった</td><td>SSI参照を持つTD</td><td>値の取りこぼしと曖昧なケース展開</td><td>関連SSIの構造値を条件欄へ追記</td></tr>
+<tr><td>P1</td><td>Expected Case Yield</td><td>TD031、TD041、TD079の期待件数が、状態×情報源、入力項目×文字数境界、性能軸×境界の独立判定数を下回っていた</td><td>Expected Case Yield</td><td>高リスク計算・入力・性能のケース不足</td><td>16件、20件、15件へ補正</td></tr>
+<tr><td>P2</td><td>件数根拠</td><td>総件数の主要な大規模展開根拠はあったが、上記3件の算出根拠が明記されていなかった</td><td>7章末尾</td><td>レビュー時の再計算性低下</td><td>算出式を追記</td></tr>
+</tbody></table></div>
+<p>修正後の期待TC総数は553件から577件となった。</p>
+<h4>第2回レビュー</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>優先度</th><th>観点</th><th>問題</th><th>場所</th><th>影響</th><th>修正方針</th></tr></thead>
+<tbody>
+<tr><td>P0</td><td>全観点</td><td>なし</td><td>-</td><td>-</td><td>-</td></tr>
+<tr><td>P1</td><td>全観点</td><td>なし</td><td>-</td><td>-</td><td>-</td></tr>
+<tr><td>P2</td><td>全観点</td><td>なし</td><td>-</td><td>-</td><td>-</td></tr>
+</tbody></table></div>
+<h3>5. 最終レビュー結果</h3>
+<ul>
+<li>TV001～TV098はTD001～TD098へ全件対応している。</li>
+<li>TA001～TA019は全件が1件以上のTDから参照される。</li>
+<li>SSI001～SSI036はTV経由で全件消費され、関連する有限値は条件欄またはExpected Case Yieldへ明示された。</li>
+<li>Expected Case YieldはTD全98件に対応し、期待TC総数は**577件**である。</li>
+<li>TD068は29画面＋50機能の79件、TD069・TD070はmigration 12本を各12件、TD031は4状態×4情報源の16件、TD041は4入力項目×5文字数境界の20件、TD079は5性能軸×3境界の15件として独立判定する。</li>
+<li>集約可否は全件「不可」とし、異なる条件・状態・環境・失敗種別を個別にPass/Fail判定する。</li>
+<li>高リスクの認証/RLS、セッション・分析、入力境界、JST境界、レスポンシブ、再現性、秘密管理、アカウント更新、一括削除は複数TCへ分割される。</li>
+<li>圧縮リストは下流TC分割単位と件数を明示しており、後続工程で値を推測する必要はない。</li>
+<li>各TDは単一の主実施方法を持つ。Unit、Integration、E2E、Security、Performance、Compatibility、Accessibility、Regressionのグループ分けを確認した。</li>
+<li>参照対象のREADME、機能一覧、画面一覧、ソース、12 migration、Edge Function、package.jsonは存在する。</li>
+<li>質問待ちTDは0件で、設計質問票の「質問なし」と整合する。分析質問Q001～Q008は全て回答済みである。</li>
+<li>想定した逃しバグは、RLS越権、開放セッション除外、月境界按分、文字数上限の項目差、CSV式注入、通知重複、360pxでのナビ重なり、migration部分適用、service role key露出、一括削除部分失敗である。すべて対応TDと期待ケース数に含まれる。</li>
+</ul>
+<p>結論: **P0、P1、P2の修正対象指摘は残っていない。**</p>
+<h3>6. 残課題</h3>
+<ul>
+<li>P3の残課題はない。</li>
+<li>次工程では<code>create-test-cases</code>によりExpected Case Yield 577件を、コードベース、E2E自動、手動、質問待ちへ分離して具体化する。</li>
+</ul>
+</body>
+</html>

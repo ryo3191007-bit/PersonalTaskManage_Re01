@@ -1,0 +1,3884 @@
+Command: E2E_BASE_URL=http://127.0.0.1:5173/ E2E_IMPLEMENT_ALL=true <test credentials> node node_modules/@playwright/test/cli.js test --config playwright.config.cjs --reporter=json --max-failures=10
+ExitCode: 1
+Timestamp: 20260628164214
+
+--- stdout ---
+{
+  "config": {
+    "argv": [
+      "C:\\Users\\ryo31\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\node\\bin\\node.exe",
+      "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\node_modules\\@playwright\\test\\cli.js",
+      "test",
+      "--config",
+      "playwright.config.cjs",
+      "--reporter=json",
+      "--max-failures=10"
+    ],
+    "configFile": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\playwright.config.cjs",
+    "rootDir": "C:/Users/ryo31/OneDrive/ドキュメント/PersonalTaskManage_テスト管理/PersonalTaskManage_Re01/tests/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 10,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Users/ryo31/OneDrive/ドキュメント/PersonalTaskManage_テスト管理/PersonalTaskManage_Re01/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "C:/Users/ryo31/OneDrive/ドキュメント/PersonalTaskManage_テスト管理/PersonalTaskManage_Re01/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 45000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 6,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "personal-taskmanage.e2e.spec.cjs",
+      "file": "personal-taskmanage.e2e.spec.cjs",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "TC-E2E-001 TD006 タスクの作成、再表示、編集、削除がSupabaseへ永続化されること 分割01",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2584,
+                  "error": {
+                    "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:5173/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:5173/\", waiting until \"load\"\u001b[22m\n",
+                    "stack": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:5173/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:5173/\", waiting until \"load\"\u001b[22m\n\n    at loginOrSignUp (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:46:14)\n    at exerciseCase (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:124:9)\n    at action (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:212:13)\n    at expectNoRuntimeErrors (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:40:9)\n    at C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:211:11",
+                    "location": {
+                      "file": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs",
+                      "column": 14,
+                      "line": 46
+                    },
+                    "snippet": "\u001b[0m \u001b[90m 44 |\u001b[39m\n \u001b[90m 45 |\u001b[39m \u001b[36masync\u001b[39m \u001b[36mfunction\u001b[39m loginOrSignUp(page\u001b[33m,\u001b[39m testCase) {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 46 |\u001b[39m   \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m'/'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m              \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 47 |\u001b[39m   \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForLoadState(\u001b[32m'domcontentloaded'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 48 |\u001b[39m\n \u001b[90m 49 |\u001b[39m   \u001b[36mif\u001b[39m (\u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgetByRole(\u001b[32m'button'\u001b[39m\u001b[33m,\u001b[39m { name\u001b[33m:\u001b[39m \u001b[32m'新規タスク'\u001b[39m })\u001b[33m.\u001b[39misVisible()\u001b[33m.\u001b[39m\u001b[36mcatch\u001b[39m(() \u001b[33m=>\u001b[39m \u001b[36mfalse\u001b[39m)) {\u001b[0m"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs",
+                        "column": 14,
+                        "line": 46
+                      },
+                      "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:5173/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:5173/\", waiting until \"load\"\u001b[22m\n\n\n  44 |\n  45 | async function loginOrSignUp(page, testCase) {\n> 46 |   await page.goto('/');\n     |              ^\n  47 |   await page.waitForLoadState('domcontentloaded');\n  48 |\n  49 |   if (await page.getByRole('button', { name: '新規タスク' }).isVisible().catch(() => false)) {\n    at loginOrSignUp (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:46:14)\n    at exerciseCase (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:124:9)\n    at action (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:212:13)\n    at expectNoRuntimeErrors (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:40:9)\n    at C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:211:11"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:42:16.491Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\test-results\\personal-taskmanage.e2e-TC-105b9-集、削除がSupabaseへ永続化されること-分割01-chromium\\test-failed-1.png"
+                    },
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\test-results\\personal-taskmanage.e2e-TC-105b9-集、削除がSupabaseへ永続化されること-分割01-chromium\\video.webm"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\test-results\\personal-taskmanage.e2e-TC-105b9-集、削除がSupabaseへ永続化されること-分割01-chromium\\error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\test-results\\personal-taskmanage.e2e-TC-105b9-集、削除がSupabaseへ永続化されること-分割01-chromium\\trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs",
+                    "column": 14,
+                    "line": 46
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-587efbdfd393230c3fdf",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-002 TD006 タスクの作成、再表示、編集、削除がSupabaseへ永続化されること 分割02",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2494,
+                  "error": {
+                    "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:5173/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:5173/\", waiting until \"load\"\u001b[22m\n",
+                    "stack": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:5173/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:5173/\", waiting until \"load\"\u001b[22m\n\n    at loginOrSignUp (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:46:14)\n    at exerciseCase (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:124:9)\n    at action (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:212:13)\n    at expectNoRuntimeErrors (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:40:9)\n    at C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:211:11",
+                    "location": {
+                      "file": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs",
+                      "column": 14,
+                      "line": 46
+                    },
+                    "snippet": "\u001b[0m \u001b[90m 44 |\u001b[39m\n \u001b[90m 45 |\u001b[39m \u001b[36masync\u001b[39m \u001b[36mfunction\u001b[39m loginOrSignUp(page\u001b[33m,\u001b[39m testCase) {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 46 |\u001b[39m   \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m'/'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m              \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 47 |\u001b[39m   \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForLoadState(\u001b[32m'domcontentloaded'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 48 |\u001b[39m\n \u001b[90m 49 |\u001b[39m   \u001b[36mif\u001b[39m (\u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgetByRole(\u001b[32m'button'\u001b[39m\u001b[33m,\u001b[39m { name\u001b[33m:\u001b[39m \u001b[32m'新規タスク'\u001b[39m })\u001b[33m.\u001b[39misVisible()\u001b[33m.\u001b[39m\u001b[36mcatch\u001b[39m(() \u001b[33m=>\u001b[39m \u001b[36mfalse\u001b[39m)) {\u001b[0m"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs",
+                        "column": 14,
+                        "line": 46
+                      },
+                      "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:5173/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:5173/\", waiting until \"load\"\u001b[22m\n\n\n  44 |\n  45 | async function loginOrSignUp(page, testCase) {\n> 46 |   await page.goto('/');\n     |              ^\n  47 |   await page.waitForLoadState('domcontentloaded');\n  48 |\n  49 |   if (await page.getByRole('button', { name: '新規タスク' }).isVisible().catch(() => false)) {\n    at loginOrSignUp (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:46:14)\n    at exerciseCase (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:124:9)\n    at action (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:212:13)\n    at expectNoRuntimeErrors (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:40:9)\n    at C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:211:11"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:42:20.373Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\test-results\\personal-taskmanage.e2e-TC-8d129-集、削除がSupabaseへ永続化されること-分割02-chromium\\test-failed-1.png"
+                    },
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\test-results\\personal-taskmanage.e2e-TC-8d129-集、削除がSupabaseへ永続化されること-分割02-chromium\\video.webm"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\test-results\\personal-taskmanage.e2e-TC-8d129-集、削除がSupabaseへ永続化されること-分割02-chromium\\error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\test-results\\personal-taskmanage.e2e-TC-8d129-集、削除がSupabaseへ永続化されること-分割02-chromium\\trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs",
+                    "column": 14,
+                    "line": 46
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-1572f934d189b1496229",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-003 TD006 タスクの作成、再表示、編集、削除がSupabaseへ永続化されること 分割03",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2482,
+                  "error": {
+                    "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:5173/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:5173/\", waiting until \"load\"\u001b[22m\n",
+                    "stack": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:5173/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:5173/\", waiting until \"load\"\u001b[22m\n\n    at loginOrSignUp (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:46:14)\n    at exerciseCase (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:124:9)\n    at action (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:212:13)\n    at expectNoRuntimeErrors (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:40:9)\n    at C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:211:11",
+                    "location": {
+                      "file": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs",
+                      "column": 14,
+                      "line": 46
+                    },
+                    "snippet": "\u001b[0m \u001b[90m 44 |\u001b[39m\n \u001b[90m 45 |\u001b[39m \u001b[36masync\u001b[39m \u001b[36mfunction\u001b[39m loginOrSignUp(page\u001b[33m,\u001b[39m testCase) {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 46 |\u001b[39m   \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m'/'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m              \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 47 |\u001b[39m   \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForLoadState(\u001b[32m'domcontentloaded'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 48 |\u001b[39m\n \u001b[90m 49 |\u001b[39m   \u001b[36mif\u001b[39m (\u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgetByRole(\u001b[32m'button'\u001b[39m\u001b[33m,\u001b[39m { name\u001b[33m:\u001b[39m \u001b[32m'新規タスク'\u001b[39m })\u001b[33m.\u001b[39misVisible()\u001b[33m.\u001b[39m\u001b[36mcatch\u001b[39m(() \u001b[33m=>\u001b[39m \u001b[36mfalse\u001b[39m)) {\u001b[0m"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs",
+                        "column": 14,
+                        "line": 46
+                      },
+                      "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:5173/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:5173/\", waiting until \"load\"\u001b[22m\n\n\n  44 |\n  45 | async function loginOrSignUp(page, testCase) {\n> 46 |   await page.goto('/');\n     |              ^\n  47 |   await page.waitForLoadState('domcontentloaded');\n  48 |\n  49 |   if (await page.getByRole('button', { name: '新規タスク' }).isVisible().catch(() => false)) {\n    at loginOrSignUp (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:46:14)\n    at exerciseCase (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:124:9)\n    at action (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:212:13)\n    at expectNoRuntimeErrors (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:40:9)\n    at C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:211:11"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:42:24.035Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\test-results\\personal-taskmanage.e2e-TC-45ca2-集、削除がSupabaseへ永続化されること-分割03-chromium\\test-failed-1.png"
+                    },
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\test-results\\personal-taskmanage.e2e-TC-45ca2-集、削除がSupabaseへ永続化されること-分割03-chromium\\video.webm"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\test-results\\personal-taskmanage.e2e-TC-45ca2-集、削除がSupabaseへ永続化されること-分割03-chromium\\error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\test-results\\personal-taskmanage.e2e-TC-45ca2-集、削除がSupabaseへ永続化されること-分割03-chromium\\trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs",
+                    "column": 14,
+                    "line": 46
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-a4ed0abe7d9514b1e73a",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-004 TD006 タスクの作成、再表示、編集、削除がSupabaseへ永続化されること 分割04",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2550,
+                  "error": {
+                    "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:5173/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:5173/\", waiting until \"load\"\u001b[22m\n",
+                    "stack": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:5173/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:5173/\", waiting until \"load\"\u001b[22m\n\n    at loginOrSignUp (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:46:14)\n    at exerciseCase (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:124:9)\n    at action (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:212:13)\n    at expectNoRuntimeErrors (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:40:9)\n    at C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:211:11",
+                    "location": {
+                      "file": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs",
+                      "column": 14,
+                      "line": 46
+                    },
+                    "snippet": "\u001b[0m \u001b[90m 44 |\u001b[39m\n \u001b[90m 45 |\u001b[39m \u001b[36masync\u001b[39m \u001b[36mfunction\u001b[39m loginOrSignUp(page\u001b[33m,\u001b[39m testCase) {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 46 |\u001b[39m   \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m'/'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m              \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 47 |\u001b[39m   \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForLoadState(\u001b[32m'domcontentloaded'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 48 |\u001b[39m\n \u001b[90m 49 |\u001b[39m   \u001b[36mif\u001b[39m (\u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgetByRole(\u001b[32m'button'\u001b[39m\u001b[33m,\u001b[39m { name\u001b[33m:\u001b[39m \u001b[32m'新規タスク'\u001b[39m })\u001b[33m.\u001b[39misVisible()\u001b[33m.\u001b[39m\u001b[36mcatch\u001b[39m(() \u001b[33m=>\u001b[39m \u001b[36mfalse\u001b[39m)) {\u001b[0m"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs",
+                        "column": 14,
+                        "line": 46
+                      },
+                      "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:5173/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:5173/\", waiting until \"load\"\u001b[22m\n\n\n  44 |\n  45 | async function loginOrSignUp(page, testCase) {\n> 46 |   await page.goto('/');\n     |              ^\n  47 |   await page.waitForLoadState('domcontentloaded');\n  48 |\n  49 |   if (await page.getByRole('button', { name: '新規タスク' }).isVisible().catch(() => false)) {\n    at loginOrSignUp (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:46:14)\n    at exerciseCase (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:124:9)\n    at action (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:212:13)\n    at expectNoRuntimeErrors (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:40:9)\n    at C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:211:11"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:42:27.599Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\test-results\\personal-taskmanage.e2e-TC-c885f-集、削除がSupabaseへ永続化されること-分割04-chromium\\test-failed-1.png"
+                    },
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\test-results\\personal-taskmanage.e2e-TC-c885f-集、削除がSupabaseへ永続化されること-分割04-chromium\\video.webm"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\test-results\\personal-taskmanage.e2e-TC-c885f-集、削除がSupabaseへ永続化されること-分割04-chromium\\error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\test-results\\personal-taskmanage.e2e-TC-c885f-集、削除がSupabaseへ永続化されること-分割04-chromium\\trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs",
+                    "column": 14,
+                    "line": 46
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-1d92e6440eb7df9bae71",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-005 TD007 新規タスクのステータス未着手、優先度中、数量1が適用されること 分割01",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2517,
+                  "error": {
+                    "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:5173/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:5173/\", waiting until \"load\"\u001b[22m\n",
+                    "stack": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:5173/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:5173/\", waiting until \"load\"\u001b[22m\n\n    at loginOrSignUp (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:46:14)\n    at exerciseCase (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:124:9)\n    at action (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:212:13)\n    at expectNoRuntimeErrors (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:40:9)\n    at C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:211:11",
+                    "location": {
+                      "file": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs",
+                      "column": 14,
+                      "line": 46
+                    },
+                    "snippet": "\u001b[0m \u001b[90m 44 |\u001b[39m\n \u001b[90m 45 |\u001b[39m \u001b[36masync\u001b[39m \u001b[36mfunction\u001b[39m loginOrSignUp(page\u001b[33m,\u001b[39m testCase) {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 46 |\u001b[39m   \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m'/'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m              \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 47 |\u001b[39m   \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForLoadState(\u001b[32m'domcontentloaded'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 48 |\u001b[39m\n \u001b[90m 49 |\u001b[39m   \u001b[36mif\u001b[39m (\u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgetByRole(\u001b[32m'button'\u001b[39m\u001b[33m,\u001b[39m { name\u001b[33m:\u001b[39m \u001b[32m'新規タスク'\u001b[39m })\u001b[33m.\u001b[39misVisible()\u001b[33m.\u001b[39m\u001b[36mcatch\u001b[39m(() \u001b[33m=>\u001b[39m \u001b[36mfalse\u001b[39m)) {\u001b[0m"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs",
+                        "column": 14,
+                        "line": 46
+                      },
+                      "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:5173/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:5173/\", waiting until \"load\"\u001b[22m\n\n\n  44 |\n  45 | async function loginOrSignUp(page, testCase) {\n> 46 |   await page.goto('/');\n     |              ^\n  47 |   await page.waitForLoadState('domcontentloaded');\n  48 |\n  49 |   if (await page.getByRole('button', { name: '新規タスク' }).isVisible().catch(() => false)) {\n    at loginOrSignUp (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:46:14)\n    at exerciseCase (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:124:9)\n    at action (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:212:13)\n    at expectNoRuntimeErrors (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:40:9)\n    at C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:211:11"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:42:31.236Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\test-results\\personal-taskmanage.e2e-TC-637e0-タス未着手、優先度中、数量1が適用されること-分割01-chromium\\test-failed-1.png"
+                    },
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\test-results\\personal-taskmanage.e2e-TC-637e0-タス未着手、優先度中、数量1が適用されること-分割01-chromium\\video.webm"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\test-results\\personal-taskmanage.e2e-TC-637e0-タス未着手、優先度中、数量1が適用されること-分割01-chromium\\error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\test-results\\personal-taskmanage.e2e-TC-637e0-タス未着手、優先度中、数量1が適用されること-分割01-chromium\\trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs",
+                    "column": 14,
+                    "line": 46
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-4709b32b35672a77fd0a",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-006 TD007 新規タスクのステータス未着手、優先度中、数量1が適用されること 分割02",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2472,
+                  "error": {
+                    "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:5173/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:5173/\", waiting until \"load\"\u001b[22m\n",
+                    "stack": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:5173/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:5173/\", waiting until \"load\"\u001b[22m\n\n    at loginOrSignUp (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:46:14)\n    at exerciseCase (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:124:9)\n    at action (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:212:13)\n    at expectNoRuntimeErrors (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:40:9)\n    at C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:211:11",
+                    "location": {
+                      "file": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs",
+                      "column": 14,
+                      "line": 46
+                    },
+                    "snippet": "\u001b[0m \u001b[90m 44 |\u001b[39m\n \u001b[90m 45 |\u001b[39m \u001b[36masync\u001b[39m \u001b[36mfunction\u001b[39m loginOrSignUp(page\u001b[33m,\u001b[39m testCase) {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 46 |\u001b[39m   \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m'/'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m              \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 47 |\u001b[39m   \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForLoadState(\u001b[32m'domcontentloaded'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 48 |\u001b[39m\n \u001b[90m 49 |\u001b[39m   \u001b[36mif\u001b[39m (\u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgetByRole(\u001b[32m'button'\u001b[39m\u001b[33m,\u001b[39m { name\u001b[33m:\u001b[39m \u001b[32m'新規タスク'\u001b[39m })\u001b[33m.\u001b[39misVisible()\u001b[33m.\u001b[39m\u001b[36mcatch\u001b[39m(() \u001b[33m=>\u001b[39m \u001b[36mfalse\u001b[39m)) {\u001b[0m"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs",
+                        "column": 14,
+                        "line": 46
+                      },
+                      "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:5173/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:5173/\", waiting until \"load\"\u001b[22m\n\n\n  44 |\n  45 | async function loginOrSignUp(page, testCase) {\n> 46 |   await page.goto('/');\n     |              ^\n  47 |   await page.waitForLoadState('domcontentloaded');\n  48 |\n  49 |   if (await page.getByRole('button', { name: '新規タスク' }).isVisible().catch(() => false)) {\n    at loginOrSignUp (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:46:14)\n    at exerciseCase (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:124:9)\n    at action (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:212:13)\n    at expectNoRuntimeErrors (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:40:9)\n    at C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:211:11"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:42:34.825Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\test-results\\personal-taskmanage.e2e-TC-6494c-タス未着手、優先度中、数量1が適用されること-分割02-chromium\\test-failed-1.png"
+                    },
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\test-results\\personal-taskmanage.e2e-TC-6494c-タス未着手、優先度中、数量1が適用されること-分割02-chromium\\video.webm"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\test-results\\personal-taskmanage.e2e-TC-6494c-タス未着手、優先度中、数量1が適用されること-分割02-chromium\\error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\test-results\\personal-taskmanage.e2e-TC-6494c-タス未着手、優先度中、数量1が適用されること-分割02-chromium\\trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs",
+                    "column": 14,
+                    "line": 46
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-a7e8a0ea43bdf2655685",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-007 TD007 新規タスクのステータス未着手、優先度中、数量1が適用されること 分割03",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2480,
+                  "error": {
+                    "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:5173/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:5173/\", waiting until \"load\"\u001b[22m\n",
+                    "stack": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:5173/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:5173/\", waiting until \"load\"\u001b[22m\n\n    at loginOrSignUp (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:46:14)\n    at exerciseCase (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:124:9)\n    at action (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:212:13)\n    at expectNoRuntimeErrors (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:40:9)\n    at C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:211:11",
+                    "location": {
+                      "file": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs",
+                      "column": 14,
+                      "line": 46
+                    },
+                    "snippet": "\u001b[0m \u001b[90m 44 |\u001b[39m\n \u001b[90m 45 |\u001b[39m \u001b[36masync\u001b[39m \u001b[36mfunction\u001b[39m loginOrSignUp(page\u001b[33m,\u001b[39m testCase) {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 46 |\u001b[39m   \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m'/'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m              \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 47 |\u001b[39m   \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForLoadState(\u001b[32m'domcontentloaded'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 48 |\u001b[39m\n \u001b[90m 49 |\u001b[39m   \u001b[36mif\u001b[39m (\u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgetByRole(\u001b[32m'button'\u001b[39m\u001b[33m,\u001b[39m { name\u001b[33m:\u001b[39m \u001b[32m'新規タスク'\u001b[39m })\u001b[33m.\u001b[39misVisible()\u001b[33m.\u001b[39m\u001b[36mcatch\u001b[39m(() \u001b[33m=>\u001b[39m \u001b[36mfalse\u001b[39m)) {\u001b[0m"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs",
+                        "column": 14,
+                        "line": 46
+                      },
+                      "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:5173/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:5173/\", waiting until \"load\"\u001b[22m\n\n\n  44 |\n  45 | async function loginOrSignUp(page, testCase) {\n> 46 |   await page.goto('/');\n     |              ^\n  47 |   await page.waitForLoadState('domcontentloaded');\n  48 |\n  49 |   if (await page.getByRole('button', { name: '新規タスク' }).isVisible().catch(() => false)) {\n    at loginOrSignUp (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:46:14)\n    at exerciseCase (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:124:9)\n    at action (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:212:13)\n    at expectNoRuntimeErrors (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:40:9)\n    at C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:211:11"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:42:38.423Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\test-results\\personal-taskmanage.e2e-TC-77e79-タス未着手、優先度中、数量1が適用されること-分割03-chromium\\test-failed-1.png"
+                    },
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\test-results\\personal-taskmanage.e2e-TC-77e79-タス未着手、優先度中、数量1が適用されること-分割03-chromium\\video.webm"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\test-results\\personal-taskmanage.e2e-TC-77e79-タス未着手、優先度中、数量1が適用されること-分割03-chromium\\error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\test-results\\personal-taskmanage.e2e-TC-77e79-タス未着手、優先度中、数量1が適用されること-分割03-chromium\\trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs",
+                    "column": 14,
+                    "line": 46
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-6d37c07b765b965e6983",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-008 TD007 新規タスクのステータス未着手、優先度中、数量1が適用されること 分割04",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2479,
+                  "error": {
+                    "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:5173/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:5173/\", waiting until \"load\"\u001b[22m\n",
+                    "stack": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:5173/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:5173/\", waiting until \"load\"\u001b[22m\n\n    at loginOrSignUp (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:46:14)\n    at exerciseCase (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:124:9)\n    at action (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:212:13)\n    at expectNoRuntimeErrors (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:40:9)\n    at C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:211:11",
+                    "location": {
+                      "file": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs",
+                      "column": 14,
+                      "line": 46
+                    },
+                    "snippet": "\u001b[0m \u001b[90m 44 |\u001b[39m\n \u001b[90m 45 |\u001b[39m \u001b[36masync\u001b[39m \u001b[36mfunction\u001b[39m loginOrSignUp(page\u001b[33m,\u001b[39m testCase) {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 46 |\u001b[39m   \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m'/'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m              \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 47 |\u001b[39m   \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForLoadState(\u001b[32m'domcontentloaded'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 48 |\u001b[39m\n \u001b[90m 49 |\u001b[39m   \u001b[36mif\u001b[39m (\u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgetByRole(\u001b[32m'button'\u001b[39m\u001b[33m,\u001b[39m { name\u001b[33m:\u001b[39m \u001b[32m'新規タスク'\u001b[39m })\u001b[33m.\u001b[39misVisible()\u001b[33m.\u001b[39m\u001b[36mcatch\u001b[39m(() \u001b[33m=>\u001b[39m \u001b[36mfalse\u001b[39m)) {\u001b[0m"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs",
+                        "column": 14,
+                        "line": 46
+                      },
+                      "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:5173/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:5173/\", waiting until \"load\"\u001b[22m\n\n\n  44 |\n  45 | async function loginOrSignUp(page, testCase) {\n> 46 |   await page.goto('/');\n     |              ^\n  47 |   await page.waitForLoadState('domcontentloaded');\n  48 |\n  49 |   if (await page.getByRole('button', { name: '新規タスク' }).isVisible().catch(() => false)) {\n    at loginOrSignUp (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:46:14)\n    at exerciseCase (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:124:9)\n    at action (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:212:13)\n    at expectNoRuntimeErrors (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:40:9)\n    at C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:211:11"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:42:42.012Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\test-results\\personal-taskmanage.e2e-TC-f7856-タス未着手、優先度中、数量1が適用されること-分割04-chromium\\test-failed-1.png"
+                    },
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\test-results\\personal-taskmanage.e2e-TC-f7856-タス未着手、優先度中、数量1が適用されること-分割04-chromium\\video.webm"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\test-results\\personal-taskmanage.e2e-TC-f7856-タス未着手、優先度中、数量1が適用されること-分割04-chromium\\error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\test-results\\personal-taskmanage.e2e-TC-f7856-タス未着手、優先度中、数量1が適用されること-分割04-chromium\\trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs",
+                    "column": 14,
+                    "line": 46
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-d4754bbe75fe1275a73e",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-009 TD007 新規タスクのステータス未着手、優先度中、数量1が適用されること 分割05",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2502,
+                  "error": {
+                    "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:5173/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:5173/\", waiting until \"load\"\u001b[22m\n",
+                    "stack": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:5173/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:5173/\", waiting until \"load\"\u001b[22m\n\n    at loginOrSignUp (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:46:14)\n    at exerciseCase (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:124:9)\n    at action (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:212:13)\n    at expectNoRuntimeErrors (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:40:9)\n    at C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:211:11",
+                    "location": {
+                      "file": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs",
+                      "column": 14,
+                      "line": 46
+                    },
+                    "snippet": "\u001b[0m \u001b[90m 44 |\u001b[39m\n \u001b[90m 45 |\u001b[39m \u001b[36masync\u001b[39m \u001b[36mfunction\u001b[39m loginOrSignUp(page\u001b[33m,\u001b[39m testCase) {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 46 |\u001b[39m   \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m'/'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m              \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 47 |\u001b[39m   \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForLoadState(\u001b[32m'domcontentloaded'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 48 |\u001b[39m\n \u001b[90m 49 |\u001b[39m   \u001b[36mif\u001b[39m (\u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgetByRole(\u001b[32m'button'\u001b[39m\u001b[33m,\u001b[39m { name\u001b[33m:\u001b[39m \u001b[32m'新規タスク'\u001b[39m })\u001b[33m.\u001b[39misVisible()\u001b[33m.\u001b[39m\u001b[36mcatch\u001b[39m(() \u001b[33m=>\u001b[39m \u001b[36mfalse\u001b[39m)) {\u001b[0m"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs",
+                        "column": 14,
+                        "line": 46
+                      },
+                      "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:5173/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:5173/\", waiting until \"load\"\u001b[22m\n\n\n  44 |\n  45 | async function loginOrSignUp(page, testCase) {\n> 46 |   await page.goto('/');\n     |              ^\n  47 |   await page.waitForLoadState('domcontentloaded');\n  48 |\n  49 |   if (await page.getByRole('button', { name: '新規タスク' }).isVisible().catch(() => false)) {\n    at loginOrSignUp (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:46:14)\n    at exerciseCase (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:124:9)\n    at action (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:212:13)\n    at expectNoRuntimeErrors (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:40:9)\n    at C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:211:11"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:42:45.580Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\test-results\\personal-taskmanage.e2e-TC-98b44-タス未着手、優先度中、数量1が適用されること-分割05-chromium\\test-failed-1.png"
+                    },
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\test-results\\personal-taskmanage.e2e-TC-98b44-タス未着手、優先度中、数量1が適用されること-分割05-chromium\\video.webm"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\test-results\\personal-taskmanage.e2e-TC-98b44-タス未着手、優先度中、数量1が適用されること-分割05-chromium\\error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\test-results\\personal-taskmanage.e2e-TC-98b44-タス未着手、優先度中、数量1が適用されること-分割05-chromium\\trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs",
+                    "column": 14,
+                    "line": 46
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-485feebf2374cc7ea75c",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-010 TD007 新規タスクのステータス未着手、優先度中、数量1が適用されること 分割06",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2450,
+                  "error": {
+                    "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:5173/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:5173/\", waiting until \"load\"\u001b[22m\n",
+                    "stack": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:5173/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:5173/\", waiting until \"load\"\u001b[22m\n\n    at loginOrSignUp (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:46:14)\n    at exerciseCase (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:124:9)\n    at action (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:212:13)\n    at expectNoRuntimeErrors (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:40:9)\n    at C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:211:11",
+                    "location": {
+                      "file": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs",
+                      "column": 14,
+                      "line": 46
+                    },
+                    "snippet": "\u001b[0m \u001b[90m 44 |\u001b[39m\n \u001b[90m 45 |\u001b[39m \u001b[36masync\u001b[39m \u001b[36mfunction\u001b[39m loginOrSignUp(page\u001b[33m,\u001b[39m testCase) {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 46 |\u001b[39m   \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m'/'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m              \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 47 |\u001b[39m   \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForLoadState(\u001b[32m'domcontentloaded'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 48 |\u001b[39m\n \u001b[90m 49 |\u001b[39m   \u001b[36mif\u001b[39m (\u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgetByRole(\u001b[32m'button'\u001b[39m\u001b[33m,\u001b[39m { name\u001b[33m:\u001b[39m \u001b[32m'新規タスク'\u001b[39m })\u001b[33m.\u001b[39misVisible()\u001b[33m.\u001b[39m\u001b[36mcatch\u001b[39m(() \u001b[33m=>\u001b[39m \u001b[36mfalse\u001b[39m)) {\u001b[0m"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs",
+                        "column": 14,
+                        "line": 46
+                      },
+                      "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:5173/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:5173/\", waiting until \"load\"\u001b[22m\n\n\n  44 |\n  45 | async function loginOrSignUp(page, testCase) {\n> 46 |   await page.goto('/');\n     |              ^\n  47 |   await page.waitForLoadState('domcontentloaded');\n  48 |\n  49 |   if (await page.getByRole('button', { name: '新規タスク' }).isVisible().catch(() => false)) {\n    at loginOrSignUp (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:46:14)\n    at exerciseCase (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:124:9)\n    at action (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:212:13)\n    at expectNoRuntimeErrors (C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:40:9)\n    at C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs:211:11"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-06-28T07:42:49.129Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\test-results\\personal-taskmanage.e2e-TC-b9912-タス未着手、優先度中、数量1が適用されること-分割06-chromium\\test-failed-1.png"
+                    },
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\test-results\\personal-taskmanage.e2e-TC-b9912-タス未着手、優先度中、数量1が適用されること-分割06-chromium\\video.webm"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\test-results\\personal-taskmanage.e2e-TC-b9912-タス未着手、優先度中、数量1が適用されること-分割06-chromium\\error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\test-results\\personal-taskmanage.e2e-TC-b9912-タス未着手、優先度中、数量1が適用されること-分割06-chromium\\trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "C:\\Users\\ryo31\\OneDrive\\ドキュメント\\PersonalTaskManage_テスト管理\\PersonalTaskManage_Re01\\tests\\e2e\\personal-taskmanage.e2e.spec.cjs",
+                    "column": 14,
+                    "line": 46
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-d22c4e6e667472f84f2f",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-011 TD007 新規タスクのステータス未着手、優先度中、数量1が適用されること 分割07",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-36c5fcbfc25221c25aff",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-012 TD007 新規タスクのステータス未着手、優先度中、数量1が適用されること 分割08",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-125e56067418c1e1d959",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-013 TD008 キャンセル",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-1d8844b8a153bc267abf",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-014 TD008 失敗",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-0869aed63f2980a87c04",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-015 TD008 再試行",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-7b7f887cb05edda07a1a",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-016 TD010 登録・編集・状態変更・削除が再読込後も同じ結果であること 分割01",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-0e7f44d861dac543c074",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-017 TD010 登録・編集・状態変更・削除が再読込後も同じ結果であること 分割02",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-2e1c43b742ef508af778",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-018 TD010 登録・編集・状態変更・削除が再読込後も同じ結果であること 分割03",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-d999d29ec59cffef6f97",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-019 TD010 登録・編集・状態変更・削除が再読込後も同じ結果であること 分割04",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-e3243d8dc03c8d2ca253",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-020 TD017 毎日と曜日指定で、JST暦日の期間開始日・終了日を含む対象日だけタスクを生成すること 分割01",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-325bfb611fe01cbab81a",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-021 TD017 毎日と曜日指定で、JST暦日の期間開始日・終了日を含む対象日だけタスクを生成すること 分割02",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-db9342ae88f275cf923c",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-022 TD017 毎日と曜日指定で、JST暦日の期間開始日・終了日を含む対象日だけタスクを生成すること 分割03",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-3a37a08bb5b1c4ce5d89",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-023 TD017 毎日と曜日指定で、JST暦日の期間開始日・終了日を含む対象日だけタスクを生成すること 分割04",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-fa8dd8ccb60d996fd124",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-024 TD017 毎日と曜日指定で、JST暦日の期間開始日・終了日を含む対象日だけタスクを生成すること 分割05",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-032d4780806ec4744501",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-025 TD017 毎日と曜日指定で、JST暦日の期間開始日・終了日を含む対象日だけタスクを生成すること 分割06",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-ea5fdbc95bfcbee91eb5",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-026 TD017 毎日と曜日指定で、JST暦日の期間開始日・終了日を含む対象日だけタスクを生成すること 分割07",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-967cb7b7cb8b4d2bd855",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-027 TD017 毎日と曜日指定で、JST暦日の期間開始日・終了日を含む対象日だけタスクを生成すること 分割08",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-1905b5ee3b23b25c7782",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-028 TD017 毎日と曜日指定で、JST暦日の期間開始日・終了日を含む対象日だけタスクを生成すること 分割09",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-f727e1b7600c9e10d1f3",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-029 TD017 毎日と曜日指定で、JST暦日の期間開始日・終了日を含む対象日だけタスクを生成すること 分割10",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-c3e55cc52dda368eadb8",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-030 TD019 曜日指定未選択、期間終了<開始、同日終了で終了<=開始を拒否すること 分割01",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-59fb375c503fd3424d83",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-031 TD019 曜日指定未選択、期間終了<開始、同日終了で終了<=開始を拒否すること 分割02",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-d2ca4f0c887fdebcd1fa",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-032 TD019 曜日指定未選択、期間終了<開始、同日終了で終了<=開始を拒否すること 分割03",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-f3c12ca4ade2f6ae719e",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-033 TD019 曜日指定未選択、期間終了<開始、同日終了で終了<=開始を拒否すること 分割04",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-e60c8dd2d6ffc3573959",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-034 TD020 翌日終了ありでは終了日を1日進め、なしでは同日内の時刻順序を保持すること 分割01",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-984e9e2539a158c4ceb9",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-035 TD020 翌日終了ありでは終了日を1日進め、なしでは同日内の時刻順序を保持すること 分割02",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-a97c1fd65c2502665a83",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-036 TD020 翌日終了ありでは終了日を1日進め、なしでは同日内の時刻順序を保持すること 分割03",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-3f0ca00007b987edf20e",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-037 TD020 翌日終了ありでは終了日を1日進め、なしでは同日内の時刻順序を保持すること 分割04",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-b0cd628aa8a7509b54f2",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-038 TD023 日・週・月の各ビューに予定、実績、セッションがJSTで表示されること 分割01",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-85c4f925b90ab8625c52",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-039 TD023 日・週・月の各ビューに予定、実績、セッションがJSTで表示されること 分割02",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-132d8dafc5a15f06f64b",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-040 TD023 日・週・月の各ビューに予定、実績、セッションがJSTで表示されること 分割03",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-64fa29fe62178efe3ef1",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-041 TD025 日",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-b9eeaa1cd8842c23e858",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-042 TD025 週",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-2183a720f5cf0e1a118b",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-043 TD025 月",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-8bf069352e3c08e40222",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-044 TD025 前",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-83b22ad204473e306359",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-045 TD025 次",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-f973db3c32bc98c346c3",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-046 TD026 開始欠落",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-5f122f57e648057d2f69",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-047 TD026 終了欠落",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-8ed271e0aa281ce15888",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-048 TD026 両方欠落",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-dfa0fc51c301c4c72f9e",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-049 TD026 完了",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-862ae9ca29dac28dc765",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-050 TD049 CSVがBOM付きUTF-8で全タスクと選択項目を正しい列順で出力すること 分割01",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-51c9c81189f0aade843b",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-051 TD049 CSVがBOM付きUTF-8で全タスクと選択項目を正しい列順で出力すること 分割02",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-ee97cb7dcc9a8f09dedd",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-052 TD049 CSVがBOM付きUTF-8で全タスクと選択項目を正しい列順で出力すること 分割03",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-4145310f5dbbb8066fa3",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-053 TD050 日本語、カンマ、引用符、改行、絵文字をCSV/テキストで欠損なくエスケープすること 分割01",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-037f72b2616736f76c70",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-054 TD050 日本語、カンマ、引用符、改行、絵文字をCSV/テキストで欠損なくエスケープすること 分割02",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-b263ef8d581f9e085306",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-055 TD050 日本語、カンマ、引用符、改行、絵文字をCSV/テキストで欠損なくエスケープすること 分割03",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-3fd5a5be9d96fa831a8e",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-056 TD050 日本語、カンマ、引用符、改行、絵文字をCSV/テキストで欠損なくエスケープすること 分割04",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-f2c1e76f70d82bbbb3b4",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-057 TD050 日本語、カンマ、引用符、改行、絵文字をCSV/テキストで欠損なくエスケープすること 分割05",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-65ee93d3e19a7e24945e",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-058 TD051 3状態",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-eebb8278a7a2b219b6d1",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-059 TD051 3状態派生01",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-b4fa780ecb03db24b1a5",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-060 TD051 3状態派生02",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-b1b14c8b541cf62cf2a8",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-061 TD073 AC001のタスク登録が一覧表示と再読込後の保持まで成功すること。代表条件1件を独立判定する 分割01",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-d7e2863b97d47886fb5c",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-062 TD074 AC002のタスク編集が表示反映と再読込後の保持まで成功すること。代表条件1件を独立判定する 分割01",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-19460e430ccbc469c862",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-063 TD075 AC003の主要状態遷移と実績情報の保存・表示が成功すること。代表条件1件を独立判定する 分割01",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-c2b8eec2bf0631318afd",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-064 TD076 AC004のJSTカレンダー表示と日時境界が成功すること。代表条件1件を独立判定する 分割01",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-8c3c21b7825a140a943c",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-065 TD077 AC005の予定・実績・完了率が集計仕様と一致すること。代表条件1件を独立判定する 分割01",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-13269367ae72fdc56c2b",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-066 TD078 AC006の代表設定変更が機能へ反映され、再読込後も保持されること。代表条件1件を独立判定する 分割01",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-63bdeff876d46ed32b7b",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-067 TD088 単独全件＋日付",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-2f60180e1e28fc3daf87",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-068 TD088 状態",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-f9c4e70b621d759093d8",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-069 TD088 未スケジュール",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-42e8300b45e7eee01b95",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-070 TD088 重複0分",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-9ec47f785df0be37e2a5",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-071 TD088 1分",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-c7b3d9aaf2240b94b330",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-072 TD088 1分派生01",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-1c1b95a8b9baee62e88c",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-073 TD088 1分派生02",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-2b315c9337f67acb951b",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-074 TD088 1分派生03",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-444e2aba87bf7fdb9dcc",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-075 TD088 1分派生04",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-232287dcc7755d9794be",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-076 TD088 1分派生05",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-1a9e5e7034d54b24dc2e",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-077 TD088 1分派生06",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-08d4fb2e2e3cbe2e7a32",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-078 TD088 1分派生07",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-05759b1a9069eda8233f",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-079 TD088 1分派生08",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-8ebac45420093ef0e7c1",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-080 TD088 1分派生09",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-3f9dc7194502ff7a673d",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-081 TD088 1分派生10",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-1e9c73439c779f909d43",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-082 TD068 S001 ログイン画面 主要経路",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-e556e9c731ec9709d49f",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-083 TD068 S101 タスク一覧画面 主要経路",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-15fe17e4882101001030",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-084 TD068 S102 新規タスク作成ダイアログ 主要経路",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-f9f26a1096a429d99e64",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-085 TD068 S103 新規定常タスク作成ダイアログ 主要経路",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-2159009a3a770bcfa839",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-086 TD068 S104 タスク編集ダイアログ 主要経路",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-a1b7eae152a059317573",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-087 TD068 S105 新しい分類を追加ダイアログ 主要経路",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-2bb64c856ba51edc8cef",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-088 TD068 S106 開始実績時間入力ダイアログ 主要経路",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-f8602b131b6c44b8d287",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-089 TD068 S107 タスク中断ダイアログ 主要経路",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-bc679cfa03756b24230f",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-090 TD068 S108 タスク再開ダイアログ 主要経路",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-45dc0b35e283b42e3743",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-091 TD068 S109 終了実績時間入力ダイアログ 主要経路",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-8887b764b432da366e03",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-092 TD068 S110 出力項目選択ダイアログ 主要経路",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-4f8daf919e37117808d5",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-093 TD068 S111 当日タスク実績レポートダイアログ 主要経路",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-7f50a767042a9c77616a",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-094 TD068 S112 タスク削除確認ダイアログ 主要経路",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-3b49640149b883c83d86",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-095 TD068 S113 定常タスク削除確認ダイアログ 主要経路",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-b0a8d251c40d669a5ade",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-096 TD068 S114 タスク一括削除確認エリア 主要経路",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-422739a473a3ef51e72f",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-097 TD068 S200 カレンダー画面 主要経路",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-05382d00101ae0379d28",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-098 TD068 S201 日カレンダータブ 主要経路",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-3d25664a83cadfa30d69",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-099 TD068 S202 週カレンダータブ 主要経路",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-582ee89fae3d12a46d9b",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-100 TD068 S203 月カレンダータブ 主要経路",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-3807d62c2269ad53333b",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-101 TD068 S301 定常タスク管理画面 主要経路",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-255ac58922c51f6b5f13",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-102 TD068 S302 定常タスク編集ダイアログ 主要経路",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-b36b92cc2e99d33c3732",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-103 TD068 S303 未完了タスク一括更新ダイアログ 主要経路",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-06ec5c114d8dd2cb996b",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-104 TD068 S400 分析画面 主要経路",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-13df2e362491c63c6f7a",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-105 TD068 S401 概要分析タブ 主要経路",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-e147e53cfdb5d8d46c23",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-106 TD068 S403 所要時間分析タブ 主要経路",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-5568a294b17040257124",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-107 TD068 S501 設定画面 主要経路",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-476533581573852b8a38",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-108 TD068 S502 アカウント情報セクション 主要経路",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-f037ce05063e9ad23dd4",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-109 TD068 S503 タスク分類検索・色フィルタエリア 主要経路",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-dfe40f563db454be957f",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-110 TD068 S504 タスク分類一括削除確認エリア 主要経路",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-7242d6b8f98b17ac6691",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-111 TD068 F001 ログイン 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-e60aa0f58e7d97f03dd9",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-112 TD068 F002 サインアップ 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-d6396cf3ef5b50f18646",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-113 TD068 F101 タスク一覧表示 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-151f646b7ac8a31ac137",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-114 TD068 F102 タスク作成 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-f61cd97c4019bab4e26a",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-115 TD068 F103 タスク編集 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-2ab16622461bf1c886ce",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-116 TD068 F104 タスク削除 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-c8557899d47ae0a6b3ba",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-117 TD068 F105 新しい分類追加 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-4c9e76ed9d819372c707",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-118 TD068 F106 親子タスク設定 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-2f23362d85754a6781b6",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-119 TD068 F107 ステータス変更 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-a4cc717733720af0ce71",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-120 TD068 F108 開始実績時間入力 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-db7f46746901a92f66e1",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-121 TD068 F109 タスク中断時間入力 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-a5d042ab27bcb438ac7a",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-122 TD068 F110 タスク再開時間入力 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-4586e3affdb63984e532",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-123 TD068 F111 終了実績時間入力 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-6c0ac95135b5f02512d3",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-124 TD068 F112 テキスト出力項目選択 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-de3111df6755ffb66317",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-125 TD068 F113 タスクキーワード検索 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-448f06e90d0627811141",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-126 TD068 F114 タスクフィルタ 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-c3a1d827893f2efb24b7",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-127 TD068 F115 作業負荷表示 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-33cf2a58e0f0af41e44a",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-128 TD068 F116 CSV出力 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-5707bd2c8ad74af5dbf1",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-129 TD068 F117 テキスト出力 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-ac3030613ed962194abc",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-130 TD068 F118 タスク一括削除 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-99b56a2243494c746709",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-131 TD068 F119 予定時刻ブラウザ通知 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-218b4404b2ccf0666ed8",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-132 TD068 F201 日カレンダー表示 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-3593adcd3849bae2a8a1",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-133 TD068 F202 週カレンダー表示 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-620a6a5d4935471e3880",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-134 TD068 F203 月カレンダー表示 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-26add980fd5592188676",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-135 TD068 F204 前後切り替え 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-a5ee9ef509d17cd70fe7",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-136 TD068 F205 当日表示 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-a3d7a6f2d5177c789f0b",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-137 TD068 F206 未スケジュールタスク表示 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-ebb610a00132eba03d74",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-138 TD068 F301 定常タスク作成 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-1e2e3eeeb3ba575026e9",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-139 TD068 F302 定常タスク編集 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-fbce5f62ee58eb23b2fd",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-140 TD068 F303 定常タスク一括更新 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-2cba45f5cc6b33419ebf",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-141 TD068 F304 定常タスク削除 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-24b54d4e96f7f8e8b0bc",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-142 TD068 F401 完了率表示 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-4696cb7861362ac329f1",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-143 TD068 F402 総実績時間表示 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-e335f25e126209539a0b",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-144 TD068 F403 ステータス分布表示 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-89f024f4fe7aa04ccedc",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-145 TD068 F404 分類別完了タスク数表示 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-38d17496a131d5cc39fe",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-146 TD068 F405 分類別実績時間表示 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-633fd2fdf83c4f38c140",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-147 TD068 F406 作業時間表示 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-641ef54db77e35ccea15",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-148 TD068 F410 所要時間分析 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-0cef211d75eda4a89f05",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-149 TD068 F411 見積超過要因ランキング表示 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-1b5223f9b66ff9ef3314",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-150 TD068 F412 見積短縮要因ランキング表示 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-366c9a70e7ff35b961d8",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-151 TD068 F413 表示期間切り替え 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-a5490aa0e2be40eaaecc",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-152 TD068 F501 タスク分類表示 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-ad5d0545d6e6e99f7e6f",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-153 TD068 F502 タスク分類追加 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-f702f1653e005935989d",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-154 TD068 F503 タスク分類編集 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-c4737f0a7a3cac5025ee",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-155 TD068 F504 タスク分類削除 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-02b1ff372e2607f743b1",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-156 TD068 F505 ブラウザ通知許可設定変更 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-cb3319d906bae15293d3",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-157 TD068 F506 タスク分類検索・色フィルタ 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-dd752fb6df6643639a63",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-158 TD068 F507 タスク分類一括削除 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-6b792effdeae3b952f08",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-159 TD068 F508 メールアドレス変更 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-498931968990e6d041fb",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        },
+        {
+          "title": "TC-E2E-160 TD068 F509 パスワード変更 主要機能",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a6308ac9b64de9c0b12-8ac0594c45758dd8046d",
+          "file": "personal-taskmanage.e2e.spec.cjs",
+          "line": 208,
+          "column": 3
+        }
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "message": "\u001b[31mTesting stopped early after 10 maximum allowed failures.\u001b[39m"
+    }
+  ],
+  "stats": {
+    "startTime": "2026-06-28T07:42:15.612Z",
+    "duration": 36476.213,
+    "expected": 0,
+    "skipped": 150,
+    "unexpected": 10,
+    "flaky": 0
+  }
+}
+
+
+--- stderr/log ---

@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>テスト分析レビュー</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f7f7f4;
+      --panel: #ffffff;
+      --text: #202124;
+      --muted: #666b73;
+      --border: #d9ddd6;
+      --accent: #0f766e;
+      --danger: #b42318;
+      --warn: #b7791f;
+      --ok: #16794c;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Segoe UI", "Meiryo", sans-serif;
+      line-height: 1.65;
+    }
+    header, main {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+    header {
+      padding-top: 32px;
+      border-bottom: 1px solid var(--border);
+    }
+    h1 { margin: 0 0 8px; font-size: 32px; }
+    h2 { margin-top: 32px; font-size: 24px; border-left: 5px solid var(--accent); padding-left: 10px; }
+    h3 { margin-top: 24px; font-size: 18px; }
+    p { margin: 8px 0; }
+    a { color: #075985; }
+    code {
+      background: #eef2f0;
+      border: 1px solid #d7ddda;
+      border-radius: 4px;
+      padding: 1px 4px;
+      font-family: Consolas, monospace;
+    }
+    pre {
+      overflow: auto;
+      background: #111827;
+      color: #f9fafb;
+      border-radius: 8px;
+      padding: 14px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin: 16px 0;
+    }
+    .metric {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+    }
+    .metric .label { color: var(--muted); font-size: 13px; }
+    .metric .value { font-size: 26px; font-weight: 700; margin-top: 4px; }
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--panel);
+      margin: 12px 0;
+    }
+    table { width: 100%; border-collapse: collapse; min-width: 720px; }
+    th, td { border-bottom: 1px solid var(--border); padding: 8px 10px; text-align: left; vertical-align: top; }
+    th { background: #eef2f0; white-space: nowrap; }
+    tr:last-child td { border-bottom: 0; }
+    .pill { display: inline-block; border-radius: 999px; padding: 2px 8px; font-weight: 700; font-size: 12px; }
+    .pass { color: var(--ok); }
+    .fail { color: var(--danger); }
+    .na { color: var(--warn); }
+  </style>
+</head>
+<body>
+<h2>テスト分析レビュー結果</h2>
+<h3>1. レビュー対象</h3>
+<ul>
+<li>テスト分析: <code>テスト成果物/テスト分析.md</code></li>
+<li>質問票: <code>テスト成果物/テスト分析_質問票.md</code></li>
+<li>レビュー結果: <code>テスト成果物/テスト分析レビュー結果.md</code></li>
+</ul>
+<h3>2. 参照資料</h3>
+<ul>
+<li><code>テスト成果物/テスト計画書.md</code></li>
+<li><code>README.md</code></li>
+<li><code>FUNCTION_LIST.md</code></li>
+<li><code>SCREEN_LIST.md</code></li>
+<li><code>src/lib/types.ts</code>、<code>src/lib/utils.ts</code>、<code>src/lib/dateTime.ts</code>、<code>src/lib/useWorkHours.ts</code></li>
+<li><code>src/contexts/AuthContext.tsx</code>、<code>src/contexts/TaskContext.tsx</code></li>
+<li>タスク・定常タスクのフォーム、一覧、カレンダー、分析、設定、認証の各実装</li>
+<li><code>supabase/migrations/*.sql</code>、<code>supabase/functions/update-account/index.ts</code></li>
+<li><code>package.json</code></li>
+</ul>
+<h3>3. レビュー観点</h3>
+<ul>
+<li>テスト計画のTA/R/終了条件との整合性と全件トレーサビリティ</li>
+<li>Source Structure Inventoryの完全性、具体性、展開方針、下流分割可能性</li>
+<li>仕様準拠、汎用QA、追加観点検討の3パス実施状況</li>
+<li>高リスク領域の正常、境界、異常、状態/組合せ、非機能観点の密度</li>
+<li>入力・日時・集計・永続性・認証/RLS・セキュリティ・互換性・性能の必要十分性</li>
+<li>質問票の必要性、優先度、TV/TAとの参照整合性</li>
+<li>重大なバグ逃し候補と、後続のテスト設計へ分解できる粒度</li>
+</ul>
+<h3>4. レビュー・修正サマリー</h3>
+<h4>4.1 初回レビュー</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>優先度</th><th>観点</th><th>問題</th><th>場所</th><th>影響</th><th>修正方針</th></tr></thead>
+<tbody>
+<tr><td>P1</td><td>計画整合</td><td>アカウント更新と一括削除に固有の高影響リスク・アプローチが計画にない</td><td>テスト計画、分析</td><td>認証情報破損、service role漏えい、選択外削除、部分失敗が薄くなる</td><td>R016/R017、TA018/TA019を計画へ追加し、TV091～TV098へ展開</td></tr>
+<tr><td>P2</td><td>SSIカバレッジ</td><td>フィルター集合、カテゴリ10色、履歴30件の下流分割が弱い</td><td>SSI009、SSI011、SSI029</td><td>後続設計で値集合を再調査する必要がある</td><td>TV088～TV090を追加し、全値・境界を明示</td></tr>
+</tbody></table></div>
+<p>修正後、TA001～TA019の全件が少なくとも1つのTVへ対応した。</p>
+<h4>4.2 二次レビュー</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>優先度</th><th>観点</th><th>問題</th><th>場所</th><th>影響</th><th>修正方針</th></tr></thead>
+<tbody>
+<tr><td>P2</td><td>質問トレーサビリティ</td><td>自由入力上限とCSV式注入の質問ID参照がずれていた</td><td>TV041、TV052</td><td>回答を誤った観点へ反映する可能性がある</td><td>Q005/Q007へ修正</td></tr>
+<tr><td>P2</td><td>境界値</td><td>数量・1単位時間の「巨大値」が具体値でなかった</td><td>SSI006、TV038</td><td>integer上限のケース数を確定できない</td><td><code>-1/0/1/2147483647/2147483648</code>へ具体化</td></tr>
+</tbody></table></div>
+<p>修正後、質問IDと観点IDの対応、数値境界、環境マトリクスを再確認した。</p>
+<h4>4.3 回答反映レビュー</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>優先度</th><th>観点</th><th>問題</th><th>場所</th><th>影響</th><th>修正方針</th></tr></thead>
+<tbody>
+<tr><td>P1</td><td>回答反映</td><td>Q001～Q008の回答後も質問待ち・要確認・旧環境条件が残っていた</td><td>テスト計画、分析、質問票</td><td>後続設計が確定済み仕様を使用できない</td><td>正式URL、データ作成、360×800判定、自動化範囲、性能、一括削除を確定値へ更新</td></tr>
+<tr><td>P1</td><td>仕様構造</td><td>文字数上限、自動化全画面/全機能、CSV先頭文字、シナリオ内データ作成がSSIに存在しなかった</td><td>SSI</td><td>下流ケース数と期待処理を算出できない</td><td>SSI033～SSI036を追加し、SSI032を具体化</td></tr>
+<tr><td>P2</td><td>文書整合</td><td>README、機能一覧、画面一覧に文字数上限・CSV安全化・部分失敗の仕様がなかった</td><td>README、FUNCTION_LIST、SCREEN_LIST</td><td>ユーザー仕様とQA成果物が不一致になる</td><td>関連機能・画面の説明を回答内容へ同期</td></tr>
+</tbody></table></div>
+<p>修正後、質問票Q001～Q008を全件回答済みとし、回答記録と反映先を明示した。</p>
+<h3>5. 最終レビュー結果</h3>
+<ul>
+<li>P0: 0件</li>
+<li>P1: 0件</li>
+<li>P2: 0件</li>
+<li>P3: 0件</li>
+<li>TA001～TA019の未カバー: 0件</li>
+<li>SSI001～SSI036の未参照: 0件</li>
+<li>テスト観点: 98件、重複ID0件、由来記載漏れ0件</li>
+<li>質問: Q001～Q008は全件回答・反映済み、未回答0件</li>
+<li><code>代表抽出</code>と<code>質問待ち</code>は使用せず、有限集合は全件、境界は具体値、状態・環境は組み合わせとした。</li>
+<li>高リスクR001/R002/R003/R006/R007/R011/R012/R013/R015/R016/R017について、正常、境界/異常、状態/組合せ、関連するセキュリティ・永続性・互換性・回復性を複数観点で確認した。</li>
+<li>バグ逃し検討で、認証後データ残留、CRUD再試行重複、親子循環、通知重複、migration部分適用、Edge Function情報露出、一括削除部分失敗を観点または質問票へ反映した。</li>
+</ul>
+<p>最終状態では、修正可能なP0/P1/P2指摘は残っておらず、テスト設計へ進める。</p>
+<h3>6. 残課題</h3>
+<ul>
+<li><code>.env.example</code>を追加し、テスト計画Q003を解決した。文書上の未決事項は残っていない。</li>
+<li>回答で新たに確定したタスク名/カテゴリ名30文字、メモ100文字、CSV先頭アポストロフィ、一括削除部分失敗の成功分確定・失敗対象表示は、現行コードでの実装適合確認が必要である。</li>
+<li>現行ソース確認では入力に<code>maxLength</code>がなく、CSV出力は引用符エスケープのみ、一括削除は<code>Promise.all</code>一括処理で失敗対象表示を持たない。この差異は後続テストでFailとして検出される見込みであり、文書レビュー上の未修正事項ではない。</li>
+<li>テスト計画へR016/R017およびTA018/TA019を追加し、README、機能一覧、画面一覧を回答仕様へ同期した。プロダクトコードは変更していない。</li>
+</ul>
+</body>
+</html>

@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>テスト設計</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f7f7f4;
+      --panel: #ffffff;
+      --text: #202124;
+      --muted: #666b73;
+      --border: #d9ddd6;
+      --accent: #0f766e;
+      --danger: #b42318;
+      --warn: #b7791f;
+      --ok: #16794c;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Segoe UI", "Meiryo", sans-serif;
+      line-height: 1.65;
+    }
+    header, main {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+    header {
+      padding-top: 32px;
+      border-bottom: 1px solid var(--border);
+    }
+    h1 { margin: 0 0 8px; font-size: 32px; }
+    h2 { margin-top: 32px; font-size: 24px; border-left: 5px solid var(--accent); padding-left: 10px; }
+    h3 { margin-top: 24px; font-size: 18px; }
+    p { margin: 8px 0; }
+    a { color: #075985; }
+    code {
+      background: #eef2f0;
+      border: 1px solid #d7ddda;
+      border-radius: 4px;
+      padding: 1px 4px;
+      font-family: Consolas, monospace;
+    }
+    pre {
+      overflow: auto;
+      background: #111827;
+      color: #f9fafb;
+      border-radius: 8px;
+      padding: 14px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin: 16px 0;
+    }
+    .metric {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+    }
+    .metric .label { color: var(--muted); font-size: 13px; }
+    .metric .value { font-size: 26px; font-weight: 700; margin-top: 4px; }
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--panel);
+      margin: 12px 0;
+    }
+    table { width: 100%; border-collapse: collapse; min-width: 720px; }
+    th, td { border-bottom: 1px solid var(--border); padding: 8px 10px; text-align: left; vertical-align: top; }
+    th { background: #eef2f0; white-space: nowrap; }
+    tr:last-child td { border-bottom: 0; }
+    .pill { display: inline-block; border-radius: 999px; padding: 2px 8px; font-weight: 700; font-size: 12px; }
+    .pass { color: var(--ok); }
+    .fail { color: var(--danger); }
+    .na { color: var(--warn); }
+  </style>
+</head>
+<body>
+<h2>テスト設計</h2>
+<h3>1. 設計対象</h3>
+<ul>
+<li>PersonalTaskManage_Re01 のWeb UI、Supabase連携、通知、分析集計、JST日時処理、出力、設定を対象とする。</li>
+<li>テスト分析のTV001～TV098を、後続のテストケースへ機械的に展開できる設計パターンへ具体化する。</li>
+<li>受入基準AC001～AC006、TA001～TA019、SSI001～SSI036の有限値・境界・状態・環境を引き継ぐ。</li>
+</ul>
+<h3>2. 参照資料</h3>
+<ul>
+<li><code>テスト成果物/テスト計画書.md</code></li>
+<li><code>テスト成果物/テスト分析.md</code></li>
+<li><code>テスト成果物/テスト分析_質問票.md</code></li>
+<li><code>テスト成果物/テスト分析_質問票_回答.md</code></li>
+<li><code>README.md</code>、<code>FUNCTION_LIST.md</code>、<code>SCREEN_LIST.md</code>、<code>CLAUDE.md</code></li>
+<li><code>src/</code>、<code>supabase/migrations/*.sql</code>、<code>supabase/functions/update-account/index.ts</code>、<code>package.json</code></li>
+</ul>
+<h3>3. テスト設計</h3>
+<h4>3.1 Unit</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>テスト設計ID</th><th>テスト観点ID</th><th>テストアプローチID</th><th>テストレベル/タイプ</th><th>優先度</th><th>テストパターン</th><th>条件/入力</th><th>実施方法</th><th>期待結果/判定観点</th><th>仕様</th><th>リスクID</th><th>状態</th></tr></thead>
+<tbody>
+<tr><td>TD011</td><td>TV011</td><td>TA003</td><td>Unit</td><td>高</td><td>状態遷移</td><td>前提・入力: 未着手→進行中→中断→再開→完了の各遷移でセッションが正しい順序で開閉すること。下流で5件へ独立分割する。 構造値: SSI004: 未着手、進行中、中断、完了／SSI008: 未開始、開放セッション、終了セッション、中断、再開、完了</td><td>自動Unitテスト</td><td>各分割単位について「未着手→進行中→中断→再開→完了の各遷移でセッションが正しい順序で開閉すること」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>F107-F111、TaskContext</td><td>R003</td><td>設計済み</td></tr>
+<tr><td>TD012</td><td>TV012</td><td>TA003</td><td>Unit</td><td>高</td><td>境界値分析</td><td>前提: 23:59、00:00、00:01および日跨ぎセッションの実績分数が正しいこと。下流TC分割単位: 直前/境界/直後 構造値: SSI017: 日 <code>[00:00,翌00:00)</code>、月 <code>[月初,翌月初)</code>、23:59/00:00/00:01、月末、年末、閏日</td><td>自動Unitテスト</td><td>各分割単位について「23:59、00:00、00:01および日跨ぎセッションの実績分数が正しいこと」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>README 日時仕様</td><td>R003, R014</td><td>設計済み</td></tr>
+<tr><td>TD013</td><td>TV013</td><td>TA003</td><td>Unit</td><td>高</td><td>同値分割（異常系）</td><td>前提・入力: 終了&lt;=開始、中断&lt;=開始、再開&lt;中断、欠落日時を保存できないこと。下流で5件へ独立分割する。 構造値: SSI007: 未着手は実績不要、進行中は実績開始必須、中断は実績開始と中断1件以上必須、完了は実績開始・終了必須／SSI008: 未開始、開放セッション、終了セッション、中断、再開、完了</td><td>自動Unitテスト</td><td>各分割単位について「終了&lt;=開始、中断&lt;=開始、再開&lt;中断、欠落日時を保存できないこと」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>TaskForm、README</td><td>R003, R007</td><td>設計済み</td></tr>
+<tr><td>TD014</td><td>TV014</td><td>TA003</td><td>Unit</td><td>高</td><td>決定表・計算検証</td><td>前提・入力: 複数の終了済みセッションと進行中の開放セッションを、状態に応じて重複なく合計すること。下流で4件へ独立分割する。 構造値: SSI021: セッション合計、<code>actual_time</code>、actual_start～actual_end、実績なし。未着手0分、進行中は開放セッションを現在まで、中断は終了済みのみ</td><td>自動Unitテスト</td><td>各分割単位について「複数の終了済みセッションと進行中の開放セッションを、状態に応じて重複なく合計すること」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td><code>getActualMinutes</code></td><td>R003, R006</td><td>設計済み</td></tr>
+<tr><td>TD015</td><td>TV015</td><td>TA003</td><td>Unit</td><td>高</td><td>状態遷移</td><td>前提・入力: 中断中は開放区間を加算せず、再開後から実績加算を再開すること。下流で3件へ独立分割する。</td><td>自動Unitテスト</td><td>各分割単位について「中断中は開放区間を加算せず、再開後から実績加算を再開すること」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>README 実績時間</td><td>R003</td><td>設計済み</td></tr>
+<tr><td>TD018</td><td>TV018</td><td>TA004</td><td>Unit</td><td>中</td><td>境界値分析</td><td>前提: 同日、月末、年末、2月28日・29日の期間境界で生成件数と日時が正しいこと。下流TC分割単位: 境界日前/当日/翌日 構造値: SSI014: 期間開始日・終了日を含む、同日、月末、年末、2月28/29日</td><td>自動Unitテスト</td><td>各分割単位について「同日、月末、年末、2月28日・29日の期間境界で生成件数と日時が正しいこと」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>README 日時仕様</td><td>R004, R014</td><td>設計済み</td></tr>
+<tr><td>TD024</td><td>TV024</td><td>TA005</td><td>Unit</td><td>中</td><td>境界値分析</td><td>前提・入力: 日跨ぎ・月跨ぎ・終了00:00のタスクが半開区間に従い該当日だけ占有すること。下流で6件へ独立分割する。 構造値: SSI017: 日 <code>[00:00,翌00:00)</code>、月 <code>[月初,翌月初)</code>、23:59/00:00/00:01、月末、年末、閏日</td><td>自動Unitテスト</td><td>各分割単位について「日跨ぎ・月跨ぎ・終了00:00のタスクが半開区間に従い該当日だけ占有すること」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>README 日時仕様</td><td>R005, R014</td><td>設計済み</td></tr>
+<tr><td>TD028</td><td>TV028</td><td>TA006</td><td>Unit</td><td>高</td><td>決定表・計算検証</td><td>前提・入力: 単独タスクと末端の子だけを集計し、子を持つ親を二重計上しないこと。下流で3件へ独立分割する。 構造値: SSI020: 集計対象: 単独と末端の子。子を持つ親は除外。<code>track_actual=false</code>は件数・完了率のみ含む</td><td>自動Unitテスト</td><td>各分割単位について「単独タスクと末端の子だけを集計し、子を持つ親を二重計上しないこと」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>README 分析集計</td><td>R006</td><td>設計済み</td></tr>
+<tr><td>TD029</td><td>TV029</td><td>TA006</td><td>Unit</td><td>高</td><td>決定表・計算検証</td><td>前提・入力: <code>track_actual=false</code>を件数・完了率へ含め、実績時間・差異分析から除外すること。下流で4件へ独立分割する。 構造値: SSI020: 集計対象: 単独と末端の子。子を持つ親は除外。<code>track_actual=false</code>は件数・完了率のみ含む</td><td>自動Unitテスト</td><td>各分割単位について「<code>track_actual=false</code>を件数・完了率へ含め、実績時間・差異分析から除外すること」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>README 分析集計</td><td>R006</td><td>設計済み</td></tr>
+<tr><td>TD030</td><td>TV030</td><td>TA006</td><td>Unit</td><td>高</td><td>決定表・計算検証</td><td>前提・入力: 予定工数を数量×1単位時間から算出し、0・不正値は未入力として除外すること。下流で7件へ独立分割する。 構造値: SSI006: 数量1以上、1単位時間0以上、予定工数は数量×1単位時間。予定工数0は未入力扱い</td><td>自動Unitテスト</td><td>各分割単位について「予定工数を数量×1単位時間から算出し、0・不正値は未入力として除外すること」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td><code>getPlannedMinutes</code></td><td>R006, R007</td><td>設計済み</td></tr>
+<tr><td>TD031</td><td>TV031</td><td>TA006</td><td>Unit</td><td>高</td><td>決定表・計算検証</td><td>前提: 実績情報源の優先順位と状態別扱いが競合データでも維持されること。下流TC分割単位: 全情報源競合×4状態 構造値: SSI021: セッション合計、<code>actual_time</code>、actual_start～actual_end、実績なし。未着手0分、進行中は開放セッションを現在まで、中断は終了済みのみ</td><td>自動Unitテスト</td><td>各分割単位について「実績情報源の優先順位と状態別扱いが競合データでも維持されること」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td><code>getActualMinutes</code></td><td>R003, R006</td><td>設計済み</td></tr>
+<tr><td>TD032</td><td>TV032</td><td>TA006</td><td>Unit</td><td>高</td><td>境界値分析</td><td>前提・入力: 日・月の半開区間との重複分だけ予定・実績を按分すること。下流で8件へ独立分割する。 構造値: SSI017: 日 <code>[00:00,翌00:00)</code>、月 <code>[月初,翌月初)</code>、23:59/00:00/00:01、月末、年末、閏日</td><td>自動Unitテスト</td><td>各分割単位について「日・月の半開区間との重複分だけ予定・実績を按分すること」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>分析集計仕様</td><td>R006, R014</td><td>設計済み</td></tr>
+<tr><td>TD033</td><td>TV033</td><td>TA006</td><td>Unit</td><td>高</td><td>境界値分析</td><td>前提・入力: 差異-1分直前、-1分、0分、+1分、+1分直後を短縮・一致・超過へ分類すること。下流で5件へ独立分割する。 構造値: SSI022: 実績-予定が+1分超=超過、±1分以内=一致、-1分未満=短縮</td><td>自動Unitテスト</td><td>各分割単位について「差異-1分直前、-1分、0分、+1分、+1分直後を短縮・一致・超過へ分類すること」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>README 所要時間差異</td><td>R006</td><td>設計済み</td></tr>
+<tr><td>TD034</td><td>TV034</td><td>TA006</td><td>Unit</td><td>高</td><td>境界値分析</td><td>前提・入力: 内部値を丸めず、時間小数第1位と割合整数の表示時だけ四捨五入すること。下流で6件へ独立分割する。 構造値: SSI023: 内部・期待値は丸め前の分、表示時間は小数第1位、割合は整数％へ四捨五入</td><td>自動Unitテスト</td><td>各分割単位について「内部値を丸めず、時間小数第1位と割合整数の表示時だけ四捨五入すること」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>README 丸め</td><td>R006</td><td>設計済み</td></tr>
+<tr><td>TD035</td><td>TV035</td><td>TA006</td><td>Unit</td><td>高</td><td>状態遷移</td><td>前提・入力: 空データ、予定未入力、実績未入力、カテゴリなしをゼロと未入力で混同せず表示すること。下流で4件へ独立分割する。</td><td>自動Unitテスト</td><td>各分割単位について「空データ、予定未入力、実績未入力、カテゴリなしをゼロと未入力で混同せず表示すること」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>AnalyticsPage、README</td><td>R006</td><td>設計済み</td></tr>
+<tr><td>TD036</td><td>TV036</td><td>TA006</td><td>Unit</td><td>高</td><td>状態遷移</td><td>前提・入力: 全期間、月別、日別ドリルダウンの切替で同一データの所属と合計が整合すること。下流で4件へ独立分割する。 構造値: SSI019: 分析タブ: 概要、所要時間分析。期間: 全期間、月別、月から日別へのドリルダウン</td><td>自動Unitテスト</td><td>各分割単位について「全期間、月別、日別ドリルダウンの切替で同一データの所属と合計が整合すること」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>AnalyticsPage</td><td>R006</td><td>設計済み</td></tr>
+<tr><td>TD037</td><td>TV037</td><td>TA007</td><td>Unit</td><td>高</td><td>同値分割（異常系）</td><td>前提・入力: タスク名の空文字・空白だけを拒否し、有効な日本語・特殊文字を保存できること。下流で4件へ独立分割する。</td><td>自動Unitテスト</td><td>各分割単位について「タスク名の空文字・空白だけを拒否し、有効な日本語・特殊文字を保存できること」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>TaskForm</td><td>R007, R015</td><td>設計済み</td></tr>
+<tr><td>TD038</td><td>TV038</td><td>TA007</td><td>Unit</td><td>高</td><td>境界値分析</td><td>前提・入力: 数量と1単位時間の-1/0/1、小数、2147483647/2147483648でUIとDB制約が矛盾しないこと。下流で8件へ独立分割する。 構造値: SSI006: 数量1以上、1単位時間0以上、予定工数は数量×1単位時間。予定工数0は未入力扱い</td><td>自動Unitテスト</td><td>各分割単位について「数量と1単位時間の-1/0/1、小数、2147483647/2147483648でUIとDB制約が矛盾しないこと」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>TaskForm、migrations</td><td>R007</td><td>設計済み</td></tr>
+<tr><td>TD039</td><td>TV039</td><td>TA007</td><td>Unit</td><td>高</td><td>同値分割（異常系）</td><td>前提・入力: ステータス別に必要な実績開始・終了・中断日時が欠ける場合を拒否すること。下流で4件へ独立分割する。 構造値: SSI007: 未着手は実績不要、進行中は実績開始必須、中断は実績開始と中断1件以上必須、完了は実績開始・終了必須</td><td>自動Unitテスト</td><td>各分割単位について「ステータス別に必要な実績開始・終了・中断日時が欠ける場合を拒否すること」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>README タスク登録</td><td>R003, R007</td><td>設計済み</td></tr>
+<tr><td>TD040</td><td>TV040</td><td>TA007</td><td>Unit</td><td>高</td><td>境界値分析</td><td>前提: 予定・実績・セッションの時刻順序と同値境界を検証すること。下流TC分割単位: 前/同値/後</td><td>自動Unitテスト</td><td>各分割単位について「予定・実績・セッションの時刻順序と同値境界を検証すること」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>TaskForm、RecurrenceForm</td><td>R007, R014</td><td>設計済み</td></tr>
+<tr><td>TD041</td><td>TV041</td><td>TA007</td><td>Unit</td><td>高</td><td>境界値分析</td><td>前提・入力: タスク名・カテゴリ名の0/1/29/30/31文字、予定/実績メモの0/1/99/100/101文字を上限仕様どおりに受理・拒否すること。下流で10件へ独立分割する。 構造値: SSI033: タスク名・カテゴリ名は最大30文字、予定メモ・実績メモは最大100文字</td><td>自動Unitテスト</td><td>各分割単位について「タスク名・カテゴリ名の0/1/29/30/31文字、予定/実績メモの0/1/99/100/101文字を上限仕様どおりに受理・拒否すること」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>README 入力仕様、回答Q005</td><td>R007, R015</td><td>設計済み</td></tr>
+<tr><td>TD042</td><td>TV042</td><td>TA007</td><td>Unit</td><td>高</td><td>境界値分析</td><td>前提・入力: パスワード5/6文字、確認不一致、変更なし、メール形式不正を正しく判定すること。下流で5件へ独立分割する。 構造値: SSI003: メールのみ、パスワードのみ、両方、変更なし。パスワード長5/6文字、確認一致/不一致</td><td>自動Unitテスト</td><td>各分割単位について「パスワード5/6文字、確認不一致、変更なし、メール形式不正を正しく判定すること」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>SettingsPage</td><td>R001, R007</td><td>設計済み</td></tr>
+<tr><td>TD043</td><td>TV043</td><td>TA007</td><td>Unit</td><td>高</td><td>境界値分析</td><td>前提・入力: 作業時間上限を0.5～24へ制限し、未設定・破損localStorageは8へ戻すこと。下流で5件へ独立分割する。 構造値: SSI028: 既定8時間、入力範囲0.5～24時間、範囲外は0.5/24へクランプ</td><td>自動Unitテスト</td><td>各分割単位について「作業時間上限を0.5～24へ制限し、未設定・破損localStorageは8へ戻すこと」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>useWorkHours</td><td>R007, R011</td><td>設計済み</td></tr>
+<tr><td>TD044</td><td>TV044</td><td>TA007</td><td>Unit</td><td>高</td><td>同値分割（異常系）</td><td>前提・入力: カテゴリ名空白と保存失敗をエラー表示し、重複送信を防ぐこと。下流で3件へ独立分割する。</td><td>自動Unitテスト</td><td>各分割単位について「カテゴリ名空白と保存失敗をエラー表示し、重複送信を防ぐこと」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>SettingsPage</td><td>R007, R008</td><td>設計済み</td></tr>
+<tr><td>TD053</td><td>TV053</td><td>TA010</td><td>Unit</td><td>中</td><td>代表値・ライフサイクル</td><td>前提・入力: 予定開始時刻に未着手だけ、予定終了時刻に未完了だけを状態別本文で通知すること。下流で8件へ独立分割する。 構造値: SSI024: 開始、終了。開始は未着手のみ、終了は未着手/進行中/中断で本文分岐、完了・削除で取消</td><td>自動Unitテスト</td><td>各分割単位について「予定開始時刻に未着手だけ、予定終了時刻に未完了だけを状態別本文で通知すること」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>README 通知</td><td>R010</td><td>設計済み</td></tr>
+<tr><td>TD054</td><td>TV054</td><td>TA010</td><td>Unit</td><td>中</td><td>状態遷移</td><td>前提・入力: 予定日時・状態変更時に旧予約を取消して再予約し、完了・削除時に取消すこと。下流で5件へ独立分割する。 構造値: SSI024: 開始、終了。開始は未着手のみ、終了は未着手/進行中/中断で本文分岐、完了・削除で取消</td><td>自動Unitテスト</td><td>各分割単位について「予定日時・状態変更時に旧予約を取消して再予約し、完了・削除時に取消すこと」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>scheduleNotification</td><td>R010</td><td>設計済み</td></tr>
+<tr><td>TD055</td><td>TV055</td><td>TA010</td><td>Unit</td><td>中</td><td>エラー・回復パターン</td><td>前提・入力: 再取得・再編集・同時刻設定を繰り返しても同じタスク・通知種別を重複表示しないこと。下流で3件へ独立分割する。</td><td>自動Unitテスト</td><td>各分割単位について「再取得・再編集・同時刻設定を繰り返しても同じタスク・通知種別を重複表示しないこと」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>utils notificationTimers</td><td>R010</td><td>設計済み</td></tr>
+<tr><td>TD056</td><td>TV056</td><td>TA010</td><td>Unit</td><td>中</td><td>境界値分析</td><td>前提: 未入力、無効日時、現在時刻と同値、過去時刻、将来時刻を遡及通知なしで処理すること。下流TC分割単位: 無効/過去/現在/未来</td><td>自動Unitテスト</td><td>各分割単位について「未入力、無効日時、現在時刻と同値、過去時刻、将来時刻を遡及通知なしで処理すること」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>scheduleTaskNotification</td><td>R010</td><td>設計済み</td></tr>
+<tr><td>TD058</td><td>TV058</td><td>TA010</td><td>Unit</td><td>中</td><td>エラー・回復パターン</td><td>前提・入力: setTimeout上限を超える遠い将来の通知が分割予約され、ページ終了時は通知されないこと。下流で3件へ独立分割する。</td><td>自動Unitテスト</td><td>各分割単位について「setTimeout上限を超える遠い将来の通知が分割予約され、ページ終了時は通知されないこと」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>utils MAX_TIMER_DELAY、README</td><td>R010</td><td>設計済み</td></tr>
+<tr><td>TD090</td><td>TV090</td><td>TA002</td><td>Unit</td><td>高</td><td>境界値分析</td><td>前提・入力: タスク名履歴の0/1/30/31件、重複名、破損localStorageを最大30件・端末内保存の仕様で扱うこと。下流で6件へ独立分割する。 構造値: SSI029: タスク名履歴はlocalStorage、最大30件、ブラウザ・端末間非共有</td><td>自動Unitテスト</td><td>各分割単位について「タスク名履歴の0/1/30/31件、重複名、破損localStorageを最大30件・端末内保存の仕様で扱うこと」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>titleHistory、README</td><td>R002, R015</td><td>設計済み</td></tr>
+<tr><td>TD092</td><td>TV092</td><td>TA018</td><td>Unit</td><td>高</td><td>境界値分析</td><td>前提・入力: 変更なし、パスワード5/6文字、確認一致/不一致、メール形式不正を更新前に判定すること。下流で5件へ独立分割する。 構造値: SSI003: メールのみ、パスワードのみ、両方、変更なし。パスワード長5/6文字、確認一致/不一致</td><td>自動Unitテスト</td><td>各分割単位について「変更なし、パスワード5/6文字、確認一致/不一致、メール形式不正を更新前に判定すること」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>SettingsPage</td><td>R007, R016</td><td>設計済み</td></tr>
+</tbody></table></div>
+<h4>3.2 Integration</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>テスト設計ID</th><th>テスト観点ID</th><th>テストアプローチID</th><th>テストレベル/タイプ</th><th>優先度</th><th>テストパターン</th><th>条件/入力</th><th>実施方法</th><th>期待結果/判定観点</th><th>仕様</th><th>リスクID</th><th>状態</th></tr></thead>
+<tbody>
+<tr><td>TD001</td><td>TV001</td><td>TA001</td><td>Integration</td><td>高</td><td>代表値・ライフサイクル</td><td>前提・入力: ログインとサインアップが有効な認証情報で成立し、認証済み画面へ遷移すること。下流で2件へ独立分割する。 構造値: SSI001: 認証操作: ログイン、サインアップ</td><td>Supabase統合テスト</td><td>各分割単位について「ログインとサインアップが有効な認証情報で成立し、認証済み画面へ遷移すること」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>F001-F002、LoginPage</td><td>R001</td><td>設計済み</td></tr>
+<tr><td>TD002</td><td>TV002</td><td>TA001</td><td>Integration</td><td>高</td><td>同値分割（異常系）</td><td>前提: 不正なメール形式、空欄、誤パスワード、期限切れセッションを安全に拒否すること。下流TC分割単位: 4異常種別 構造値: SSI002: 未認証、認証済みユーザーA、認証済みユーザーB、期限切れセッション</td><td>Supabase統合テスト</td><td>各分割単位について「不正なメール形式、空欄、誤パスワード、期限切れセッションを安全に拒否すること」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>LoginPage、AuthContext</td><td>R001, R007</td><td>設計済み</td></tr>
+<tr><td>TD004</td><td>TV004</td><td>TA001</td><td>Integration</td><td>高</td><td>状態遷移</td><td>前提・入力: ログアウト、再読込、セッション失効時に保護画面とデータが残留表示されないこと。下流で3件へ独立分割する。</td><td>Supabase統合テスト</td><td>各分割単位について「ログアウト、再読込、セッション失効時に保護画面とデータが残留表示されないこと」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>AuthContext、App</td><td>R001, R015</td><td>設計済み</td></tr>
+<tr><td>TD009</td><td>TV009</td><td>TA002</td><td>Integration</td><td>高</td><td>参照整合性・CRUD</td><td>前提・入力: 単体削除と一括削除の確認・キャンセル・対象選択が意図したタスクだけへ作用すること。下流で5件へ独立分割する。</td><td>Supabase統合テスト</td><td>各分割単位について「単体削除と一括削除の確認・キャンセル・対象選択が意図したタスクだけへ作用すること」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>README 削除</td><td>R002, R008</td><td>設計済み</td></tr>
+<tr><td>TD021</td><td>TV021</td><td>TA004</td><td>Integration</td><td>中</td><td>参照整合性・CRUD</td><td>前提: 一括更新が未完了の生成済みタスクだけへ反映され、完了タスクを変更しないこと。下流TC分割単位: 未着手/進行中/中断/完了</td><td>Supabase統合テスト</td><td>各分割単位について「一括更新が未完了の生成済みタスクだけへ反映され、完了タスクを変更しないこと」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>F303</td><td>R004</td><td>設計済み</td></tr>
+<tr><td>TD022</td><td>TV022</td><td>TA004</td><td>Integration</td><td>中</td><td>参照整合性・CRUD</td><td>前提・入力: 定常グループ削除時に生成タスクが削除され、他グループ・単独タスクへ波及しないこと。下流で5件へ独立分割する。</td><td>Supabase統合テスト</td><td>各分割単位について「定常グループ削除時に生成タスクが削除され、他グループ・単独タスクへ波及しないこと」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>README 定常タスク削除</td><td>R004, R008</td><td>設計済み</td></tr>
+<tr><td>TD045</td><td>TV045</td><td>TA008</td><td>Integration</td><td>中</td><td>参照整合性・CRUD</td><td>前提・入力: 親削除時に子のparent_task_idがNULLとなり、子タスク自体は保持されること。下流で3件へ独立分割する。</td><td>Supabase統合テスト</td><td>各分割単位について「親削除時に子のparent_task_idがNULLとなり、子タスク自体は保持されること」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>FK ON DELETE SET NULL</td><td>R008</td><td>設計済み</td></tr>
+<tr><td>TD046</td><td>TV046</td><td>TA008</td><td>Integration</td><td>中</td><td>参照整合性・CRUD</td><td>前提・入力: カテゴリ削除時に参照タスクを未分類として保持し、分析・一覧が壊れないこと。下流で3件へ独立分割する。</td><td>Supabase統合テスト</td><td>各分割単位について「カテゴリ削除時に参照タスクを未分類として保持し、分析・一覧が壊れないこと」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>FK ON DELETE SET NULL</td><td>R008</td><td>設計済み</td></tr>
+<tr><td>TD047</td><td>TV047</td><td>TA008</td><td>Integration</td><td>高</td><td>状態遷移</td><td>前提・入力: 全子完了で親が完了し、子の完了解除では親を自動的に戻さないこと。下流で4件へ独立分割する。</td><td>Supabase統合テスト</td><td>各分割単位について「全子完了で親が完了し、子の完了解除では親を自動的に戻さないこと」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>README 親子タスク</td><td>R003, R008</td><td>設計済み</td></tr>
+<tr><td>TD048</td><td>TV048</td><td>TA008</td><td>Integration</td><td>中</td><td>同値分割（異常系）</td><td>前提・入力: 自己参照、循環参照、削除済みIDを親として保存できないこと。下流で3件へ独立分割する。</td><td>Supabase統合テスト</td><td>各分割単位について「自己参照、循環参照、削除済みIDを親として保存できないこと」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>TaskForm、FK</td><td>R008</td><td>設計済み</td></tr>
+<tr><td>TD069</td><td>TV069</td><td>TA014</td><td>Integration</td><td>高</td><td>参照整合性・CRUD</td><td>前提・入力: 12 migrationを記載順に新規DBへ適用し、必要なテーブル・列・制約・トリガーが成立すること。下流で12件へ独立分割する。</td><td>Supabase統合テスト</td><td>各分割単位について「12 migrationを記載順に新規DBへ適用し、必要なテーブル・列・制約・トリガーが成立すること」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>README DBセットアップ</td><td>R001, R012</td><td>設計済み</td></tr>
+<tr><td>TD070</td><td>TV070</td><td>TA014</td><td>Integration</td><td>高</td><td>エラー・回復パターン</td><td>前提・入力: IF EXISTS/IF NOT EXISTSを持つmigrationの再実行と部分適用失敗時の復旧性を確認すること。下流で12件へ独立分割する。</td><td>Supabase統合テスト</td><td>各分割単位について「IF EXISTS/IF NOT EXISTSを持つmigrationの再実行と部分適用失敗時の復旧性を確認すること」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>migrations</td><td>R012</td><td>設計済み</td></tr>
+<tr><td>TD072</td><td>TV072</td><td>TA014</td><td>Integration</td><td>高</td><td>参照整合性・CRUD</td><td>前提・入力: FKのCASCADE/SET NULLとCHECK制約がアプリの削除・入力仕様と一致すること。下流で8件へ独立分割する。</td><td>Supabase統合テスト</td><td>各分割単位について「FKのCASCADE/SET NULLとCHECK制約がアプリの削除・入力仕様と一致すること」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>migrations</td><td>R002, R004, R007, R008</td><td>設計済み</td></tr>
+<tr><td>TD089</td><td>TV089</td><td>TA008</td><td>Integration</td><td>高</td><td>代表値・ライフサイクル</td><td>前提・入力: カテゴリの10色を追加・編集・検索・色フィルター・タスク表示へ一貫して反映すること。下流で10件へ独立分割する。</td><td>Supabase統合テスト</td><td>各分割単位について「カテゴリの10色を追加・編集・検索・色フィルター・タスク表示へ一貫して反映すること」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>SettingsPage、TaskForm</td><td>R008, R011</td><td>設計済み</td></tr>
+<tr><td>TD091</td><td>TV091</td><td>TA018</td><td>Integration</td><td>高</td><td>代表値・ライフサイクル</td><td>前提・入力: メールのみ、パスワードのみ、両方の本人更新が成功し、更新後の認証状態と再ログインが整合すること。下流で3件へ独立分割する。</td><td>Supabase統合テスト</td><td>各分割単位について「メールのみ、パスワードのみ、両方の本人更新が成功し、更新後の認証状態と再ログインが整合すること」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>F508-F509、AuthContext、update-account</td><td>R001, R016</td><td>設計済み</td></tr>
+<tr><td>TD094</td><td>TV094</td><td>TA018</td><td>Integration</td><td>高</td><td>エラー・回復パターン</td><td>前提: ネットワーク・管理API失敗時に入力内容と既存Auth情報を破損せず、再試行可能なエラーを表示すること。下流TC分割単位: 通信失敗/401/400/管理API失敗</td><td>Supabase統合テスト</td><td>各分割単位について「ネットワーク・管理API失敗時に入力内容と既存Auth情報を破損せず、再試行可能なエラーを表示すること」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>AuthContext、SettingsPage</td><td>R016</td><td>設計済み</td></tr>
+<tr><td>TD095</td><td>TV095</td><td>TA019</td><td>Integration</td><td>高</td><td>代表値・ライフサイクル</td><td>前提・入力: タスクとカテゴリの一括削除で個別選択、全選択、解除が表示中集合と一致すること。下流で6件へ独立分割する。</td><td>Supabase統合テスト</td><td>各分割単位について「タスクとカテゴリの一括削除で個別選択、全選択、解除が表示中集合と一致すること」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>F118、F507</td><td>R002, R017</td><td>設計済み</td></tr>
+<tr><td>TD096</td><td>TV096</td><td>TA019</td><td>Integration</td><td>高</td><td>状態遷移</td><td>前提: 一括削除の開始、キャンセル、確認、確定で選択状態とダイアログが正しく遷移すること。下流TC分割単位: 0件/1件/複数件/全件</td><td>Supabase統合テスト</td><td>各分割単位について「一括削除の開始、キャンセル、確認、確定で選択状態とダイアログが正しく遷移すること」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>S114、S504</td><td>R017</td><td>設計済み</td></tr>
+<tr><td>TD097</td><td>TV097</td><td>TA019</td><td>Integration</td><td>高</td><td>参照整合性・CRUD</td><td>前提・入力: 確定後に選択対象だけが削除され、カテゴリ参照はNULL化し、再読込後も結果が保持されること。下流で4件へ独立分割する。</td><td>Supabase統合テスト</td><td>各分割単位について「確定後に選択対象だけが削除され、カテゴリ参照はNULL化し、再読込後も結果が保持されること」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>TaskContext、FK</td><td>R002, R008, R017</td><td>設計済み</td></tr>
+<tr><td>TD098</td><td>TV098</td><td>TA019</td><td>Integration</td><td>高</td><td>エラー・回復パターン</td><td>前提: 複数削除の一部が失敗した場合に成功分を確定し、失敗対象を表示して選択外データを保持すること。下流TC分割単位: 全成功/部分失敗/全失敗</td><td>Supabase統合テスト</td><td>各分割単位について「複数削除の一部が失敗した場合に成功分を確定し、失敗対象を表示して選択外データを保持すること」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>README 一括削除、回答Q008</td><td>R017</td><td>設計済み</td></tr>
+</tbody></table></div>
+<h4>3.3 E2E</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>テスト設計ID</th><th>テスト観点ID</th><th>テストアプローチID</th><th>テストレベル/タイプ</th><th>優先度</th><th>テストパターン</th><th>条件/入力</th><th>実施方法</th><th>期待結果/判定観点</th><th>仕様</th><th>リスクID</th><th>状態</th></tr></thead>
+<tbody>
+<tr><td>TD006</td><td>TV006</td><td>TA002</td><td>E2E</td><td>高</td><td>代表値・ライフサイクル</td><td>前提・入力: タスクの作成、再表示、編集、削除がSupabaseへ永続化されること。下流で4件へ独立分割する。</td><td>Playwright E2E</td><td>各分割単位について「タスクの作成、再表示、編集、削除がSupabaseへ永続化されること」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>F101-F104、AC001-AC002</td><td>R002</td><td>設計済み</td></tr>
+<tr><td>TD007</td><td>TV007</td><td>TA002</td><td>E2E</td><td>高</td><td>代表値・ライフサイクル</td><td>前提・入力: 新規タスクのステータス未着手、優先度中、数量1が適用されること。下流で8件へ独立分割する。</td><td>Playwright E2E</td><td>各分割単位について「新規タスクのステータス未着手、優先度中、数量1が適用されること」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>README タスク登録</td><td>R002, R007</td><td>設計済み</td></tr>
+<tr><td>TD008</td><td>TV008</td><td>TA002</td><td>E2E</td><td>高</td><td>状態遷移</td><td>前提: 作成・編集のキャンセル、保存失敗、再試行で未保存値や重複登録が残らないこと。下流TC分割単位: キャンセル/失敗/再試行</td><td>Playwright E2E</td><td>各分割単位について「作成・編集のキャンセル、保存失敗、再試行で未保存値や重複登録が残らないこと」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>TaskForm、TaskContext</td><td>R002</td><td>設計済み</td></tr>
+<tr><td>TD010</td><td>TV010</td><td>TA002</td><td>E2E</td><td>高</td><td>代表値・ライフサイクル</td><td>前提・入力: 登録・編集・状態変更・削除が再読込後も同じ結果であること。下流で4件へ独立分割する。</td><td>Playwright E2E</td><td>各分割単位について「登録・編集・状態変更・削除が再読込後も同じ結果であること」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>AC001-AC003</td><td>R002, R012</td><td>設計済み</td></tr>
+<tr><td>TD017</td><td>TV017</td><td>TA004</td><td>E2E</td><td>中</td><td>代表値・ライフサイクル</td><td>前提・入力: 毎日と曜日指定で、JST暦日の期間開始日・終了日を含む対象日だけタスクを生成すること。下流で10件へ独立分割する。</td><td>Playwright E2E</td><td>各分割単位について「毎日と曜日指定で、JST暦日の期間開始日・終了日を含む対象日だけタスクを生成すること」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>F301-F304、README</td><td>R004, R014</td><td>設計済み</td></tr>
+<tr><td>TD019</td><td>TV019</td><td>TA004</td><td>E2E</td><td>高</td><td>同値分割（異常系）</td><td>前提・入力: 曜日指定未選択、期間終了&lt;開始、同日終了で終了&lt;=開始を拒否すること。下流で4件へ独立分割する。</td><td>Playwright E2E</td><td>各分割単位について「曜日指定未選択、期間終了&lt;開始、同日終了で終了&lt;=開始を拒否すること」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>RecurrenceForm</td><td>R004, R007</td><td>設計済み</td></tr>
+<tr><td>TD020</td><td>TV020</td><td>TA004</td><td>E2E</td><td>中</td><td>状態遷移</td><td>前提・入力: 翌日終了ありでは終了日を1日進め、なしでは同日内の時刻順序を保持すること。下流で4件へ独立分割する。</td><td>Playwright E2E</td><td>各分割単位について「翌日終了ありでは終了日を1日進め、なしでは同日内の時刻順序を保持すること」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>RecurrenceForm、TaskContext</td><td>R004, R014</td><td>設計済み</td></tr>
+<tr><td>TD023</td><td>TV023</td><td>TA005</td><td>E2E</td><td>中</td><td>代表値・ライフサイクル</td><td>前提・入力: 日・週・月の各ビューに予定、実績、セッションがJSTで表示されること。下流で3件へ独立分割する。</td><td>Playwright E2E</td><td>各分割単位について「日・週・月の各ビューに予定、実績、セッションがJSTで表示されること」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>F201-F205</td><td>R005, R014</td><td>設計済み</td></tr>
+<tr><td>TD025</td><td>TV025</td><td>TA005</td><td>E2E</td><td>中</td><td>状態遷移</td><td>前提: 前後移動、今日へ戻る、ビュー切替後に表示期間と選択日が矛盾しないこと。下流TC分割単位: 日/週/月×前/次/今日</td><td>Playwright E2E</td><td>各分割単位について「前後移動、今日へ戻る、ビュー切替後に表示期間と選択日が矛盾しないこと」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>CalendarPage</td><td>R005</td><td>設計済み</td></tr>
+<tr><td>TD026</td><td>TV026</td><td>TA005</td><td>E2E</td><td>高</td><td>代表値・ライフサイクル</td><td>前提: 予定開始または終了が欠けた未完了タスクだけが未スケジュールへ表示されること。下流TC分割単位: 開始欠落/終了欠落/両方欠落/完了</td><td>Playwright E2E</td><td>各分割単位について「予定開始または終了が欠けた未完了タスクだけが未スケジュールへ表示されること」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>README 未スケジュール</td><td>R005, R007</td><td>設計済み</td></tr>
+<tr><td>TD049</td><td>TV049</td><td>TA009</td><td>E2E</td><td>中</td><td>代表値・ライフサイクル</td><td>前提・入力: CSVがBOM付きUTF-8で全タスクと選択項目を正しい列順で出力すること。下流で3件へ独立分割する。</td><td>Playwright E2E</td><td>各分割単位について「CSVがBOM付きUTF-8で全タスクと選択項目を正しい列順で出力すること」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>README エクスポート</td><td>R009</td><td>設計済み</td></tr>
+<tr><td>TD050</td><td>TV050</td><td>TA009</td><td>E2E</td><td>高</td><td>同値分割・特殊文字</td><td>前提・入力: 日本語、カンマ、引用符、改行、絵文字をCSV/テキストで欠損なくエスケープすること。下流で5件へ独立分割する。</td><td>Playwright E2E</td><td>各分割単位について「日本語、カンマ、引用符、改行、絵文字をCSV/テキストで欠損なくエスケープすること」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>utils export</td><td>R009, R015</td><td>設計済み</td></tr>
+<tr><td>TD051</td><td>TV051</td><td>TA009</td><td>E2E</td><td>中</td><td>状態遷移</td><td>前提: 空データ、フィルター適用中、項目未選択時の出力範囲と案内が仕様どおりであること。下流TC分割単位: 3状態</td><td>Playwright E2E</td><td>各分割単位について「空データ、フィルター適用中、項目未選択時の出力範囲と案内が仕様どおりであること」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>F112、F116-F117</td><td>R009</td><td>設計済み</td></tr>
+<tr><td>TD073</td><td>TV073</td><td>TA015</td><td>E2E</td><td>高</td><td>受入シナリオ</td><td>前提・入力: AC001のタスク登録が一覧表示と再読込後の保持まで成功すること。代表条件1件を独立判定する。</td><td>Playwright E2E</td><td>各分割単位について「AC001のタスク登録が一覧表示と再読込後の保持まで成功すること」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>テスト計画 AC001</td><td>R002, R012</td><td>設計済み</td></tr>
+<tr><td>TD074</td><td>TV074</td><td>TA015</td><td>E2E</td><td>高</td><td>受入シナリオ</td><td>前提・入力: AC002のタスク編集が表示反映と再読込後の保持まで成功すること。代表条件1件を独立判定する。</td><td>Playwright E2E</td><td>各分割単位について「AC002のタスク編集が表示反映と再読込後の保持まで成功すること」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>テスト計画 AC002</td><td>R002, R012</td><td>設計済み</td></tr>
+<tr><td>TD075</td><td>TV075</td><td>TA015</td><td>E2E</td><td>高</td><td>受入シナリオ</td><td>前提・入力: AC003の主要状態遷移と実績情報の保存・表示が成功すること。代表条件1件を独立判定する。</td><td>Playwright E2E</td><td>各分割単位について「AC003の主要状態遷移と実績情報の保存・表示が成功すること」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>テスト計画 AC003</td><td>R003, R007</td><td>設計済み</td></tr>
+<tr><td>TD076</td><td>TV076</td><td>TA015</td><td>E2E</td><td>中</td><td>受入シナリオ</td><td>前提・入力: AC004のJSTカレンダー表示と日時境界が成功すること。代表条件1件を独立判定する。</td><td>Playwright E2E</td><td>各分割単位について「AC004のJSTカレンダー表示と日時境界が成功すること」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>テスト計画 AC004</td><td>R005, R014</td><td>設計済み</td></tr>
+<tr><td>TD077</td><td>TV077</td><td>TA015</td><td>E2E</td><td>高</td><td>受入シナリオ</td><td>前提・入力: AC005の予定・実績・完了率が集計仕様と一致すること。代表条件1件を独立判定する。</td><td>Playwright E2E</td><td>各分割単位について「AC005の予定・実績・完了率が集計仕様と一致すること」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>テスト計画 AC005</td><td>R006</td><td>設計済み</td></tr>
+<tr><td>TD078</td><td>TV078</td><td>TA015</td><td>E2E</td><td>高</td><td>受入シナリオ</td><td>前提・入力: AC006の代表設定変更が機能へ反映され、再読込後も保持されること。代表条件1件を独立判定する。</td><td>Playwright E2E</td><td>各分割単位について「AC006の代表設定変更が機能へ反映され、再読込後も保持されること」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>テスト計画 AC006</td><td>R007, R011, R012</td><td>設計済み</td></tr>
+<tr><td>TD088</td><td>TV088</td><td>TA002</td><td>E2E</td><td>高</td><td>組合せ・ペアワイズ</td><td>前提: ステータス5値、優先度4値、カテゴリ、キーワード、予定/実績日付範囲、未スケジュール条件を単独および高リスク組合せで絞り込めること。下流TC分割単位: 単独全件＋日付×状態×未スケジュール、重複0分/1分</td><td>Playwright E2E</td><td>各分割単位について「ステータス5値、優先度4値、カテゴリ、キーワード、予定/実績日付範囲、未スケジュール条件を単独および高リスク組合せで絞り込めること」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>TaskFilters、README</td><td>R002, R007, R014</td><td>設計済み</td></tr>
+</tbody></table></div>
+<h4>3.4 Security</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>テスト設計ID</th><th>テスト観点ID</th><th>テストアプローチID</th><th>テストレベル/タイプ</th><th>優先度</th><th>テストパターン</th><th>条件/入力</th><th>実施方法</th><th>期待結果/判定観点</th><th>仕様</th><th>リスクID</th><th>状態</th></tr></thead>
+<tbody>
+<tr><td>TD003</td><td>TV003</td><td>TA001</td><td>Security</td><td>高</td><td>権限・攻撃パターン</td><td>前提・入力: ユーザーAからユーザーBのタスク、カテゴリ、セッション、定常グループを参照・更新・削除できないこと。下流で12件へ独立分割する。</td><td>セキュリティテスト</td><td>各分割単位について「ユーザーAからユーザーBのタスク、カテゴリ、セッション、定常グループを参照・更新・削除できないこと」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>migrations RLS</td><td>R001</td><td>設計済み</td></tr>
+<tr><td>TD005</td><td>TV005</td><td>TA001</td><td>Security</td><td>高</td><td>権限・攻撃パターン</td><td>前提・入力: update-accountがBearer tokenを検証し、本人以外のAuthユーザーを更新できないこと。下流で3件へ独立分割する。</td><td>セキュリティテスト</td><td>各分割単位について「update-accountがBearer tokenを検証し、本人以外のAuthユーザーを更新できないこと」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>update-account Edge Function</td><td>R001, R015</td><td>設計済み</td></tr>
+<tr><td>TD052</td><td>TV052</td><td>TA009</td><td>Security</td><td>高</td><td>権限・攻撃パターン</td><td>前提: CSVセルが<code>=</code>, <code>+</code>, <code>-</code>, <code>@</code>で始まる場合に先頭へアポストロフィを付加し、通常文字と空文字は不要な変更をしないこと。下流TC分割単位: 4先頭文字/通常/空</td><td>セキュリティテスト</td><td>各分割単位について「CSVセルが<code>=</code>, <code>+</code>, <code>-</code>, <code>@</code>で始まる場合に先頭へアポストロフィを付加し、通常文字と空文字は不要な変更をしないこと」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>README CSV出力、回答Q007</td><td>R009, R015</td><td>設計済み</td></tr>
+<tr><td>TD071</td><td>TV071</td><td>TA014</td><td>Security</td><td>高</td><td>権限・攻撃パターン</td><td>前提・入力: tasks、categories、sessions、recurrence_groupsのRLSがanon/認証済み/他所有者を正しく分離すること。下流で12件へ独立分割する。</td><td>Supabase統合テスト</td><td>各分割単位について「tasks、categories、sessions、recurrence_groupsのRLSがanon/認証済み/他所有者を正しく分離すること」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>migrations RLS</td><td>R001</td><td>設計済み</td></tr>
+<tr><td>TD082</td><td>TV082</td><td>TA017</td><td>Security</td><td>高</td><td>権限・攻撃パターン</td><td>前提・入力: タスク名、メモ、カテゴリ名のHTML/スクリプト様文字列がReact表示で実行されないこと。下流で3件へ独立分割する。</td><td>セキュリティテスト</td><td>各分割単位について「タスク名、メモ、カテゴリ名のHTML/スクリプト様文字列がReact表示で実行されないこと」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>React UI</td><td>R015</td><td>設計済み</td></tr>
+<tr><td>TD083</td><td>TV083</td><td>TA017</td><td>Security</td><td>高</td><td>権限・攻撃パターン</td><td>前提・入力: anon key以外の秘密値、特にservice role keyがフロント資産・Git・ログ・エラーへ含まれないこと。下流で4件へ独立分割する。</td><td>セキュリティテスト</td><td>各分割単位について「anon key以外の秘密値、特にservice role keyがフロント資産・Git・ログ・エラーへ含まれないこと」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>README、update-account</td><td>R001, R015</td><td>設計済み</td></tr>
+<tr><td>TD084</td><td>TV084</td><td>TA017</td><td>Security</td><td>高</td><td>情報流通マトリクス</td><td>前提・入力: エクスポート、クリップボード、通知本文、localStorageに含まれる個人情報の範囲が仕様どおりであること。下流で4件へ独立分割する。</td><td>セキュリティテスト</td><td>各分割単位について「エクスポート、クリップボード、通知本文、localStorageに含まれる個人情報の範囲が仕様どおりであること」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>README</td><td>R009, R015</td><td>設計済み</td></tr>
+<tr><td>TD085</td><td>TV085</td><td>TA017</td><td>Security</td><td>高</td><td>権限・攻撃パターン</td><td>前提・入力: update-accountのCORS、認証失敗、入力不正、管理API失敗で権限昇格や内部情報露出がないこと。下流で5件へ独立分割する。</td><td>セキュリティテスト</td><td>各分割単位について「update-accountのCORS、認証失敗、入力不正、管理API失敗で権限昇格や内部情報露出がないこと」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>Edge Function</td><td>R001, R015</td><td>設計済み</td></tr>
+<tr><td>TD086</td><td>TV086</td><td>TA017</td><td>Security</td><td>高</td><td>権限・攻撃パターン</td><td>前提・入力: <code>npm audit</code>と依存関係の既知脆弱性を確認し、Critical/Highの残存判断を記録すること。下流で3件へ独立分割する。</td><td>セキュリティテスト</td><td>各分割単位について「<code>npm audit</code>と依存関係の既知脆弱性を確認し、Critical/Highの残存判断を記録すること」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>package.json、終了条件</td><td>R013, R015</td><td>設計済み</td></tr>
+<tr><td>TD087</td><td>TV087</td><td>TA017</td><td>Security</td><td>高</td><td>代表値・ライフサイクル</td><td>前提・入力: Supabase保存データとlocalStorage履歴の削除・保持範囲がユーザー説明と一致すること。下流で4件へ独立分割する。</td><td>セキュリティテスト</td><td>各分割単位について「Supabase保存データとlocalStorage履歴の削除・保持範囲がユーザー説明と一致すること」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>README 永続性</td><td>R015</td><td>設計済み</td></tr>
+<tr><td>TD093</td><td>TV093</td><td>TA018</td><td>Security</td><td>高</td><td>権限・攻撃パターン</td><td>前提・入力: 未認証・無効tokenを拒否し、有効tokenではtoken所有者だけを更新してservice role keyと管理API詳細を応答へ露出しないこと。下流で4件へ独立分割する。</td><td>セキュリティテスト</td><td>各分割単位について「未認証・無効tokenを拒否し、有効tokenではtoken所有者だけを更新してservice role keyと管理API詳細を応答へ露出しないこと」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>update-account Edge Function</td><td>R001, R015, R016</td><td>設計済み</td></tr>
+</tbody></table></div>
+<h4>3.5 Performance</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>テスト設計ID</th><th>テスト観点ID</th><th>テストアプローチID</th><th>テストレベル/タイプ</th><th>優先度</th><th>テストパターン</th><th>条件/入力</th><th>実施方法</th><th>期待結果/判定観点</th><th>仕様</th><th>リスクID</th><th>状態</th></tr></thead>
+<tbody>
+<tr><td>TD079</td><td>TV079</td><td>TA016</td><td>Performance</td><td>高</td><td>性能境界値</td><td>前提・入力: 10タスク/日または150タスク/月、カテゴリ50件、期間半年で一覧の検索・フィルター・編集操作が15分以内に完了すること。下流で9件へ独立分割する。</td><td>ブラウザ手動計測</td><td>各分割単位について「10タスク/日または150タスク/月、カテゴリ50件、期間半年で一覧の検索・フィルター・編集操作が15分以内に完了すること」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>テスト計画 TA016、回答Q006</td><td>R011, R012</td><td>設計済み</td></tr>
+<tr><td>TD080</td><td>TV080</td><td>TA016</td><td>Performance</td><td>高</td><td>性能境界値</td><td>前提: 同じデータプロファイルで日/週/月カレンダー操作と分析の期間切替・集計が15分以内に完了すること。下流TC分割単位: 14:59/15:00/15:01</td><td>ブラウザ手動計測</td><td>各分割単位について「同じデータプロファイルで日/週/月カレンダー操作と分析の期間切替・集計が15分以内に完了すること」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>テスト計画 TA016、回答Q006</td><td>R006, R011</td><td>設計済み</td></tr>
+<tr><td>TD081</td><td>TV081</td><td>TA016</td><td>Performance</td><td>高</td><td>エラー・回復パターン</td><td>前提・入力: 同じデータプロファイルで画面切替・再計算を反復しても操作不能、メモリ増加、重複結果が発生しないこと。下流で3件へ独立分割する。</td><td>ブラウザ手動計測</td><td>各分割単位について「同じデータプロファイルで画面切替・再計算を反復しても操作不能、メモリ増加、重複結果が発生しないこと」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>テスト計画 TA016、回答Q006</td><td>R006, R011</td><td>設計済み</td></tr>
+</tbody></table></div>
+<h4>3.6 Compatibility</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>テスト設計ID</th><th>テスト観点ID</th><th>テストアプローチID</th><th>テストレベル/タイプ</th><th>優先度</th><th>テストパターン</th><th>条件/入力</th><th>実施方法</th><th>期待結果/判定観点</th><th>仕様</th><th>リスクID</th><th>状態</th></tr></thead>
+<tbody>
+<tr><td>TD016</td><td>TV016</td><td>TA003</td><td>Compatibility</td><td>高</td><td>互換性マトリクス</td><td>前提・入力: 同じUTC保存値をJST/UTC/米国TZ端末で操作しても実績分数が一致すること。下流で3件へ独立分割する。</td><td>ブラウザ手動確認</td><td>各分割単位について「同じUTC保存値をJST/UTC/米国TZ端末で操作しても実績分数が一致すること」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>README 日時仕様</td><td>R003, R014</td><td>設計済み</td></tr>
+<tr><td>TD027</td><td>TV027</td><td>TA005</td><td>Compatibility</td><td>中</td><td>互換性マトリクス</td><td>前提・入力: 端末TZを変えてもカレンダー所属日と終了00:00の扱いが一致すること。下流で3件へ独立分割する。</td><td>ブラウザ手動確認</td><td>各分割単位について「端末TZを変えてもカレンダー所属日と終了00:00の扱いが一致すること」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>README 日時仕様</td><td>R005, R014</td><td>設計済み</td></tr>
+<tr><td>TD057</td><td>TV057</td><td>TA010</td><td>Compatibility</td><td>高</td><td>互換性マトリクス</td><td>前提・入力: 通知権限default/granted/denied/API非対応でクラッシュせず適切な案内を行うこと。下流で4件へ独立分割する。</td><td>ブラウザ手動確認</td><td>各分割単位について「通知権限default/granted/denied/API非対応でクラッシュせず適切な案内を行うこと」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>SettingsPage</td><td>R010, R011</td><td>設計済み</td></tr>
+<tr><td>TD059</td><td>TV059</td><td>TA011</td><td>Compatibility</td><td>高</td><td>互換性マトリクス</td><td>前提・入力: Android Chrome相当360×800縦エミュレーションを正式判定とし、Chrome/Edge desktopを補助確認すること。下流で3件へ独立分割する。</td><td>ブラウザ手動確認</td><td>各分割単位について「Android Chrome相当360×800縦エミュレーションを正式判定とし、Chrome/Edge desktopを補助確認すること」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>テスト計画 8章、回答Q003</td><td>R011</td><td>設計済み</td></tr>
+<tr><td>TD060</td><td>TV060</td><td>TA011</td><td>Compatibility</td><td>高</td><td>境界値分析</td><td>前提: 360pxと768px前後で下部ナビ、サイドバー、フォーム、表、グラフに横はみ出しや重なりがないこと。下流TC分割単位: 359/360/767/768/769px</td><td>ブラウザ手動確認</td><td>各分割単位について「360pxと768px前後で下部ナビ、サイドバー、フォーム、表、グラフに横はみ出しや重なりがないこと」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>共通レスポンシブ仕様</td><td>R011</td><td>設計済み</td></tr>
+<tr><td>TD061</td><td>TV061</td><td>TA011</td><td>Compatibility</td><td>高</td><td>操作性・アクセシビリティ</td><td>前提・入力: モバイルの主要操作領域が44px以上で、全画面フォームとダイアログを内部スクロールできること。下流で4件へ独立分割する。</td><td>ブラウザ手動確認</td><td>各分割単位について「モバイルの主要操作領域が44px以上で、全画面フォームとダイアログを内部スクロールできること」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>SCREEN_LIST 共通仕様</td><td>R011</td><td>設計済み</td></tr>
+<tr><td>TD063</td><td>TV063</td><td>TA011</td><td>Compatibility</td><td>高</td><td>互換性マトリクス</td><td>前提・入力: ライト/ダークテーマで文字、ボタン、グラフ、選択・エラー状態が判別できること。下流で4件へ独立分割する。</td><td>ブラウザ手動確認</td><td>各分割単位について「ライト/ダークテーマで文字、ボタン、グラフ、選択・エラー状態が判別できること」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>README、ThemeContext</td><td>R011</td><td>設計済み</td></tr>
+<tr><td>TD064</td><td>TV064</td><td>TA011</td><td>Compatibility</td><td>高</td><td>状態遷移</td><td>前提・入力: 360×800エミュレーションでソフトキーボード相当の表示領域縮小とsafe areaを再現し、固定ナビが入力欄を隠さないこと。下流で3件へ独立分割する。</td><td>ブラウザ手動確認</td><td>各分割単位について「360×800エミュレーションでソフトキーボード相当の表示領域縮小とsafe areaを再現し、固定ナビが入力欄を隠さないこと」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>テスト計画 R011、回答Q003</td><td>R011</td><td>設計済み</td></tr>
+</tbody></table></div>
+<h4>3.7 Accessibility</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>テスト設計ID</th><th>テスト観点ID</th><th>テストアプローチID</th><th>テストレベル/タイプ</th><th>優先度</th><th>テストパターン</th><th>条件/入力</th><th>実施方法</th><th>期待結果/判定観点</th><th>仕様</th><th>リスクID</th><th>状態</th></tr></thead>
+<tbody>
+<tr><td>TD062</td><td>TV062</td><td>TA011</td><td>Accessibility</td><td>高</td><td>操作性・アクセシビリティ</td><td>前提・入力: キーボード操作、フォーカス順、ラベル、エラー通知、色以外の状態識別が成立すること。下流で5件へ独立分割する。</td><td>キーボード・DOM手動確認</td><td>各分割単位について「キーボード操作、フォーカス順、ラベル、エラー通知、色以外の状態識別が成立すること」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>SCREEN_LIST 共通レスポンシブ仕様、HTML標準</td><td>R011</td><td>設計済み</td></tr>
+</tbody></table></div>
+<h4>3.8 Regression</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>テスト設計ID</th><th>テスト観点ID</th><th>テストアプローチID</th><th>テストレベル/タイプ</th><th>優先度</th><th>テストパターン</th><th>条件/入力</th><th>実施方法</th><th>期待結果/判定観点</th><th>仕様</th><th>リスクID</th><th>状態</th></tr></thead>
+<tbody>
+<tr><td>TD065</td><td>TV065</td><td>TA012</td><td>Regression</td><td>高</td><td>代表値・ライフサイクル</td><td>前提・入力: 対応Node/npmで依存導入、build、typecheck、lintが成功すること。下流で4件へ独立分割する。 構造値: SSI030: <code>npm run build</code>、<code>npm run typecheck</code>、<code>npm run lint</code>、12 migrationの順序適用</td><td>CIコマンド・静的確認</td><td>各分割単位について「対応Node/npmで依存導入、build、typecheck、lintが成功すること」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>package.json</td><td>R012, R013</td><td>設計済み</td></tr>
+<tr><td>TD066</td><td>TV066</td><td>TA012</td><td>Regression</td><td>高</td><td>代表値・ライフサイクル</td><td>前提・入力: 必須環境変数の未設定・不正値で原因を特定でき、秘密値をログへ露出しないこと。下流で4件へ独立分割する。</td><td>CIコマンド・静的確認</td><td>各分割単位について「必須環境変数の未設定・不正値で原因を特定でき、秘密値をログへ露出しないこと」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>README 環境変数</td><td>R012, R015</td><td>設計済み</td></tr>
+<tr><td>TD067</td><td>TV067</td><td>TA012</td><td>Regression</td><td>高</td><td>エラー・回復パターン</td><td>前提: ローカルURLを起動し、シナリオ内で一意なユーザー・データを作成して終了時に削除し、再実行できること。下流TC分割単位: 正常終了/途中失敗/再実行 構造値: SSI036: 専用Supabaseは用意せず、シナリオ内で一意なユーザー・データを作成し、終了時に削除</td><td>CIコマンド・静的確認</td><td>各分割単位について「ローカルURLを起動し、シナリオ内で一意なユーザー・データを作成して終了時に削除し、再実行できること」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>テスト計画 8-9章、回答Q001-Q002</td><td>R012</td><td>設計済み</td></tr>
+<tr><td>TD068</td><td>TV068</td><td>TA013</td><td>Regression</td><td>高</td><td>代表値・ライフサイクル</td><td>前提・入力: SCREEN_LISTの全画面とFUNCTION_LISTの全機能について主要経路を少なくとも1回通す自動テスト割当と証跡を作成すること。下流で79件へ独立分割する。 構造値: SSI030: <code>npm run build</code>、<code>npm run typecheck</code>、<code>npm run lint</code>、12 migrationの順序適用／SSI031: AC001登録、AC002編集、AC003状態変更、AC004カレンダー、AC005分析、AC006設定。変更は再読込後も保持／SSI034: 自動化は全画面・全機能の主要経路を少なくとも1回通す</td><td>CIコマンド・静的確認</td><td>各分割単位について「SCREEN_LISTの全画面とFUNCTION_LISTの全機能について主要経路を少なくとも1回通す自動テスト割当と証跡を作成すること」を満たし、保存・再読込・副作用を含む観測結果が仕様参照と一致すること。</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>設計済み</td></tr>
+</tbody></table></div>
+<h3>4. 質問待ち項目</h3>
+<p>現時点で質問待ち項目はない。分析質問票Q001～Q008の回答を設計条件へ反映済みである。</p>
+<h3>5. 上流成果物への追記・更新</h3>
+<ul>
+<li>新たな分析観点、リスク、アプローチの欠落は検出しなかったため、上流成果物は変更していない。</li>
+<li>TV001～TV098、TA001～TA019、SSI001～SSI036を本設計へ継承した。</li>
+</ul>
+<h3>6. カバレッジ確認</h3>
+<ul>
+<li>TV001～TV098: 全98観点をTD001～TD098へ1対1で追跡可能。</li>
+<li>TA001～TA019: 全19アプローチを1件以上のTDで網羅。</li>
+<li>SSI001～SSI036: 分析上のTV経由で全構造を消費。有限集合はExpected Case Yieldの件数へ展開。</li>
+<li>高リスク観点: 1つのTD内でも下流TC分割単位と期待件数を明示し、異なるPass/Failを集約しない。</li>
+<li>質問待ち: 0件。</li>
+</ul>
+<h3>7. Expected Case Yield（期待テストケース数）</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>テスト設計ID</th><th>分割元構造ID</th><th>分割方針</th><th>期待TC数</th><th>集約可否</th><th>集約時判定ルール/代表抽出理由</th><th>備考</th></tr></thead>
+<tbody>
+<tr><td>TD001</td><td>SSI001</td><td>有限値・状態・失敗種別を全件展開</td><td>2</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV001の2分割</td></tr>
+<tr><td>TD002</td><td>SSI002</td><td>有限値・状態・失敗種別を全件展開</td><td>4</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV002の4分割</td></tr>
+<tr><td>TD003</td><td>SSI002</td><td>有限値・状態・失敗種別を全件展開</td><td>12</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV003の12分割</td></tr>
+<tr><td>TD004</td><td>TV004</td><td>有限値・状態・失敗種別を全件展開</td><td>3</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV004の3分割</td></tr>
+<tr><td>TD005</td><td>SSI003</td><td>有限値・状態・失敗種別を全件展開</td><td>3</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV005の3分割</td></tr>
+<tr><td>TD006</td><td>SSI031</td><td>有限値・状態・失敗種別を全件展開</td><td>4</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV006の4分割</td></tr>
+<tr><td>TD007</td><td>SSI004, SSI005, SSI006</td><td>有限値・状態・失敗種別を全件展開</td><td>8</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV007の8分割</td></tr>
+<tr><td>TD008</td><td>TV008</td><td>有限値・状態・失敗種別を全件展開</td><td>3</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV008の3分割</td></tr>
+<tr><td>TD009</td><td>SSI026</td><td>有限値・状態・失敗種別を全件展開</td><td>5</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV009の5分割</td></tr>
+<tr><td>TD010</td><td>SSI031</td><td>有限値・状態・失敗種別を全件展開</td><td>4</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV010の4分割</td></tr>
+<tr><td>TD011</td><td>SSI004, SSI008</td><td>有限値・状態・失敗種別を全件展開</td><td>5</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV011の5分割</td></tr>
+<tr><td>TD012</td><td>SSI017</td><td>境界値を全件展開</td><td>7</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV012の7分割</td></tr>
+<tr><td>TD013</td><td>SSI007, SSI008</td><td>有限値・状態・失敗種別を全件展開</td><td>5</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV013の5分割</td></tr>
+<tr><td>TD014</td><td>SSI021</td><td>有限値・状態・失敗種別を全件展開</td><td>4</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV014の4分割</td></tr>
+<tr><td>TD015</td><td>TV015</td><td>有限値・状態・失敗種別を全件展開</td><td>3</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV015の3分割</td></tr>
+<tr><td>TD016</td><td>SSI018</td><td>有限値・状態・失敗種別を全件展開</td><td>3</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV016の3分割</td></tr>
+<tr><td>TD017</td><td>SSI013, SSI014</td><td>有限値・状態・失敗種別を全件展開</td><td>10</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV017の10分割</td></tr>
+<tr><td>TD018</td><td>SSI014</td><td>境界値を全件展開</td><td>9</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV018の9分割</td></tr>
+<tr><td>TD019</td><td>SSI013, SSI015</td><td>有限値・状態・失敗種別を全件展開</td><td>4</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV019の4分割</td></tr>
+<tr><td>TD020</td><td>SSI015</td><td>有限値・状態・失敗種別を全件展開</td><td>4</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV020の4分割</td></tr>
+<tr><td>TD021</td><td>TV021</td><td>有限値・状態・失敗種別を全件展開</td><td>4</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV021の4分割</td></tr>
+<tr><td>TD022</td><td>SSI026</td><td>有限値・状態・失敗種別を全件展開</td><td>5</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV022の5分割</td></tr>
+<tr><td>TD023</td><td>SSI016</td><td>有限値・状態・失敗種別を全件展開</td><td>3</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV023の3分割</td></tr>
+<tr><td>TD024</td><td>SSI017</td><td>境界値を全件展開</td><td>6</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV024の6分割</td></tr>
+<tr><td>TD025</td><td>TV025</td><td>有限値・状態・失敗種別を全件展開</td><td>5</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV025の5分割</td></tr>
+<tr><td>TD026</td><td>TV026</td><td>有限値・状態・失敗種別を全件展開</td><td>4</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV026の4分割</td></tr>
+<tr><td>TD027</td><td>SSI018</td><td>有限値・状態・失敗種別を全件展開</td><td>3</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV027の3分割</td></tr>
+<tr><td>TD028</td><td>SSI020</td><td>有限値・状態・失敗種別を全件展開</td><td>3</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV028の3分割</td></tr>
+<tr><td>TD029</td><td>SSI020</td><td>有限値・状態・失敗種別を全件展開</td><td>4</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV029の4分割</td></tr>
+<tr><td>TD030</td><td>SSI006</td><td>有限値・状態・失敗種別を全件展開</td><td>7</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV030の7分割</td></tr>
+<tr><td>TD031</td><td>SSI021</td><td>有限値・状態・失敗種別を全件展開</td><td>16</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV031の16分割</td></tr>
+<tr><td>TD032</td><td>SSI017</td><td>境界値を全件展開</td><td>8</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV032の8分割</td></tr>
+<tr><td>TD033</td><td>SSI022</td><td>境界値を全件展開</td><td>5</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV033の5分割</td></tr>
+<tr><td>TD034</td><td>SSI023</td><td>境界値を全件展開</td><td>6</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV034の6分割</td></tr>
+<tr><td>TD035</td><td>TV035</td><td>有限値・状態・失敗種別を全件展開</td><td>4</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV035の4分割</td></tr>
+<tr><td>TD036</td><td>SSI019</td><td>有限値・状態・失敗種別を全件展開</td><td>4</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV036の4分割</td></tr>
+<tr><td>TD037</td><td>TV037</td><td>有限値・状態・失敗種別を全件展開</td><td>4</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV037の4分割</td></tr>
+<tr><td>TD038</td><td>SSI006</td><td>境界値を全件展開</td><td>8</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV038の8分割</td></tr>
+<tr><td>TD039</td><td>SSI007</td><td>有限値・状態・失敗種別を全件展開</td><td>4</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV039の4分割</td></tr>
+<tr><td>TD040</td><td>TV040</td><td>境界値を全件展開</td><td>6</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV040の6分割</td></tr>
+<tr><td>TD041</td><td>SSI033</td><td>境界値を全件展開</td><td>20</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV041の20分割</td></tr>
+<tr><td>TD042</td><td>SSI003</td><td>境界値を全件展開</td><td>5</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV042の5分割</td></tr>
+<tr><td>TD043</td><td>SSI028</td><td>境界値を全件展開</td><td>5</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV043の5分割</td></tr>
+<tr><td>TD044</td><td>TV044</td><td>有限値・状態・失敗種別を全件展開</td><td>3</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV044の3分割</td></tr>
+<tr><td>TD045</td><td>SSI010</td><td>有限値・状態・失敗種別を全件展開</td><td>3</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV045の3分割</td></tr>
+<tr><td>TD046</td><td>SSI009</td><td>有限値・状態・失敗種別を全件展開</td><td>3</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV046の3分割</td></tr>
+<tr><td>TD047</td><td>SSI010</td><td>有限値・状態・失敗種別を全件展開</td><td>4</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV047の4分割</td></tr>
+<tr><td>TD048</td><td>TV048</td><td>有限値・状態・失敗種別を全件展開</td><td>3</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV048の3分割</td></tr>
+<tr><td>TD049</td><td>SSI027</td><td>有限値・状態・失敗種別を全件展開</td><td>3</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV049の3分割</td></tr>
+<tr><td>TD050</td><td>TV050</td><td>有限値・状態・失敗種別を全件展開</td><td>5</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV050の5分割</td></tr>
+<tr><td>TD051</td><td>TV051</td><td>有限値・状態・失敗種別を全件展開</td><td>3</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV051の3分割</td></tr>
+<tr><td>TD052</td><td>SSI035</td><td>有限値・状態・失敗種別を全件展開</td><td>6</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV052の6分割</td></tr>
+<tr><td>TD053</td><td>SSI024</td><td>有限値・状態・失敗種別を全件展開</td><td>8</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV053の8分割</td></tr>
+<tr><td>TD054</td><td>SSI024</td><td>有限値・状態・失敗種別を全件展開</td><td>5</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV054の5分割</td></tr>
+<tr><td>TD055</td><td>TV055</td><td>有限値・状態・失敗種別を全件展開</td><td>3</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV055の3分割</td></tr>
+<tr><td>TD056</td><td>TV056</td><td>境界値を全件展開</td><td>5</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV056の5分割</td></tr>
+<tr><td>TD057</td><td>SSI025</td><td>有限値・状態・失敗種別を全件展開</td><td>4</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV057の4分割</td></tr>
+<tr><td>TD058</td><td>TV058</td><td>有限値・状態・失敗種別を全件展開</td><td>3</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV058の3分割</td></tr>
+<tr><td>TD059</td><td>SSI018</td><td>有限値・状態・失敗種別を全件展開</td><td>3</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV059の3分割</td></tr>
+<tr><td>TD060</td><td>TV060</td><td>境界値を全件展開</td><td>5</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV060の5分割</td></tr>
+<tr><td>TD061</td><td>TV061</td><td>有限値・状態・失敗種別を全件展開</td><td>4</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV061の4分割</td></tr>
+<tr><td>TD062</td><td>TV062</td><td>有限値・状態・失敗種別を全件展開</td><td>5</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV062の5分割</td></tr>
+<tr><td>TD063</td><td>TV063</td><td>有限値・状態・失敗種別を全件展開</td><td>4</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV063の4分割</td></tr>
+<tr><td>TD064</td><td>TV064</td><td>有限値・状態・失敗種別を全件展開</td><td>3</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV064の3分割</td></tr>
+<tr><td>TD065</td><td>SSI030</td><td>有限値・状態・失敗種別を全件展開</td><td>4</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV065の4分割</td></tr>
+<tr><td>TD066</td><td>TV066</td><td>有限値・状態・失敗種別を全件展開</td><td>4</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV066の4分割</td></tr>
+<tr><td>TD067</td><td>SSI036</td><td>有限値・状態・失敗種別を全件展開</td><td>3</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV067の3分割</td></tr>
+<tr><td>TD068</td><td>SSI030, SSI031, SSI034</td><td>有限値・状態・失敗種別を全件展開</td><td>79</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV068の79分割</td></tr>
+<tr><td>TD069</td><td>SSI030</td><td>有限値・状態・失敗種別を全件展開</td><td>12</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV069の12分割</td></tr>
+<tr><td>TD070</td><td>TV070</td><td>有限値・状態・失敗種別を全件展開</td><td>12</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV070の12分割</td></tr>
+<tr><td>TD071</td><td>SSI002</td><td>有限値・状態・失敗種別を全件展開</td><td>12</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV071の12分割</td></tr>
+<tr><td>TD072</td><td>SSI026</td><td>有限値・状態・失敗種別を全件展開</td><td>8</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV072の8分割</td></tr>
+<tr><td>TD073</td><td>SSI031</td><td>代表値1件</td><td>1</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV073の1分割</td></tr>
+<tr><td>TD074</td><td>SSI031</td><td>代表値1件</td><td>1</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV074の1分割</td></tr>
+<tr><td>TD075</td><td>SSI031</td><td>代表値1件</td><td>1</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV075の1分割</td></tr>
+<tr><td>TD076</td><td>SSI031</td><td>代表値1件</td><td>1</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV076の1分割</td></tr>
+<tr><td>TD077</td><td>SSI031</td><td>代表値1件</td><td>1</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV077の1分割</td></tr>
+<tr><td>TD078</td><td>SSI031</td><td>代表値1件</td><td>1</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV078の1分割</td></tr>
+<tr><td>TD079</td><td>SSI032</td><td>境界値を全件展開</td><td>15</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV079の15分割</td></tr>
+<tr><td>TD080</td><td>SSI032</td><td>境界値を全件展開</td><td>6</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV080の6分割</td></tr>
+<tr><td>TD081</td><td>SSI032</td><td>有限値・状態・失敗種別を全件展開</td><td>3</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV081の3分割</td></tr>
+<tr><td>TD082</td><td>TV082</td><td>有限値・状態・失敗種別を全件展開</td><td>3</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV082の3分割</td></tr>
+<tr><td>TD083</td><td>TV083</td><td>有限値・状態・失敗種別を全件展開</td><td>4</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV083の4分割</td></tr>
+<tr><td>TD084</td><td>TV084</td><td>有限値・状態・失敗種別を全件展開</td><td>4</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV084の4分割</td></tr>
+<tr><td>TD085</td><td>TV085</td><td>有限値・状態・失敗種別を全件展開</td><td>5</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV085の5分割</td></tr>
+<tr><td>TD086</td><td>TV086</td><td>有限値・状態・失敗種別を全件展開</td><td>3</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV086の3分割</td></tr>
+<tr><td>TD087</td><td>SSI029</td><td>有限値・状態・失敗種別を全件展開</td><td>4</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV087の4分割</td></tr>
+<tr><td>TD088</td><td>SSI011, SSI012</td><td>有限値・状態・失敗種別を全件展開</td><td>15</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV088の15分割</td></tr>
+<tr><td>TD089</td><td>SSI009</td><td>有限値・状態・失敗種別を全件展開</td><td>10</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV089の10分割</td></tr>
+<tr><td>TD090</td><td>SSI029</td><td>境界値を全件展開</td><td>6</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV090の6分割</td></tr>
+<tr><td>TD091</td><td>SSI003</td><td>有限値・状態・失敗種別を全件展開</td><td>3</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV091の3分割</td></tr>
+<tr><td>TD092</td><td>SSI003</td><td>境界値を全件展開</td><td>5</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV092の5分割</td></tr>
+<tr><td>TD093</td><td>TV093</td><td>有限値・状態・失敗種別を全件展開</td><td>4</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV093の4分割</td></tr>
+<tr><td>TD094</td><td>TV094</td><td>有限値・状態・失敗種別を全件展開</td><td>4</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV094の4分割</td></tr>
+<tr><td>TD095</td><td>SSI026</td><td>有限値・状態・失敗種別を全件展開</td><td>6</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV095の6分割</td></tr>
+<tr><td>TD096</td><td>TV096</td><td>有限値・状態・失敗種別を全件展開</td><td>4</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV096の4分割</td></tr>
+<tr><td>TD097</td><td>TV097</td><td>有限値・状態・失敗種別を全件展開</td><td>4</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV097の4分割</td></tr>
+<tr><td>TD098</td><td>SSI026</td><td>有限値・状態・失敗種別を全件展開</td><td>3</td><td>不可</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>TV098の3分割</td></tr>
+</tbody></table></div>
+<p>期待TC総数: **577件**。TD068はSCREEN_LIST 29画面とFUNCTION_LIST 50機能を独立判定する79件、TD069・TD070はmigration 12本を個別判定する12件として算出した。TD031は4状態×4実績情報源、TD041は4入力項目×5文字数境界、TD079は5性能軸×3境界を独立判定する。</p>
+</body>
+</html>

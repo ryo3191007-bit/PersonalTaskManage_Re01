@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>テストケースレビュー</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f7f7f4;
+      --panel: #ffffff;
+      --text: #202124;
+      --muted: #666b73;
+      --border: #d9ddd6;
+      --accent: #0f766e;
+      --danger: #b42318;
+      --warn: #b7791f;
+      --ok: #16794c;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Segoe UI", "Meiryo", sans-serif;
+      line-height: 1.65;
+    }
+    header, main {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+    header {
+      padding-top: 32px;
+      border-bottom: 1px solid var(--border);
+    }
+    h1 { margin: 0 0 8px; font-size: 32px; }
+    h2 { margin-top: 32px; font-size: 24px; border-left: 5px solid var(--accent); padding-left: 10px; }
+    h3 { margin-top: 24px; font-size: 18px; }
+    p { margin: 8px 0; }
+    a { color: #075985; }
+    code {
+      background: #eef2f0;
+      border: 1px solid #d7ddda;
+      border-radius: 4px;
+      padding: 1px 4px;
+      font-family: Consolas, monospace;
+    }
+    pre {
+      overflow: auto;
+      background: #111827;
+      color: #f9fafb;
+      border-radius: 8px;
+      padding: 14px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin: 16px 0;
+    }
+    .metric {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+    }
+    .metric .label { color: var(--muted); font-size: 13px; }
+    .metric .value { font-size: 26px; font-weight: 700; margin-top: 4px; }
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--panel);
+      margin: 12px 0;
+    }
+    table { width: 100%; border-collapse: collapse; min-width: 720px; }
+    th, td { border-bottom: 1px solid var(--border); padding: 8px 10px; text-align: left; vertical-align: top; }
+    th { background: #eef2f0; white-space: nowrap; }
+    tr:last-child td { border-bottom: 0; }
+    .pill { display: inline-block; border-radius: 999px; padding: 2px 8px; font-weight: 700; font-size: 12px; }
+    .pass { color: var(--ok); }
+    .fail { color: var(--danger); }
+    .na { color: var(--warn); }
+  </style>
+</head>
+<body>
+<h2>テストケースレビュー結果</h2>
+<h3>1. レビュー対象</h3>
+<ul>
+<li><code>テスト成果物/テストケース_コードベース.md</code></li>
+<li><code>テスト成果物/テストケース_E2E自動.md</code></li>
+<li><code>テスト成果物/テストケース_人間実行.md</code></li>
+<li><code>テスト成果物/テストケース_質問待ち.md</code></li>
+<li><code>テスト成果物/テストケース_人間実行.csv</code></li>
+</ul>
+<h3>2. 参照資料</h3>
+<ul>
+<li><code>テスト成果物/テスト設計.md</code></li>
+<li><code>テスト成果物/テスト設計_質問票.md</code></li>
+<li><code>テスト成果物/テスト分析.md</code></li>
+<li><code>テスト成果物/テスト分析_質問票.md</code></li>
+<li><code>テスト成果物/テスト分析_質問票_回答.md</code></li>
+<li><code>テスト成果物/テスト計画書.md</code></li>
+<li><code>README.md</code>, <code>FUNCTION_LIST.md</code>, <code>SCREEN_LIST.md</code>, <code>CLAUDE.md</code></li>
+</ul>
+<h3>3. レビュー観点</h3>
+<ul>
+<li>TD/TV/TA/仕様/リスクのトレーサビリティ</li>
+<li>Expected Case Yield と Case Expansion Ledger の一致</li>
+<li>1TC=1独立判定の粒度</li>
+<li>実行区分ごとのファイル配置</li>
+<li>質問待ち管理</li>
+<li>Markdown表の列数整合性</li>
+<li>人間実行MarkdownとCSVのTC-MAN行一致</li>
+</ul>
+<h3>4. レビュー・修正サマリー</h3>
+<ul>
+<li>create-test-casesで、TD001～TD098を期待TC数どおりに展開した。</li>
+<li>review-test-casesで、件数、台帳、CSV、Markdown表構造を検証した。</li>
+<li>P0/P1/P2の残課題は検出していない。</li>
+</ul>
+<h3>5. 最終レビュー結果</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>項目</th><th>結果</th></tr></thead>
+<tbody>
+<tr><td>期待TC総数</td><td>577</td></tr>
+<tr><td>実TC総数</td><td>577</td></tr>
+<tr><td>不足TC数</td><td>0</td></tr>
+<tr><td>TDカバレッジ</td><td>98/98</td></tr>
+<tr><td>質問待ちTC</td><td>0</td></tr>
+<tr><td>コードベースTC</td><td>359</td></tr>
+<tr><td>E2E自動TC</td><td>160</td></tr>
+<tr><td>人間実行TC</td><td>58</td></tr>
+</tbody></table></div>
+<ul>
+<li>Case Expansion Ledgerは各出力ファイル内で該当TDの期待TC数、実TC数、不足数0を記録している。</li>
+<li>圧縮条件スキャンでは、各TCを設計上の分割単位ごとに独立行として作成していることを確認した。</li>
+<li>行独立性、実行入力、期待結果、証跡欄は各TC行内に記載している。</li>
+<li>Markdown表は生成時にセル内の縦棒をエスケープし、列数を保持している。</li>
+<li><code>テストケース_人間実行.csv</code> は <code>テストケース_人間実行.md</code> のTC-MAN行から生成し、実行記録用の空欄列を追加している。</li>
+</ul>
+<h3>6. 残課題</h3>
+<ul>
+<li>P0/P1/P2: なし。</li>
+<li>P3: 後続の <code>create-test-code</code> / <code>create-playwright-e2e-tests</code> 実行時に、実装対象ファイルやPlaywrightのfixture設計に合わせてTC名と自動テスト名の対応表を追加すると追跡しやすい。</li>
+</ul>
+</body>
+</html>
