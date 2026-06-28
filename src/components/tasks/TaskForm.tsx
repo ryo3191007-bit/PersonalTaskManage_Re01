@@ -128,7 +128,7 @@ interface SuspendEntry {
 let _localIdCounter = 0;
 const nextLocalId = () => ++_localIdCounter;
 
-function buildEntriesFromSessions(
+export function buildEntriesFromSessions(
   taskSessions: import('../../lib/types').TaskSession[],
   actualStart: string
 ): SuspendEntry[] {
@@ -170,7 +170,7 @@ function buildEntriesFromSessions(
   return entries;
 }
 
-function calcSuspendMins(suspendVal: string, resumeVal: string): number {
+export function calcSuspendMins(suspendVal: string, resumeVal: string): number {
   if (!suspendVal || !resumeVal) return 0;
   const suspendAt = parseJstDateTime(suspendVal);
   const resumeAt = parseJstDateTime(resumeVal);
@@ -260,7 +260,7 @@ interface DesiredSession {
   sessionEnd: string | null;
 }
 
-function buildDesiredSessions(
+export function buildDesiredSessions(
   entries: SuspendEntry[],
   actualStart: string,
   actualEnd: string,
@@ -710,6 +710,10 @@ export default function TaskForm({ task, onClose, initialDatetime }: TaskFormPro
     setFormErrors({});
     setLoading(true);
 
+    const parentTaskId = parentOptions.some(t => t.id === form.parent_task_id)
+      ? form.parent_task_id
+      : '';
+
     const payload: Partial<Task> = {
       title: form.title.trim(),
       category_id: form.category_id || null,
@@ -719,7 +723,7 @@ export default function TaskForm({ task, onClose, initialDatetime }: TaskFormPro
       time_per_unit: Number(form.time_per_unit),
       scheduled_start: localToISO(form.scheduled_start),
       scheduled_end: localToISO(form.scheduled_end),
-      parent_task_id: form.parent_task_id || null,
+      parent_task_id: parentTaskId || null,
       notes: form.notes,
       status: form.status,
       track_actual: true,

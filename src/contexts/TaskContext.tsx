@@ -57,7 +57,7 @@ const TaskContext = createContext<TaskContextValue>({
 });
 
 /** グループ設定からJST暦日の対象日一覧を生成（開始日・終了日を含む）。 */
-function generateDateKeys(group: RecurrenceGroup): string[] {
+export function generateDateKeys(group: RecurrenceGroup): string[] {
   const dates: string[] = [];
   let current = group.period_start;
   while (current && current <= group.period_end) {
@@ -135,22 +135,55 @@ export function TaskProvider({ children }: { children: React.ReactNode }) {
   };
 
   const updateTask = async (id: string, task: Partial<Task>) => {
-    const { data } = await supabase
+    const { data, error } = await supabase
       .from('tasks')
       .update(task as Task)
       .eq('id', id)
       .select('*, category:task_categories(*)')
       .single();
+    if (error) throw error;
     if (data) {
-      setTasks(prev => prev.map(t => t.id === id ? data as Task : t));
-      scheduleNotification(data as Task);
+      const updatedTask = data as Task;
+      const nextTasks = tasks.map(t => t.id === id ? updatedTask : t);
+      setTasks(prev => prev.map(t => t.id === id ? updatedTask : t));
+      scheduleNotification(updatedTask);
+
+      if (updatedTask.status === 'completed' && updatedTask.parent_task_id) {
+        const parent = nextTasks.find(t => t.id === updatedTask.parent_task_id);
+        const children = nextTasks.filter(t => t.parent_task_id === updatedTask.parent_task_id);
+        const shouldCompleteParent =
+          parent &&
+          parent.status !== 'completed' &&
+          children.length > 0 &&
+          children.every(t => t.status === 'completed');
+
+        if (shouldCompleteParent) {
+          const completedAt = parent.completed_at ?? updatedTask.completed_at ?? new Date().toISOString();
+          const { data: parentData, error: parentError } = await supabase
+            .from('tasks')
+            .update({ status: 'completed', completed_at: completedAt } as Partial<Task>)
+            .eq('id', parent.id)
+            .select('*, category:task_categories(*)')
+            .single();
+          if (parentError) throw parentError;
+          if (parentData) {
+            const completedParent = parentData as Task;
+            setTasks(prev => prev.map(t => t.id === parent.id ? completedParent : t));
+            scheduleNotification(completedParent);
+          }
+        }
+      }
     }
   };
 
   const deleteTask = async (id: string) => {
-    await supabase.from('tasks').delete().eq('id', id);
+    const { error } = await supabase.from('tasks').delete().eq('id', id);
+    if (error) throw error;
     cancelTaskNotifications(id);
-    setTasks(prev => prev.filter(t => t.id !== id));
+    setTasks(prev => prev
+      .filter(t => t.id !== id)
+      .map(t => t.parent_task_id === id ? { ...t, parent_task_id: null } : t)
+    );
     setSessions(prev => prev.filter(s => s.task_id !== id));
   };
 
@@ -176,8 +209,11 @@ export function TaskProvider({ children }: { children: React.ReactNode }) {
   };
 
   const deleteCategory = async (id: string) => {
-    await supabase.from('task_categories').delete().eq('id', id);
+    const { error } = await supabase.from('task_categories').delete().eq('id', id);
+    if (error) throw error;
     setCategories(prev => prev.filter(c => c.id !== id));
+    setTasks(prev => prev.map(t => t.category_id === id ? { ...t, category_id: null, category: null } : t));
+    setRecurrenceGroups(prev => prev.map(g => g.category_id === id ? { ...g, category_id: null, category: null } : g));
   };
 
   const createRecurrenceGroup = async (group: Partial<RecurrenceGroup>): Promise<RecurrenceGroup | null> => {
@@ -210,11 +246,14 @@ export function TaskProvider({ children }: { children: React.ReactNode }) {
     const deletedTaskIds = tasks
       .filter(t => t.recurrence_group_id === id)
       .map(t => t.id);
-    await supabase.from('tasks').delete().eq('recurrence_group_id', id);
-    await supabase.from('recurrence_groups').delete().eq('id', id);
+    const { error: tasksError } = await supabase.from('tasks').delete().eq('recurrence_group_id', id);
+    if (tasksError) throw tasksError;
+    const { error: groupError } = await supabase.from('recurrence_groups').delete().eq('id', id);
+    if (groupError) throw groupError;
     deletedTaskIds.forEach(cancelTaskNotifications);
     setRecurrenceGroups(prev => prev.filter(g => g.id !== id));
     setTasks(prev => prev.filter(t => t.recurrence_group_id !== id));
+    setSessions(prev => prev.filter(s => !deletedTaskIds.includes(s.task_id)));
   };
 
   /** グループの設定に基づきタスクを一括生成 */
