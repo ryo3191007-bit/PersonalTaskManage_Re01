@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Playwright E2Eテストレビュー</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f7f7f4;
+      --panel: #ffffff;
+      --text: #202124;
+      --muted: #666b73;
+      --border: #d9ddd6;
+      --accent: #0f766e;
+      --danger: #b42318;
+      --warn: #b7791f;
+      --ok: #16794c;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Segoe UI", "Meiryo", sans-serif;
+      line-height: 1.65;
+    }
+    header, main {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+    header {
+      padding-top: 32px;
+      border-bottom: 1px solid var(--border);
+    }
+    h1 { margin: 0 0 8px; font-size: 32px; }
+    h2 { margin-top: 32px; font-size: 24px; border-left: 5px solid var(--accent); padding-left: 10px; }
+    h3 { margin-top: 24px; font-size: 18px; }
+    p { margin: 8px 0; }
+    a { color: #075985; }
+    code {
+      background: #eef2f0;
+      border: 1px solid #d7ddda;
+      border-radius: 4px;
+      padding: 1px 4px;
+      font-family: Consolas, monospace;
+    }
+    pre {
+      overflow: auto;
+      background: #111827;
+      color: #f9fafb;
+      border-radius: 8px;
+      padding: 14px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin: 16px 0;
+    }
+    .metric {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+    }
+    .metric .label { color: var(--muted); font-size: 13px; }
+    .metric .value { font-size: 26px; font-weight: 700; margin-top: 4px; }
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--panel);
+      margin: 12px 0;
+    }
+    table { width: 100%; border-collapse: collapse; min-width: 720px; }
+    th, td { border-bottom: 1px solid var(--border); padding: 8px 10px; text-align: left; vertical-align: top; }
+    th { background: #eef2f0; white-space: nowrap; }
+    tr:last-child td { border-bottom: 0; }
+    .pill { display: inline-block; border-radius: 999px; padding: 2px 8px; font-weight: 700; font-size: 12px; }
+    .pass { color: var(--ok); }
+    .fail { color: var(--danger); }
+    .na { color: var(--warn); }
+  </style>
+</head>
+<body>
+<p>﻿# Playwright E2Eテストレビュー結果</p>
+<h3>1. レビュー対象</h3>
+<ul>
+<li>playwright.config.cjs</li>
+<li>tests/e2e/personal-taskmanage.e2e.spec.cjs</li>
+<li>tests/e2e/e2e-cases.generated.cjs</li>
+<li>テスト成果物/Playwright_E2Eテスト実装結果.md</li>
+<li>テスト成果物/未実装テストケース_E2E自動.md</li>
+<li>テスト成果物/テストケース_E2E自動.md</li>
+<li>対象URL: https://personal-task-manage-pcx2.bolt.host/</li>
+</ul>
+<h3>2. 参照資料</h3>
+<ul>
+<li>テスト成果物/テストケース_E2E自動.md</li>
+<li>テスト成果物/テストケース_質問待ち.md</li>
+<li>テスト成果物/テスト設計.md</li>
+<li>README.md, FUNCTION_LIST.md, SCREEN_LIST.md</li>
+<li>src/pages/LoginPage.tsx, src/contexts/AuthContext.tsx, src/contexts/TaskContext.tsx</li>
+</ul>
+<h3>3. レビュー観点</h3>
+<ul>
+<li>対象URL妥当性</li>
+<li>トレーサビリティ</li>
+<li>テストケースカバレッジ</li>
+<li>未実装ケース管理</li>
+<li>アサーション妥当性</li>
+<li>False positive / false negativeリスク</li>
+<li>安定性、独立性、ロケータ堅牢性</li>
+<li>環境ポータビリティ</li>
+<li>実行 readiness</li>
+</ul>
+<h3>4. レビュー・修正サマリー</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>優先度</th><th>観点</th><th>問題</th><th>場所</th><th>影響</th><th>修正方針</th></tr></thead>
+<tbody>
+<tr><td>P1</td><td>対象環境</td><td>ローカル http://127.0.0.1:5173/ ではSupabase通信が Failed to fetch となり認証/CRUD系を判定できなかった</td><td>旧実行結果</td><td>159件が未実装扱いになった</td><td>公開Bolt環境 https://personal-task-manage-pcx2.bolt.host/ を対象に変更</td></tr>
+<tr><td>P1</td><td>ロケータ堅牢性</td><td>同名ボタン、同名見出し、デスクトップ/モバイルナビの重複でstrict mode違反が発生した</td><td>loginOrSignUp, createTask, navigate</td><td>E2EがUI重複で失敗する</td><td>form 内submit、exact: true、first()、実placeholderに修正</td></tr>
+<tr><td>P1</td><td>データ独立性</td><td>同一タスク名が公開環境に残るとstrict modeで複数一致する</td><td>タスク作成/編集系</td><td>再実行時に不安定化する</td><td>E2E_RUN_ID をタスク名へ含める</td></tr>
+<tr><td>P2</td><td>フィルター初期値</td><td>タスク一覧が当日予定日で初期フィルタされ、予定日時なしタスクが見えない</td><td>createTask</td><td>作成済みタスクの表示確認が不安定</td><td>作成時にJST当日の予定開始/終了を設定</td></tr>
+</tbody></table></div>
+<p>修正後、P0/P1/P2の修正可能な指摘は残っていない。</p>
+<h3>5. 最終レビュー結果</h3>
+<ul>
+<li>実装済み: 160件</li>
+<li>未実装: 0件</li>
+<li>質問待ちE2Eケース: 0件</li>
+<li>P0/P1/P2残課題: なし</li>
+<li>P3残課題: pnpm-lock.yaml が追加されている。npm運用へ統一する場合は、npmが利用できる環境でlockfile再生成を検討する。</li>
+</ul>
+<h3>6. 実行結果</h3>
+<pre><code>160 passed (5.6m)</code></pre>
+<p>静的確認:</p>
+<pre><code>node --check tests/e2e/personal-taskmanage.e2e.spec.cjs: OK
+node --check tests/e2e/e2e-cases.generated.cjs: OK</code></pre>
+<h3>7. 残課題</h3>
+<ul>
+<li>P0/P1/P2残課題: なし。</li>
+<li>公開Bolt環境にE2E実行で作成したテストデータが残るため、必要に応じて別途テストデータ削除方針を決める。</li>
+</ul>
+</body>
+</html>

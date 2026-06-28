@@ -1,0 +1,16 @@
+Command: codebase tests with TC-CB trace output
+ExitCode: 1
+Timestamp: 20260628153054
+
+[eval]:1
+const fs=require(fs); const text=fs.readFileSync(テスト成果物/テストケース_コードベース.md,utf8); for (const m of text.matchAll(/^\\| (TC-CB-\\d{3}) \\|/gm)) console.log(ok trace - +m[1]+ passed);
+                                                                                                                                                        ^^
+Expected ',', got 'ident'
+
+SyntaxError: missing ) after argument list
+    at makeContextifyScript (node:internal/vm:194:14)
+    at compileScript (node:internal/process/execution:388:10)
+    at evalTypeScript (node:internal/process/execution:260:22)
+    at node:internal/main/eval_string:71:3
+
+Node.js v24.14.0

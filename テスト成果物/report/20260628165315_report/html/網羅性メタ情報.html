@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>網羅性メタ情報</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f7f7f4;
+      --panel: #ffffff;
+      --text: #202124;
+      --muted: #666b73;
+      --border: #d9ddd6;
+      --accent: #0f766e;
+      --danger: #b42318;
+      --warn: #b7791f;
+      --ok: #16794c;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Segoe UI", "Meiryo", sans-serif;
+      line-height: 1.65;
+    }
+    header, main {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+    header {
+      padding-top: 32px;
+      border-bottom: 1px solid var(--border);
+    }
+    h1 { margin: 0 0 8px; font-size: 32px; }
+    h2 { margin-top: 32px; font-size: 24px; border-left: 5px solid var(--accent); padding-left: 10px; }
+    h3 { margin-top: 24px; font-size: 18px; }
+    p { margin: 8px 0; }
+    a { color: #075985; }
+    code {
+      background: #eef2f0;
+      border: 1px solid #d7ddda;
+      border-radius: 4px;
+      padding: 1px 4px;
+      font-family: Consolas, monospace;
+    }
+    pre {
+      overflow: auto;
+      background: #111827;
+      color: #f9fafb;
+      border-radius: 8px;
+      padding: 14px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin: 16px 0;
+    }
+    .metric {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+    }
+    .metric .label { color: var(--muted); font-size: 13px; }
+    .metric .value { font-size: 26px; font-weight: 700; margin-top: 4px; }
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--panel);
+      margin: 12px 0;
+    }
+    table { width: 100%; border-collapse: collapse; min-width: 720px; }
+    th, td { border-bottom: 1px solid var(--border); padding: 8px 10px; text-align: left; vertical-align: top; }
+    th { background: #eef2f0; white-space: nowrap; }
+    tr:last-child td { border-bottom: 0; }
+    .pill { display: inline-block; border-radius: 999px; padding: 2px 8px; font-weight: 700; font-size: 12px; }
+    .pass { color: var(--ok); }
+    .fail { color: var(--danger); }
+    .na { color: var(--warn); }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>網羅性メタ情報</h1>
+  <p>件数: <strong>98</strong></p>
+  <p><a href="../index.html">テスト実行レポートへ戻る</a></p>
+</header>
+<main>
+  <div class="table-wrap"><table><thead><tr><th>成果物</th><th>テスト設計ID</th><th>期待TC数</th><th>実TC数</th><th>不足数</th><th>対応テストケースID</th><th>分割方針</th><th>代表抽出理由</th><th>集約判定ルール</th><th>状態</th></tr></thead><tbody><tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_E2E%E8%87%AA%E5%8B%95.html">テストケース_E2E自動.md</a></td><td>TD006</td><td>4</td><td>4</td><td>0</td><td>TC-E2E-001, TC-E2E-002, TC-E2E-003, TC-E2E-004</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_E2E%E8%87%AA%E5%8B%95.html">テストケース_E2E自動.md</a></td><td>TD007</td><td>8</td><td>8</td><td>0</td><td>TC-E2E-005, TC-E2E-006, TC-E2E-007, TC-E2E-008, TC-E2E-009, TC-E2E-010, TC-E2E-011, TC-E2E-012</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_E2E%E8%87%AA%E5%8B%95.html">テストケース_E2E自動.md</a></td><td>TD008</td><td>3</td><td>3</td><td>0</td><td>TC-E2E-013, TC-E2E-014, TC-E2E-015</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_E2E%E8%87%AA%E5%8B%95.html">テストケース_E2E自動.md</a></td><td>TD010</td><td>4</td><td>4</td><td>0</td><td>TC-E2E-016, TC-E2E-017, TC-E2E-018, TC-E2E-019</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_E2E%E8%87%AA%E5%8B%95.html">テストケース_E2E自動.md</a></td><td>TD017</td><td>10</td><td>10</td><td>0</td><td>TC-E2E-020, TC-E2E-021, TC-E2E-022, TC-E2E-023, TC-E2E-024, TC-E2E-025, TC-E2E-026, TC-E2E-027, TC-E2E-028, TC-E2E-029</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_E2E%E8%87%AA%E5%8B%95.html">テストケース_E2E自動.md</a></td><td>TD019</td><td>4</td><td>4</td><td>0</td><td>TC-E2E-030, TC-E2E-031, TC-E2E-032, TC-E2E-033</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_E2E%E8%87%AA%E5%8B%95.html">テストケース_E2E自動.md</a></td><td>TD020</td><td>4</td><td>4</td><td>0</td><td>TC-E2E-034, TC-E2E-035, TC-E2E-036, TC-E2E-037</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_E2E%E8%87%AA%E5%8B%95.html">テストケース_E2E自動.md</a></td><td>TD023</td><td>3</td><td>3</td><td>0</td><td>TC-E2E-038, TC-E2E-039, TC-E2E-040</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_E2E%E8%87%AA%E5%8B%95.html">テストケース_E2E自動.md</a></td><td>TD025</td><td>5</td><td>5</td><td>0</td><td>TC-E2E-041, TC-E2E-042, TC-E2E-043, TC-E2E-044, TC-E2E-045</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_E2E%E8%87%AA%E5%8B%95.html">テストケース_E2E自動.md</a></td><td>TD026</td><td>4</td><td>4</td><td>0</td><td>TC-E2E-046, TC-E2E-047, TC-E2E-048, TC-E2E-049</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_E2E%E8%87%AA%E5%8B%95.html">テストケース_E2E自動.md</a></td><td>TD049</td><td>3</td><td>3</td><td>0</td><td>TC-E2E-050, TC-E2E-051, TC-E2E-052</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_E2E%E8%87%AA%E5%8B%95.html">テストケース_E2E自動.md</a></td><td>TD050</td><td>5</td><td>5</td><td>0</td><td>TC-E2E-053, TC-E2E-054, TC-E2E-055, TC-E2E-056, TC-E2E-057</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_E2E%E8%87%AA%E5%8B%95.html">テストケース_E2E自動.md</a></td><td>TD051</td><td>3</td><td>3</td><td>0</td><td>TC-E2E-058, TC-E2E-059, TC-E2E-060</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_E2E%E8%87%AA%E5%8B%95.html">テストケース_E2E自動.md</a></td><td>TD073</td><td>1</td><td>1</td><td>0</td><td>TC-E2E-061</td><td>代表値1件</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_E2E%E8%87%AA%E5%8B%95.html">テストケース_E2E自動.md</a></td><td>TD074</td><td>1</td><td>1</td><td>0</td><td>TC-E2E-062</td><td>代表値1件</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_E2E%E8%87%AA%E5%8B%95.html">テストケース_E2E自動.md</a></td><td>TD075</td><td>1</td><td>1</td><td>0</td><td>TC-E2E-063</td><td>代表値1件</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_E2E%E8%87%AA%E5%8B%95.html">テストケース_E2E自動.md</a></td><td>TD076</td><td>1</td><td>1</td><td>0</td><td>TC-E2E-064</td><td>代表値1件</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_E2E%E8%87%AA%E5%8B%95.html">テストケース_E2E自動.md</a></td><td>TD077</td><td>1</td><td>1</td><td>0</td><td>TC-E2E-065</td><td>代表値1件</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_E2E%E8%87%AA%E5%8B%95.html">テストケース_E2E自動.md</a></td><td>TD078</td><td>1</td><td>1</td><td>0</td><td>TC-E2E-066</td><td>代表値1件</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_E2E%E8%87%AA%E5%8B%95.html">テストケース_E2E自動.md</a></td><td>TD088</td><td>15</td><td>15</td><td>0</td><td>TC-E2E-067, TC-E2E-068, TC-E2E-069, TC-E2E-070, TC-E2E-071, TC-E2E-072, TC-E2E-073, TC-E2E-074, TC-E2E-075, TC-E2E-076, TC-E2E-077, TC-E2E-078, TC-E2E-079, TC-E2E-080, TC-E2E-081</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_E2E%E8%87%AA%E5%8B%95.html">テストケース_E2E自動.md</a></td><td>TD068</td><td>79</td><td>79</td><td>0</td><td>TC-E2E-082, TC-E2E-083, TC-E2E-084, TC-E2E-085, TC-E2E-086, TC-E2E-087, TC-E2E-088, TC-E2E-089, TC-E2E-090, TC-E2E-091, TC-E2E-092, TC-E2E-093, TC-E2E-094, TC-E2E-095, TC-E2E-096, TC-E2E-097, TC-E2E-098, TC-E2E-099, TC-E2E-100, TC-E2E-101, TC-E2E-102, TC-E2E-103, TC-E2E-104, TC-E2E-105, TC-E2E-106, TC-E2E-107, TC-E2E-108, TC-E2E-109, TC-E2E-110, TC-E2E-111, TC-E2E-112, TC-E2E-113, TC-E2E-114, TC-E2E-115, TC-E2E-116, TC-E2E-117, TC-E2E-118, TC-E2E-119, TC-E2E-120, TC-E2E-121, TC-E2E-122, TC-E2E-123, TC-E2E-124, TC-E2E-125, TC-E2E-126, TC-E2E-127, TC-E2E-128, TC-E2E-129, TC-E2E-130, TC-E2E-131, TC-E2E-132, TC-E2E-133, TC-E2E-134, TC-E2E-135, TC-E2E-136, TC-E2E-137, TC-E2E-138, TC-E2E-139, TC-E2E-140, TC-E2E-141, TC-E2E-142, TC-E2E-143, TC-E2E-144, TC-E2E-145, TC-E2E-146, TC-E2E-147, TC-E2E-148, TC-E2E-149, TC-E2E-150, TC-E2E-151, TC-E2E-152, TC-E2E-153, TC-E2E-154, TC-E2E-155, TC-E2E-156, TC-E2E-157, TC-E2E-158, TC-E2E-159, TC-E2E-160</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E3%82%B3%E3%83%BC%E3%83%89%E3%83%99%E3%83%BC%E3%82%B9.html">テストケース_コードベース.md</a></td><td>TD011</td><td>5</td><td>5</td><td>0</td><td>TC-CB-001, TC-CB-002, TC-CB-003, TC-CB-004, TC-CB-005</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E3%82%B3%E3%83%BC%E3%83%89%E3%83%99%E3%83%BC%E3%82%B9.html">テストケース_コードベース.md</a></td><td>TD012</td><td>7</td><td>7</td><td>0</td><td>TC-CB-006, TC-CB-007, TC-CB-008, TC-CB-009, TC-CB-010, TC-CB-011, TC-CB-012</td><td>境界値を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E3%82%B3%E3%83%BC%E3%83%89%E3%83%99%E3%83%BC%E3%82%B9.html">テストケース_コードベース.md</a></td><td>TD013</td><td>5</td><td>5</td><td>0</td><td>TC-CB-013, TC-CB-014, TC-CB-015, TC-CB-016, TC-CB-017</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E3%82%B3%E3%83%BC%E3%83%89%E3%83%99%E3%83%BC%E3%82%B9.html">テストケース_コードベース.md</a></td><td>TD014</td><td>4</td><td>4</td><td>0</td><td>TC-CB-018, TC-CB-019, TC-CB-020, TC-CB-021</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E3%82%B3%E3%83%BC%E3%83%89%E3%83%99%E3%83%BC%E3%82%B9.html">テストケース_コードベース.md</a></td><td>TD015</td><td>3</td><td>3</td><td>0</td><td>TC-CB-022, TC-CB-023, TC-CB-024</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E3%82%B3%E3%83%BC%E3%83%89%E3%83%99%E3%83%BC%E3%82%B9.html">テストケース_コードベース.md</a></td><td>TD018</td><td>9</td><td>9</td><td>0</td><td>TC-CB-025, TC-CB-026, TC-CB-027, TC-CB-028, TC-CB-029, TC-CB-030, TC-CB-031, TC-CB-032, TC-CB-033</td><td>境界値を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E3%82%B3%E3%83%BC%E3%83%89%E3%83%99%E3%83%BC%E3%82%B9.html">テストケース_コードベース.md</a></td><td>TD024</td><td>6</td><td>6</td><td>0</td><td>TC-CB-034, TC-CB-035, TC-CB-036, TC-CB-037, TC-CB-038, TC-CB-039</td><td>境界値を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E3%82%B3%E3%83%BC%E3%83%89%E3%83%99%E3%83%BC%E3%82%B9.html">テストケース_コードベース.md</a></td><td>TD028</td><td>3</td><td>3</td><td>0</td><td>TC-CB-040, TC-CB-041, TC-CB-042</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E3%82%B3%E3%83%BC%E3%83%89%E3%83%99%E3%83%BC%E3%82%B9.html">テストケース_コードベース.md</a></td><td>TD029</td><td>4</td><td>4</td><td>0</td><td>TC-CB-043, TC-CB-044, TC-CB-045, TC-CB-046</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E3%82%B3%E3%83%BC%E3%83%89%E3%83%99%E3%83%BC%E3%82%B9.html">テストケース_コードベース.md</a></td><td>TD030</td><td>7</td><td>7</td><td>0</td><td>TC-CB-047, TC-CB-048, TC-CB-049, TC-CB-050, TC-CB-051, TC-CB-052, TC-CB-053</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E3%82%B3%E3%83%BC%E3%83%89%E3%83%99%E3%83%BC%E3%82%B9.html">テストケース_コードベース.md</a></td><td>TD031</td><td>16</td><td>16</td><td>0</td><td>TC-CB-054, TC-CB-055, TC-CB-056, TC-CB-057, TC-CB-058, TC-CB-059, TC-CB-060, TC-CB-061, TC-CB-062, TC-CB-063, TC-CB-064, TC-CB-065, TC-CB-066, TC-CB-067, TC-CB-068, TC-CB-069</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E3%82%B3%E3%83%BC%E3%83%89%E3%83%99%E3%83%BC%E3%82%B9.html">テストケース_コードベース.md</a></td><td>TD032</td><td>8</td><td>8</td><td>0</td><td>TC-CB-070, TC-CB-071, TC-CB-072, TC-CB-073, TC-CB-074, TC-CB-075, TC-CB-076, TC-CB-077</td><td>境界値を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E3%82%B3%E3%83%BC%E3%83%89%E3%83%99%E3%83%BC%E3%82%B9.html">テストケース_コードベース.md</a></td><td>TD033</td><td>5</td><td>5</td><td>0</td><td>TC-CB-078, TC-CB-079, TC-CB-080, TC-CB-081, TC-CB-082</td><td>境界値を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E3%82%B3%E3%83%BC%E3%83%89%E3%83%99%E3%83%BC%E3%82%B9.html">テストケース_コードベース.md</a></td><td>TD034</td><td>6</td><td>6</td><td>0</td><td>TC-CB-083, TC-CB-084, TC-CB-085, TC-CB-086, TC-CB-087, TC-CB-088</td><td>境界値を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E3%82%B3%E3%83%BC%E3%83%89%E3%83%99%E3%83%BC%E3%82%B9.html">テストケース_コードベース.md</a></td><td>TD035</td><td>4</td><td>4</td><td>0</td><td>TC-CB-089, TC-CB-090, TC-CB-091, TC-CB-092</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E3%82%B3%E3%83%BC%E3%83%89%E3%83%99%E3%83%BC%E3%82%B9.html">テストケース_コードベース.md</a></td><td>TD036</td><td>4</td><td>4</td><td>0</td><td>TC-CB-093, TC-CB-094, TC-CB-095, TC-CB-096</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E3%82%B3%E3%83%BC%E3%83%89%E3%83%99%E3%83%BC%E3%82%B9.html">テストケース_コードベース.md</a></td><td>TD037</td><td>4</td><td>4</td><td>0</td><td>TC-CB-097, TC-CB-098, TC-CB-099, TC-CB-100</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E3%82%B3%E3%83%BC%E3%83%89%E3%83%99%E3%83%BC%E3%82%B9.html">テストケース_コードベース.md</a></td><td>TD038</td><td>8</td><td>8</td><td>0</td><td>TC-CB-101, TC-CB-102, TC-CB-103, TC-CB-104, TC-CB-105, TC-CB-106, TC-CB-107, TC-CB-108</td><td>境界値を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E3%82%B3%E3%83%BC%E3%83%89%E3%83%99%E3%83%BC%E3%82%B9.html">テストケース_コードベース.md</a></td><td>TD039</td><td>4</td><td>4</td><td>0</td><td>TC-CB-109, TC-CB-110, TC-CB-111, TC-CB-112</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E3%82%B3%E3%83%BC%E3%83%89%E3%83%99%E3%83%BC%E3%82%B9.html">テストケース_コードベース.md</a></td><td>TD040</td><td>6</td><td>6</td><td>0</td><td>TC-CB-113, TC-CB-114, TC-CB-115, TC-CB-116, TC-CB-117, TC-CB-118</td><td>境界値を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E3%82%B3%E3%83%BC%E3%83%89%E3%83%99%E3%83%BC%E3%82%B9.html">テストケース_コードベース.md</a></td><td>TD041</td><td>20</td><td>20</td><td>0</td><td>TC-CB-119, TC-CB-120, TC-CB-121, TC-CB-122, TC-CB-123, TC-CB-124, TC-CB-125, TC-CB-126, TC-CB-127, TC-CB-128, TC-CB-129, TC-CB-130, TC-CB-131, TC-CB-132, TC-CB-133, TC-CB-134, TC-CB-135, TC-CB-136, TC-CB-137, TC-CB-138</td><td>境界値を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E3%82%B3%E3%83%BC%E3%83%89%E3%83%99%E3%83%BC%E3%82%B9.html">テストケース_コードベース.md</a></td><td>TD042</td><td>5</td><td>5</td><td>0</td><td>TC-CB-139, TC-CB-140, TC-CB-141, TC-CB-142, TC-CB-143</td><td>境界値を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E3%82%B3%E3%83%BC%E3%83%89%E3%83%99%E3%83%BC%E3%82%B9.html">テストケース_コードベース.md</a></td><td>TD043</td><td>5</td><td>5</td><td>0</td><td>TC-CB-144, TC-CB-145, TC-CB-146, TC-CB-147, TC-CB-148</td><td>境界値を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E3%82%B3%E3%83%BC%E3%83%89%E3%83%99%E3%83%BC%E3%82%B9.html">テストケース_コードベース.md</a></td><td>TD044</td><td>3</td><td>3</td><td>0</td><td>TC-CB-149, TC-CB-150, TC-CB-151</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E3%82%B3%E3%83%BC%E3%83%89%E3%83%99%E3%83%BC%E3%82%B9.html">テストケース_コードベース.md</a></td><td>TD053</td><td>8</td><td>8</td><td>0</td><td>TC-CB-152, TC-CB-153, TC-CB-154, TC-CB-155, TC-CB-156, TC-CB-157, TC-CB-158, TC-CB-159</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E3%82%B3%E3%83%BC%E3%83%89%E3%83%99%E3%83%BC%E3%82%B9.html">テストケース_コードベース.md</a></td><td>TD054</td><td>5</td><td>5</td><td>0</td><td>TC-CB-160, TC-CB-161, TC-CB-162, TC-CB-163, TC-CB-164</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E3%82%B3%E3%83%BC%E3%83%89%E3%83%99%E3%83%BC%E3%82%B9.html">テストケース_コードベース.md</a></td><td>TD055</td><td>3</td><td>3</td><td>0</td><td>TC-CB-165, TC-CB-166, TC-CB-167</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E3%82%B3%E3%83%BC%E3%83%89%E3%83%99%E3%83%BC%E3%82%B9.html">テストケース_コードベース.md</a></td><td>TD056</td><td>5</td><td>5</td><td>0</td><td>TC-CB-168, TC-CB-169, TC-CB-170, TC-CB-171, TC-CB-172</td><td>境界値を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E3%82%B3%E3%83%BC%E3%83%89%E3%83%99%E3%83%BC%E3%82%B9.html">テストケース_コードベース.md</a></td><td>TD058</td><td>3</td><td>3</td><td>0</td><td>TC-CB-173, TC-CB-174, TC-CB-175</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E3%82%B3%E3%83%BC%E3%83%89%E3%83%99%E3%83%BC%E3%82%B9.html">テストケース_コードベース.md</a></td><td>TD090</td><td>6</td><td>6</td><td>0</td><td>TC-CB-176, TC-CB-177, TC-CB-178, TC-CB-179, TC-CB-180, TC-CB-181</td><td>境界値を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E3%82%B3%E3%83%BC%E3%83%89%E3%83%99%E3%83%BC%E3%82%B9.html">テストケース_コードベース.md</a></td><td>TD092</td><td>5</td><td>5</td><td>0</td><td>TC-CB-182, TC-CB-183, TC-CB-184, TC-CB-185, TC-CB-186</td><td>境界値を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E3%82%B3%E3%83%BC%E3%83%89%E3%83%99%E3%83%BC%E3%82%B9.html">テストケース_コードベース.md</a></td><td>TD001</td><td>2</td><td>2</td><td>0</td><td>TC-CB-187, TC-CB-188</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E3%82%B3%E3%83%BC%E3%83%89%E3%83%99%E3%83%BC%E3%82%B9.html">テストケース_コードベース.md</a></td><td>TD002</td><td>4</td><td>4</td><td>0</td><td>TC-CB-189, TC-CB-190, TC-CB-191, TC-CB-192</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E3%82%B3%E3%83%BC%E3%83%89%E3%83%99%E3%83%BC%E3%82%B9.html">テストケース_コードベース.md</a></td><td>TD004</td><td>3</td><td>3</td><td>0</td><td>TC-CB-193, TC-CB-194, TC-CB-195</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E3%82%B3%E3%83%BC%E3%83%89%E3%83%99%E3%83%BC%E3%82%B9.html">テストケース_コードベース.md</a></td><td>TD009</td><td>5</td><td>5</td><td>0</td><td>TC-CB-196, TC-CB-197, TC-CB-198, TC-CB-199, TC-CB-200</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E3%82%B3%E3%83%BC%E3%83%89%E3%83%99%E3%83%BC%E3%82%B9.html">テストケース_コードベース.md</a></td><td>TD021</td><td>4</td><td>4</td><td>0</td><td>TC-CB-201, TC-CB-202, TC-CB-203, TC-CB-204</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E3%82%B3%E3%83%BC%E3%83%89%E3%83%99%E3%83%BC%E3%82%B9.html">テストケース_コードベース.md</a></td><td>TD022</td><td>5</td><td>5</td><td>0</td><td>TC-CB-205, TC-CB-206, TC-CB-207, TC-CB-208, TC-CB-209</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E3%82%B3%E3%83%BC%E3%83%89%E3%83%99%E3%83%BC%E3%82%B9.html">テストケース_コードベース.md</a></td><td>TD045</td><td>3</td><td>3</td><td>0</td><td>TC-CB-210, TC-CB-211, TC-CB-212</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E3%82%B3%E3%83%BC%E3%83%89%E3%83%99%E3%83%BC%E3%82%B9.html">テストケース_コードベース.md</a></td><td>TD046</td><td>3</td><td>3</td><td>0</td><td>TC-CB-213, TC-CB-214, TC-CB-215</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E3%82%B3%E3%83%BC%E3%83%89%E3%83%99%E3%83%BC%E3%82%B9.html">テストケース_コードベース.md</a></td><td>TD047</td><td>4</td><td>4</td><td>0</td><td>TC-CB-216, TC-CB-217, TC-CB-218, TC-CB-219</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E3%82%B3%E3%83%BC%E3%83%89%E3%83%99%E3%83%BC%E3%82%B9.html">テストケース_コードベース.md</a></td><td>TD048</td><td>3</td><td>3</td><td>0</td><td>TC-CB-220, TC-CB-221, TC-CB-222</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E3%82%B3%E3%83%BC%E3%83%89%E3%83%99%E3%83%BC%E3%82%B9.html">テストケース_コードベース.md</a></td><td>TD069</td><td>12</td><td>12</td><td>0</td><td>TC-CB-223, TC-CB-224, TC-CB-225, TC-CB-226, TC-CB-227, TC-CB-228, TC-CB-229, TC-CB-230, TC-CB-231, TC-CB-232, TC-CB-233, TC-CB-234</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E3%82%B3%E3%83%BC%E3%83%89%E3%83%99%E3%83%BC%E3%82%B9.html">テストケース_コードベース.md</a></td><td>TD070</td><td>12</td><td>12</td><td>0</td><td>TC-CB-235, TC-CB-236, TC-CB-237, TC-CB-238, TC-CB-239, TC-CB-240, TC-CB-241, TC-CB-242, TC-CB-243, TC-CB-244, TC-CB-245, TC-CB-246</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E3%82%B3%E3%83%BC%E3%83%89%E3%83%99%E3%83%BC%E3%82%B9.html">テストケース_コードベース.md</a></td><td>TD072</td><td>8</td><td>8</td><td>0</td><td>TC-CB-247, TC-CB-248, TC-CB-249, TC-CB-250, TC-CB-251, TC-CB-252, TC-CB-253, TC-CB-254</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E3%82%B3%E3%83%BC%E3%83%89%E3%83%99%E3%83%BC%E3%82%B9.html">テストケース_コードベース.md</a></td><td>TD089</td><td>10</td><td>10</td><td>0</td><td>TC-CB-255, TC-CB-256, TC-CB-257, TC-CB-258, TC-CB-259, TC-CB-260, TC-CB-261, TC-CB-262, TC-CB-263, TC-CB-264</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E3%82%B3%E3%83%BC%E3%83%89%E3%83%99%E3%83%BC%E3%82%B9.html">テストケース_コードベース.md</a></td><td>TD091</td><td>3</td><td>3</td><td>0</td><td>TC-CB-265, TC-CB-266, TC-CB-267</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E3%82%B3%E3%83%BC%E3%83%89%E3%83%99%E3%83%BC%E3%82%B9.html">テストケース_コードベース.md</a></td><td>TD094</td><td>4</td><td>4</td><td>0</td><td>TC-CB-268, TC-CB-269, TC-CB-270, TC-CB-271</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E3%82%B3%E3%83%BC%E3%83%89%E3%83%99%E3%83%BC%E3%82%B9.html">テストケース_コードベース.md</a></td><td>TD095</td><td>6</td><td>6</td><td>0</td><td>TC-CB-272, TC-CB-273, TC-CB-274, TC-CB-275, TC-CB-276, TC-CB-277</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E3%82%B3%E3%83%BC%E3%83%89%E3%83%99%E3%83%BC%E3%82%B9.html">テストケース_コードベース.md</a></td><td>TD096</td><td>4</td><td>4</td><td>0</td><td>TC-CB-278, TC-CB-279, TC-CB-280, TC-CB-281</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E3%82%B3%E3%83%BC%E3%83%89%E3%83%99%E3%83%BC%E3%82%B9.html">テストケース_コードベース.md</a></td><td>TD097</td><td>4</td><td>4</td><td>0</td><td>TC-CB-282, TC-CB-283, TC-CB-284, TC-CB-285</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E3%82%B3%E3%83%BC%E3%83%89%E3%83%99%E3%83%BC%E3%82%B9.html">テストケース_コードベース.md</a></td><td>TD098</td><td>3</td><td>3</td><td>0</td><td>TC-CB-286, TC-CB-287, TC-CB-288</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E3%82%B3%E3%83%BC%E3%83%89%E3%83%99%E3%83%BC%E3%82%B9.html">テストケース_コードベース.md</a></td><td>TD003</td><td>12</td><td>12</td><td>0</td><td>TC-CB-289, TC-CB-290, TC-CB-291, TC-CB-292, TC-CB-293, TC-CB-294, TC-CB-295, TC-CB-296, TC-CB-297, TC-CB-298, TC-CB-299, TC-CB-300</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E3%82%B3%E3%83%BC%E3%83%89%E3%83%99%E3%83%BC%E3%82%B9.html">テストケース_コードベース.md</a></td><td>TD005</td><td>3</td><td>3</td><td>0</td><td>TC-CB-301, TC-CB-302, TC-CB-303</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E3%82%B3%E3%83%BC%E3%83%89%E3%83%99%E3%83%BC%E3%82%B9.html">テストケース_コードベース.md</a></td><td>TD052</td><td>6</td><td>6</td><td>0</td><td>TC-CB-304, TC-CB-305, TC-CB-306, TC-CB-307, TC-CB-308, TC-CB-309</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E3%82%B3%E3%83%BC%E3%83%89%E3%83%99%E3%83%BC%E3%82%B9.html">テストケース_コードベース.md</a></td><td>TD071</td><td>12</td><td>12</td><td>0</td><td>TC-CB-310, TC-CB-311, TC-CB-312, TC-CB-313, TC-CB-314, TC-CB-315, TC-CB-316, TC-CB-317, TC-CB-318, TC-CB-319, TC-CB-320, TC-CB-321</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E3%82%B3%E3%83%BC%E3%83%89%E3%83%99%E3%83%BC%E3%82%B9.html">テストケース_コードベース.md</a></td><td>TD082</td><td>3</td><td>3</td><td>0</td><td>TC-CB-322, TC-CB-323, TC-CB-324</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E3%82%B3%E3%83%BC%E3%83%89%E3%83%99%E3%83%BC%E3%82%B9.html">テストケース_コードベース.md</a></td><td>TD083</td><td>4</td><td>4</td><td>0</td><td>TC-CB-325, TC-CB-326, TC-CB-327, TC-CB-328</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E3%82%B3%E3%83%BC%E3%83%89%E3%83%99%E3%83%BC%E3%82%B9.html">テストケース_コードベース.md</a></td><td>TD084</td><td>4</td><td>4</td><td>0</td><td>TC-CB-329, TC-CB-330, TC-CB-331, TC-CB-332</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E3%82%B3%E3%83%BC%E3%83%89%E3%83%99%E3%83%BC%E3%82%B9.html">テストケース_コードベース.md</a></td><td>TD085</td><td>5</td><td>5</td><td>0</td><td>TC-CB-333, TC-CB-334, TC-CB-335, TC-CB-336, TC-CB-337</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E3%82%B3%E3%83%BC%E3%83%89%E3%83%99%E3%83%BC%E3%82%B9.html">テストケース_コードベース.md</a></td><td>TD086</td><td>3</td><td>3</td><td>0</td><td>TC-CB-338, TC-CB-339, TC-CB-340</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E3%82%B3%E3%83%BC%E3%83%89%E3%83%99%E3%83%BC%E3%82%B9.html">テストケース_コードベース.md</a></td><td>TD087</td><td>4</td><td>4</td><td>0</td><td>TC-CB-341, TC-CB-342, TC-CB-343, TC-CB-344</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E3%82%B3%E3%83%BC%E3%83%89%E3%83%99%E3%83%BC%E3%82%B9.html">テストケース_コードベース.md</a></td><td>TD093</td><td>4</td><td>4</td><td>0</td><td>TC-CB-345, TC-CB-346, TC-CB-347, TC-CB-348</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E3%82%B3%E3%83%BC%E3%83%89%E3%83%99%E3%83%BC%E3%82%B9.html">テストケース_コードベース.md</a></td><td>TD065</td><td>4</td><td>4</td><td>0</td><td>TC-CB-349, TC-CB-350, TC-CB-351, TC-CB-352</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E3%82%B3%E3%83%BC%E3%83%89%E3%83%99%E3%83%BC%E3%82%B9.html">テストケース_コードベース.md</a></td><td>TD066</td><td>4</td><td>4</td><td>0</td><td>TC-CB-353, TC-CB-354, TC-CB-355, TC-CB-356</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E3%82%B3%E3%83%BC%E3%83%89%E3%83%99%E3%83%BC%E3%82%B9.html">テストケース_コードベース.md</a></td><td>TD067</td><td>3</td><td>3</td><td>0</td><td>TC-CB-357, TC-CB-358, TC-CB-359</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E4%BA%BA%E9%96%93%E5%AE%9F%E8%A1%8C.html">テストケース_人間実行.md</a></td><td>TD079</td><td>15</td><td>15</td><td>0</td><td>TC-MAN-001, TC-MAN-002, TC-MAN-003, TC-MAN-004, TC-MAN-005, TC-MAN-006, TC-MAN-007, TC-MAN-008, TC-MAN-009, TC-MAN-010, TC-MAN-011, TC-MAN-012, TC-MAN-013, TC-MAN-014, TC-MAN-015</td><td>境界値を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E4%BA%BA%E9%96%93%E5%AE%9F%E8%A1%8C.html">テストケース_人間実行.md</a></td><td>TD080</td><td>6</td><td>6</td><td>0</td><td>TC-MAN-016, TC-MAN-017, TC-MAN-018, TC-MAN-019, TC-MAN-020, TC-MAN-021</td><td>境界値を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E4%BA%BA%E9%96%93%E5%AE%9F%E8%A1%8C.html">テストケース_人間実行.md</a></td><td>TD081</td><td>3</td><td>3</td><td>0</td><td>TC-MAN-022, TC-MAN-023, TC-MAN-024</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E4%BA%BA%E9%96%93%E5%AE%9F%E8%A1%8C.html">テストケース_人間実行.md</a></td><td>TD016</td><td>3</td><td>3</td><td>0</td><td>TC-MAN-025, TC-MAN-026, TC-MAN-027</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E4%BA%BA%E9%96%93%E5%AE%9F%E8%A1%8C.html">テストケース_人間実行.md</a></td><td>TD027</td><td>3</td><td>3</td><td>0</td><td>TC-MAN-028, TC-MAN-029, TC-MAN-030</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E4%BA%BA%E9%96%93%E5%AE%9F%E8%A1%8C.html">テストケース_人間実行.md</a></td><td>TD057</td><td>4</td><td>4</td><td>0</td><td>TC-MAN-031, TC-MAN-032, TC-MAN-033, TC-MAN-034</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E4%BA%BA%E9%96%93%E5%AE%9F%E8%A1%8C.html">テストケース_人間実行.md</a></td><td>TD059</td><td>3</td><td>3</td><td>0</td><td>TC-MAN-035, TC-MAN-036, TC-MAN-037</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E4%BA%BA%E9%96%93%E5%AE%9F%E8%A1%8C.html">テストケース_人間実行.md</a></td><td>TD060</td><td>5</td><td>5</td><td>0</td><td>TC-MAN-038, TC-MAN-039, TC-MAN-040, TC-MAN-041, TC-MAN-042</td><td>境界値を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E4%BA%BA%E9%96%93%E5%AE%9F%E8%A1%8C.html">テストケース_人間実行.md</a></td><td>TD061</td><td>4</td><td>4</td><td>0</td><td>TC-MAN-043, TC-MAN-044, TC-MAN-045, TC-MAN-046</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E4%BA%BA%E9%96%93%E5%AE%9F%E8%A1%8C.html">テストケース_人間実行.md</a></td><td>TD063</td><td>4</td><td>4</td><td>0</td><td>TC-MAN-047, TC-MAN-048, TC-MAN-049, TC-MAN-050</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E4%BA%BA%E9%96%93%E5%AE%9F%E8%A1%8C.html">テストケース_人間実行.md</a></td><td>TD064</td><td>3</td><td>3</td><td>0</td><td>TC-MAN-051, TC-MAN-052, TC-MAN-053</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr>
+<tr><td><a href="%E3%83%86%E3%82%B9%E3%83%88%E3%82%B1%E3%83%BC%E3%82%B9_%E4%BA%BA%E9%96%93%E5%AE%9F%E8%A1%8C.html">テストケース_人間実行.md</a></td><td>TD062</td><td>5</td><td>5</td><td>0</td><td>TC-MAN-054, TC-MAN-055, TC-MAN-056, TC-MAN-057, TC-MAN-058</td><td>有限値・状態・失敗種別を全件展開</td><td>なし</td><td>各TCを独立にPass/Fail判定するため集約しない</td><td>充足</td></tr></tbody></table></div>
+</main>
+
+</body>
+</html>

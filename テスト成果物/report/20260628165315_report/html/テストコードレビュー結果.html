@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>テストコードレビュー</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f7f7f4;
+      --panel: #ffffff;
+      --text: #202124;
+      --muted: #666b73;
+      --border: #d9ddd6;
+      --accent: #0f766e;
+      --danger: #b42318;
+      --warn: #b7791f;
+      --ok: #16794c;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Segoe UI", "Meiryo", sans-serif;
+      line-height: 1.65;
+    }
+    header, main {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+    header {
+      padding-top: 32px;
+      border-bottom: 1px solid var(--border);
+    }
+    h1 { margin: 0 0 8px; font-size: 32px; }
+    h2 { margin-top: 32px; font-size: 24px; border-left: 5px solid var(--accent); padding-left: 10px; }
+    h3 { margin-top: 24px; font-size: 18px; }
+    p { margin: 8px 0; }
+    a { color: #075985; }
+    code {
+      background: #eef2f0;
+      border: 1px solid #d7ddda;
+      border-radius: 4px;
+      padding: 1px 4px;
+      font-family: Consolas, monospace;
+    }
+    pre {
+      overflow: auto;
+      background: #111827;
+      color: #f9fafb;
+      border-radius: 8px;
+      padding: 14px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin: 16px 0;
+    }
+    .metric {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+    }
+    .metric .label { color: var(--muted); font-size: 13px; }
+    .metric .value { font-size: 26px; font-weight: 700; margin-top: 4px; }
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--panel);
+      margin: 12px 0;
+    }
+    table { width: 100%; border-collapse: collapse; min-width: 720px; }
+    th, td { border-bottom: 1px solid var(--border); padding: 8px 10px; text-align: left; vertical-align: top; }
+    th { background: #eef2f0; white-space: nowrap; }
+    tr:last-child td { border-bottom: 0; }
+    .pill { display: inline-block; border-radius: 999px; padding: 2px 8px; font-weight: 700; font-size: 12px; }
+    .pass { color: var(--ok); }
+    .fail { color: var(--danger); }
+    .na { color: var(--warn); }
+  </style>
+</head>
+<body>
+<h2>テストコードレビュー結果</h2>
+<h3>1. レビュー対象</h3>
+<ul>
+<li><code>tests/code/lib-dateTime-utils.test.mjs</code></li>
+<li><code>package.json</code></li>
+<li><code>テスト成果物/テストコード実装結果.md</code></li>
+<li><code>テスト成果物/未実装テストケース_コードベース.md</code></li>
+<li><code>テスト成果物/テストケース_コードベース.md</code></li>
+<li>対象コード: <code>src/lib/dateTime.ts</code>, <code>src/lib/utils.ts</code>, <code>src/lib/useWorkHours.ts</code>, <code>src/contexts/TaskContext.tsx</code>, <code>src/components/tasks/TaskForm.tsx</code></li>
+</ul>
+<h3>2. 参照資料</h3>
+<ul>
+<li><code>テスト成果物/テスト設計.md</code></li>
+<li><code>テスト成果物/テストケース_コードベース.md</code></li>
+<li><code>README.md</code></li>
+<li><code>src/lib/dateTime.ts</code></li>
+<li><code>src/lib/utils.ts</code></li>
+<li><code>src/lib/useWorkHours.ts</code></li>
+<li><code>src/contexts/TaskContext.tsx</code></li>
+<li><code>src/components/tasks/TaskForm.tsx</code></li>
+<li><code>src/lib/types.ts</code></li>
+<li><code>package.json</code></li>
+</ul>
+<h3>3. レビュー観点</h3>
+<ul>
+<li>実装済みテストの <code>TC-CB-*</code> トレーサビリティ</li>
+<li>対象コードを実際にimportして検証しているか</li>
+<li>期待値が仕様または実装契約から導けるか</li>
+<li>テストの決定性とグローバル状態復元</li>
+<li>未実装ケースの理由が明確か</li>
+<li>テストコマンドが依存追加なしで実行可能か</li>
+</ul>
+<h3>4. レビュー・修正サマリー</h3>
+<ul>
+<li>初回実行で通知系2件が失敗した。原因はテストモックが <code>window.Notification</code> を提供しておらず、実装の <code>Notification in window</code> 条件を満たしていなかったこと。</li>
+<li>テストモックを修正し、<code>globalThis.window.Notification</code> を設定するようにした。</li>
+<li>一時変換ディレクトリがリポジトリ直下に残る設計を修正し、OS一時ディレクトリを使うようにした。</li>
+<li><code>src/lib/useWorkHours.ts</code> は localStorage 読み込み境界と0.5〜24時間クランプを純粋関数境界で確認した。</li>
+<li><code>src/contexts/TaskContext.tsx</code> は Supabase永続化全体ではなく、セッション/定常タスク生成に近い <code>generateDateKeys</code> の daily/weekly 境界を確認した。</li>
+<li><code>src/components/tasks/TaskForm.tsx</code> は React DOM基盤を追加せず、セッション入力検証・中断/再開変換の純粋関数境界を確認した。</li>
+<li>再実行で33件すべてPassし、TypeScript型検査もPassした。</li>
+</ul>
+<h3>5. 最終レビュー結果</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>優先度</th><th>観点</th><th>問題</th><th>場所</th><th>影響</th><th>修正方針</th></tr></thead>
+<tbody>
+<tr><td>P0</td><td>実行可否</td><td>なし</td><td>-</td><td>-</td><td>-</td></tr>
+<tr><td>P1</td><td>対象検証・トレーサビリティ</td><td>なし</td><td>-</td><td>-</td><td>-</td></tr>
+<tr><td>P2</td><td>決定性・保守性</td><td>なし</td><td>-</td><td>-</td><td>-</td></tr>
+<tr><td>P3</td><td>後続拡張</td><td>未実装326件は対象ファイルごとに追加実装が必要</td><td><code>未実装テストケース_コードベース.md</code></td><td>後続工程で対応</td><td>React DOM基盤やSupabaseモックが必要なケースは別工程で実装する</td></tr>
+</tbody></table></div>
+<h3>6. 実行結果</h3>
+<pre><code>node --test tests/code/*.test.mjs
+tests 33
+pass 33
+fail 0
+duration_ms 711.5201</code></pre>
+<pre><code>node node_modules/typescript/bin/tsc --noEmit -p tsconfig.app.json
+exit 0</code></pre>
+<h3>7. 残課題</h3>
+<ul>
+<li>P0/P1/P2: なし。</li>
+<li>P3: 未実装326件は今回指定対象外または追加具体化が必要。React UI状態のDOM検証やTaskContextのSupabase永続化モックは別工程で実装する。</li>
+</ul>
+</body>
+</html>

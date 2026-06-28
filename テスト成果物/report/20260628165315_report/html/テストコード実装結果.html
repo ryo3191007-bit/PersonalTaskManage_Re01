@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>テストコード実装結果</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f7f7f4;
+      --panel: #ffffff;
+      --text: #202124;
+      --muted: #666b73;
+      --border: #d9ddd6;
+      --accent: #0f766e;
+      --danger: #b42318;
+      --warn: #b7791f;
+      --ok: #16794c;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Segoe UI", "Meiryo", sans-serif;
+      line-height: 1.65;
+    }
+    header, main {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+    header {
+      padding-top: 32px;
+      border-bottom: 1px solid var(--border);
+    }
+    h1 { margin: 0 0 8px; font-size: 32px; }
+    h2 { margin-top: 32px; font-size: 24px; border-left: 5px solid var(--accent); padding-left: 10px; }
+    h3 { margin-top: 24px; font-size: 18px; }
+    p { margin: 8px 0; }
+    a { color: #075985; }
+    code {
+      background: #eef2f0;
+      border: 1px solid #d7ddda;
+      border-radius: 4px;
+      padding: 1px 4px;
+      font-family: Consolas, monospace;
+    }
+    pre {
+      overflow: auto;
+      background: #111827;
+      color: #f9fafb;
+      border-radius: 8px;
+      padding: 14px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin: 16px 0;
+    }
+    .metric {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+    }
+    .metric .label { color: var(--muted); font-size: 13px; }
+    .metric .value { font-size: 26px; font-weight: 700; margin-top: 4px; }
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--panel);
+      margin: 12px 0;
+    }
+    table { width: 100%; border-collapse: collapse; min-width: 720px; }
+    th, td { border-bottom: 1px solid var(--border); padding: 8px 10px; text-align: left; vertical-align: top; }
+    th { background: #eef2f0; white-space: nowrap; }
+    tr:last-child td { border-bottom: 0; }
+    .pill { display: inline-block; border-radius: 999px; padding: 2px 8px; font-weight: 700; font-size: 12px; }
+    .pass { color: var(--ok); }
+    .fail { color: var(--danger); }
+    .na { color: var(--warn); }
+  </style>
+</head>
+<body>
+<p>﻿# テストコード実装結果</p>
+<h3>1. 実装対象</h3>
+<ul>
+<li>対象ファイル: <code>src/lib/dateTime.ts</code>, <code>src/lib/utils.ts</code>, <code>src/lib/useWorkHours.ts</code>, <code>src/lib/supabase.ts</code>, <code>src/contexts/AuthContext.tsx</code>, <code>src/contexts/TaskContext.tsx</code>, <code>src/components/tasks/TaskForm.tsx</code>, <code>src/components/tasks/titleHistory.ts</code>, <code>src/pages/LoginPage.tsx</code>, <code>src/App.tsx</code>, <code>src/components/tasks/RecurrenceForm.tsx</code>, <code>src/pages/TaskListPage.tsx</code>, <code>src/pages/SettingsPage.tsx</code>, <code>src/pages/AnalyticsPage.tsx</code>, <code>supabase/migrations/*.sql</code>, <code>supabase/functions/update-account/index.ts</code>, <code>package.json</code>, <code>.gitignore</code>, <code>.env.example</code></li>
+<li>入力テストケース: <code>テスト成果物/テストケース_コードベース.md</code></li>
+<li>実装ファイル: <code>tests/code/lib-dateTime-utils.test.mjs</code>, <code>tests/code/phase2-pure-functions.test.mjs</code>, <code>tests/code/phase6-migrations.test.mjs</code>, <code>tests/code/phase7-update-account.test.mjs</code>, <code>tests/code/phase8-cli-env-security.test.mjs</code>, <code>tests/react/authContext.provider.test.tsx</code>, <code>tests/react/taskContext.provider.test.tsx</code>, <code>tests/react/taskForm.dom.test.tsx</code>, <code>tests/react/analyticsPage.dom.test.tsx</code>, <code>tests/react/settingsPage.dom.test.tsx</code>, <code>tests/react/phase4-login-app.dom.test.tsx</code>, <code>tests/react/phase4-recurrence.dom.test.tsx</code>, <code>tests/react/phase4-tasklist.dom.test.tsx</code>, <code>tests/react/phase4-xss-display.dom.test.tsx</code></li>
+<li>テストコマンド: <code>node --test tests/code/*.test.mjs</code>, <code>npm run test:react</code>, <code>node node_modules/typescript/bin/tsc --noEmit -p tsconfig.test.json</code></li>
+</ul>
+<h3>2. 参照資料</h3>
+<ul>
+<li><code>テスト成果物/テストケース_コードベース.md</code></li>
+<li><code>テスト成果物/テスト設計.md</code></li>
+<li><code>README.md</code></li>
+<li><code>src/lib/dateTime.ts</code></li>
+<li><code>src/lib/utils.ts</code></li>
+<li><code>src/lib/useWorkHours.ts</code></li>
+<li><code>src/lib/supabase.ts</code></li>
+<li><code>src/contexts/AuthContext.tsx</code></li>
+<li><code>src/contexts/TaskContext.tsx</code></li>
+<li><code>src/components/tasks/TaskForm.tsx</code></li>
+<li><code>src/components/tasks/titleHistory.ts</code></li>
+<li><code>src/lib/types.ts</code></li>
+<li><code>supabase/migrations/*.sql</code></li>
+<li><code>supabase/functions/update-account/index.ts</code></li>
+<li><code>package.json</code></li>
+<li><code>.gitignore</code></li>
+<li><code>.env.example</code></li>
+</ul>
+<h3>3. 使用テストフレームワーク</h3>
+<ul>
+<li>Node.js built-in <code>node:test</code></li>
+<li>Node.js built-in <code>node:test</code> は純粋関数/ブラウザAPI境界に使用する。<code>typescript.transpileModule</code> で対象TypeScriptソースをOS一時ディレクトリへ変換して実コードをimportする。</li>
+<li>Vitest + Testing Library + jsdom は React DOM/Provider テストに使用する。</li>
+</ul>
+<h3>4. 実装したテスト</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>テストケースID</th><th>テスト名</th><th>実装ファイル</th><th>対象</th><th>テストレベル/タイプ</th><th>仕様</th><th>リスクID</th><th>状態</th></tr></thead>
+<tbody>
+<tr><td>TC-CB-006</td><td>JST入力をUTC ISOへ変換する</td><td><code>tests/code/lib-dateTime-utils.test.mjs</code></td><td><code>parseJstDateTime</code>, <code>jstDateTimeToIso</code></td><td>Unit</td><td>README 日時仕様</td><td>R003, R014</td><td>実装済み</td></tr>
+<tr><td>TC-CB-007</td><td>不正なJST日時をnullとして扱う</td><td><code>tests/code/lib-dateTime-utils.test.mjs</code></td><td><code>parseJstDateTime</code></td><td>Unit</td><td>README 日時仕様</td><td>R003, R014</td><td>実装済み</td></tr>
+<tr><td>TC-CB-008</td><td>UTC日時をdatetime-local用JST文字列へ変換する</td><td><code>tests/code/lib-dateTime-utils.test.mjs</code></td><td><code>formatJstDateTimeLocal</code>, <code>getJstDateKey</code></td><td>Unit</td><td>README 日時仕様</td><td>R003, R014</td><td>実装済み</td></tr>
+<tr><td>TC-CB-009</td><td>JST日の半開区間をUTC範囲で返す</td><td><code>tests/code/lib-dateTime-utils.test.mjs</code></td><td><code>getJstDayRange</code></td><td>Unit</td><td>README 日時仕様</td><td>R003, R014</td><td>実装済み</td></tr>
+<tr><td>TC-CB-010</td><td>JST月の半開区間をUTC範囲で返す</td><td><code>tests/code/lib-dateTime-utils.test.mjs</code></td><td><code>getJstMonthRange</code></td><td>Unit</td><td>README 日時仕様</td><td>R003, R014</td><td>実装済み</td></tr>
+<tr><td>TC-CB-011</td><td>JST日付加算と月末丸めを行う</td><td><code>tests/code/lib-dateTime-utils.test.mjs</code></td><td><code>addJstDays</code>, <code>addJstMonths</code></td><td>Unit</td><td>README 日時仕様</td><td>R003, R014</td><td>実装済み</td></tr>
+<tr><td>TC-CB-012</td><td>JST壁時計Dateへ変換する</td><td><code>tests/code/lib-dateTime-utils.test.mjs</code></td><td><code>toJstWallClockDate</code></td><td>Unit</td><td>README 日時仕様</td><td>R003, R014</td><td>実装済み</td></tr>
+<tr><td>TC-CB-018〜TC-CB-021</td><td>実績工数の状態別計算</td><td><code>tests/code/lib-dateTime-utils.test.mjs</code></td><td><code>getActualMinutes</code></td><td>Unit</td><td><code>getActualMinutes</code></td><td>R003, R006</td><td>実装済み</td></tr>
+<tr><td>TC-CB-028</td><td>子を持つ親タスクを集計対象から除外する</td><td><code>tests/code/lib-dateTime-utils.test.mjs</code></td><td><code>getWorkloadTaskList</code>, <code>hasChildTasks</code></td><td>Unit</td><td>README 分析集計</td><td>R006</td><td>実装済み</td></tr>
+<tr><td>TC-CB-035</td><td>日跨ぎの当日分だけ作業工数を返す</td><td><code>tests/code/lib-dateTime-utils.test.mjs</code></td><td><code>getWorkloadMinsForDay</code></td><td>Unit</td><td>README 日時仕様</td><td>R005, R014</td><td>実装済み</td></tr>
+<tr><td>TC-CB-037</td><td>buildTreeは親子関係を再構築する</td><td><code>tests/code/lib-dateTime-utils.test.mjs</code></td><td><code>buildTree</code></td><td>Unit</td><td>TaskForm</td><td>R007, R015</td><td>実装済み</td></tr>
+<tr><td>TC-CB-063</td><td>予定工数は数量と単位時間から算出し0以下は未入力にする</td><td><code>tests/code/lib-dateTime-utils.test.mjs</code></td><td><code>getPlannedMinutes</code></td><td>Unit</td><td><code>getPlannedMinutes</code></td><td>R006, R007</td><td>実装済み</td></tr>
+<tr><td>TC-CB-070</td><td>予定工数を期間重複比率で按分する</td><td><code>tests/code/lib-dateTime-utils.test.mjs</code></td><td><code>getPlannedMinutesForRange</code></td><td>Unit</td><td><code>getPlannedMinutes</code></td><td>R006, R007</td><td>実装済み</td></tr>
+<tr><td>TC-CB-074</td><td>実績工数を指定範囲の重複分だけ按分する</td><td><code>tests/code/lib-dateTime-utils.test.mjs</code></td><td><code>getActualMinutesForRange</code></td><td>Unit</td><td>分析集計仕様</td><td>R006, R014</td><td>実装済み</td></tr>
+<tr><td>TC-CB-078</td><td>予定実績差異を1分許容で分類する</td><td><code>tests/code/lib-dateTime-utils.test.mjs</code></td><td><code>getDurationVariance</code></td><td>Unit</td><td>README 所要時間差異</td><td>R006</td><td>実装済み</td></tr>
+<tr><td>TC-CB-083</td><td>内部計算では小数分を丸めない</td><td><code>tests/code/lib-dateTime-utils.test.mjs</code></td><td><code>getActualMinutes</code></td><td>Unit</td><td>README 丸め</td><td>R006</td><td>実装済み</td></tr>
+<tr><td>TC-CB-088</td><td>当日テキスト出力はJST日の対象タスクだけを出力する</td><td><code>tests/code/lib-dateTime-utils.test.mjs</code></td><td><code>exportTodayTasksAsText</code></td><td>Unit</td><td>README 丸め</td><td>R006</td><td>実装済み</td></tr>
+<tr><td>TC-CB-165</td><td>通知再予約時に既存タイマーを取り消す</td><td><code>tests/code/lib-dateTime-utils.test.mjs</code></td><td><code>scheduleNotification</code>, <code>clearAllTaskNotifications</code></td><td>Unit</td><td>utils notificationTimers</td><td>R010</td><td>実装済み</td></tr>
+<tr><td>TC-CB-173</td><td>遠い将来の通知はsetTimeout上限以内で分割予約する</td><td><code>tests/code/lib-dateTime-utils.test.mjs</code></td><td><code>scheduleNotification</code></td><td>Unit</td><td>utils MAX_TIMER_DELAY、README</td><td>R010</td><td>実装済み</td></tr>
+<tr><td>TC-CB-138</td><td>作業時間上限を0.5から24時間へクランプする</td><td><code>tests/code/lib-dateTime-utils.test.mjs</code></td><td><code>normalizeWorkHours</code></td><td>Unit</td><td>useWorkHours localStorage設定</td><td>R007, R011</td><td>実装済み</td></tr>
+<tr><td>TC-CB-139</td><td>localStorage未設定と破損値は既定8時間で読み込む</td><td><code>tests/code/lib-dateTime-utils.test.mjs</code></td><td><code>loadWorkHours</code></td><td>Unit</td><td>useWorkHours localStorage設定</td><td>R007, R011</td><td>実装済み</td></tr>
+<tr><td>TC-CB-025</td><td>daily定常タスクは期間開始日と終了日を含める</td><td><code>tests/code/lib-dateTime-utils.test.mjs</code></td><td><code>generateDateKeys</code></td><td>Unit</td><td>TaskContext 定常タスク生成</td><td>R004, R014</td><td>実装済み</td></tr>
+<tr><td>TC-CB-026</td><td>weekly定常タスクはJST曜日に合う日だけ生成する</td><td><code>tests/code/lib-dateTime-utils.test.mjs</code></td><td><code>generateDateKeys</code></td><td>Unit</td><td>TaskContext 定常タスク生成</td><td>R004, R014</td><td>実装済み</td></tr>
+<tr><td>TC-CB-013</td><td>中断再開ペアはセッション列へ変換される</td><td><code>tests/code/lib-dateTime-utils.test.mjs</code></td><td><code>buildDesiredSessions</code></td><td>Unit</td><td>TaskForm セッション入力</td><td>R003, R007</td><td>実装済み</td></tr>
+<tr><td>TC-CB-014</td><td>中断時刻が開始以前ならエラーにする</td><td><code>tests/code/lib-dateTime-utils.test.mjs</code></td><td><code>buildDesiredSessions</code></td><td>Unit</td><td>TaskForm 入力検証</td><td>R003, R007</td><td>実装済み</td></tr>
+<tr><td>TC-CB-015</td><td>再開時刻が中断以前ならエラーにする</td><td><code>tests/code/lib-dateTime-utils.test.mjs</code></td><td><code>buildDesiredSessions</code></td><td>Unit</td><td>TaskForm 入力検証</td><td>R003, R007</td><td>実装済み</td></tr>
+<tr><td>TC-CB-016</td><td>中断中タスクは最後の再開時刻を空にする</td><td><code>tests/code/lib-dateTime-utils.test.mjs</code></td><td><code>buildDesiredSessions</code></td><td>Unit</td><td>TaskForm セッション入力</td><td>R003, R007</td><td>実装済み</td></tr>
+<tr><td>TC-CB-017</td><td>完了タスクは終了実績日時を必須にする</td><td><code>tests/code/lib-dateTime-utils.test.mjs</code></td><td><code>buildDesiredSessions</code></td><td>Unit</td><td>TaskForm 入力検証</td><td>R003, R007</td><td>実装済み</td></tr>
+<tr><td>TC-CB-089</td><td>セッションから中断再開入力行を復元する</td><td><code>tests/code/lib-dateTime-utils.test.mjs</code></td><td><code>buildEntriesFromSessions</code></td><td>Unit</td><td>TaskForm セッション復元</td><td>R007, R015</td><td>実装済み</td></tr>
+<tr><td>TC-CB-090</td><td>中断分数をJST入力から算出する</td><td><code>tests/code/lib-dateTime-utils.test.mjs</code></td><td><code>calcSuspendMins</code></td><td>Unit</td><td>TaskForm セッション入力</td><td>R007, R015</td><td>実装済み</td></tr>
+</tbody></table></div>
+<h4>4.1 今回追加実装: TaskContext Provider / 状態遷移</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>テストケースID</th><th>テスト名</th><th>実装ファイル</th><th>対象</th><th>テストレベル/タイプ</th><th>仕様</th><th>リスクID</th><th>状態</th></tr></thead>
+<tbody>
+<tr><td>TC-CB-001</td><td>未着手から進行中への遷移でタスク状態と開始セッションを保存する</td><td><code>tests/react/taskContext.provider.test.tsx</code></td><td><code>TaskProvider.updateTask</code>, <code>TaskProvider.createSession</code></td><td>Unit/Provider</td><td>TD011/TV011/TA003</td><td>R003</td><td>実装済み</td></tr>
+<tr><td>TC-CB-002</td><td>中断時に開放セッションを閉じ、actual_timeと中断状態を保存する</td><td><code>tests/react/taskContext.provider.test.tsx</code></td><td><code>TaskProvider.suspendTask</code></td><td>Unit/Provider</td><td>TD011/TV011/TA003</td><td>R003</td><td>実装済み</td></tr>
+<tr><td>TC-CB-003</td><td>再開時に中断状態を解除し、新しい開放セッションを作成する</td><td><code>tests/react/taskContext.provider.test.tsx</code></td><td><code>TaskProvider.resumeTask</code></td><td>Unit/Provider</td><td>TD011/TV011/TA003</td><td>R003</td><td>実装済み</td></tr>
+<tr><td>TC-CB-004</td><td>再開時に不足している中断終了セッションをactual_startから補完する</td><td><code>tests/react/taskContext.provider.test.tsx</code></td><td><code>TaskProvider.resumeTask</code></td><td>Unit/Provider</td><td>TD011/TV011/TA003</td><td>R003</td><td>実装済み</td></tr>
+<tr><td>TC-CB-005</td><td>完了時にタスク完了状態と終了済みセッションを保存する</td><td><code>tests/react/taskContext.provider.test.tsx</code></td><td><code>TaskProvider.updateTask</code>, <code>TaskProvider.updateSession</code></td><td>Unit/Provider</td><td>TD011/TV011/TA003</td><td>R003</td><td>実装済み</td></tr>
+<tr><td>TC-CB-201〜TC-CB-204</td><td>not_started/in_progress/suspended/completedの各ステータスを保存してProvider状態へ反映する</td><td><code>tests/react/taskContext.provider.test.tsx</code></td><td><code>TaskProvider.updateTask</code></td><td>Unit/Provider</td><td>TD021/TV021/TA004</td><td>R003, R006</td><td>実装済み</td></tr>
+<tr><td>TC-CB-205</td><td>定常グループ削除時に対象グループの生成タスクとグループだけを削除する</td><td><code>tests/react/taskContext.provider.test.tsx</code></td><td><code>TaskProvider.deleteRecurrenceGroup</code></td><td>Unit/Provider</td><td>TD022/TV022/TA004</td><td>R004</td><td>実装済み</td></tr>
+<tr><td>TC-CB-210</td><td>タスク削除時に対象タスクとProvider内の紐づくセッションだけを削除する</td><td><code>tests/react/taskContext.provider.test.tsx</code></td><td><code>TaskProvider.deleteTask</code></td><td>Unit/Provider</td><td>TD045/TV045/TA008</td><td>R007</td><td>実装済み</td></tr>
+</tbody></table></div>
+<h4>4.2 今回追加実装: TaskForm DOM入力 / UI状態</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>テストケースID</th><th>テスト名</th><th>実装ファイル</th><th>対象</th><th>テストレベル/タイプ</th><th>仕様</th><th>リスクID</th><th>状態</th></tr></thead>
+<tbody>
+<tr><td>TC-CB-097</td><td>空のタスク名では送信せず保存処理を呼ばない</td><td><code>tests/react/taskForm.dom.test.tsx</code></td><td><code>TaskForm</code></td><td>Unit/React DOM</td><td>TD037/TV037/TA007</td><td>R007, R015</td><td>実装済み</td></tr>
+<tr><td>TC-CB-098</td><td>空白だけのタスク名では送信せず保存処理を呼ばない</td><td><code>tests/react/taskForm.dom.test.tsx</code></td><td><code>TaskForm</code></td><td>Unit/React DOM</td><td>TD037/TV037/TA007</td><td>R007, R015</td><td>実装済み</td></tr>
+<tr><td>TC-CB-099〜TC-CB-100</td><td>有効な日本語・特殊文字タスク名をtrimして保存する</td><td><code>tests/react/taskForm.dom.test.tsx</code></td><td><code>TaskForm</code></td><td>Unit/React DOM</td><td>TD037/TV037/TA007</td><td>R007, R015</td><td>実装済み</td></tr>
+<tr><td>TC-CB-109</td><td>進行中で開始実績日時がない場合は保存しない</td><td><code>tests/react/taskForm.dom.test.tsx</code></td><td><code>TaskForm</code></td><td>Unit/React DOM</td><td>TD039/TV039/TA007</td><td>R003, R007</td><td>実装済み</td></tr>
+<tr><td>TC-CB-110</td><td>完了で終了実績日時がない場合は保存しない</td><td><code>tests/react/taskForm.dom.test.tsx</code></td><td><code>TaskForm</code></td><td>Unit/React DOM</td><td>TD039/TV039/TA007</td><td>R003, R007</td><td>実装済み</td></tr>
+<tr><td>TC-CB-111</td><td>中断で中断時刻がない場合は保存しない</td><td><code>tests/react/taskForm.dom.test.tsx</code></td><td><code>TaskForm</code></td><td>Unit/React DOM</td><td>TD039/TV039/TA007</td><td>R003, R007</td><td>実装済み</td></tr>
+<tr><td>TC-CB-112</td><td>中断入力行を追加しても中断時刻が空なら保存しない</td><td><code>tests/react/taskForm.dom.test.tsx</code></td><td><code>TaskForm</code></td><td>Unit/React DOM</td><td>TD039/TV039/TA007</td><td>R003, R007</td><td>実装済み</td></tr>
+<tr><td>TC-CB-220</td><td>編集対象自身を親タスク候補に表示しない</td><td><code>tests/react/taskForm.dom.test.tsx</code></td><td><code>TaskForm</code></td><td>Unit/React DOM</td><td>TD048/TV048/TA008</td><td>R008</td><td>実装済み</td></tr>
+<tr><td>TC-CB-221</td><td>編集対象の直接子を親タスク候補に表示しない</td><td><code>tests/react/taskForm.dom.test.tsx</code></td><td><code>TaskForm</code></td><td>Unit/React DOM</td><td>TD048/TV048/TA008</td><td>R008</td><td>実装済み</td></tr>
+</tbody></table></div>
+<h4>4.3 今回追加実装: 履歴 / 通知 / 出力</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>テストケースID</th><th>テスト名</th><th>実装ファイル</th><th>対象</th><th>テストレベル/タイプ</th><th>仕様</th><th>リスクID</th><th>状態</th></tr></thead>
+<tbody>
+<tr><td>TC-CB-152〜TC-CB-159</td><td>予定開始/終了通知の状態別予約と発火内容を検証する</td><td><code>tests/code/lib-dateTime-utils.test.mjs</code></td><td><code>scheduleNotification</code></td><td>Unit/Browser API mock</td><td>TD053/TV053/TA010</td><td>R010</td><td>実装済み</td></tr>
+<tr><td>TC-CB-160〜TC-CB-164</td><td>通知の再予約、個別取消、全取消、同期再構築を検証する</td><td><code>tests/code/lib-dateTime-utils.test.mjs</code></td><td><code>scheduleNotification</code>, <code>cancelTaskNotifications</code>, <code>clearAllTaskNotifications</code>, <code>syncTaskNotifications</code></td><td>Unit/Browser API mock</td><td>TD054/TV054/TA010</td><td>R010</td><td>実装済み</td></tr>
+<tr><td>TC-CB-166〜TC-CB-167</td><td>同一タスク重複排除と別タスク独立予約を検証する</td><td><code>tests/code/lib-dateTime-utils.test.mjs</code></td><td><code>scheduleNotification</code></td><td>Unit/Browser API mock</td><td>TD055/TV055/TA010</td><td>R010</td><td>実装済み</td></tr>
+<tr><td>TC-CB-168〜TC-CB-172</td><td>不正/過去/未来日時、通知権限、終了通知タグを検証する</td><td><code>tests/code/lib-dateTime-utils.test.mjs</code></td><td><code>scheduleNotification</code></td><td>Unit/Browser API mock</td><td>TD056/TV056/TA010</td><td>R010</td><td>実装済み</td></tr>
+<tr><td>TC-CB-174〜TC-CB-175</td><td>長期通知の上限内タイマー予約と取消を検証する</td><td><code>tests/code/lib-dateTime-utils.test.mjs</code></td><td><code>scheduleNotification</code>, <code>cancelTaskNotifications</code></td><td>Unit/Browser API mock</td><td>TD058/TV058/TA010</td><td>R010</td><td>実装済み</td></tr>
+<tr><td>TC-CB-176〜TC-CB-181</td><td>タイトル履歴の0/1/30/31件、重複、破損localStorageを検証する</td><td><code>tests/code/lib-dateTime-utils.test.mjs</code></td><td><code>loadTitleHistory</code>, <code>saveTitleHistory</code></td><td>Unit/localStorage mock</td><td>TD090/TV090/TA002</td><td>R002, R015</td><td>実装済み</td></tr>
+<tr><td>TC-CB-305〜TC-CB-309</td><td>CSV出力の通常/空/カンマ/改行/引用符セルを検証する</td><td><code>tests/code/lib-dateTime-utils.test.mjs</code></td><td><code>exportToCSV</code></td><td>Unit/DOM API mock</td><td>TD052/TV052/TA009</td><td>R009, R015</td><td>実装済み</td></tr>
+</tbody></table></div>
+<h4>4.4 今回追加実装: AnalyticsPage / SettingsPage React DOM</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>テストケースID</th><th>テスト名</th><th>実装ファイル</th><th>対象</th><th>テストレベル/タイプ</th><th>仕様</th><th>リスクID</th><th>状態</th></tr></thead>
+<tbody>
+<tr><td>TC-CB-084〜TC-CB-087</td><td>AnalyticsPageの時間小数第1位・割合整数表示丸めを検証する</td><td><code>tests/react/analyticsPage.dom.test.tsx</code></td><td><code>AnalyticsPage</code></td><td>Unit/React DOM</td><td>TD034/TV034/TA006</td><td>R006</td><td>実装済み</td></tr>
+<tr><td>TC-CB-091〜TC-CB-092</td><td>AnalyticsPageの空データ・カテゴリなし表示を検証する</td><td><code>tests/react/analyticsPage.dom.test.tsx</code></td><td><code>AnalyticsPage</code></td><td>Unit/React DOM</td><td>TD035/TV035/TA006</td><td>R006</td><td>実装済み</td></tr>
+<tr><td>TC-CB-093〜TC-CB-096</td><td>AnalyticsPageの全期間・月別・日別ドリルダウン切替を検証する</td><td><code>tests/react/analyticsPage.dom.test.tsx</code></td><td><code>AnalyticsPage</code></td><td>Unit/React DOM</td><td>TD036/TV036/TA006</td><td>R006</td><td>実装済み</td></tr>
+<tr><td>TC-CB-140〜TC-CB-143, TC-CB-182〜TC-CB-186</td><td>SettingsPageのパスワード境界・メール形式・確認不一致・変更なしを検証する</td><td><code>tests/react/settingsPage.dom.test.tsx</code></td><td><code>SettingsPage</code></td><td>Unit/React DOM</td><td>TD042/TD092</td><td>R001</td><td>実装済み</td></tr>
+<tr><td>TC-CB-149〜TC-CB-151</td><td>SettingsPageのカテゴリ名空白・保存失敗表示・保存中二重submit防止を検証する</td><td><code>tests/react/settingsPage.dom.test.tsx</code></td><td><code>SettingsPage</code></td><td>Unit/React DOM</td><td>TD044/TV044/TA007</td><td>R007</td><td>実装済み</td></tr>
+<tr><td>TC-CB-255〜TC-CB-264</td><td>SettingsPageのカテゴリ10色、色フィルタ、検索、編集反映を検証する</td><td><code>tests/react/settingsPage.dom.test.tsx</code></td><td><code>SettingsPage</code></td><td>Unit/React DOM</td><td>TD089/TV089/TA008</td><td>R008</td><td>実装済み</td></tr>
+</tbody></table></div>
+<h4>4.5 今回追加実装: Phase2 純粋関数 / localStorage / 出力境界</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>テストケースID</th><th>テスト名</th><th>実装ファイル</th><th>対象</th><th>テストレベル/タイプ</th><th>仕様</th><th>リスクID</th><th>状態</th></tr></thead>
+<tbody>
+<tr><td>TC-CB-027, TC-CB-029〜TC-CB-033</td><td>定常タスク日付生成・JST日付加算の翌日/月末/年末/うるう日境界を検証する</td><td><code>tests/code/phase2-pure-functions.test.mjs</code></td><td><code>generateDateKeys</code>, <code>addJstDays</code>, <code>addJstMonths</code></td><td>Unit</td><td>TD018/TV018/TA004</td><td>R004, R014</td><td>実装済み</td></tr>
+<tr><td>TC-CB-034, TC-CB-036, TC-CB-038〜TC-CB-039</td><td>日跨ぎ・月末境界の当日作業工数クリップを検証する</td><td><code>tests/code/phase2-pure-functions.test.mjs</code></td><td><code>getWorkloadMinsForDay</code></td><td>Unit</td><td>TD024/TV024/TA005</td><td>R005, R014</td><td>実装済み</td></tr>
+<tr><td>TC-CB-040〜TC-CB-042</td><td>単独タスク、子を持つ親、孤立子タスクの集計対象判定を検証する</td><td><code>tests/code/phase2-pure-functions.test.mjs</code></td><td><code>getWorkloadTaskList</code></td><td>Unit</td><td>TD028/TV028/TA006</td><td>R006</td><td>実装済み</td></tr>
+<tr><td>TC-CB-043〜TC-CB-046</td><td><code>track_actual=false</code> の実績・差異除外と件数対象維持を検証する</td><td><code>tests/code/phase2-pure-functions.test.mjs</code></td><td><code>getActualMinutes</code>, <code>getActualMinutesForRange</code>, <code>getDurationVariance</code>, <code>getWorkloadTaskList</code></td><td>Unit</td><td>TD029/TV029/TA006</td><td>R006</td><td>実装済み</td></tr>
+<tr><td>TC-CB-047〜TC-CB-053</td><td>予定工数の数量・単位時間・0/負数/非有限値境界を検証する</td><td><code>tests/code/phase2-pure-functions.test.mjs</code></td><td><code>getPlannedMinutes</code></td><td>Unit</td><td>TD030/TV030/TA006</td><td>R006, R007</td><td>実装済み</td></tr>
+<tr><td>TC-CB-054〜TC-CB-062, TC-CB-064〜TC-CB-069</td><td>未着手/進行中/中断中/完了の実績情報源優先順位を検証する</td><td><code>tests/code/phase2-pure-functions.test.mjs</code></td><td><code>getActualMinutes</code></td><td>Unit</td><td>TD031/TV031/TA006</td><td>R006</td><td>実装済み</td></tr>
+<tr><td>TC-CB-071〜TC-CB-073, TC-CB-075〜TC-CB-077</td><td>00:00、00:01、日跨ぎ、月末、うるう日、年末の期間按分境界を検証する</td><td><code>tests/code/phase2-pure-functions.test.mjs</code></td><td><code>getPlannedMinutesForRange</code></td><td>Unit</td><td>TD032/TV032/TA006</td><td>R006, R014</td><td>実装済み</td></tr>
+<tr><td>TC-CB-079〜TC-CB-082</td><td>所要時間差異の-1分/+1分許容境界を検証する</td><td><code>tests/code/phase2-pure-functions.test.mjs</code></td><td><code>getDurationVariance</code></td><td>Unit</td><td>TD033/TV033/TA006</td><td>R006</td><td>実装済み</td></tr>
+<tr><td>TC-CB-144〜TC-CB-148</td><td>作業時間設定の0.5〜24クランプ、未設定、破損、異常localStorageを検証する</td><td><code>tests/code/phase2-pure-functions.test.mjs</code></td><td><code>normalizeWorkHours</code>, <code>loadWorkHours</code></td><td>Unit/localStorage mock</td><td>TD043/TV043/TA007</td><td>R007, R011</td><td>実装済み</td></tr>
+<tr><td>TC-CB-304</td><td>CSV出力で数式先頭文字をアポストロフィで無害化することを検証する</td><td><code>tests/code/phase2-pure-functions.test.mjs</code></td><td><code>exportToCSV</code></td><td>Unit/DOM API mock</td><td>TD052/TV052/TA009</td><td>R009, R015</td><td>実装済み</td></tr>
+</tbody></table></div>
+<h4>4.6 今回追加実装: Phase4 残UI React DOM</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>テストケースID</th><th>テスト名</th><th>実装ファイル</th><th>対象</th><th>テストレベル/タイプ</th><th>仕様</th><th>リスクID</th><th>状態</th></tr></thead>
+<tbody>
+<tr><td>TC-CB-187〜TC-CB-188</td><td>ログイン/サインアップの認証関数呼び出しを検証する</td><td><code>tests/react/phase4-login-app.dom.test.tsx</code></td><td><code>LoginPage</code></td><td>Unit/React DOM</td><td>TD001/TV001/TA001</td><td>R001</td><td>実装済み</td></tr>
+<tr><td>TC-CB-193〜TC-CB-195</td><td>未認証/認証済み/loading時の保護画面表示を検証する</td><td><code>tests/react/phase4-login-app.dom.test.tsx</code></td><td><code>App</code></td><td>Unit/React DOM</td><td>TD004/TV004/TA001</td><td>R001, R015</td><td>実装済み</td></tr>
+<tr><td>TC-CB-101〜TC-CB-108</td><td>数量と1単位時間のUI入力境界を検証する</td><td><code>tests/react/taskForm.dom.test.tsx</code></td><td><code>TaskForm</code></td><td>Unit/React DOM</td><td>TD038/TV038/TA007</td><td>R007</td><td>実装済み</td></tr>
+<tr><td>TC-CB-113〜TC-CB-118</td><td>定常タスク作成の開始/終了時刻と曜日/期間境界を検証する</td><td><code>tests/react/phase4-recurrence.dom.test.tsx</code></td><td><code>RecurrenceForm</code></td><td>Unit/React DOM</td><td>TD040/TV040/TA007</td><td>R007, R014</td><td>実装済み</td></tr>
+<tr><td>TC-CB-119〜TC-CB-123</td><td>タスク名の0/1/29/30/31文字境界を検証する</td><td><code>tests/react/taskForm.dom.test.tsx</code></td><td><code>TaskForm</code></td><td>Unit/React DOM</td><td>TD041/TV041/TA007</td><td>R007, R015</td><td>実装済み</td></tr>
+<tr><td>TC-CB-124〜TC-CB-128</td><td>カテゴリ名の0/1/29/30/31文字境界を検証する</td><td><code>tests/react/settingsPage.dom.test.tsx</code></td><td><code>SettingsPage</code></td><td>Unit/React DOM</td><td>TD041/TV041/TA007</td><td>R007, R015</td><td>実装済み</td></tr>
+<tr><td>TC-CB-129〜TC-CB-133</td><td>予定メモの0/1/99/100/101文字境界を検証する</td><td><code>tests/react/taskForm.dom.test.tsx</code></td><td><code>TaskForm</code></td><td>Unit/React DOM</td><td>TD041/TV041/TA007</td><td>R007, R015</td><td>実装済み</td></tr>
+<tr><td>TC-CB-134〜TC-CB-137</td><td>実績メモの0/1/99/100文字境界を検証する</td><td><code>tests/react/taskForm.dom.test.tsx</code></td><td><code>TaskForm</code></td><td>Unit/React DOM</td><td>TD041/TV041/TA007</td><td>R007, R015</td><td>実装済み</td></tr>
+<tr><td>TC-CB-272〜TC-CB-274, TC-CB-278, TC-CB-280〜TC-CB-281</td><td>タスク一括削除の選択数、0件、複数削除、キャンセルを検証する</td><td><code>tests/react/phase4-tasklist.dom.test.tsx</code></td><td><code>TaskListPage</code></td><td>Unit/React DOM</td><td>TD095/TD096/TV095/TV096/TA019</td><td>R002, R017</td><td>実装済み</td></tr>
+<tr><td>TC-CB-275〜TC-CB-277, TC-CB-279</td><td>カテゴリ一括削除の選択数、解除、削除、1件状態を検証する</td><td><code>tests/react/settingsPage.dom.test.tsx</code></td><td><code>SettingsPage</code></td><td>Unit/React DOM</td><td>TD095/TD096/TV095/TV096/TA019</td><td>R002, R017</td><td>実装済み</td></tr>
+<tr><td>TC-CB-322〜TC-CB-324</td><td>タスク名/メモ/カテゴリ名のHTML・script様文字列が実行されずテキスト表示されることを検証する</td><td><code>tests/react/phase4-xss-display.dom.test.tsx</code></td><td><code>TaskListPage</code>, <code>SettingsPage</code></td><td>Unit/React DOM/Security</td><td>TD082/TV082/TA017</td><td>R015</td><td>実装済み</td></tr>
+</tbody></table></div>
+<h4>4.7 今回追加実装: Phase3 Provider / 状態管理</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>テストケースID</th><th>テスト名</th><th>実装ファイル</th><th>対象</th><th>テストレベル/タイプ</th><th>仕様</th><th>リスクID</th><th>状態</th></tr></thead>
+<tbody>
+<tr><td>TC-CB-189〜TC-CB-192</td><td>未認証、ユーザーA/B切替、期限切れ相当sessionのAuthProvider状態を検証する</td><td><code>tests/react/authContext.provider.test.tsx</code></td><td><code>AuthProvider</code></td><td>Unit/Provider</td><td>TD002/TV002/TA001</td><td>R001, R007</td><td>実装済み</td></tr>
+<tr><td>TC-CB-196〜TC-CB-200</td><td>単体削除、一括削除相当、空選択、通知/セッション整理をProvider境界で検証する</td><td><code>tests/react/taskContext.provider.test.tsx</code></td><td><code>TaskProvider.deleteTask</code></td><td>Unit/Provider</td><td>TD009/TV009/TA002</td><td>R017</td><td>実装済み</td></tr>
+<tr><td>TC-CB-206〜TC-CB-209</td><td>定常グループ削除の複数生成タスク、他グループ、単独タスク、空グループ境界を検証する</td><td><code>tests/react/taskContext.provider.test.tsx</code></td><td><code>TaskProvider.deleteRecurrenceGroup</code></td><td>Unit/Provider</td><td>TD022/TV022/TA004</td><td>R004</td><td>実装済み</td></tr>
+<tr><td>TC-CB-022〜TC-CB-024</td><td>中断中の開放区間を加算せず、再開後から実績加算する境界を検証する</td><td><code>tests/react/taskContext.provider.test.tsx</code></td><td><code>TaskProvider.suspendTask</code>, <code>TaskProvider.resumeTask</code>, <code>TaskProvider.updateTask</code></td><td>Unit/Provider</td><td>TD015/TV015/TA003</td><td>R003, R014</td><td>実装済み</td></tr>
+<tr><td>TC-CB-211〜TC-CB-215</td><td>親削除時の子保持/parent_task_id NULL化、カテゴリ削除時の未分類保持を検証する</td><td><code>tests/react/taskContext.provider.test.tsx</code></td><td><code>TaskProvider.deleteTask</code>, <code>TaskProvider.deleteCategory</code></td><td>Unit/Provider/FK mock</td><td>TD045/TD046/TV045/TV046/TA008</td><td>R007, R008</td><td>実装済み</td></tr>
+<tr><td>TC-CB-216〜TC-CB-219</td><td>全直接子完了時の親自動完了と、未完了子/完了解除時の非自動変更を検証する</td><td><code>tests/react/taskContext.provider.test.tsx</code></td><td><code>TaskProvider.updateTask</code></td><td>Unit/Provider</td><td>TD047/TV047/TA008</td><td>R008</td><td>実装済み</td></tr>
+<tr><td>TC-CB-222</td><td>削除済み親IDが編集フォームに残っていても保存時にNULLへ正規化する</td><td><code>tests/react/taskForm.dom.test.tsx</code></td><td><code>TaskForm</code></td><td>Unit/React DOM/FK guard</td><td>TD048/TV048/TA008</td><td>R008</td><td>実装済み</td></tr>
+<tr><td>TC-CB-282〜TC-CB-288</td><td>選択削除/カテゴリ参照NULL化/生成タスクセッション削除/一括削除の全成功・部分失敗・全失敗を検証する</td><td><code>tests/react/taskContext.provider.test.tsx</code></td><td><code>TaskProvider.deleteTask</code>, <code>TaskProvider.deleteCategory</code>, <code>TaskProvider.deleteRecurrenceGroup</code>, <code>SupabaseMock</code></td><td>Unit/Provider/FK mock</td><td>TD097/TD098/TV097/TV098/TA019</td><td>R017</td><td>実装済み</td></tr>
+<tr><td>TC-CB-341〜TC-CB-344</td><td>Supabase保存データとlocalStorage履歴の削除・保持範囲をProvider境界で検証する</td><td><code>tests/react/taskContext.provider.test.tsx</code></td><td><code>TaskProvider</code>, <code>localStorage</code></td><td>Unit/Provider/Security</td><td>TD087/TV087/TA017</td><td>R015</td><td>実装済み</td></tr>
+</tbody></table></div>
+<h4>4.8 今回追加実装: Phase5 Browser API / privacy</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>テストケースID</th><th>テスト名</th><th>実装ファイル</th><th>対象</th><th>テストレベル/タイプ</th><th>仕様</th><th>リスクID</th><th>状態</th></tr></thead>
+<tbody>
+<tr><td>TC-CB-329</td><td>CSV exportに含まれる個人情報範囲を検証する</td><td><code>tests/code/lib-dateTime-utils.test.mjs</code></td><td><code>exportToCSV</code></td><td>Unit/Browser API mock/Security</td><td>TD084/TV084/TA017</td><td>R015</td><td>実装済み</td></tr>
+<tr><td>TC-CB-330</td><td>clipboardへ渡す当日テキスト出力の個人情報範囲を検証する</td><td><code>tests/code/lib-dateTime-utils.test.mjs</code></td><td><code>exportTodayTasksAsText</code></td><td>Unit/Browser API mock/Security</td><td>TD084/TV084/TA017</td><td>R015</td><td>実装済み</td></tr>
+<tr><td>TC-CB-331</td><td>notification本文に含まれる個人情報範囲を検証する</td><td><code>tests/code/lib-dateTime-utils.test.mjs</code></td><td><code>scheduleNotification</code></td><td>Unit/Browser API mock/Security</td><td>TD084/TV084/TA017</td><td>R015</td><td>実装済み</td></tr>
+<tr><td>TC-CB-332</td><td>localStorageに保存するUI設定/履歴範囲を検証する</td><td><code>tests/code/lib-dateTime-utils.test.mjs</code></td><td><code>titleHistory</code>, <code>useWorkHours</code></td><td>Unit/localStorage mock/Security</td><td>TD084/TV084/TA017</td><td>R015</td><td>実装済み</td></tr>
+</tbody></table></div>
+<h4>4.9 今回追加実装: Phase6 DB / SQL / migration</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>テストケースID</th><th>テスト名</th><th>実装ファイル</th><th>対象</th><th>テストレベル/タイプ</th><th>仕様</th><th>リスクID</th><th>状態</th></tr></thead>
+<tbody>
+<tr><td>TC-CB-223〜TC-CB-234</td><td>12本のmigration存在と主要schema変更を検証する</td><td><code>tests/code/phase6-migrations.test.mjs</code></td><td><code>supabase/migrations/*.sql</code></td><td>Unit/Static SQL</td><td>TD069/TV069/TA014</td><td>R001, R007, R014</td><td>実装済み</td></tr>
+<tr><td>TC-CB-235〜TC-CB-246</td><td>migration再適用に必要な静的冪等性ガードを検証する</td><td><code>tests/code/phase6-migrations.test.mjs</code></td><td><code>supabase/migrations/*.sql</code></td><td>Unit/Static SQL</td><td>TD070/TV070/TA014</td><td>R014</td><td>実装済み</td></tr>
+<tr><td>TC-CB-247〜TC-CB-254</td><td>FK CASCADE/SET NULLとCHECK制約を検証する</td><td><code>tests/code/phase6-migrations.test.mjs</code></td><td><code>supabase/migrations/*.sql</code></td><td>Unit/Static SQL</td><td>TD072/TV072/TA014</td><td>R007, R008, R017</td><td>実装済み</td></tr>
+<tr><td>TC-CB-289〜TC-CB-300</td><td>tasks/categories/sessions/recurrence_groupsのSELECT/UPDATE/DELETE RLS所有者制約を検証する</td><td><code>tests/code/phase6-migrations.test.mjs</code></td><td><code>supabase/migrations/*.sql</code></td><td>Unit/Static SQL/Security</td><td>TD003/TV003/TA001</td><td>R001</td><td>実装済み</td></tr>
+<tr><td>TC-CB-310〜TC-CB-321</td><td>各テーブルのRLS有効化、INSERT/UPDATE owner checkを検証する</td><td><code>tests/code/phase6-migrations.test.mjs</code></td><td><code>supabase/migrations/*.sql</code></td><td>Unit/Static SQL/Security</td><td>TD071/TV071/TA014</td><td>R001</td><td>実装済み</td></tr>
+</tbody></table></div>
+<h4>4.10 今回追加実装: Phase7 Edge Function / API</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>テストケースID</th><th>テスト名</th><th>実装ファイル</th><th>対象</th><th>テストレベル/タイプ</th><th>仕様</th><th>リスクID</th><th>状態</th></tr></thead>
+<tbody>
+<tr><td>TC-CB-265〜TC-CB-267</td><td>SettingsPageのパスワード5文字拒否、6文字許可、確認不一致拒否を検証する</td><td><code>tests/react/settingsPage.dom.test.tsx</code></td><td><code>SettingsPage</code></td><td>Unit/React DOM</td><td>TD091/TV091/TA018</td><td>R016</td><td>実装済み</td></tr>
+<tr><td>TC-CB-268〜TC-CB-271</td><td>updateAccountの通信失敗/401/400/管理API失敗応答をErrorとして返すことを検証する</td><td><code>tests/react/authContext.provider.test.tsx</code></td><td><code>AuthProvider.updateAccount</code></td><td>Unit/Provider/API mock</td><td>TD094/TV094/TA018</td><td>R016</td><td>実装済み</td></tr>
+<tr><td>TC-CB-301〜TC-CB-303</td><td>Bearer token検証と本人ユーザーIDだけを更新対象にすることを検証する</td><td><code>tests/code/phase7-update-account.test.mjs</code></td><td><code>supabase/functions/update-account/index.ts</code></td><td>Unit/Static API/Security</td><td>TD005/TV005/TA001</td><td>R001, R015</td><td>実装済み</td></tr>
+<tr><td>TC-CB-333〜TC-CB-337</td><td>CORS、認証失敗、入力不正、管理API失敗、service role key非露出を検証する</td><td><code>tests/code/phase7-update-account.test.mjs</code></td><td><code>supabase/functions/update-account/index.ts</code></td><td>Unit/Static API/Security</td><td>TD085/TV085/TA017</td><td>R001, R015</td><td>実装済み</td></tr>
+<tr><td>TC-CB-345〜TC-CB-348</td><td>未認証/無効token拒否、有効token所有者更新、クライアント側service role key非送信を検証する</td><td><code>tests/code/phase7-update-account.test.mjs</code></td><td><code>supabase/functions/update-account/index.ts</code>, <code>src/contexts/AuthContext.tsx</code></td><td>Unit/Static API/Security</td><td>TD093/TV093/TA018</td><td>R001, R015, R016</td><td>実装済み</td></tr>
+</tbody></table></div>
+<h4>4.11 今回追加実装: Phase8 CLI / 環境 / セキュリティ検査</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>テストケースID</th><th>テスト名</th><th>実装ファイル</th><th>対象</th><th>テストレベル/タイプ</th><th>仕様</th><th>リスクID</th><th>状態</th></tr></thead>
+<tbody>
+<tr><td>TC-CB-325〜TC-CB-328</td><td>service role keyがフロント資産、<code>.env.example</code>、クライアント認証要求へ混入しないことを検証する</td><td><code>tests/code/phase8-cli-env-security.test.mjs</code></td><td><code>src/**</code>, <code>.gitignore</code>, <code>.env.example</code>, <code>AuthContext</code></td><td>Unit/Static Security</td><td>TD083/TV083/TA017</td><td>R015</td><td>実装済み</td></tr>
+<tr><td>TC-CB-338〜TC-CB-340</td><td>audit対象lockfile、audit回避設定なし、依存/エンジン宣言を検証する</td><td><code>tests/code/phase8-cli-env-security.test.mjs</code></td><td><code>package.json</code>, <code>package-lock.json</code></td><td>Unit/Static CLI/Security</td><td>TD086/TV086/TA017</td><td>R015</td><td>実装済み</td></tr>
+<tr><td>TC-CB-349〜TC-CB-352</td><td>Node/npm engines、lockfile再現性、build/typecheck/lintスクリプトを検証する</td><td><code>tests/code/phase8-cli-env-security.test.mjs</code></td><td><code>package.json</code>, <code>package-lock.json</code></td><td>Unit/Static CLI</td><td>TD065/TV065/TA012</td><td>R012</td><td>実装済み</td></tr>
+<tr><td>TC-CB-353〜TC-CB-356</td><td>Supabase必須環境変数の未設定・不正URL・anon key未設定・秘密値非露出診断を検証する</td><td><code>tests/code/phase8-cli-env-security.test.mjs</code></td><td><code>src/lib/supabase.ts</code></td><td>Unit/Static CLI/Security</td><td>TD066/TV066/TA012</td><td>R012, R015</td><td>実装済み</td></tr>
+<tr><td>TC-CB-357〜TC-CB-359</td><td>正常終了用テストコマンド、失敗時non-zero構成、専用Supabase非依存の再実行性を検証する</td><td><code>tests/code/phase8-cli-env-security.test.mjs</code></td><td><code>package.json</code></td><td>Unit/Static CLI</td><td>TD067/TV067/TA012</td><td>R012</td><td>実装済み</td></tr>
+</tbody></table></div>
+<h3>5. 未実装テストケース</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>区分</th><th>件数</th><th>主な理由</th><th>詳細ファイル</th></tr></thead>
+<tbody>
+<tr><td>未実装</td><td>0</td><td>該当なし</td><td><code>テスト成果物/未実装テストケース_コードベース.md</code></td></tr>
+</tbody></table></div>
+<h3>6. 実行結果</h3>
+<pre><code>node --test tests/code/*.test.mjs
+tests 201
+pass 201
+fail 0
+duration_ms 858.6211</code></pre>
+<pre><code>node node_modules/vitest/vitest.mjs run --config vitest.config.ts
+Test Files 11 passed
+Tests 124 passed
+fail 0
+Duration 29.90s</code></pre>
+<pre><code>node node_modules/typescript/bin/tsc --noEmit -p tsconfig.test.json
+exit 0</code></pre>
+<pre><code>npm run build
+exit 0</code></pre>
+<pre><code>npm run typecheck
+exit 0</code></pre>
+<pre><code>npm run lint
+exit 0
+warnings 24</code></pre>
+<pre><code>npm audit --audit-level=high
+found 0 vulnerabilities</code></pre>
+<h3>7. トレーサビリティ確認</h3>
+<ul>
+<li>各テスト名に <code>TC-CB-*</code>, <code>TDxxx</code>, <code>TVxxx</code>, <code>TAxxx</code>, <code>Rxxx</code> を含めた。</li>
+<li>質問待ちまたは期待結果が未確定のケースは実装していない。</li>
+<li>対象外ケースは <code>未実装テストケース_コードベース.md</code> に分離した。</li>
+</ul>
+</body>
+</html>

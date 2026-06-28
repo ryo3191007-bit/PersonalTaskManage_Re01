@@ -13,6 +13,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "test:code": "node --test tests/code/*.test.mjs",
+    "test:e2e": "playwright test",
     "test:react": "vitest run --config vitest.config.ts",
     "test:react:watch": "vitest --config vitest.config.ts",
     "typecheck": "tsc --noEmit -p tsconfig.app.json"
@@ -25,6 +26,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.4",
+    "@playwright/test": "^1.61.1",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",

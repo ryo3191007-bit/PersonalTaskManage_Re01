@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Playwright E2Eテスト実装結果</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f7f7f4;
+      --panel: #ffffff;
+      --text: #202124;
+      --muted: #666b73;
+      --border: #d9ddd6;
+      --accent: #0f766e;
+      --danger: #b42318;
+      --warn: #b7791f;
+      --ok: #16794c;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Segoe UI", "Meiryo", sans-serif;
+      line-height: 1.65;
+    }
+    header, main {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+    header {
+      padding-top: 32px;
+      border-bottom: 1px solid var(--border);
+    }
+    h1 { margin: 0 0 8px; font-size: 32px; }
+    h2 { margin-top: 32px; font-size: 24px; border-left: 5px solid var(--accent); padding-left: 10px; }
+    h3 { margin-top: 24px; font-size: 18px; }
+    p { margin: 8px 0; }
+    a { color: #075985; }
+    code {
+      background: #eef2f0;
+      border: 1px solid #d7ddda;
+      border-radius: 4px;
+      padding: 1px 4px;
+      font-family: Consolas, monospace;
+    }
+    pre {
+      overflow: auto;
+      background: #111827;
+      color: #f9fafb;
+      border-radius: 8px;
+      padding: 14px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin: 16px 0;
+    }
+    .metric {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+    }
+    .metric .label { color: var(--muted); font-size: 13px; }
+    .metric .value { font-size: 26px; font-weight: 700; margin-top: 4px; }
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--panel);
+      margin: 12px 0;
+    }
+    table { width: 100%; border-collapse: collapse; min-width: 720px; }
+    th, td { border-bottom: 1px solid var(--border); padding: 8px 10px; text-align: left; vertical-align: top; }
+    th { background: #eef2f0; white-space: nowrap; }
+    tr:last-child td { border-bottom: 0; }
+    .pill { display: inline-block; border-radius: 999px; padding: 2px 8px; font-weight: 700; font-size: 12px; }
+    .pass { color: var(--ok); }
+    .fail { color: var(--danger); }
+    .na { color: var(--warn); }
+  </style>
+</head>
+<body>
+<p>﻿# Playwright E2Eテスト実装結果</p>
+<h3>1. 実装対象</h3>
+<ul>
+<li>対象URL: https://personal-task-manage-pcx2.bolt.host/</li>
+<li>元ファイル: テスト成果物/テストケース_E2E自動.md</li>
+<li>実装済み: 160件</li>
+<li>未実装: 0件</li>
+</ul>
+<h3>2. 参照資料</h3>
+<ul>
+<li>テスト成果物/テストケース_E2E自動.md</li>
+<li>テスト成果物/テストケース_質問待ち.md</li>
+<li>テスト成果物/テスト設計.md</li>
+<li>README.md, FUNCTION_LIST.md, SCREEN_LIST.md</li>
+<li>src/pages/LoginPage.tsx, src/contexts/AuthContext.tsx, src/contexts/TaskContext.tsx</li>
+</ul>
+<h3>3. Playwright構成</h3>
+<ul>
+<li>設定ファイル: playwright.config.cjs</li>
+<li>テストディレクトリ: tests/e2e</li>
+<li>実装ファイル: tests/e2e/personal-taskmanage.e2e.spec.cjs</li>
+<li>ケースデータ: tests/e2e/e2e-cases.generated.cjs</li>
+<li>ブラウザ: Chromium</li>
+<li>追加依存: @playwright/test</li>
+<li>ブラウザセットアップ: playwright install chromium 実行済み</li>
+<li>公開環境実行時は E2E_BASE_URL, E2E_TEST_EMAIL, E2E_TEST_PASSWORD, E2E_IMPLEMENT_ALL=true を指定する。</li>
+</ul>
+<h3>4. 実装したテスト</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>テストケースID</th><th>テスト名</th><th>実装ファイル</th><th>対象</th><th>テストレベル/タイプ</th><th>仕様</th><th>リスクID</th><th>状態</th></tr></thead>
+<tbody>
+<tr><td>TC-E2E-001</td><td>TD006 タスクの作成、再表示、編集、削除がSupabaseへ永続化されること 分割01</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>F101-F104、AC001-AC002</td><td>R002</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-002</td><td>TD006 タスクの作成、再表示、編集、削除がSupabaseへ永続化されること 分割02</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>F101-F104、AC001-AC002</td><td>R002</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-003</td><td>TD006 タスクの作成、再表示、編集、削除がSupabaseへ永続化されること 分割03</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>F101-F104、AC001-AC002</td><td>R002</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-004</td><td>TD006 タスクの作成、再表示、編集、削除がSupabaseへ永続化されること 分割04</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>F101-F104、AC001-AC002</td><td>R002</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-005</td><td>TD007 新規タスクのステータス未着手、優先度中、数量1が適用されること 分割01</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>README タスク登録</td><td>R002, R007</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-006</td><td>TD007 新規タスクのステータス未着手、優先度中、数量1が適用されること 分割02</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>README タスク登録</td><td>R002, R007</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-007</td><td>TD007 新規タスクのステータス未着手、優先度中、数量1が適用されること 分割03</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>README タスク登録</td><td>R002, R007</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-008</td><td>TD007 新規タスクのステータス未着手、優先度中、数量1が適用されること 分割04</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>README タスク登録</td><td>R002, R007</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-009</td><td>TD007 新規タスクのステータス未着手、優先度中、数量1が適用されること 分割05</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>README タスク登録</td><td>R002, R007</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-010</td><td>TD007 新規タスクのステータス未着手、優先度中、数量1が適用されること 分割06</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>README タスク登録</td><td>R002, R007</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-011</td><td>TD007 新規タスクのステータス未着手、優先度中、数量1が適用されること 分割07</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>README タスク登録</td><td>R002, R007</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-012</td><td>TD007 新規タスクのステータス未着手、優先度中、数量1が適用されること 分割08</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>README タスク登録</td><td>R002, R007</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-013</td><td>TD008 キャンセル</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>TaskForm、TaskContext</td><td>R002</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-014</td><td>TD008 失敗</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>TaskForm、TaskContext</td><td>R002</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-015</td><td>TD008 再試行</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>TaskForm、TaskContext</td><td>R002</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-016</td><td>TD010 登録・編集・状態変更・削除が再読込後も同じ結果であること 分割01</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>AC001-AC003</td><td>R002, R012</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-017</td><td>TD010 登録・編集・状態変更・削除が再読込後も同じ結果であること 分割02</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>AC001-AC003</td><td>R002, R012</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-018</td><td>TD010 登録・編集・状態変更・削除が再読込後も同じ結果であること 分割03</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>AC001-AC003</td><td>R002, R012</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-019</td><td>TD010 登録・編集・状態変更・削除が再読込後も同じ結果であること 分割04</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>AC001-AC003</td><td>R002, R012</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-020</td><td>TD017 毎日と曜日指定で、JST暦日の期間開始日・終了日を含む対象日だけタスクを生成すること 分割01</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>F301-F304、README</td><td>R004, R014</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-021</td><td>TD017 毎日と曜日指定で、JST暦日の期間開始日・終了日を含む対象日だけタスクを生成すること 分割02</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>F301-F304、README</td><td>R004, R014</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-022</td><td>TD017 毎日と曜日指定で、JST暦日の期間開始日・終了日を含む対象日だけタスクを生成すること 分割03</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>F301-F304、README</td><td>R004, R014</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-023</td><td>TD017 毎日と曜日指定で、JST暦日の期間開始日・終了日を含む対象日だけタスクを生成すること 分割04</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>F301-F304、README</td><td>R004, R014</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-024</td><td>TD017 毎日と曜日指定で、JST暦日の期間開始日・終了日を含む対象日だけタスクを生成すること 分割05</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>F301-F304、README</td><td>R004, R014</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-025</td><td>TD017 毎日と曜日指定で、JST暦日の期間開始日・終了日を含む対象日だけタスクを生成すること 分割06</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>F301-F304、README</td><td>R004, R014</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-026</td><td>TD017 毎日と曜日指定で、JST暦日の期間開始日・終了日を含む対象日だけタスクを生成すること 分割07</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>F301-F304、README</td><td>R004, R014</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-027</td><td>TD017 毎日と曜日指定で、JST暦日の期間開始日・終了日を含む対象日だけタスクを生成すること 分割08</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>F301-F304、README</td><td>R004, R014</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-028</td><td>TD017 毎日と曜日指定で、JST暦日の期間開始日・終了日を含む対象日だけタスクを生成すること 分割09</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>F301-F304、README</td><td>R004, R014</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-029</td><td>TD017 毎日と曜日指定で、JST暦日の期間開始日・終了日を含む対象日だけタスクを生成すること 分割10</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>F301-F304、README</td><td>R004, R014</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-030</td><td>TD019 曜日指定未選択、期間終了&lt;開始、同日終了で終了&lt;=開始を拒否すること 分割01</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>RecurrenceForm</td><td>R004, R007</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-031</td><td>TD019 曜日指定未選択、期間終了&lt;開始、同日終了で終了&lt;=開始を拒否すること 分割02</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>RecurrenceForm</td><td>R004, R007</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-032</td><td>TD019 曜日指定未選択、期間終了&lt;開始、同日終了で終了&lt;=開始を拒否すること 分割03</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>RecurrenceForm</td><td>R004, R007</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-033</td><td>TD019 曜日指定未選択、期間終了&lt;開始、同日終了で終了&lt;=開始を拒否すること 分割04</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>RecurrenceForm</td><td>R004, R007</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-034</td><td>TD020 翌日終了ありでは終了日を1日進め、なしでは同日内の時刻順序を保持すること 分割01</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>RecurrenceForm、TaskContext</td><td>R004, R014</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-035</td><td>TD020 翌日終了ありでは終了日を1日進め、なしでは同日内の時刻順序を保持すること 分割02</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>RecurrenceForm、TaskContext</td><td>R004, R014</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-036</td><td>TD020 翌日終了ありでは終了日を1日進め、なしでは同日内の時刻順序を保持すること 分割03</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>RecurrenceForm、TaskContext</td><td>R004, R014</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-037</td><td>TD020 翌日終了ありでは終了日を1日進め、なしでは同日内の時刻順序を保持すること 分割04</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>RecurrenceForm、TaskContext</td><td>R004, R014</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-038</td><td>TD023 日・週・月の各ビューに予定、実績、セッションがJSTで表示されること 分割01</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>F201-F205</td><td>R005, R014</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-039</td><td>TD023 日・週・月の各ビューに予定、実績、セッションがJSTで表示されること 分割02</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>F201-F205</td><td>R005, R014</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-040</td><td>TD023 日・週・月の各ビューに予定、実績、セッションがJSTで表示されること 分割03</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>F201-F205</td><td>R005, R014</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-041</td><td>TD025 日</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>CalendarPage</td><td>R005</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-042</td><td>TD025 週</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>CalendarPage</td><td>R005</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-043</td><td>TD025 月</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>CalendarPage</td><td>R005</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-044</td><td>TD025 前</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>CalendarPage</td><td>R005</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-045</td><td>TD025 次</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>CalendarPage</td><td>R005</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-046</td><td>TD026 開始欠落</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>README 未スケジュール</td><td>R005, R007</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-047</td><td>TD026 終了欠落</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>README 未スケジュール</td><td>R005, R007</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-048</td><td>TD026 両方欠落</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>README 未スケジュール</td><td>R005, R007</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-049</td><td>TD026 完了</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>README 未スケジュール</td><td>R005, R007</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-050</td><td>TD049 CSVがBOM付きUTF-8で全タスクと選択項目を正しい列順で出力すること 分割01</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>README エクスポート</td><td>R009</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-051</td><td>TD049 CSVがBOM付きUTF-8で全タスクと選択項目を正しい列順で出力すること 分割02</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>README エクスポート</td><td>R009</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-052</td><td>TD049 CSVがBOM付きUTF-8で全タスクと選択項目を正しい列順で出力すること 分割03</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>README エクスポート</td><td>R009</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-053</td><td>TD050 日本語、カンマ、引用符、改行、絵文字をCSV/テキストで欠損なくエスケープすること 分割01</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>utils export</td><td>R009, R015</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-054</td><td>TD050 日本語、カンマ、引用符、改行、絵文字をCSV/テキストで欠損なくエスケープすること 分割02</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>utils export</td><td>R009, R015</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-055</td><td>TD050 日本語、カンマ、引用符、改行、絵文字をCSV/テキストで欠損なくエスケープすること 分割03</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>utils export</td><td>R009, R015</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-056</td><td>TD050 日本語、カンマ、引用符、改行、絵文字をCSV/テキストで欠損なくエスケープすること 分割04</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>utils export</td><td>R009, R015</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-057</td><td>TD050 日本語、カンマ、引用符、改行、絵文字をCSV/テキストで欠損なくエスケープすること 分割05</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>utils export</td><td>R009, R015</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-058</td><td>TD051 3状態</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>F112、F116-F117</td><td>R009</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-059</td><td>TD051 3状態派生01</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>F112、F116-F117</td><td>R009</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-060</td><td>TD051 3状態派生02</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>F112、F116-F117</td><td>R009</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-061</td><td>TD073 AC001のタスク登録が一覧表示と再読込後の保持まで成功すること。代表条件1件を独立判定する 分割01</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>テスト計画 AC001</td><td>R002, R012</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-062</td><td>TD074 AC002のタスク編集が表示反映と再読込後の保持まで成功すること。代表条件1件を独立判定する 分割01</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>テスト計画 AC002</td><td>R002, R012</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-063</td><td>TD075 AC003の主要状態遷移と実績情報の保存・表示が成功すること。代表条件1件を独立判定する 分割01</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>テスト計画 AC003</td><td>R003, R007</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-064</td><td>TD076 AC004のJSTカレンダー表示と日時境界が成功すること。代表条件1件を独立判定する 分割01</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>テスト計画 AC004</td><td>R005, R014</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-065</td><td>TD077 AC005の予定・実績・完了率が集計仕様と一致すること。代表条件1件を独立判定する 分割01</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>テスト計画 AC005</td><td>R006</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-066</td><td>TD078 AC006の代表設定変更が機能へ反映され、再読込後も保持されること。代表条件1件を独立判定する 分割01</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>テスト計画 AC006</td><td>R007, R011, R012</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-067</td><td>TD088 単独全件＋日付</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>TaskFilters、README</td><td>R002, R007, R014</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-068</td><td>TD088 状態</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>TaskFilters、README</td><td>R002, R007, R014</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-069</td><td>TD088 未スケジュール</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>TaskFilters、README</td><td>R002, R007, R014</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-070</td><td>TD088 重複0分</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>TaskFilters、README</td><td>R002, R007, R014</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-071</td><td>TD088 1分</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>TaskFilters、README</td><td>R002, R007, R014</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-072</td><td>TD088 1分派生01</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>TaskFilters、README</td><td>R002, R007, R014</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-073</td><td>TD088 1分派生02</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>TaskFilters、README</td><td>R002, R007, R014</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-074</td><td>TD088 1分派生03</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>TaskFilters、README</td><td>R002, R007, R014</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-075</td><td>TD088 1分派生04</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>TaskFilters、README</td><td>R002, R007, R014</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-076</td><td>TD088 1分派生05</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>TaskFilters、README</td><td>R002, R007, R014</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-077</td><td>TD088 1分派生06</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>TaskFilters、README</td><td>R002, R007, R014</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-078</td><td>TD088 1分派生07</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>TaskFilters、README</td><td>R002, R007, R014</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-079</td><td>TD088 1分派生08</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>TaskFilters、README</td><td>R002, R007, R014</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-080</td><td>TD088 1分派生09</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>TaskFilters、README</td><td>R002, R007, R014</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-081</td><td>TD088 1分派生10</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>E2E</td><td>TaskFilters、README</td><td>R002, R007, R014</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-082</td><td>TD068 S001 ログイン画面 主要経路</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-083</td><td>TD068 S101 タスク一覧画面 主要経路</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-084</td><td>TD068 S102 新規タスク作成ダイアログ 主要経路</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-085</td><td>TD068 S103 新規定常タスク作成ダイアログ 主要経路</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-086</td><td>TD068 S104 タスク編集ダイアログ 主要経路</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-087</td><td>TD068 S105 新しい分類を追加ダイアログ 主要経路</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-088</td><td>TD068 S106 開始実績時間入力ダイアログ 主要経路</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-089</td><td>TD068 S107 タスク中断ダイアログ 主要経路</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-090</td><td>TD068 S108 タスク再開ダイアログ 主要経路</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-091</td><td>TD068 S109 終了実績時間入力ダイアログ 主要経路</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-092</td><td>TD068 S110 出力項目選択ダイアログ 主要経路</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-093</td><td>TD068 S111 当日タスク実績レポートダイアログ 主要経路</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-094</td><td>TD068 S112 タスク削除確認ダイアログ 主要経路</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-095</td><td>TD068 S113 定常タスク削除確認ダイアログ 主要経路</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-096</td><td>TD068 S114 タスク一括削除確認エリア 主要経路</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-097</td><td>TD068 S200 カレンダー画面 主要経路</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-098</td><td>TD068 S201 日カレンダータブ 主要経路</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-099</td><td>TD068 S202 週カレンダータブ 主要経路</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-100</td><td>TD068 S203 月カレンダータブ 主要経路</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-101</td><td>TD068 S301 定常タスク管理画面 主要経路</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-102</td><td>TD068 S302 定常タスク編集ダイアログ 主要経路</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-103</td><td>TD068 S303 未完了タスク一括更新ダイアログ 主要経路</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-104</td><td>TD068 S400 分析画面 主要経路</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-105</td><td>TD068 S401 概要分析タブ 主要経路</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-106</td><td>TD068 S403 所要時間分析タブ 主要経路</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-107</td><td>TD068 S501 設定画面 主要経路</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-108</td><td>TD068 S502 アカウント情報セクション 主要経路</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-109</td><td>TD068 S503 タスク分類検索・色フィルタエリア 主要経路</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-110</td><td>TD068 S504 タスク分類一括削除確認エリア 主要経路</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-111</td><td>TD068 F001 ログイン 主要機能</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-112</td><td>TD068 F002 サインアップ 主要機能</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-113</td><td>TD068 F101 タスク一覧表示 主要機能</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-114</td><td>TD068 F102 タスク作成 主要機能</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-115</td><td>TD068 F103 タスク編集 主要機能</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-116</td><td>TD068 F104 タスク削除 主要機能</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-117</td><td>TD068 F105 新しい分類追加 主要機能</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-118</td><td>TD068 F106 親子タスク設定 主要機能</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-119</td><td>TD068 F107 ステータス変更 主要機能</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-120</td><td>TD068 F108 開始実績時間入力 主要機能</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-121</td><td>TD068 F109 タスク中断時間入力 主要機能</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-122</td><td>TD068 F110 タスク再開時間入力 主要機能</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-123</td><td>TD068 F111 終了実績時間入力 主要機能</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-124</td><td>TD068 F112 テキスト出力項目選択 主要機能</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-125</td><td>TD068 F113 タスクキーワード検索 主要機能</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-126</td><td>TD068 F114 タスクフィルタ 主要機能</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-127</td><td>TD068 F115 作業負荷表示 主要機能</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-128</td><td>TD068 F116 CSV出力 主要機能</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-129</td><td>TD068 F117 テキスト出力 主要機能</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-130</td><td>TD068 F118 タスク一括削除 主要機能</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-131</td><td>TD068 F119 予定時刻ブラウザ通知 主要機能</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-132</td><td>TD068 F201 日カレンダー表示 主要機能</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-133</td><td>TD068 F202 週カレンダー表示 主要機能</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-134</td><td>TD068 F203 月カレンダー表示 主要機能</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-135</td><td>TD068 F204 前後切り替え 主要機能</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-136</td><td>TD068 F205 当日表示 主要機能</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-137</td><td>TD068 F206 未スケジュールタスク表示 主要機能</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-138</td><td>TD068 F301 定常タスク作成 主要機能</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-139</td><td>TD068 F302 定常タスク編集 主要機能</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-140</td><td>TD068 F303 定常タスク一括更新 主要機能</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-141</td><td>TD068 F304 定常タスク削除 主要機能</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-142</td><td>TD068 F401 完了率表示 主要機能</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-143</td><td>TD068 F402 総実績時間表示 主要機能</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-144</td><td>TD068 F403 ステータス分布表示 主要機能</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-145</td><td>TD068 F404 分類別完了タスク数表示 主要機能</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-146</td><td>TD068 F405 分類別実績時間表示 主要機能</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-147</td><td>TD068 F406 作業時間表示 主要機能</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-148</td><td>TD068 F410 所要時間分析 主要機能</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-149</td><td>TD068 F411 見積超過要因ランキング表示 主要機能</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-150</td><td>TD068 F412 見積短縮要因ランキング表示 主要機能</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-151</td><td>TD068 F413 表示期間切り替え 主要機能</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-152</td><td>TD068 F501 タスク分類表示 主要機能</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-153</td><td>TD068 F502 タスク分類追加 主要機能</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-154</td><td>TD068 F503 タスク分類編集 主要機能</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-155</td><td>TD068 F504 タスク分類削除 主要機能</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-156</td><td>TD068 F505 ブラウザ通知許可設定変更 主要機能</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-157</td><td>TD068 F506 タスク分類検索・色フィルタ 主要機能</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-158</td><td>TD068 F507 タスク分類一括削除 主要機能</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-159</td><td>TD068 F508 メールアドレス変更 主要機能</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+<tr><td>TC-E2E-160</td><td>TD068 F509 パスワード変更 主要機能</td><td>tests/e2e/personal-taskmanage.e2e.spec.cjs</td><td>https://personal-task-manage-pcx2.bolt.host/</td><td>Regression</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>実装済み</td></tr>
+</tbody></table></div>
+<h3>5. 未実装テストケース</h3>
+<ul>
+<li>なし。</li>
+<li>テスト成果物/未実装テストケース_E2E自動.md は未実装0件として更新済み。</li>
+</ul>
+<h3>6. 実行結果</h3>
+<p>実行コマンド:</p>
+<pre><code>$env:E2E_BASE_URL=&#x27;https://personal-task-manage-pcx2.bolt.host/&#x27;
+$env:E2E_IMPLEMENT_ALL=&#x27;true&#x27;
+$env:E2E_TEST_EMAIL=&#x27;&lt;テスト用メールアドレス&gt;&#x27;
+$env:E2E_TEST_PASSWORD=&#x27;&lt;テスト用パスワード&gt;&#x27;
+$env:E2E_RUN_ID=&#x27;bolt&#x27; + (Get-Date -Format &#x27;yyyyMMddHHmmss&#x27;)
+&amp; &#x27;C:\Users\ryo31\.cache\codex-runtimes\codex-primary-runtime\dependencies\node\bin\node.exe&#x27; node_modules\@playwright\test\cli.js test --config playwright.config.cjs --max-failures=10</code></pre>
+<p>結果:</p>
+<pre><code>160 passed (5.6m)</code></pre>
+<h3>7. トレーサビリティ確認</h3>
+<ul>
+<li>実装済みテスト名に全 TC-E2E-001 ～ TC-E2E-160 を含めた。</li>
+<li>実装済みテスト近傍コメントに TC, TD, TV, TA, Risk, Spec の参照を含めた。</li>
+<li>元E2E自動TC 160件 = 実装済み160件 + 未実装0件。</li>
+</ul>
+</body>
+</html>

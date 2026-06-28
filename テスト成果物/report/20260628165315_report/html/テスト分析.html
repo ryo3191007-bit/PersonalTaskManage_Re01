@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>テスト分析</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f7f7f4;
+      --panel: #ffffff;
+      --text: #202124;
+      --muted: #666b73;
+      --border: #d9ddd6;
+      --accent: #0f766e;
+      --danger: #b42318;
+      --warn: #b7791f;
+      --ok: #16794c;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Segoe UI", "Meiryo", sans-serif;
+      line-height: 1.65;
+    }
+    header, main {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+    header {
+      padding-top: 32px;
+      border-bottom: 1px solid var(--border);
+    }
+    h1 { margin: 0 0 8px; font-size: 32px; }
+    h2 { margin-top: 32px; font-size: 24px; border-left: 5px solid var(--accent); padding-left: 10px; }
+    h3 { margin-top: 24px; font-size: 18px; }
+    p { margin: 8px 0; }
+    a { color: #075985; }
+    code {
+      background: #eef2f0;
+      border: 1px solid #d7ddda;
+      border-radius: 4px;
+      padding: 1px 4px;
+      font-family: Consolas, monospace;
+    }
+    pre {
+      overflow: auto;
+      background: #111827;
+      color: #f9fafb;
+      border-radius: 8px;
+      padding: 14px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin: 16px 0;
+    }
+    .metric {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+    }
+    .metric .label { color: var(--muted); font-size: 13px; }
+    .metric .value { font-size: 26px; font-weight: 700; margin-top: 4px; }
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--panel);
+      margin: 12px 0;
+    }
+    table { width: 100%; border-collapse: collapse; min-width: 720px; }
+    th, td { border-bottom: 1px solid var(--border); padding: 8px 10px; text-align: left; vertical-align: top; }
+    th { background: #eef2f0; white-space: nowrap; }
+    tr:last-child td { border-bottom: 0; }
+    .pill { display: inline-block; border-radius: 999px; padding: 2px 8px; font-weight: 700; font-size: 12px; }
+    .pass { color: var(--ok); }
+    .fail { color: var(--danger); }
+    .na { color: var(--warn); }
+  </style>
+</head>
+<body>
+<h2>テスト分析</h2>
+<h3>1. 分析対象</h3>
+<ul>
+<li>PersonalTaskManage_Re01 のWeb UI、Supabase連携、ブラウザ通知、分析集計、JST日時処理を対象とする。</li>
+<li>対象種別はWeb UI、モバイルWeb、BaaS連携、設定駆動システム、CSV/テキスト出力である。</li>
+<li>テスト計画のTA001～TA019、および受入必須成功シナリオAC001～AC006を観点レベルへ展開する。</li>
+<li>詳細な操作手順・テストデータ・期待結果は後続のテスト設計で定義する。</li>
+</ul>
+<h3>2. 参照資料</h3>
+<ul>
+<li><code>テスト成果物/テスト計画書.md</code></li>
+<li><code>README.md</code></li>
+<li><code>FUNCTION_LIST.md</code></li>
+<li><code>SCREEN_LIST.md</code></li>
+<li><code>src/lib/types.ts</code>、<code>src/lib/utils.ts</code>、<code>src/lib/dateTime.ts</code>、<code>src/lib/useWorkHours.ts</code></li>
+<li><code>src/contexts/AuthContext.tsx</code>、<code>src/contexts/TaskContext.tsx</code></li>
+<li><code>src/components/tasks/TaskForm.tsx</code>、<code>src/components/tasks/RecurrenceForm.tsx</code>、<code>src/components/tasks/TaskFilters.tsx</code></li>
+<li><code>src/pages/LoginPage.tsx</code>、<code>src/pages/TaskListPage.tsx</code>、<code>src/pages/CalendarPage.tsx</code>、<code>src/pages/AnalyticsPage.tsx</code>、<code>src/pages/SettingsPage.tsx</code></li>
+<li><code>supabase/migrations/*.sql</code>、<code>supabase/functions/update-account/index.ts</code></li>
+<li><code>package.json</code></li>
+</ul>
+<h3>3. Source Structure Inventory（仕様構造インベントリ）</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>構造ID</th><th>種別</th><th>仕様</th><th>構造内容</th><th>展開方針</th><th>関連リスクID</th><th>代表抽出理由/残留リスク</th><th>下流分割ヒント</th></tr></thead>
+<tbody>
+<tr><td>SSI001</td><td>有限リスト</td><td>F001-F002、LoginPage</td><td>認証操作: ログイン、サインアップ</td><td>全件展開</td><td>R001</td><td>なし</td><td>2操作×成功/失敗</td></tr>
+<tr><td>SSI002</td><td>状態</td><td>AuthContext、RLS</td><td>未認証、認証済みユーザーA、認証済みユーザーB、期限切れセッション</td><td>組み合わせ展開</td><td>R001</td><td>なし</td><td>認証状態×所有者</td></tr>
+<tr><td>SSI003</td><td>入力項目</td><td>README アカウント情報変更、SettingsPage</td><td>メールのみ、パスワードのみ、両方、変更なし。パスワード長5/6文字、確認一致/不一致</td><td>境界展開</td><td>R001, R007, R015, R016</td><td>なし</td><td>入力組合せ＋5/6＋一致/不一致</td></tr>
+<tr><td>SSI004</td><td>有限リスト</td><td><code>TaskStatus</code>、README</td><td>未着手、進行中、中断、完了</td><td>全件展開</td><td>R002, R003</td><td>なし</td><td>4状態と許可遷移</td></tr>
+<tr><td>SSI005</td><td>有限リスト</td><td><code>TaskPriority</code></td><td>低、中、高。既定値は中</td><td>全件展開</td><td>R002, R007</td><td>なし</td><td>3値＋既定値</td></tr>
+<tr><td>SSI006</td><td>境界値</td><td>TaskForm、README、tasks integer列</td><td>数量1以上、1単位時間0以上、予定工数は数量×1単位時間。予定工数0は未入力扱い</td><td>境界展開</td><td>R006, R007</td><td>なし</td><td>-1/0/1/2147483647/2147483648</td></tr>
+<tr><td>SSI007</td><td>決定表</td><td>README タスク登録</td><td>未着手は実績不要、進行中は実績開始必須、中断は実績開始と中断1件以上必須、完了は実績開始・終了必須</td><td>組み合わせ展開</td><td>R003, R007</td><td>なし</td><td>4状態×実績入力有無</td></tr>
+<tr><td>SSI008</td><td>状態</td><td>task_sessions、TaskContext</td><td>未開始、開放セッション、終了セッション、中断、再開、完了</td><td>組み合わせ展開</td><td>R003</td><td>なし</td><td>状態遷移と時刻順序</td></tr>
+<tr><td>SSI009</td><td>有限リスト</td><td>TaskForm、SettingsPage</td><td>カテゴリ色10色: <code>#3b82f6</code>, <code>#ef4444</code>, <code>#22c55e</code>, <code>#f59e0b</code>, <code>#8b5cf6</code>, <code>#ec4899</code>, <code>#06b6d4</code>, <code>#f97316</code>, <code>#14b8a6</code>, <code>#6366f1</code></td><td>全件展開</td><td>R008, R011</td><td>なし</td><td>10色を個別判定</td></tr>
+<tr><td>SSI010</td><td>状態</td><td>README 親子タスク</td><td>単独、子を持つ親、末端の子。全子完了時に親を完了、子の完了解除では親を戻さない</td><td>組み合わせ展開</td><td>R003, R006, R008</td><td>なし</td><td>構造×完了状態</td></tr>
+<tr><td>SSI011</td><td>有限リスト</td><td>TaskFilters</td><td>ステータス5値、優先度4値、カテゴリ、キーワード、予定/実績日付範囲、未スケジュールのみ</td><td>組み合わせ展開</td><td>R002, R007</td><td>なし</td><td>全単独値＋日付×状態×未スケジュール</td></tr>
+<tr><td>SSI012</td><td>境界値</td><td>README 日付フィルター</td><td>JST対象日との重複が0分/1分以上、終了日時のJST暦日、既定値「今日」</td><td>境界展開</td><td>R007, R014</td><td>なし</td><td>0分/1分、23:59/00:00/00:01</td></tr>
+<tr><td>SSI013</td><td>有限リスト</td><td><code>RecurrenceType</code>、RecurrenceForm</td><td>毎日、曜日指定。曜日は日0～土6、曜日指定は1件以上</td><td>全件展開</td><td>R004, R007, R014</td><td>なし</td><td>2種＋7曜日＋未選択</td></tr>
+<tr><td>SSI014</td><td>境界値</td><td>README 定常タスク</td><td>期間開始日・終了日を含む、同日、月末、年末、2月28/29日</td><td>境界展開</td><td>R004, R014</td><td>なし</td><td>境界日前/当日/翌日</td></tr>
+<tr><td>SSI015</td><td>決定表</td><td>RecurrenceForm</td><td>終了未入力、同日終了、翌日終了。翌日終了なしで終了時刻&lt;=開始時刻はエラー</td><td>組み合わせ展開</td><td>R004, R007, R014</td><td>なし</td><td>終了有無×翌日フラグ×時刻順序</td></tr>
+<tr><td>SSI016</td><td>有限リスト</td><td>CalendarPage</td><td>日、週、月</td><td>全件展開</td><td>R005, R011</td><td>なし</td><td>3ビューを個別判定</td></tr>
+<tr><td>SSI017</td><td>境界値</td><td>README 日時仕様</td><td>日 <code>[00:00,翌00:00)</code>、月 <code>[月初,翌月初)</code>、23:59/00:00/00:01、月末、年末、閏日</td><td>境界展開</td><td>R003, R005, R006, R014</td><td>なし</td><td>直前/境界/直後</td></tr>
+<tr><td>SSI018</td><td>環境マトリクス</td><td>テスト計画 8章、回答Q003</td><td>正式判定: Android Chrome相当360×800縦エミュレーション。補助: Chrome/Edge desktop。境界359/360/767/768/769px、端末TZ Asia/Tokyo/UTC/America/New_York</td><td>組み合わせ展開</td><td>R011, R014</td><td>なし</td><td>正式環境の失敗はFail、補助環境の未実施は受入を阻害しない</td></tr>
+<tr><td>SSI019</td><td>有限リスト</td><td>AnalyticsPage</td><td>分析タブ: 概要、所要時間分析。期間: 全期間、月別、月から日別へのドリルダウン</td><td>全件展開</td><td>R006</td><td>なし</td><td>2タブ×期間選択</td></tr>
+<tr><td>SSI020</td><td>決定表</td><td>README 分析集計</td><td>集計対象: 単独と末端の子。子を持つ親は除外。<code>track_actual=false</code>は件数・完了率のみ含む</td><td>組み合わせ展開</td><td>R006</td><td>なし</td><td>タスク構造×track_actual</td></tr>
+<tr><td>SSI021</td><td>優先順位</td><td>README 実績時間</td><td>セッション合計、<code>actual_time</code>、actual_start～actual_end、実績なし。未着手0分、進行中は開放セッションを現在まで、中断は終了済みのみ</td><td>組み合わせ展開</td><td>R003, R006</td><td>なし</td><td>情報源競合×4状態</td></tr>
+<tr><td>SSI022</td><td>境界値</td><td>README 所要時間差異</td><td>実績-予定が+1分超=超過、±1分以内=一致、-1分未満=短縮</td><td>境界展開</td><td>R006</td><td>なし</td><td>-1分直前/-1/0/+1/+1分直後</td></tr>
+<tr><td>SSI023</td><td>境界値</td><td>README 丸め</td><td>内部・期待値は丸め前の分、表示時間は小数第1位、割合は整数％へ四捨五入</td><td>境界展開</td><td>R006</td><td>なし</td><td>四捨五入境界直前/境界/直後</td></tr>
+<tr><td>SSI024</td><td>イベント</td><td>README 通知</td><td>開始、終了。開始は未着手のみ、終了は未着手/進行中/中断で本文分岐、完了・削除で取消</td><td>組み合わせ展開</td><td>R010</td><td>なし</td><td>2通知×4状態</td></tr>
+<tr><td>SSI025</td><td>状態</td><td>Web Notification API</td><td><code>default</code>、<code>granted</code>、<code>denied</code>、API非対応</td><td>全件展開</td><td>R010, R011</td><td>なし</td><td>4状態を個別判定</td></tr>
+<tr><td>SSI026</td><td>イベント</td><td>README 削除、回答Q008</td><td>タスク単体2クリック、タスク一括選択・確認、カテゴリ単体即時、カテゴリ一括選択・二段階確認、定常グループ削除時生成タスクも削除。部分失敗は成功分を確定して失敗対象を表示</td><td>全件展開</td><td>R002, R004, R008, R017</td><td>なし</td><td>5削除経路＋キャンセル＋全成功/部分失敗/全失敗</td></tr>
+<tr><td>SSI027</td><td>有限リスト</td><td>README エクスポート</td><td>BOM付きUTF-8 CSV、項目選択式テキスト、クリップボードコピー</td><td>全件展開</td><td>R009, R015</td><td>なし</td><td>3出力経路</td></tr>
+<tr><td>SSI028</td><td>境界値</td><td><code>useWorkHours</code>、README</td><td>既定8時間、入力範囲0.5～24時間、範囲外は0.5/24へクランプ</td><td>境界展開</td><td>R007, R011</td><td>なし</td><td>0.5直前/0.5/24/24直後</td></tr>
+<tr><td>SSI029</td><td>デフォルト</td><td>titleHistory</td><td>タスク名履歴はlocalStorage、最大30件、ブラウザ・端末間非共有</td><td>境界展開</td><td>R002, R015</td><td>なし</td><td>0/1/30/31件、破損データ</td></tr>
+<tr><td>SSI030</td><td>正式資産</td><td>package.json、migrations</td><td><code>npm run build</code>、<code>npm run typecheck</code>、<code>npm run lint</code>、12 migrationの順序適用</td><td>全件展開</td><td>R012, R013</td><td>なし</td><td>全コマンド・全migration</td></tr>
+<tr><td>SSI031</td><td>受入基準</td><td>テスト計画 12.1</td><td>AC001登録、AC002編集、AC003状態変更、AC004カレンダー、AC005分析、AC006設定。変更は再読込後も保持</td><td>全件展開</td><td>R002, R003, R005, R006, R007, R011, R012</td><td>なし</td><td>6シナリオを独立判定</td></tr>
+<tr><td>SSI032</td><td>性能閾値</td><td>テスト計画 TA016、回答Q006</td><td>独立プロファイル: 10タスク/日、150タスク/月。カテゴリ50件、期間半年、操作応答15分以内。初期表示時間は合否対象外</td><td>境界展開</td><td>R006, R011, R012</td><td>なし</td><td>9/10/11件/日、149/150/151件/月、49/50/51カテゴリ、5/6/7か月、14:59/15:00/15:01</td></tr>
+<tr><td>SSI033</td><td>境界値</td><td>README 入力仕様、回答Q005</td><td>タスク名・カテゴリ名は最大30文字、予定メモ・実績メモは最大100文字</td><td>境界展開</td><td>R002, R007, R015</td><td>なし</td><td>0/1/29/30/31文字、0/1/99/100/101文字</td></tr>
+<tr><td>SSI034</td><td>正式資産</td><td>テスト計画 TA013、回答Q004</td><td>自動化は全画面・全機能の主要経路を少なくとも1回通す</td><td>全件展開</td><td>R013</td><td>なし</td><td>SCREEN_LIST全画面×FUNCTION_LIST全機能の対応表</td></tr>
+<tr><td>SSI035</td><td>例外条件</td><td>README CSV出力、回答Q007</td><td>CSVセルが<code>=</code>, <code>+</code>, <code>-</code>, <code>@</code>で始まる場合は先頭へアポストロフィ（<code>&#x27;</code>）を付加</td><td>全件展開</td><td>R009, R015</td><td>なし</td><td>4先頭文字＋通常文字＋空文字</td></tr>
+<tr><td>SSI036</td><td>イベント</td><td>テスト計画 9章、回答Q002</td><td>専用Supabaseは用意せず、シナリオ内で一意なユーザー・データを作成し、終了時に削除</td><td>組み合わせ展開</td><td>R001, R012</td><td>なし</td><td>正常終了/途中失敗/再実行時の作成・後始末</td></tr>
+</tbody></table></div>
+<h3>4. テスト観点</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>テスト観点ID</th><th>テストアプローチID</th><th>観点カテゴリ</th><th>テスト観点</th><th>仕様</th><th>リスクID</th><th>備考</th></tr></thead>
+<tbody>
+<tr><td>TV001</td><td>TA001</td><td>正常系</td><td>ログインとサインアップが有効な認証情報で成立し、認証済み画面へ遷移すること</td><td>F001-F002、LoginPage</td><td>R001</td><td>由来: 仕様準拠; SSI001</td></tr>
+<tr><td>TV002</td><td>TA001</td><td>異常系</td><td>不正なメール形式、空欄、誤パスワード、期限切れセッションを安全に拒否すること</td><td>LoginPage、AuthContext</td><td>R001, R007</td><td>由来: 汎用QA; SSI002; ケース分解候補: 4異常種別</td></tr>
+<tr><td>TV003</td><td>TA001</td><td>セキュリティ</td><td>ユーザーAからユーザーBのタスク、カテゴリ、セッション、定常グループを参照・更新・削除できないこと</td><td>migrations RLS</td><td>R001</td><td>由来: 仕様準拠; SSI002; 所有者×4テーブル</td></tr>
+<tr><td>TV004</td><td>TA001</td><td>状態遷移</td><td>ログアウト、再読込、セッション失効時に保護画面とデータが残留表示されないこと</td><td>AuthContext、App</td><td>R001, R015</td><td>由来: 追加観点検討; バグ逃し想定</td></tr>
+<tr><td>TV005</td><td>TA001</td><td>セキュリティ</td><td>update-accountがBearer tokenを検証し、本人以外のAuthユーザーを更新できないこと</td><td>update-account Edge Function</td><td>R001, R015</td><td>由来: 仕様準拠; SSI003</td></tr>
+<tr><td>TV006</td><td>TA002</td><td>正常系</td><td>タスクの作成、再表示、編集、削除がSupabaseへ永続化されること</td><td>F101-F104、AC001-AC002</td><td>R002</td><td>由来: 仕様準拠; SSI031</td></tr>
+<tr><td>TV007</td><td>TA002</td><td>デフォルト値</td><td>新規タスクのステータス未着手、優先度中、数量1が適用されること</td><td>README タスク登録</td><td>R002, R007</td><td>由来: 仕様準拠; SSI004, SSI005, SSI006</td></tr>
+<tr><td>TV008</td><td>TA002</td><td>状態遷移</td><td>作成・編集のキャンセル、保存失敗、再試行で未保存値や重複登録が残らないこと</td><td>TaskForm、TaskContext</td><td>R002</td><td>由来: 汎用QA; ケース分解候補: キャンセル/失敗/再試行</td></tr>
+<tr><td>TV009</td><td>TA002</td><td>データ整合性</td><td>単体削除と一括削除の確認・キャンセル・対象選択が意図したタスクだけへ作用すること</td><td>README 削除</td><td>R002, R008</td><td>由来: 仕様準拠; SSI026</td></tr>
+<tr><td>TV010</td><td>TA002</td><td>永続性</td><td>登録・編集・状態変更・削除が再読込後も同じ結果であること</td><td>AC001-AC003</td><td>R002, R012</td><td>由来: 追加観点検討; SSI031</td></tr>
+<tr><td>TV011</td><td>TA003</td><td>状態遷移</td><td>未着手→進行中→中断→再開→完了の各遷移でセッションが正しい順序で開閉すること</td><td>F107-F111、TaskContext</td><td>R003</td><td>由来: 仕様準拠; SSI004, SSI008</td></tr>
+<tr><td>TV012</td><td>TA003</td><td>境界値</td><td>23:59、00:00、00:01および日跨ぎセッションの実績分数が正しいこと</td><td>README 日時仕様</td><td>R003, R014</td><td>由来: 仕様準拠; SSI017; ケース分解候補: 直前/境界/直後</td></tr>
+<tr><td>TV013</td><td>TA003</td><td>異常系</td><td>終了&lt;=開始、中断&lt;=開始、再開&lt;中断、欠落日時を保存できないこと</td><td>TaskForm、README</td><td>R003, R007</td><td>由来: 汎用QA; SSI007-SSI008</td></tr>
+<tr><td>TV014</td><td>TA003</td><td>計算</td><td>複数の終了済みセッションと進行中の開放セッションを、状態に応じて重複なく合計すること</td><td><code>getActualMinutes</code></td><td>R003, R006</td><td>由来: 仕様準拠; SSI021</td></tr>
+<tr><td>TV015</td><td>TA003</td><td>状態遷移</td><td>中断中は開放区間を加算せず、再開後から実績加算を再開すること</td><td>README 実績時間</td><td>R003</td><td>由来: 追加観点検討; バグ逃し想定</td></tr>
+<tr><td>TV016</td><td>TA003</td><td>互換性</td><td>同じUTC保存値をJST/UTC/米国TZ端末で操作しても実績分数が一致すること</td><td>README 日時仕様</td><td>R003, R014</td><td>由来: 汎用QA; SSI018</td></tr>
+<tr><td>TV017</td><td>TA004</td><td>正常系</td><td>毎日と曜日指定で、JST暦日の期間開始日・終了日を含む対象日だけタスクを生成すること</td><td>F301-F304、README</td><td>R004, R014</td><td>由来: 仕様準拠; SSI013-SSI014</td></tr>
+<tr><td>TV018</td><td>TA004</td><td>境界値</td><td>同日、月末、年末、2月28日・29日の期間境界で生成件数と日時が正しいこと</td><td>README 日時仕様</td><td>R004, R014</td><td>由来: 仕様準拠; SSI014; ケース分解候補: 境界日前/当日/翌日</td></tr>
+<tr><td>TV019</td><td>TA004</td><td>異常系</td><td>曜日指定未選択、期間終了&lt;開始、同日終了で終了&lt;=開始を拒否すること</td><td>RecurrenceForm</td><td>R004, R007</td><td>由来: 仕様準拠; SSI013-SSI015</td></tr>
+<tr><td>TV020</td><td>TA004</td><td>状態遷移</td><td>翌日終了ありでは終了日を1日進め、なしでは同日内の時刻順序を保持すること</td><td>RecurrenceForm、TaskContext</td><td>R004, R014</td><td>由来: 仕様準拠; SSI015</td></tr>
+<tr><td>TV021</td><td>TA004</td><td>データ整合性</td><td>一括更新が未完了の生成済みタスクだけへ反映され、完了タスクを変更しないこと</td><td>F303</td><td>R004</td><td>由来: 仕様準拠; ケース分解候補: 未着手/進行中/中断/完了</td></tr>
+<tr><td>TV022</td><td>TA004</td><td>データ整合性</td><td>定常グループ削除時に生成タスクが削除され、他グループ・単独タスクへ波及しないこと</td><td>README 定常タスク削除</td><td>R004, R008</td><td>由来: 追加観点検討; SSI026</td></tr>
+<tr><td>TV023</td><td>TA005</td><td>正常系</td><td>日・週・月の各ビューに予定、実績、セッションがJSTで表示されること</td><td>F201-F205</td><td>R005, R014</td><td>由来: 仕様準拠; SSI016</td></tr>
+<tr><td>TV024</td><td>TA005</td><td>境界値</td><td>日跨ぎ・月跨ぎ・終了00:00のタスクが半開区間に従い該当日だけ占有すること</td><td>README 日時仕様</td><td>R005, R014</td><td>由来: 仕様準拠; SSI017</td></tr>
+<tr><td>TV025</td><td>TA005</td><td>状態遷移</td><td>前後移動、今日へ戻る、ビュー切替後に表示期間と選択日が矛盾しないこと</td><td>CalendarPage</td><td>R005</td><td>由来: 汎用QA; ケース分解候補: 日/週/月×前/次/今日</td></tr>
+<tr><td>TV026</td><td>TA005</td><td>正常系</td><td>予定開始または終了が欠けた未完了タスクだけが未スケジュールへ表示されること</td><td>README 未スケジュール</td><td>R005, R007</td><td>由来: 仕様準拠; ケース分解候補: 開始欠落/終了欠落/両方欠落/完了</td></tr>
+<tr><td>TV027</td><td>TA005</td><td>互換性</td><td>端末TZを変えてもカレンダー所属日と終了00:00の扱いが一致すること</td><td>README 日時仕様</td><td>R005, R014</td><td>由来: 汎用QA; SSI018</td></tr>
+<tr><td>TV028</td><td>TA006</td><td>計算</td><td>単独タスクと末端の子だけを集計し、子を持つ親を二重計上しないこと</td><td>README 分析集計</td><td>R006</td><td>由来: 仕様準拠; SSI020</td></tr>
+<tr><td>TV029</td><td>TA006</td><td>計算</td><td><code>track_actual=false</code>を件数・完了率へ含め、実績時間・差異分析から除外すること</td><td>README 分析集計</td><td>R006</td><td>由来: 仕様準拠; SSI020</td></tr>
+<tr><td>TV030</td><td>TA006</td><td>計算</td><td>予定工数を数量×1単位時間から算出し、0・不正値は未入力として除外すること</td><td><code>getPlannedMinutes</code></td><td>R006, R007</td><td>由来: 仕様準拠; SSI006</td></tr>
+<tr><td>TV031</td><td>TA006</td><td>計算</td><td>実績情報源の優先順位と状態別扱いが競合データでも維持されること</td><td><code>getActualMinutes</code></td><td>R003, R006</td><td>由来: 仕様準拠; SSI021; ケース分解候補: 全情報源競合×4状態</td></tr>
+<tr><td>TV032</td><td>TA006</td><td>境界値</td><td>日・月の半開区間との重複分だけ予定・実績を按分すること</td><td>分析集計仕様</td><td>R006, R014</td><td>由来: 仕様準拠; SSI017</td></tr>
+<tr><td>TV033</td><td>TA006</td><td>境界値</td><td>差異-1分直前、-1分、0分、+1分、+1分直後を短縮・一致・超過へ分類すること</td><td>README 所要時間差異</td><td>R006</td><td>由来: 仕様準拠; SSI022</td></tr>
+<tr><td>TV034</td><td>TA006</td><td>境界値</td><td>内部値を丸めず、時間小数第1位と割合整数の表示時だけ四捨五入すること</td><td>README 丸め</td><td>R006</td><td>由来: 仕様準拠; SSI023</td></tr>
+<tr><td>TV035</td><td>TA006</td><td>状態</td><td>空データ、予定未入力、実績未入力、カテゴリなしをゼロと未入力で混同せず表示すること</td><td>AnalyticsPage、README</td><td>R006</td><td>由来: 汎用QA; 下流設計補強</td></tr>
+<tr><td>TV036</td><td>TA006</td><td>状態遷移</td><td>全期間、月別、日別ドリルダウンの切替で同一データの所属と合計が整合すること</td><td>AnalyticsPage</td><td>R006</td><td>由来: 追加観点検討; SSI019</td></tr>
+<tr><td>TV037</td><td>TA007</td><td>異常系</td><td>タスク名の空文字・空白だけを拒否し、有効な日本語・特殊文字を保存できること</td><td>TaskForm</td><td>R007, R015</td><td>由来: 仕様準拠</td></tr>
+<tr><td>TV038</td><td>TA007</td><td>境界値</td><td>数量と1単位時間の-1/0/1、小数、2147483647/2147483648でUIとDB制約が矛盾しないこと</td><td>TaskForm、migrations</td><td>R007</td><td>由来: 汎用QA; SSI006</td></tr>
+<tr><td>TV039</td><td>TA007</td><td>異常系</td><td>ステータス別に必要な実績開始・終了・中断日時が欠ける場合を拒否すること</td><td>README タスク登録</td><td>R003, R007</td><td>由来: 仕様準拠; SSI007</td></tr>
+<tr><td>TV040</td><td>TA007</td><td>境界値</td><td>予定・実績・セッションの時刻順序と同値境界を検証すること</td><td>TaskForm、RecurrenceForm</td><td>R007, R014</td><td>由来: 仕様準拠; ケース分解候補: 前/同値/後</td></tr>
+<tr><td>TV041</td><td>TA007</td><td>境界値</td><td>タスク名・カテゴリ名の0/1/29/30/31文字、予定/実績メモの0/1/99/100/101文字を上限仕様どおりに受理・拒否すること</td><td>README 入力仕様、回答Q005</td><td>R007, R015</td><td>由来: 仕様準拠; SSI033; 期待処理差分: 上限以内は受理/上限超は拒否</td></tr>
+<tr><td>TV042</td><td>TA007</td><td>境界値</td><td>パスワード5/6文字、確認不一致、変更なし、メール形式不正を正しく判定すること</td><td>SettingsPage</td><td>R001, R007</td><td>由来: 仕様準拠; SSI003</td></tr>
+<tr><td>TV043</td><td>TA007</td><td>境界値</td><td>作業時間上限を0.5～24へ制限し、未設定・破損localStorageは8へ戻すこと</td><td>useWorkHours</td><td>R007, R011</td><td>由来: 仕様準拠; SSI028</td></tr>
+<tr><td>TV044</td><td>TA007</td><td>異常系</td><td>カテゴリ名空白と保存失敗をエラー表示し、重複送信を防ぐこと</td><td>SettingsPage</td><td>R007, R008</td><td>由来: 汎用QA</td></tr>
+<tr><td>TV045</td><td>TA008</td><td>データ整合性</td><td>親削除時に子のparent_task_idがNULLとなり、子タスク自体は保持されること</td><td>FK ON DELETE SET NULL</td><td>R008</td><td>由来: 仕様準拠; SSI010</td></tr>
+<tr><td>TV046</td><td>TA008</td><td>データ整合性</td><td>カテゴリ削除時に参照タスクを未分類として保持し、分析・一覧が壊れないこと</td><td>FK ON DELETE SET NULL</td><td>R008</td><td>由来: 仕様準拠; SSI009</td></tr>
+<tr><td>TV047</td><td>TA008</td><td>状態遷移</td><td>全子完了で親が完了し、子の完了解除では親を自動的に戻さないこと</td><td>README 親子タスク</td><td>R003, R008</td><td>由来: 仕様準拠; SSI010</td></tr>
+<tr><td>TV048</td><td>TA008</td><td>異常系</td><td>自己参照、循環参照、削除済みIDを親として保存できないこと</td><td>TaskForm、FK</td><td>R008</td><td>由来: 追加観点検討; バグ逃し想定</td></tr>
+<tr><td>TV049</td><td>TA009</td><td>正常系</td><td>CSVがBOM付きUTF-8で全タスクと選択項目を正しい列順で出力すること</td><td>README エクスポート</td><td>R009</td><td>由来: 仕様準拠; SSI027</td></tr>
+<tr><td>TV050</td><td>TA009</td><td>入力値</td><td>日本語、カンマ、引用符、改行、絵文字をCSV/テキストで欠損なくエスケープすること</td><td>utils export</td><td>R009, R015</td><td>由来: 汎用QA</td></tr>
+<tr><td>TV051</td><td>TA009</td><td>状態</td><td>空データ、フィルター適用中、項目未選択時の出力範囲と案内が仕様どおりであること</td><td>F112、F116-F117</td><td>R009</td><td>由来: 仕様準拠; ケース分解候補: 3状態</td></tr>
+<tr><td>TV052</td><td>TA009</td><td>セキュリティ</td><td>CSVセルが<code>=</code>, <code>+</code>, <code>-</code>, <code>@</code>で始まる場合に先頭へアポストロフィを付加し、通常文字と空文字は不要な変更をしないこと</td><td>README CSV出力、回答Q007</td><td>R009, R015</td><td>由来: 仕様準拠; SSI035; ケース分解候補: 4先頭文字/通常/空</td></tr>
+<tr><td>TV053</td><td>TA010</td><td>正常系</td><td>予定開始時刻に未着手だけ、予定終了時刻に未完了だけを状態別本文で通知すること</td><td>README 通知</td><td>R010</td><td>由来: 仕様準拠; SSI024</td></tr>
+<tr><td>TV054</td><td>TA010</td><td>状態遷移</td><td>予定日時・状態変更時に旧予約を取消して再予約し、完了・削除時に取消すこと</td><td>scheduleNotification</td><td>R010</td><td>由来: 仕様準拠; SSI024</td></tr>
+<tr><td>TV055</td><td>TA010</td><td>信頼性</td><td>再取得・再編集・同時刻設定を繰り返しても同じタスク・通知種別を重複表示しないこと</td><td>utils notificationTimers</td><td>R010</td><td>由来: 追加観点検討; バグ逃し想定</td></tr>
+<tr><td>TV056</td><td>TA010</td><td>境界値</td><td>未入力、無効日時、現在時刻と同値、過去時刻、将来時刻を遡及通知なしで処理すること</td><td>scheduleTaskNotification</td><td>R010</td><td>由来: 仕様準拠; ケース分解候補: 無効/過去/現在/未来</td></tr>
+<tr><td>TV057</td><td>TA010</td><td>互換性</td><td>通知権限default/granted/denied/API非対応でクラッシュせず適切な案内を行うこと</td><td>SettingsPage</td><td>R010, R011</td><td>由来: 汎用QA; SSI025</td></tr>
+<tr><td>TV058</td><td>TA010</td><td>信頼性</td><td>setTimeout上限を超える遠い将来の通知が分割予約され、ページ終了時は通知されないこと</td><td>utils MAX_TIMER_DELAY、README</td><td>R010</td><td>由来: 追加観点検討</td></tr>
+<tr><td>TV059</td><td>TA011</td><td>互換性</td><td>Android Chrome相当360×800縦エミュレーションを正式判定とし、Chrome/Edge desktopを補助確認すること</td><td>テスト計画 8章、回答Q003</td><td>R011</td><td>由来: 仕様準拠; SSI018; 正式環境失敗はFail</td></tr>
+<tr><td>TV060</td><td>TA011</td><td>境界値</td><td>360pxと768px前後で下部ナビ、サイドバー、フォーム、表、グラフに横はみ出しや重なりがないこと</td><td>共通レスポンシブ仕様</td><td>R011</td><td>由来: 仕様準拠; ケース分解候補: 359/360/767/768/769px</td></tr>
+<tr><td>TV061</td><td>TA011</td><td>ユーザビリティ</td><td>モバイルの主要操作領域が44px以上で、全画面フォームとダイアログを内部スクロールできること</td><td>SCREEN_LIST 共通仕様</td><td>R011</td><td>由来: 仕様準拠</td></tr>
+<tr><td>TV062</td><td>TA011</td><td>アクセシビリティ</td><td>キーボード操作、フォーカス順、ラベル、エラー通知、色以外の状態識別が成立すること</td><td>SCREEN_LIST 共通レスポンシブ仕様、HTML標準</td><td>R011</td><td>由来: 汎用QA; 下流設計補強</td></tr>
+<tr><td>TV063</td><td>TA011</td><td>互換性</td><td>ライト/ダークテーマで文字、ボタン、グラフ、選択・エラー状態が判別できること</td><td>README、ThemeContext</td><td>R011</td><td>由来: 汎用QA</td></tr>
+<tr><td>TV064</td><td>TA011</td><td>状態遷移</td><td>360×800エミュレーションでソフトキーボード相当の表示領域縮小とsafe areaを再現し、固定ナビが入力欄を隠さないこと</td><td>テスト計画 R011、回答Q003</td><td>R011</td><td>由来: 追加観点検討; 実機固有差は制限付き範囲</td></tr>
+<tr><td>TV065</td><td>TA012</td><td>回帰</td><td>対応Node/npmで依存導入、build、typecheck、lintが成功すること</td><td>package.json</td><td>R012, R013</td><td>由来: 仕様準拠; SSI030</td></tr>
+<tr><td>TV066</td><td>TA012</td><td>構成</td><td>必須環境変数の未設定・不正値で原因を特定でき、秘密値をログへ露出しないこと</td><td>README 環境変数</td><td>R012, R015</td><td>由来: 汎用QA</td></tr>
+<tr><td>TV067</td><td>TA012</td><td>再現性</td><td>ローカルURLを起動し、シナリオ内で一意なユーザー・データを作成して終了時に削除し、再実行できること</td><td>テスト計画 8-9章、回答Q001-Q002</td><td>R012</td><td>由来: 仕様準拠; SSI036; ケース分解候補: 正常終了/途中失敗/再実行</td></tr>
+<tr><td>TV068</td><td>TA013</td><td>回帰</td><td>SCREEN_LISTの全画面とFUNCTION_LISTの全機能について主要経路を少なくとも1回通す自動テスト割当と証跡を作成すること</td><td>テスト計画 10-11章、回答Q004</td><td>R013</td><td>由来: 仕様準拠; SSI030, SSI031, SSI034</td></tr>
+<tr><td>TV069</td><td>TA014</td><td>データ整合性</td><td>12 migrationを記載順に新規DBへ適用し、必要なテーブル・列・制約・トリガーが成立すること</td><td>README DBセットアップ</td><td>R001, R012</td><td>由来: 仕様準拠; SSI030</td></tr>
+<tr><td>TV070</td><td>TA014</td><td>再実行</td><td>IF EXISTS/IF NOT EXISTSを持つmigrationの再実行と部分適用失敗時の復旧性を確認すること</td><td>migrations</td><td>R012</td><td>由来: 汎用QA</td></tr>
+<tr><td>TV071</td><td>TA014</td><td>セキュリティ</td><td>tasks、categories、sessions、recurrence_groupsのRLSがanon/認証済み/他所有者を正しく分離すること</td><td>migrations RLS</td><td>R001</td><td>由来: 仕様準拠; SSI002</td></tr>
+<tr><td>TV072</td><td>TA014</td><td>データ整合性</td><td>FKのCASCADE/SET NULLとCHECK制約がアプリの削除・入力仕様と一致すること</td><td>migrations</td><td>R002, R004, R007, R008</td><td>由来: 追加観点検討; SSI026</td></tr>
+<tr><td>TV073</td><td>TA015</td><td>受入</td><td>AC001のタスク登録が一覧表示と再読込後の保持まで成功すること</td><td>テスト計画 AC001</td><td>R002, R012</td><td>由来: 仕様準拠; SSI031</td></tr>
+<tr><td>TV074</td><td>TA015</td><td>受入</td><td>AC002のタスク編集が表示反映と再読込後の保持まで成功すること</td><td>テスト計画 AC002</td><td>R002, R012</td><td>由来: 仕様準拠; SSI031</td></tr>
+<tr><td>TV075</td><td>TA015</td><td>受入</td><td>AC003の主要状態遷移と実績情報の保存・表示が成功すること</td><td>テスト計画 AC003</td><td>R003, R007</td><td>由来: 仕様準拠; SSI031</td></tr>
+<tr><td>TV076</td><td>TA015</td><td>受入</td><td>AC004のJSTカレンダー表示と日時境界が成功すること</td><td>テスト計画 AC004</td><td>R005, R014</td><td>由来: 仕様準拠; SSI031</td></tr>
+<tr><td>TV077</td><td>TA015</td><td>受入</td><td>AC005の予定・実績・完了率が集計仕様と一致すること</td><td>テスト計画 AC005</td><td>R006</td><td>由来: 仕様準拠; SSI031</td></tr>
+<tr><td>TV078</td><td>TA015</td><td>受入</td><td>AC006の代表設定変更が機能へ反映され、再読込後も保持されること</td><td>テスト計画 AC006</td><td>R007, R011, R012</td><td>由来: 仕様準拠; SSI031</td></tr>
+<tr><td>TV079</td><td>TA016</td><td>性能</td><td>10タスク/日または150タスク/月、カテゴリ50件、期間半年で一覧の検索・フィルター・編集操作が15分以内に完了すること</td><td>テスト計画 TA016、回答Q006</td><td>R011, R012</td><td>由来: 仕様準拠; SSI032; 初期表示時間は対象外</td></tr>
+<tr><td>TV080</td><td>TA016</td><td>性能</td><td>同じデータプロファイルで日/週/月カレンダー操作と分析の期間切替・集計が15分以内に完了すること</td><td>テスト計画 TA016、回答Q006</td><td>R006, R011</td><td>由来: 仕様準拠; SSI032; ケース分解候補: 14:59/15:00/15:01</td></tr>
+<tr><td>TV081</td><td>TA016</td><td>信頼性</td><td>同じデータプロファイルで画面切替・再計算を反復しても操作不能、メモリ増加、重複結果が発生しないこと</td><td>テスト計画 TA016、回答Q006</td><td>R006, R011</td><td>由来: 追加観点検討; SSI032</td></tr>
+<tr><td>TV082</td><td>TA017</td><td>セキュリティ</td><td>タスク名、メモ、カテゴリ名のHTML/スクリプト様文字列がReact表示で実行されないこと</td><td>React UI</td><td>R015</td><td>由来: 仕様準拠</td></tr>
+<tr><td>TV083</td><td>TA017</td><td>セキュリティ</td><td>anon key以外の秘密値、特にservice role keyがフロント資産・Git・ログ・エラーへ含まれないこと</td><td>README、update-account</td><td>R001, R015</td><td>由来: 仕様準拠</td></tr>
+<tr><td>TV084</td><td>TA017</td><td>プライバシー</td><td>エクスポート、クリップボード、通知本文、localStorageに含まれる個人情報の範囲が仕様どおりであること</td><td>README</td><td>R009, R015</td><td>由来: 汎用QA</td></tr>
+<tr><td>TV085</td><td>TA017</td><td>セキュリティ</td><td>update-accountのCORS、認証失敗、入力不正、管理API失敗で権限昇格や内部情報露出がないこと</td><td>Edge Function</td><td>R001, R015</td><td>由来: 追加観点検討; バグ逃し想定</td></tr>
+<tr><td>TV086</td><td>TA017</td><td>セキュリティ</td><td><code>npm audit</code>と依存関係の既知脆弱性を確認し、Critical/Highの残存判断を記録すること</td><td>package.json、終了条件</td><td>R013, R015</td><td>由来: 汎用QA</td></tr>
+<tr><td>TV087</td><td>TA017</td><td>データ保持</td><td>Supabase保存データとlocalStorage履歴の削除・保持範囲がユーザー説明と一致すること</td><td>README 永続性</td><td>R015</td><td>由来: 汎用QA; SSI029</td></tr>
+<tr><td>TV088</td><td>TA002</td><td>組み合わせ</td><td>ステータス5値、優先度4値、カテゴリ、キーワード、予定/実績日付範囲、未スケジュール条件を単独および高リスク組合せで絞り込めること</td><td>TaskFilters、README</td><td>R002, R007, R014</td><td>由来: 仕様準拠; SSI011, SSI012; ケース分解候補: 単独全件＋日付×状態×未スケジュール、重複0分/1分</td></tr>
+<tr><td>TV089</td><td>TA008</td><td>正常系</td><td>カテゴリの10色を追加・編集・検索・色フィルター・タスク表示へ一貫して反映すること</td><td>SettingsPage、TaskForm</td><td>R008, R011</td><td>由来: 仕様準拠; SSI009; 対象リスト: 10色全件</td></tr>
+<tr><td>TV090</td><td>TA002</td><td>境界値</td><td>タスク名履歴の0/1/30/31件、重複名、破損localStorageを最大30件・端末内保存の仕様で扱うこと</td><td>titleHistory、README</td><td>R002, R015</td><td>由来: 追加観点検討; SSI029</td></tr>
+<tr><td>TV091</td><td>TA018</td><td>正常系</td><td>メールのみ、パスワードのみ、両方の本人更新が成功し、更新後の認証状態と再ログインが整合すること</td><td>F508-F509、AuthContext、update-account</td><td>R001, R016</td><td>由来: 仕様準拠; SSI003</td></tr>
+<tr><td>TV092</td><td>TA018</td><td>境界値</td><td>変更なし、パスワード5/6文字、確認一致/不一致、メール形式不正を更新前に判定すること</td><td>SettingsPage</td><td>R007, R016</td><td>由来: 仕様準拠; SSI003</td></tr>
+<tr><td>TV093</td><td>TA018</td><td>セキュリティ</td><td>未認証・無効tokenを拒否し、有効tokenではtoken所有者だけを更新してservice role keyと管理API詳細を応答へ露出しないこと</td><td>update-account Edge Function</td><td>R001, R015, R016</td><td>由来: 仕様準拠; バグ逃し想定</td></tr>
+<tr><td>TV094</td><td>TA018</td><td>回復性</td><td>ネットワーク・管理API失敗時に入力内容と既存Auth情報を破損せず、再試行可能なエラーを表示すること</td><td>AuthContext、SettingsPage</td><td>R016</td><td>由来: 汎用QA; ケース分解候補: 通信失敗/401/400/管理API失敗</td></tr>
+<tr><td>TV095</td><td>TA019</td><td>正常系</td><td>タスクとカテゴリの一括削除で個別選択、全選択、解除が表示中集合と一致すること</td><td>F118、F507</td><td>R002, R017</td><td>由来: 仕様準拠; SSI026</td></tr>
+<tr><td>TV096</td><td>TA019</td><td>状態遷移</td><td>一括削除の開始、キャンセル、確認、確定で選択状態とダイアログが正しく遷移すること</td><td>S114、S504</td><td>R017</td><td>由来: 仕様準拠; ケース分解候補: 0件/1件/複数件/全件</td></tr>
+<tr><td>TV097</td><td>TA019</td><td>データ整合性</td><td>確定後に選択対象だけが削除され、カテゴリ参照はNULL化し、再読込後も結果が保持されること</td><td>TaskContext、FK</td><td>R002, R008, R017</td><td>由来: 仕様準拠</td></tr>
+<tr><td>TV098</td><td>TA019</td><td>回復性</td><td>複数削除の一部が失敗した場合に成功分を確定し、失敗対象を表示して選択外データを保持すること</td><td>README 一括削除、回答Q008</td><td>R017</td><td>由来: 仕様準拠; SSI026; ケース分解候補: 全成功/部分失敗/全失敗</td></tr>
+</tbody></table></div>
+<h3>5. テスト計画への追記・更新</h3>
+<ul>
+<li>現行実装に対して不足していたアカウント更新リスクR016、一括削除リスクR017、対応アプローチTA018・TA019をテスト計画へ追加した。</li>
+<li>TA015のAC001～AC006はTV073～TV078へ展開した。</li>
+<li>回答Q001～Q008を反映し、正式E2E環境、データ作成、モバイル判定、自動化範囲、入力上限、性能閾値、CSV安全化、一括削除部分失敗を確定した。</li>
+<li>テスト計画の未決事項から解決済みのQ001、Q002、Q007、Q009、Q010を削除し、<code>.env.example</code>を追加してQ003も解決した。</li>
+</ul>
+<h3>6. カバレッジ確認</h3>
+<ul>
+<li>Pass 1（仕様準拠）: TA001～TA019とAC001～AC006をすべて観点へ展開した。</li>
+<li>Pass 2（汎用QA）: 入力、境界、状態遷移、回復性、セキュリティ、性能、互換性、アクセシビリティ、永続性、時刻をWeb UI/BaaS向けに補完した。</li>
+<li>Pass 3（追加観点検討）: 認証データ残留、再試行重複、親子循環、通知重複、Edge Function情報露出、migration復旧をバグ逃し候補として追加した。</li>
+<li>SSI001～SSI036は少なくとも1つのTVへ対応している。代表抽出と質問待ちは使用していない。</li>
+<li>高リスクのR001、R002、R003、R006、R007、R011、R012、R013、R015、R016、R017は正常、境界/異常、状態/組合せ、関連する非機能観点を複数行で扱った。</li>
+</ul>
+<h3>7. 未決事項</h3>
+<ul>
+<li>テスト分析質問票Q001～Q008は全件回答済みであり、分析上の未回答事項はない。</li>
+<li><code>.env.example</code>を追加したため、テスト計画を含め未決事項は残っていない。</li>
+<li>文字数上限、CSV先頭アポストロフィ、一括削除部分失敗の新仕様は、現行実装への適合を後続テストで確認する。</li>
+</ul>
+</body>
+</html>

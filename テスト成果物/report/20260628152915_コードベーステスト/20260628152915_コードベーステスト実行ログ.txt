@@ -1,0 +1,1420 @@
+Command: node --test --test-reporter=tap tests/code/*.test.mjs; vitest --reporter=tap
+ExitCode: 0
+Timestamp: 20260628152915
+
+TAP version 13
+# Subtest: TC-CB-006 TD012 TV012 TA003 R003/R014 JST入力をUTC ISOへ変換する
+ok 1 - TC-CB-006 TD012 TV012 TA003 R003/R014 JST入力をUTC ISOへ変換する
+  ---
+  duration_ms: 3.0206
+  type: 'test'
+  ...
+# Subtest: TC-CB-007 TD012 TV012 TA003 R003/R014 不正なJST日時をnullとして扱う
+ok 2 - TC-CB-007 TD012 TV012 TA003 R003/R014 不正なJST日時をnullとして扱う
+  ---
+  duration_ms: 0.2274
+  type: 'test'
+  ...
+# Subtest: TC-CB-008 TD012 TV012 TA003 R003/R014 UTC日時をdatetime-local用JST文字列へ変換する
+ok 3 - TC-CB-008 TD012 TV012 TA003 R003/R014 UTC日時をdatetime-local用JST文字列へ変換する
+  ---
+  duration_ms: 0.3515
+  type: 'test'
+  ...
+# Subtest: TC-CB-009 TD012 TV012 TA003 R003/R014 JST日の半開区間をUTC範囲で返す
+ok 4 - TC-CB-009 TD012 TV012 TA003 R003/R014 JST日の半開区間をUTC範囲で返す
+  ---
+  duration_ms: 0.2845
+  type: 'test'
+  ...
+# Subtest: TC-CB-010 TD012 TV012 TA003 R003/R014 JST月の半開区間をUTC範囲で返す
+ok 5 - TC-CB-010 TD012 TV012 TA003 R003/R014 JST月の半開区間をUTC範囲で返す
+  ---
+  duration_ms: 0.6266
+  type: 'test'
+  ...
+# Subtest: TC-CB-011 TD012 TV012 TA003 R003/R014 JST日付加算と月末丸めを行う
+ok 6 - TC-CB-011 TD012 TV012 TA003 R003/R014 JST日付加算と月末丸めを行う
+  ---
+  duration_ms: 0.5985
+  type: 'test'
+  ...
+# Subtest: TC-CB-012 TD012 TV012 TA003 R003/R014 JST壁時計Dateへ変換する
+ok 7 - TC-CB-012 TD012 TV012 TA003 R003/R014 JST壁時計Dateへ変換する
+  ---
+  duration_ms: 0.4324
+  type: 'test'
+  ...
+# Subtest: TC-CB-063 TD030 TV030 TA006 R006/R007 予定工数は数量と単位時間から算出し0以下は未入力にする
+ok 8 - TC-CB-063 TD030 TV030 TA006 R006/R007 予定工数は数量と単位時間から算出し0以下は未入力にする
+  ---
+  duration_ms: 0.3879
+  type: 'test'
+  ...
+# Subtest: TC-CB-070 TD030 TV030 TA006 R006/R007 予定工数を期間重複比率で按分する
+ok 9 - TC-CB-070 TD030 TV030 TA006 R006/R007 予定工数を期間重複比率で按分する
+  ---
+  duration_ms: 0.4069
+  type: 'test'
+  ...
+# Subtest: TC-CB-018 TD014 TV014 TA003 R003/R006 未着手と実績追跡対象外の実績工数を仕様どおり返す
+ok 10 - TC-CB-018 TD014 TV014 TA003 R003/R006 未着手と実績追跡対象外の実績工数を仕様どおり返す
+  ---
+  duration_ms: 0.4072
+  type: 'test'
+  ...
+# Subtest: TC-CB-019 TD014 TV014 TA003 R003/R006 終了済みセッションを合計しactual_timeより優先する
+ok 11 - TC-CB-019 TD014 TV014 TA003 R003/R006 終了済みセッションを合計しactual_timeより優先する
+  ---
+  duration_ms: 0.3471
+  type: 'test'
+  ...
+# Subtest: TC-CB-020 TD014 TV014 TA003 R003/R006 進行中の開放セッションはnowまで加算する
+ok 12 - TC-CB-020 TD014 TV014 TA003 R003/R006 進行中の開放セッションはnowまで加算する
+  ---
+  duration_ms: 0.1816
+  type: 'test'
+  ...
+# Subtest: TC-CB-021 TD014 TV014 TA003 R003/R006 中断中の開放セッションは加算しない
+ok 13 - TC-CB-021 TD014 TV014 TA003 R003/R006 中断中の開放セッションは加算しない
+  ---
+  duration_ms: 0.1355
+  type: 'test'
+  ...
+# Subtest: TC-CB-074 TD032 TV032 TA006 R006/R014 実績工数を指定範囲の重複分だけ按分する
+ok 14 - TC-CB-074 TD032 TV032 TA006 R006/R014 実績工数を指定範囲の重複分だけ按分する
+  ---
+  duration_ms: 0.2617
+  type: 'test'
+  ...
+# Subtest: TC-CB-078 TD033 TV033 TA006 R006 予定実績差異を1分許容で分類する
+ok 15 - TC-CB-078 TD033 TV033 TA006 R006 予定実績差異を1分許容で分類する
+  ---
+  duration_ms: 0.1786
+  type: 'test'
+  ...
+# Subtest: TC-CB-083 TD034 TV034 TA006 R006 内部計算では小数分を丸めない
+ok 16 - TC-CB-083 TD034 TV034 TA006 R006 内部計算では小数分を丸めない
+  ---
+  duration_ms: 0.1269
+  type: 'test'
+  ...
+# Subtest: TC-CB-035 TD024 TV024 TA005 R005/R014 日跨ぎの当日分だけ作業工数を返す
+ok 17 - TC-CB-035 TD024 TV024 TA005 R005/R014 日跨ぎの当日分だけ作業工数を返す
+  ---
+  duration_ms: 0.4064
+  type: 'test'
+  ...
+# Subtest: TC-CB-028 TD028 TV028 TA006 R006 子を持つ親タスクを集計対象から除外する
+ok 18 - TC-CB-028 TD028 TV028 TA006 R006 子を持つ親タスクを集計対象から除外する
+  ---
+  duration_ms: 0.9556
+  type: 'test'
+  ...
+# Subtest: TC-CB-037 TD037 TV037 TA007 R007/R015 buildTreeは親子関係を再構築する
+ok 19 - TC-CB-037 TD037 TV037 TA007 R007/R015 buildTreeは親子関係を再構築する
+  ---
+  duration_ms: 0.239
+  type: 'test'
+  ...
+# Subtest: TC-CB-088 TD034 TV034 TA006 R006 当日テキスト出力はJST日の対象タスクだけを出力する
+ok 20 - TC-CB-088 TD034 TV034 TA006 R006 当日テキスト出力はJST日の対象タスクだけを出力する
+  ---
+  duration_ms: 0.6217
+  type: 'test'
+  ...
+# Subtest: TC-CB-165 TD055 TV055 TA010 R010 通知再予約時に既存タイマーを取り消す
+ok 21 - TC-CB-165 TD055 TV055 TA010 R010 通知再予約時に既存タイマーを取り消す
+  ---
+  duration_ms: 0.4789
+  type: 'test'
+  ...
+# Subtest: TC-CB-173 TD058 TV058 TA010 R010 遠い将来の通知はsetTimeout上限以内で分割予約する
+ok 22 - TC-CB-173 TD058 TV058 TA010 R010 遠い将来の通知はsetTimeout上限以内で分割予約する
+  ---
+  duration_ms: 0.2841
+  type: 'test'
+  ...
+# Subtest: TC-CB-138 TD043 TV043 TA007 R007/R011 作業時間上限を0.5から24時間へクランプする
+ok 23 - TC-CB-138 TD043 TV043 TA007 R007/R011 作業時間上限を0.5から24時間へクランプする
+  ---
+  duration_ms: 0.141
+  type: 'test'
+  ...
+# Subtest: TC-CB-139 TD043 TV043 TA007 R007/R011 localStorage未設定と破損値は既定8時間で読み込む
+ok 24 - TC-CB-139 TD043 TV043 TA007 R007/R011 localStorage未設定と破損値は既定8時間で読み込む
+  ---
+  duration_ms: 0.192
+  type: 'test'
+  ...
+# Subtest: TC-CB-025 TD018 TV018 TA004 R004/R014 daily定常タスクは期間開始日と終了日を含める
+ok 25 - TC-CB-025 TD018 TV018 TA004 R004/R014 daily定常タスクは期間開始日と終了日を含める
+  ---
+  duration_ms: 0.2375
+  type: 'test'
+  ...
+# Subtest: TC-CB-026 TD018 TV018 TA004 R004/R014 weekly定常タスクはJST曜日に合う日だけ生成する
+ok 26 - TC-CB-026 TD018 TV018 TA004 R004/R014 weekly定常タスクはJST曜日に合う日だけ生成する
+  ---
+  duration_ms: 0.1948
+  type: 'test'
+  ...
+# Subtest: TC-CB-013 TD013 TV013 TA003 R003/R007 中断再開ペアはセッション列へ変換される
+ok 27 - TC-CB-013 TD013 TV013 TA003 R003/R007 中断再開ペアはセッション列へ変換される
+  ---
+  duration_ms: 0.4616
+  type: 'test'
+  ...
+# Subtest: TC-CB-014 TD013 TV013 TA003 R003/R007 中断時刻が開始以前ならエラーにする
+ok 28 - TC-CB-014 TD013 TV013 TA003 R003/R007 中断時刻が開始以前ならエラーにする
+  ---
+  duration_ms: 0.234
+  type: 'test'
+  ...
+# Subtest: TC-CB-015 TD013 TV013 TA003 R003/R007 再開時刻が中断以前ならエラーにする
+ok 29 - TC-CB-015 TD013 TV013 TA003 R003/R007 再開時刻が中断以前ならエラーにする
+  ---
+  duration_ms: 0.1921
+  type: 'test'
+  ...
+# Subtest: TC-CB-016 TD013 TV013 TA003 R003/R007 中断中タスクは最後の再開時刻を空にする
+ok 30 - TC-CB-016 TD013 TV013 TA003 R003/R007 中断中タスクは最後の再開時刻を空にする
+  ---
+  duration_ms: 0.173
+  type: 'test'
+  ...
+# Subtest: TC-CB-017 TD013 TV013 TA003 R003/R007 完了タスクは終了実績日時を必須にする
+ok 31 - TC-CB-017 TD013 TV013 TA003 R003/R007 完了タスクは終了実績日時を必須にする
+  ---
+  duration_ms: 0.1336
+  type: 'test'
+  ...
+# Subtest: TC-CB-089 TD090 TV090 TA002 R007/R015 セッションから中断再開入力行を復元する
+ok 32 - TC-CB-089 TD090 TV090 TA002 R007/R015 セッションから中断再開入力行を復元する
+  ---
+  duration_ms: 0.3391
+  type: 'test'
+  ...
+# Subtest: TC-CB-090 TD090 TV090 TA002 R007/R015 中断分数をJST入力から算出する
+ok 33 - TC-CB-090 TD090 TV090 TA002 R007/R015 中断分数をJST入力から算出する
+  ---
+  duration_ms: 0.1877
+  type: 'test'
+  ...
+# Subtest: TC-CB-176 TD090 TV090 TA002 R002/R015 タイトル履歴が未保存なら空配列を返す
+ok 34 - TC-CB-176 TD090 TV090 TA002 R002/R015 タイトル履歴が未保存なら空配列を返す
+  ---
+  duration_ms: 0.2095
+  type: 'test'
+  ...
+# Subtest: TC-CB-177 TD090 TV090 TA002 R002/R015 タイトル履歴を1件保存して復元できる
+ok 35 - TC-CB-177 TD090 TV090 TA002 R002/R015 タイトル履歴を1件保存して復元できる
+  ---
+  duration_ms: 0.2049
+  type: 'test'
+  ...
+# Subtest: TC-CB-178 TD090 TV090 TA002 R002/R015 タイトル履歴は30件まで保持する
+ok 36 - TC-CB-178 TD090 TV090 TA002 R002/R015 タイトル履歴は30件まで保持する
+  ---
+  duration_ms: 0.3346
+  type: 'test'
+  ...
+# Subtest: TC-CB-179 TD090 TV090 TA002 R002/R015 タイトル履歴は31件目で最古を落とす
+ok 37 - TC-CB-179 TD090 TV090 TA002 R002/R015 タイトル履歴は31件目で最古を落とす
+  ---
+  duration_ms: 0.2816
+  type: 'test'
+  ...
+# Subtest: TC-CB-180 TD090 TV090 TA002 R002/R015 重複タイトルは先頭へ移動して単一化する
+ok 38 - TC-CB-180 TD090 TV090 TA002 R002/R015 重複タイトルは先頭へ移動して単一化する
+  ---
+  duration_ms: 0.1322
+  type: 'test'
+  ...
+# Subtest: TC-CB-181 TD090 TV090 TA002 R002/R015 壊れたlocalStorage値は空配列として扱う
+ok 39 - TC-CB-181 TD090 TV090 TA002 R002/R015 壊れたlocalStorage値は空配列として扱う
+  ---
+  duration_ms: 0.1767
+  type: 'test'
+  ...
+# Subtest: TC-CB-152 TD053 TV053 TA010 R010 未着手タスクは開始と終了の通知を予約する
+ok 40 - TC-CB-152 TD053 TV053 TA010 R010 未着手タスクは開始と終了の通知を予約する
+  ---
+  duration_ms: 0.3418
+  type: 'test'
+  ...
+# Subtest: TC-CB-153/TC-CB-154 TD053 TV053 TA010 R010 進行中・中断中タスクは終了通知だけを予約する
+ok 41 - TC-CB-153/TC-CB-154 TD053 TV053 TA010 R010 進行中・中断中タスクは終了通知だけを予約する
+  ---
+  duration_ms: 0.2478
+  type: 'test'
+  ...
+# Subtest: TC-CB-155 TD053 TV053 TA010 R010 完了タスクは通知を予約しない
+ok 42 - TC-CB-155 TD053 TV053 TA010 R010 完了タスクは通知を予約しない
+  ---
+  duration_ms: 0.1539
+  type: 'test'
+  ...
+# Subtest: TC-CB-156/TC-CB-157 TD053 TV053 TA010 R010 開始または終了予定がない場合は存在する側だけ予約する
+ok 43 - TC-CB-156/TC-CB-157 TD053 TV053 TA010 R010 開始または終了予定がない場合は存在する側だけ予約する
+  ---
+  duration_ms: 0.2303
+  type: 'test'
+  ...
+# Subtest: TC-CB-158 TD053 TV053 TA010 R010 Notification API非対応なら通知を予約しない
+ok 44 - TC-CB-158 TD053 TV053 TA010 R010 Notification API非対応なら通知を予約しない
+  ---
+  duration_ms: 0.2437
+  type: 'test'
+  ...
+# Subtest: TC-CB-159 TD053 TV053 TA010 R010 通知発火時にタスク名と種別タグを渡す
+ok 45 - TC-CB-159 TD053 TV053 TA010 R010 通知発火時にタスク名と種別タグを渡す
+  ---
+  duration_ms: 0.3158
+  type: 'test'
+  ...
+# Subtest: TC-CB-160 TD054 TV054 TA010 R010 再予約時に既存通知を取り消す
+ok 46 - TC-CB-160 TD054 TV054 TA010 R010 再予約時に既存通知を取り消す
+  ---
+  duration_ms: 0.2054
+  type: 'test'
+  ...
+# Subtest: TC-CB-161 TD054 TV054 TA010 R010 完了への変更で既存通知を取り消して新規予約しない
+ok 47 - TC-CB-161 TD054 TV054 TA010 R010 完了への変更で既存通知を取り消して新規予約しない
+  ---
+  duration_ms: 0.1931
+  type: 'test'
+  ...
+# Subtest: TC-CB-162/TC-CB-163 TD054 TV054 TA010 R010 個別取消と全取消で予約済みタイマーを解除する
+ok 48 - TC-CB-162/TC-CB-163 TD054 TV054 TA010 R010 個別取消と全取消で予約済みタイマーを解除する
+  ---
+  duration_ms: 0.1513
+  type: 'test'
+  ...
+# Subtest: TC-CB-164 TD054 TV054 TA010 R010 syncTaskNotificationsは全取消後に対象を再予約する
+ok 49 - TC-CB-164 TD054 TV054 TA010 R010 syncTaskNotificationsは全取消後に対象を再予約する
+  ---
+  duration_ms: 0.2216
+  type: 'test'
+  ...
+# Subtest: TC-CB-166/TC-CB-167 TD055 TV055 TA010 R010 同一タスクは重複排除し別タスクは独立予約する
+ok 50 - TC-CB-166/TC-CB-167 TD055 TV055 TA010 R010 同一タスクは重複排除し別タスクは独立予約する
+  ---
+  duration_ms: 0.2147
+  type: 'test'
+  ...
+# Subtest: TC-CB-168/TC-CB-169/TC-CB-170 TD056 TV056 TA010 R010 不正・過去日時を無視し未来日時を予約する
+ok 51 - TC-CB-168/TC-CB-169/TC-CB-170 TD056 TV056 TA010 R010 不正・過去日時を無視し未来日時を予約する
+  ---
+  duration_ms: 0.1375
+  type: 'test'
+  ...
+# Subtest: TC-CB-171/TC-CB-172 TD056 TV056 TA010 R010 権限なしでは生成せず終了通知はendタグで生成する
+ok 52 - TC-CB-171/TC-CB-172 TD056 TV056 TA010 R010 権限なしでは生成せず終了通知はendタグで生成する
+  ---
+  duration_ms: 0.2251
+  type: 'test'
+  ...
+# Subtest: TC-CB-174/TC-CB-175 TD058 TV058 TA010 R010 長期通知は上限内タイマーで予約し取消できる
+ok 53 - TC-CB-174/TC-CB-175 TD058 TV058 TA010 R010 長期通知は上限内タイマーで予約し取消できる
+  ---
+  duration_ms: 0.1387
+  type: 'test'
+  ...
+# Subtest: TC-CB-329 TD084 TV084 TA017 R015 CSV export includes task fields but not user/auth identifiers
+ok 54 - TC-CB-329 TD084 TV084 TA017 R015 CSV export includes task fields but not user/auth identifiers
+  ---
+  duration_ms: 1.2227
+  type: 'test'
+  ...
+# Subtest: TC-CB-330 TD084 TV084 TA017 R015 clipboard text export uses selected report fields and excludes user/auth identifiers
+ok 55 - TC-CB-330 TD084 TV084 TA017 R015 clipboard text export uses selected report fields and excludes user/auth identifiers
+  ---
+  duration_ms: 0.5557
+  type: 'test'
+  ...
+# Subtest: TC-CB-331 TD084 TV084 TA017 R015 notification body contains task title and status context only
+ok 56 - TC-CB-331 TD084 TV084 TA017 R015 notification body contains task title and status context only
+  ---
+  duration_ms: 0.3666
+  type: 'test'
+  ...
+# Subtest: TC-CB-332 TD084 TV084 TA017 R015 localStorage stores local UI settings/history but not Supabase task payloads or auth identifiers
+ok 57 - TC-CB-332 TD084 TV084 TA017 R015 localStorage stores local UI settings/history but not Supabase task payloads or auth identifiers
+  ---
+  duration_ms: 0.2696
+  type: 'test'
+  ...
+# Subtest: TC-CB-305 TD052 TV052 TA009 R009/R015 CSV出力は通常文字列をCSVとしてダウンロードする
+ok 58 - TC-CB-305 TD052 TV052 TA009 R009/R015 CSV出力は通常文字列をCSVとしてダウンロードする
+  ---
+  duration_ms: 0.4942
+  type: 'test'
+  ...
+# Subtest: TC-CB-306 TD052 TV052 TA009 R009/R015 CSV出力は空文字を空セルとしてクォートする
+ok 59 - TC-CB-306 TD052 TV052 TA009 R009/R015 CSV出力は空文字を空セルとしてクォートする
+  ---
+  duration_ms: 0.4398
+  type: 'test'
+  ...
+# Subtest: TC-CB-307/TC-CB-308/TC-CB-309 TD052 TV052 TA009 R009/R015 CSV出力はカンマ・改行・引用符をセル内に保持する
+ok 60 - TC-CB-307/TC-CB-308/TC-CB-309 TD052 TV052 TA009 R009/R015 CSV出力はカンマ・改行・引用符をセル内に保持する
+  ---
+  duration_ms: 0.3137
+  type: 'test'
+  ...
+# Subtest: TC-CB-027 TD018 TV018 TA004 R004/R014 recurrence daily includes next day boundary
+ok 61 - TC-CB-027 TD018 TV018 TA004 R004/R014 recurrence daily includes next day boundary
+  ---
+  duration_ms: 2.5073
+  type: 'test'
+  ...
+# Subtest: TC-CB-029 TD018 TV018 TA004 R004/R014 addJstMonths clamps month end
+ok 62 - TC-CB-029 TD018 TV018 TA004 R004/R014 addJstMonths clamps month end
+  ---
+  duration_ms: 0.3957
+  type: 'test'
+  ...
+# Subtest: TC-CB-030 TD018 TV018 TA004 R004/R014 addJstDays crosses year end
+ok 63 - TC-CB-030 TD018 TV018 TA004 R004/R014 addJstDays crosses year end
+  ---
+  duration_ms: 0.3372
+  type: 'test'
+  ...
+# Subtest: TC-CB-031 TD018 TV018 TA004 R004/R014 addJstDays crosses non-leap Feb 28
+ok 64 - TC-CB-031 TD018 TV018 TA004 R004/R014 addJstDays crosses non-leap Feb 28
+  ---
+  duration_ms: 0.3509
+  type: 'test'
+  ...
+# Subtest: TC-CB-032 TD018 TV018 TA004 R004/R014 addJstDays crosses leap Feb 29
+ok 65 - TC-CB-032 TD018 TV018 TA004 R004/R014 addJstDays crosses leap Feb 29
+  ---
+  duration_ms: 0.2127
+  type: 'test'
+  ...
+# Subtest: TC-CB-033 TD018 TV018 TA004 R004/R014 weekly recurrence includes leap-day Saturday only
+ok 66 - TC-CB-033 TD018 TV018 TA004 R004/R014 weekly recurrence includes leap-day Saturday only
+  ---
+  duration_ms: 0.2473
+  type: 'test'
+  ...
+# Subtest: TC-CB-034 TD024 TV024 TA005 R005/R014 workload clips one minute before midnight
+ok 67 - TC-CB-034 TD024 TV024 TA005 R005/R014 workload clips one minute before midnight
+  ---
+  duration_ms: 2.2307
+  type: 'test'
+  ...
+# Subtest: TC-CB-036 TD024 TV024 TA005 R005/R014 workload clips one minute after midnight
+ok 68 - TC-CB-036 TD024 TV024 TA005 R005/R014 workload clips one minute after midnight
+  ---
+  duration_ms: 0.3691
+  type: 'test'
+  ...
+# Subtest: TC-CB-038 TD024 TV024 TA005 R005/R014 workload counts only end-side overlap
+ok 69 - TC-CB-038 TD024 TV024 TA005 R005/R014 workload counts only end-side overlap
+  ---
+  duration_ms: 0.3835
+  type: 'test'
+  ...
+# Subtest: TC-CB-039 TD024 TV024 TA005 R005/R014 workload clips month-end boundary
+ok 70 - TC-CB-039 TD024 TV024 TA005 R005/R014 workload clips month-end boundary
+  ---
+  duration_ms: 0.4214
+  type: 'test'
+  ...
+# Subtest: TC-CB-040 TD028 TV028 TA006 R006 workload keeps standalone task
+ok 71 - TC-CB-040 TD028 TV028 TA006 R006 workload keeps standalone task
+  ---
+  duration_ms: 0.3184
+  type: 'test'
+  ...
+# Subtest: TC-CB-041 TD028 TV028 TA006 R006 workload excludes direct parent and keeps child leaf
+ok 72 - TC-CB-041 TD028 TV028 TA006 R006 workload excludes direct parent and keeps child leaf
+  ---
+  duration_ms: 0.2638
+  type: 'test'
+  ...
+# Subtest: TC-CB-042 TD028 TV028 TA006 R006 workload treats missing parent as leaf
+ok 73 - TC-CB-042 TD028 TV028 TA006 R006 workload treats missing parent as leaf
+  ---
+  duration_ms: 0.2179
+  type: 'test'
+  ...
+# Subtest: TC-CB-043 TD029 TV029 TA006 R006 track_actual false returns null actual minutes
+ok 74 - TC-CB-043 TD029 TV029 TA006 R006 track_actual false returns null actual minutes
+  ---
+  duration_ms: 0.1965
+  type: 'test'
+  ...
+# Subtest: TC-CB-044 TD029 TV029 TA006 R006 track_actual false returns null range actual minutes
+ok 75 - TC-CB-044 TD029 TV029 TA006 R006 track_actual false returns null range actual minutes
+  ---
+  duration_ms: 0.1755
+  type: 'test'
+  ...
+# Subtest: TC-CB-045 TD029 TV029 TA006 R006 track_actual false yields unknown variance
+ok 76 - TC-CB-045 TD029 TV029 TA006 R006 track_actual false yields unknown variance
+  ---
+  duration_ms: 0.1392
+  type: 'test'
+  ...
+# Subtest: TC-CB-046 TD029 TV029 TA006 R006 track_actual false task can remain in workload list
+ok 77 - TC-CB-046 TD029 TV029 TA006 R006 track_actual false task can remain in workload list
+  ---
+  duration_ms: 0.1242
+  type: 'test'
+  ...
+# Subtest: TC-CB-047 TD030 TV030 TA006 R006 planned minutes multiplies quantity and unit minutes
+ok 78 - TC-CB-047 TD030 TV030 TA006 R006 planned minutes multiplies quantity and unit minutes
+  ---
+  duration_ms: 0.0782
+  type: 'test'
+  ...
+# Subtest: TC-CB-048 TD030 TV030 TA006 R006 planned minutes rejects zero quantity
+ok 79 - TC-CB-048 TD030 TV030 TA006 R006 planned minutes rejects zero quantity
+  ---
+  duration_ms: 0.0635
+  type: 'test'
+  ...
+# Subtest: TC-CB-049 TD030 TV030 TA006 R006 planned minutes rejects zero unit minutes
+ok 80 - TC-CB-049 TD030 TV030 TA006 R006 planned minutes rejects zero unit minutes
+  ---
+  duration_ms: 0.0637
+  type: 'test'
+  ...
+# Subtest: TC-CB-050 TD030 TV030 TA006 R006 planned minutes rejects negative quantity
+ok 81 - TC-CB-050 TD030 TV030 TA006 R006 planned minutes rejects negative quantity
+  ---
+  duration_ms: 0.0654
+  type: 'test'
+  ...
+# Subtest: TC-CB-051 TD030 TV030 TA006 R006 planned minutes rejects negative unit minutes
+ok 82 - TC-CB-051 TD030 TV030 TA006 R006 planned minutes rejects negative unit minutes
+  ---
+  duration_ms: 0.0621
+  type: 'test'
+  ...
+# Subtest: TC-CB-052 TD030 TV030 TA006 R006 planned minutes rejects non-finite quantity
+ok 83 - TC-CB-052 TD030 TV030 TA006 R006 planned minutes rejects non-finite quantity
+  ---
+  duration_ms: 0.0788
+  type: 'test'
+  ...
+# Subtest: TC-CB-053 TD030 TV030 TA006 R006 planned minutes rejects non-finite unit minutes
+ok 84 - TC-CB-053 TD030 TV030 TA006 R006 planned minutes rejects non-finite unit minutes
+  ---
+  duration_ms: 0.079
+  type: 'test'
+  ...
+# Subtest: TC-CB-054 TD031 TV031 TA006 R006 not_started with sessions returns zero actual minutes
+ok 85 - TC-CB-054 TD031 TV031 TA006 R006 not_started with sessions returns zero actual minutes
+  ---
+  duration_ms: 0.1405
+  type: 'test'
+  ...
+# Subtest: TC-CB-055 TD031 TV031 TA006 R006 not_started with actual_time returns zero actual minutes
+ok 86 - TC-CB-055 TD031 TV031 TA006 R006 not_started with actual_time returns zero actual minutes
+  ---
+  duration_ms: 0.1214
+  type: 'test'
+  ...
+# Subtest: TC-CB-056 TD031 TV031 TA006 R006 not_started with actual range returns zero actual minutes
+ok 87 - TC-CB-056 TD031 TV031 TA006 R006 not_started with actual range returns zero actual minutes
+  ---
+  duration_ms: 0.1073
+  type: 'test'
+  ...
+# Subtest: TC-CB-057 TD031 TV031 TA006 R006 not_started without actual data returns zero actual minutes
+ok 88 - TC-CB-057 TD031 TV031 TA006 R006 not_started without actual data returns zero actual minutes
+  ---
+  duration_ms: 0.0702
+  type: 'test'
+  ...
+# Subtest: TC-CB-058 TD031 TV031 TA006 R006 in_progress open session uses provided now
+ok 89 - TC-CB-058 TD031 TV031 TA006 R006 in_progress open session uses provided now
+  ---
+  duration_ms: 0.184
+  type: 'test'
+  ...
+# Subtest: TC-CB-059 TD031 TV031 TA006 R006 in_progress without sessions uses actual_time
+ok 90 - TC-CB-059 TD031 TV031 TA006 R006 in_progress without sessions uses actual_time
+  ---
+  duration_ms: 0.1527
+  type: 'test'
+  ...
+# Subtest: TC-CB-060 TD031 TV031 TA006 R006 in_progress without sessions uses actual range
+ok 91 - TC-CB-060 TD031 TV031 TA006 R006 in_progress without sessions uses actual range
+  ---
+  duration_ms: 0.0942
+  type: 'test'
+  ...
+# Subtest: TC-CB-061 TD031 TV031 TA006 R006 in_progress without actual data returns null
+ok 92 - TC-CB-061 TD031 TV031 TA006 R006 in_progress without actual data returns null
+  ---
+  duration_ms: 0.0748
+  type: 'test'
+  ...
+# Subtest: TC-CB-062 TD031 TV031 TA006 R006 suspended closed session is summed
+ok 93 - TC-CB-062 TD031 TV031 TA006 R006 suspended closed session is summed
+  ---
+  duration_ms: 0.2183
+  type: 'test'
+  ...
+# Subtest: TC-CB-064 TD031 TV031 TA006 R006 suspended without sessions uses actual range
+ok 94 - TC-CB-064 TD031 TV031 TA006 R006 suspended without sessions uses actual range
+  ---
+  duration_ms: 0.2879
+  type: 'test'
+  ...
+# Subtest: TC-CB-065 TD031 TV031 TA006 R006 suspended without actual data returns null
+ok 95 - TC-CB-065 TD031 TV031 TA006 R006 suspended without actual data returns null
+  ---
+  duration_ms: 0.266
+  type: 'test'
+  ...
+# Subtest: TC-CB-066 TD031 TV031 TA006 R006 completed session total wins over actual_time
+ok 96 - TC-CB-066 TD031 TV031 TA006 R006 completed session total wins over actual_time
+  ---
+  duration_ms: 0.3388
+  type: 'test'
+  ...
+# Subtest: TC-CB-067 TD031 TV031 TA006 R006 completed without sessions uses actual_time
+ok 97 - TC-CB-067 TD031 TV031 TA006 R006 completed without sessions uses actual_time
+  ---
+  duration_ms: 0.3349
+  type: 'test'
+  ...
+# Subtest: TC-CB-068 TD031 TV031 TA006 R006 completed without sessions uses actual range
+ok 98 - TC-CB-068 TD031 TV031 TA006 R006 completed without sessions uses actual range
+  ---
+  duration_ms: 0.3956
+  type: 'test'
+  ...
+# Subtest: TC-CB-069 TD031 TV031 TA006 R006 completed without actual data returns null
+ok 99 - TC-CB-069 TD031 TV031 TA006 R006 completed without actual data returns null
+  ---
+  duration_ms: 0.3358
+  type: 'test'
+  ...
+# Subtest: TC-CB-071 TD032 TV032 TA006 R006/R014 range attribution includes exact midnight start
+ok 100 - TC-CB-071 TD032 TV032 TA006 R006/R014 range attribution includes exact midnight start
+  ---
+  duration_ms: 0.4972
+  type: 'test'
+  ...
+# Subtest: TC-CB-072 TD032 TV032 TA006 R006/R014 range attribution clips one minute after midnight
+ok 101 - TC-CB-072 TD032 TV032 TA006 R006/R014 range attribution clips one minute after midnight
+  ---
+  duration_ms: 0.3181
+  type: 'test'
+  ...
+# Subtest: TC-CB-073 TD032 TV032 TA006 R006/R014 range attribution counts day-crossing start side
+ok 102 - TC-CB-073 TD032 TV032 TA006 R006/R014 range attribution counts day-crossing start side
+  ---
+  duration_ms: 0.3135
+  type: 'test'
+  ...
+# Subtest: TC-CB-075 TD032 TV032 TA006 R006/R014 range attribution handles month end
+ok 103 - TC-CB-075 TD032 TV032 TA006 R006/R014 range attribution handles month end
+  ---
+  duration_ms: 0.3433
+  type: 'test'
+  ...
+# Subtest: TC-CB-076 TD032 TV032 TA006 R006/R014 range attribution handles leap day
+ok 104 - TC-CB-076 TD032 TV032 TA006 R006/R014 range attribution handles leap day
+  ---
+  duration_ms: 0.4472
+  type: 'test'
+  ...
+# Subtest: TC-CB-077 TD032 TV032 TA006 R006/R014 range attribution handles year end
+ok 105 - TC-CB-077 TD032 TV032 TA006 R006/R014 range attribution handles year end
+  ---
+  duration_ms: 0.3514
+  type: 'test'
+  ...
+# Subtest: TC-CB-079 TD033 TV033 TA006 R006 duration variance is short just below lower tolerance
+ok 106 - TC-CB-079 TD033 TV033 TA006 R006 duration variance is short just below lower tolerance
+  ---
+  duration_ms: 0.2507
+  type: 'test'
+  ...
+# Subtest: TC-CB-080 TD033 TV033 TA006 R006 duration variance matches exact lower tolerance
+ok 107 - TC-CB-080 TD033 TV033 TA006 R006 duration variance matches exact lower tolerance
+  ---
+  duration_ms: 0.1912
+  type: 'test'
+  ...
+# Subtest: TC-CB-081 TD033 TV033 TA006 R006 duration variance matches exact upper tolerance
+ok 108 - TC-CB-081 TD033 TV033 TA006 R006 duration variance matches exact upper tolerance
+  ---
+  duration_ms: 0.215
+  type: 'test'
+  ...
+# Subtest: TC-CB-082 TD033 TV033 TA006 R006 duration variance is over just above upper tolerance
+ok 109 - TC-CB-082 TD033 TV033 TA006 R006 duration variance is over just above upper tolerance
+  ---
+  duration_ms: 0.2066
+  type: 'test'
+  ...
+# Subtest: TC-CB-144 TD043 TV043 TA007 R007/R011 work hours clamps below minimum to 0.5
+ok 110 - TC-CB-144 TD043 TV043 TA007 R007/R011 work hours clamps below minimum to 0.5
+  ---
+  duration_ms: 0.1951
+  type: 'test'
+  ...
+# Subtest: TC-CB-145 TD043 TV043 TA007 R007/R011 work hours clamps above maximum to 24
+ok 111 - TC-CB-145 TD043 TV043 TA007 R007/R011 work hours clamps above maximum to 24
+  ---
+  duration_ms: 0.1214
+  type: 'test'
+  ...
+# Subtest: TC-CB-146 TD043 TV043 TA007 R007/R011 missing work hours localStorage returns default 8
+ok 112 - TC-CB-146 TD043 TV043 TA007 R007/R011 missing work hours localStorage returns default 8
+  ---
+  duration_ms: 0.3355
+  type: 'test'
+  ...
+# Subtest: TC-CB-147 TD043 TV043 TA007 R007/R011 throwing work hours localStorage returns default 8
+ok 113 - TC-CB-147 TD043 TV043 TA007 R007/R011 throwing work hours localStorage returns default 8
+  ---
+  duration_ms: 0.3692
+  type: 'test'
+  ...
+# Subtest: TC-CB-148 TD043 TV043 TA007 R007/R011 malformed work hours localStorage returns default 8
+ok 114 - TC-CB-148 TD043 TV043 TA007 R007/R011 malformed work hours localStorage returns default 8
+  ---
+  duration_ms: 0.1619
+  type: 'test'
+  ...
+# Subtest: TC-CB-304 TD052 TV052 TA009 R009/R015 CSV output prefixes formula-leading cells
+ok 115 - TC-CB-304 TD052 TV052 TA009 R009/R015 CSV output prefixes formula-leading cells
+  ---
+  duration_ms: 1.7964
+  type: 'test'
+  ...
+# Subtest: TC-CB-223 TD069 TV069 TA014 migration 20260507120154_create_tasks_schema.sql exists and contains expected schema change
+ok 116 - TC-CB-223 TD069 TV069 TA014 migration 20260507120154_create_tasks_schema.sql exists and contains expected schema change
+  ---
+  duration_ms: 28.4982
+  type: 'test'
+  ...
+# Subtest: TC-CB-224 TD069 TV069 TA014 migration 20260507124519_add_actual_times_to_tasks.sql exists and contains expected schema change
+ok 117 - TC-CB-224 TD069 TV069 TA014 migration 20260507124519_add_actual_times_to_tasks.sql exists and contains expected schema change
+  ---
+  duration_ms: 0.3498
+  type: 'test'
+  ...
+# Subtest: TC-CB-225 TD069 TV069 TA014 migration 20260507132400_fix_difficulty_check_allow_zero.sql exists and contains expected schema change
+ok 118 - TC-CB-225 TD069 TV069 TA014 migration 20260507132400_fix_difficulty_check_allow_zero.sql exists and contains expected schema change
+  ---
+  duration_ms: 0.2415
+  type: 'test'
+  ...
+# Subtest: TC-CB-226 TD069 TV069 TA014 migration 20260507135810_fix_update_updated_at_search_path.sql exists and contains expected schema change
+ok 119 - TC-CB-226 TD069 TV069 TA014 migration 20260507135810_fix_update_updated_at_search_path.sql exists and contains expected schema change
+  ---
+  duration_ms: 0.2633
+  type: 'test'
+  ...
+# Subtest: TC-CB-227 TD069 TV069 TA014 migration 20260507142514_add_priority_to_tasks.sql exists and contains expected schema change
+ok 120 - TC-CB-227 TD069 TV069 TA014 migration 20260507142514_add_priority_to_tasks.sql exists and contains expected schema change
+  ---
+  duration_ms: 0.4573
+  type: 'test'
+  ...
+# Subtest: TC-CB-228 TD069 TV069 TA014 migration 20260508015438_add_estimate_factors_to_tasks.sql exists and contains expected schema change
+ok 121 - TC-CB-228 TD069 TV069 TA014 migration 20260508015438_add_estimate_factors_to_tasks.sql exists and contains expected schema change
+  ---
+  duration_ms: 0.3863
+  type: 'test'
+  ...
+# Subtest: TC-CB-229 TD069 TV069 TA014 migration 20260508033304_add_track_actual_to_tasks.sql exists and contains expected schema change
+ok 122 - TC-CB-229 TD069 TV069 TA014 migration 20260508033304_add_track_actual_to_tasks.sql exists and contains expected schema change
+  ---
+  duration_ms: 0.3543
+  type: 'test'
+  ...
+# Subtest: TC-CB-230 TD069 TV069 TA014 migration 20260508034739_add_recurrence_groups.sql exists and contains expected schema change
+ok 123 - TC-CB-230 TD069 TV069 TA014 migration 20260508034739_add_recurrence_groups.sql exists and contains expected schema change
+  ---
+  duration_ms: 0.352
+  type: 'test'
+  ...
+# Subtest: TC-CB-231 TD069 TV069 TA014 migration 20260508040152_add_track_actual_to_recurrence_groups.sql exists and contains expected schema change
+ok 124 - TC-CB-231 TD069 TV069 TA014 migration 20260508040152_add_track_actual_to_recurrence_groups.sql exists and contains expected schema change
+  ---
+  duration_ms: 0.4763
+  type: 'test'
+  ...
+# Subtest: TC-CB-232 TD069 TV069 TA014 migration 20260508052021_fix_update_recurrence_groups_updated_at_security.sql exists and contains expected schema change
+ok 125 - TC-CB-232 TD069 TV069 TA014 migration 20260508052021_fix_update_recurrence_groups_updated_at_security.sql exists and contains expected schema change
+  ---
+  duration_ms: 0.5822
+  type: 'test'
+  ...
+# Subtest: TC-CB-233 TD069 TV069 TA014 migration 20260512115920_add_task_sessions_and_suspended_status.sql exists and contains expected schema change
+ok 126 - TC-CB-233 TD069 TV069 TA014 migration 20260512115920_add_task_sessions_and_suspended_status.sql exists and contains expected schema change
+  ---
+  duration_ms: 0.3143
+  type: 'test'
+  ...
+# Subtest: TC-CB-234 TD069 TV069 TA014 migration 20260621093000_add_recurrence_ends_next_day.sql exists and contains expected schema change
+ok 127 - TC-CB-234 TD069 TV069 TA014 migration 20260621093000_add_recurrence_ends_next_day.sql exists and contains expected schema change
+  ---
+  duration_ms: 0.2298
+  type: 'test'
+  ...
+# Subtest: TC-CB-235 TD070 TV070 TA014 migration 20260507120154_create_tasks_schema.sql has static idempotency guard
+ok 128 - TC-CB-235 TD070 TV070 TA014 migration 20260507120154_create_tasks_schema.sql has static idempotency guard
+  ---
+  duration_ms: 0.2846
+  type: 'test'
+  ...
+# Subtest: TC-CB-236 TD070 TV070 TA014 migration 20260507124519_add_actual_times_to_tasks.sql has static idempotency guard
+ok 129 - TC-CB-236 TD070 TV070 TA014 migration 20260507124519_add_actual_times_to_tasks.sql has static idempotency guard
+  ---
+  duration_ms: 0.6484
+  type: 'test'
+  ...
+# Subtest: TC-CB-237 TD070 TV070 TA014 migration 20260507132400_fix_difficulty_check_allow_zero.sql has static idempotency guard
+ok 130 - TC-CB-237 TD070 TV070 TA014 migration 20260507132400_fix_difficulty_check_allow_zero.sql has static idempotency guard
+  ---
+  duration_ms: 0.1899
+  type: 'test'
+  ...
+# Subtest: TC-CB-238 TD070 TV070 TA014 migration 20260507135810_fix_update_updated_at_search_path.sql has static idempotency guard
+ok 131 - TC-CB-238 TD070 TV070 TA014 migration 20260507135810_fix_update_updated_at_search_path.sql has static idempotency guard
+  ---
+  duration_ms: 0.2402
+  type: 'test'
+  ...
+# Subtest: TC-CB-239 TD070 TV070 TA014 migration 20260507142514_add_priority_to_tasks.sql has static idempotency guard
+ok 132 - TC-CB-239 TD070 TV070 TA014 migration 20260507142514_add_priority_to_tasks.sql has static idempotency guard
+  ---
+  duration_ms: 0.2843
+  type: 'test'
+  ...
+# Subtest: TC-CB-240 TD070 TV070 TA014 migration 20260508015438_add_estimate_factors_to_tasks.sql has static idempotency guard
+ok 133 - TC-CB-240 TD070 TV070 TA014 migration 20260508015438_add_estimate_factors_to_tasks.sql has static idempotency guard
+  ---
+  duration_ms: 0.3537
+  type: 'test'
+  ...
+# Subtest: TC-CB-241 TD070 TV070 TA014 migration 20260508033304_add_track_actual_to_tasks.sql has static idempotency guard
+ok 134 - TC-CB-241 TD070 TV070 TA014 migration 20260508033304_add_track_actual_to_tasks.sql has static idempotency guard
+  ---
+  duration_ms: 0.347
+  type: 'test'
+  ...
+# Subtest: TC-CB-242 TD070 TV070 TA014 migration 20260508034739_add_recurrence_groups.sql has static idempotency guard
+ok 135 - TC-CB-242 TD070 TV070 TA014 migration 20260508034739_add_recurrence_groups.sql has static idempotency guard
+  ---
+  duration_ms: 0.3076
+  type: 'test'
+  ...
+# Subtest: TC-CB-243 TD070 TV070 TA014 migration 20260508040152_add_track_actual_to_recurrence_groups.sql has static idempotency guard
+ok 136 - TC-CB-243 TD070 TV070 TA014 migration 20260508040152_add_track_actual_to_recurrence_groups.sql has static idempotency guard
+  ---
+  duration_ms: 0.3569
+  type: 'test'
+  ...
+# Subtest: TC-CB-244 TD070 TV070 TA014 migration 20260508052021_fix_update_recurrence_groups_updated_at_security.sql has static idempotency guard
+ok 137 - TC-CB-244 TD070 TV070 TA014 migration 20260508052021_fix_update_recurrence_groups_updated_at_security.sql has static idempotency guard
+  ---
+  duration_ms: 0.2221
+  type: 'test'
+  ...
+# Subtest: TC-CB-245 TD070 TV070 TA014 migration 20260512115920_add_task_sessions_and_suspended_status.sql has static idempotency guard
+ok 138 - TC-CB-245 TD070 TV070 TA014 migration 20260512115920_add_task_sessions_and_suspended_status.sql has static idempotency guard
+  ---
+  duration_ms: 0.3457
+  type: 'test'
+  ...
+# Subtest: TC-CB-246 TD070 TV070 TA014 migration 20260621093000_add_recurrence_ends_next_day.sql has static idempotency guard
+ok 139 - TC-CB-246 TD070 TV070 TA014 migration 20260621093000_add_recurrence_ends_next_day.sql has static idempotency guard
+  ---
+  duration_ms: 0.2526
+  type: 'test'
+  ...
+# Subtest: TC-CB-247 TD072 TV072 TA014 FK/CHECK task_categories user FK cascades on auth user delete
+ok 140 - TC-CB-247 TD072 TV072 TA014 FK/CHECK task_categories user FK cascades on auth user delete
+  ---
+  duration_ms: 0.3472
+  type: 'test'
+  ...
+# Subtest: TC-CB-248 TD072 TV072 TA014 FK/CHECK tasks category FK is set null
+ok 141 - TC-CB-248 TD072 TV072 TA014 FK/CHECK tasks category FK is set null
+  ---
+  duration_ms: 0.2167
+  type: 'test'
+  ...
+# Subtest: TC-CB-249 TD072 TV072 TA014 FK/CHECK parent task FK is set null
+ok 142 - TC-CB-249 TD072 TV072 TA014 FK/CHECK parent task FK is set null
+  ---
+  duration_ms: 0.1261
+  type: 'test'
+  ...
+# Subtest: TC-CB-250 TD072 TV072 TA014 FK/CHECK recurrence group FK is set null
+ok 143 - TC-CB-250 TD072 TV072 TA014 FK/CHECK recurrence group FK is set null
+  ---
+  duration_ms: 0.2151
+  type: 'test'
+  ...
+# Subtest: TC-CB-251 TD072 TV072 TA014 FK/CHECK task_sessions task FK cascades
+ok 144 - TC-CB-251 TD072 TV072 TA014 FK/CHECK task_sessions task FK cascades
+  ---
+  duration_ms: 0.3704
+  type: 'test'
+  ...
+# Subtest: TC-CB-252 TD072 TV072 TA014 FK/CHECK status check includes suspended
+ok 145 - TC-CB-252 TD072 TV072 TA014 FK/CHECK status check includes suspended
+  ---
+  duration_ms: 0.2856
+  type: 'test'
+  ...
+# Subtest: TC-CB-253 TD072 TV072 TA014 FK/CHECK difficulty check accepts 0..5
+ok 146 - TC-CB-253 TD072 TV072 TA014 FK/CHECK difficulty check accepts 0..5
+  ---
+  duration_ms: 0.2837
+  type: 'test'
+  ...
+# Subtest: TC-CB-254 TD072 TV072 TA014 FK/CHECK priority check accepts finite priority values
+ok 147 - TC-CB-254 TD072 TV072 TA014 FK/CHECK priority check accepts finite priority values
+  ---
+  duration_ms: 0.1999
+  type: 'test'
+  ...
+# Subtest: TC-CB-289 TD003 TV003 TA001 tasks select policy restricts access to auth.uid user_id
+ok 148 - TC-CB-289 TD003 TV003 TA001 tasks select policy restricts access to auth.uid user_id
+  ---
+  duration_ms: 2.658
+  type: 'test'
+  ...
+# Subtest: TC-CB-290 TD003 TV003 TA001 tasks update policy restricts access to auth.uid user_id
+ok 149 - TC-CB-290 TD003 TV003 TA001 tasks update policy restricts access to auth.uid user_id
+  ---
+  duration_ms: 1.626
+  type: 'test'
+  ...
+# Subtest: TC-CB-291 TD003 TV003 TA001 tasks delete policy restricts access to auth.uid user_id
+ok 150 - TC-CB-291 TD003 TV003 TA001 tasks delete policy restricts access to auth.uid user_id
+  ---
+  duration_ms: 1.0481
+  type: 'test'
+  ...
+# Subtest: TC-CB-292 TD003 TV003 TA001 task_categories select policy restricts access to auth.uid user_id
+ok 151 - TC-CB-292 TD003 TV003 TA001 task_categories select policy restricts access to auth.uid user_id
+  ---
+  duration_ms: 1.7956
+  type: 'test'
+  ...
+# Subtest: TC-CB-293 TD003 TV003 TA001 task_categories update policy restricts access to auth.uid user_id
+ok 152 - TC-CB-293 TD003 TV003 TA001 task_categories update policy restricts access to auth.uid user_id
+  ---
+  duration_ms: 0.8612
+  type: 'test'
+  ...
+# Subtest: TC-CB-294 TD003 TV003 TA001 task_categories delete policy restricts access to auth.uid user_id
+ok 153 - TC-CB-294 TD003 TV003 TA001 task_categories delete policy restricts access to auth.uid user_id
+  ---
+  duration_ms: 0.6464
+  type: 'test'
+  ...
+# Subtest: TC-CB-295 TD003 TV003 TA001 task_sessions select policy restricts access to auth.uid user_id
+ok 154 - TC-CB-295 TD003 TV003 TA001 task_sessions select policy restricts access to auth.uid user_id
+  ---
+  duration_ms: 0.7085
+  type: 'test'
+  ...
+# Subtest: TC-CB-296 TD003 TV003 TA001 task_sessions update policy restricts access to auth.uid user_id
+ok 155 - TC-CB-296 TD003 TV003 TA001 task_sessions update policy restricts access to auth.uid user_id
+  ---
+  duration_ms: 0.69
+  type: 'test'
+  ...
+# Subtest: TC-CB-297 TD003 TV003 TA001 task_sessions delete policy restricts access to auth.uid user_id
+ok 156 - TC-CB-297 TD003 TV003 TA001 task_sessions delete policy restricts access to auth.uid user_id
+  ---
+  duration_ms: 1.3139
+  type: 'test'
+  ...
+# Subtest: TC-CB-298 TD003 TV003 TA001 recurrence_groups select policy restricts access to auth.uid user_id
+ok 157 - TC-CB-298 TD003 TV003 TA001 recurrence_groups select policy restricts access to auth.uid user_id
+  ---
+  duration_ms: 0.6424
+  type: 'test'
+  ...
+# Subtest: TC-CB-299 TD003 TV003 TA001 recurrence_groups update policy restricts access to auth.uid user_id
+ok 158 - TC-CB-299 TD003 TV003 TA001 recurrence_groups update policy restricts access to auth.uid user_id
+  ---
+  duration_ms: 0.6819
+  type: 'test'
+  ...
+# Subtest: TC-CB-300 TD003 TV003 TA001 recurrence_groups delete policy restricts access to auth.uid user_id
+ok 159 - TC-CB-300 TD003 TV003 TA001 recurrence_groups delete policy restricts access to auth.uid user_id
+  ---
+  duration_ms: 0.5799
+  type: 'test'
+  ...
+# Subtest: TC-CB-310 TD071 TV071 TA014 tasks RLS insert is defined for authenticated owner isolation
+ok 160 - TC-CB-310 TD071 TV071 TA014 tasks RLS insert is defined for authenticated owner isolation
+  ---
+  duration_ms: 0.7259
+  type: 'test'
+  ...
+# Subtest: TC-CB-311 TD071 TV071 TA014 tasks RLS update is defined for authenticated owner isolation
+ok 161 - TC-CB-311 TD071 TV071 TA014 tasks RLS update is defined for authenticated owner isolation
+  ---
+  duration_ms: 0.3377
+  type: 'test'
+  ...
+# Subtest: TC-CB-312 TD071 TV071 TA014 tasks RLS rls is defined for authenticated owner isolation
+ok 162 - TC-CB-312 TD071 TV071 TA014 tasks RLS rls is defined for authenticated owner isolation
+  ---
+  duration_ms: 0.1679
+  type: 'test'
+  ...
+# Subtest: TC-CB-313 TD071 TV071 TA014 task_categories RLS insert is defined for authenticated owner isolation
+ok 163 - TC-CB-313 TD071 TV071 TA014 task_categories RLS insert is defined for authenticated owner isolation
+  ---
+  duration_ms: 0.5346
+  type: 'test'
+  ...
+# Subtest: TC-CB-314 TD071 TV071 TA014 task_categories RLS update is defined for authenticated owner isolation
+ok 164 - TC-CB-314 TD071 TV071 TA014 task_categories RLS update is defined for authenticated owner isolation
+  ---
+  duration_ms: 0.3462
+  type: 'test'
+  ...
+# Subtest: TC-CB-315 TD071 TV071 TA014 task_categories RLS rls is defined for authenticated owner isolation
+ok 165 - TC-CB-315 TD071 TV071 TA014 task_categories RLS rls is defined for authenticated owner isolation
+  ---
+  duration_ms: 0.1718
+  type: 'test'
+  ...
+# Subtest: TC-CB-316 TD071 TV071 TA014 task_sessions RLS insert is defined for authenticated owner isolation
+ok 166 - TC-CB-316 TD071 TV071 TA014 task_sessions RLS insert is defined for authenticated owner isolation
+  ---
+  duration_ms: 0.5693
+  type: 'test'
+  ...
+# Subtest: TC-CB-317 TD071 TV071 TA014 task_sessions RLS update is defined for authenticated owner isolation
+ok 167 - TC-CB-317 TD071 TV071 TA014 task_sessions RLS update is defined for authenticated owner isolation
+  ---
+  duration_ms: 0.9181
+  type: 'test'
+  ...
+# Subtest: TC-CB-318 TD071 TV071 TA014 task_sessions RLS rls is defined for authenticated owner isolation
+ok 168 - TC-CB-318 TD071 TV071 TA014 task_sessions RLS rls is defined for authenticated owner isolation
+  ---
+  duration_ms: 0.1859
+  type: 'test'
+  ...
+# Subtest: TC-CB-319 TD071 TV071 TA014 recurrence_groups RLS insert is defined for authenticated owner isolation
+ok 169 - TC-CB-319 TD071 TV071 TA014 recurrence_groups RLS insert is defined for authenticated owner isolation
+  ---
+  duration_ms: 0.5389
+  type: 'test'
+  ...
+# Subtest: TC-CB-320 TD071 TV071 TA014 recurrence_groups RLS update is defined for authenticated owner isolation
+ok 170 - TC-CB-320 TD071 TV071 TA014 recurrence_groups RLS update is defined for authenticated owner isolation
+  ---
+  duration_ms: 0.4248
+  type: 'test'
+  ...
+# Subtest: TC-CB-321 TD071 TV071 TA014 recurrence_groups RLS rls is defined for authenticated owner isolation
+ok 171 - TC-CB-321 TD071 TV071 TA014 recurrence_groups RLS rls is defined for authenticated owner isolation
+  ---
+  duration_ms: 0.2443
+  type: 'test'
+  ...
+# Subtest: TC-CB-301 TD005 TV005 TA001 R001/R015 update-account requires Authorization header before admin update
+ok 172 - TC-CB-301 TD005 TV005 TA001 R001/R015 update-account requires Authorization header before admin update
+  ---
+  duration_ms: 1.6086
+  type: 'test'
+  ...
+# Subtest: TC-CB-302 TD005 TV005 TA001 R001/R015 update-account verifies Bearer token through anon client getUser
+ok 173 - TC-CB-302 TD005 TV005 TA001 R001/R015 update-account verifies Bearer token through anon client getUser
+  ---
+  duration_ms: 0.3811
+  type: 'test'
+  ...
+# Subtest: TC-CB-303 TD005 TV005 TA001 R001/R015 update-account updates only getUser returned user.id
+ok 174 - TC-CB-303 TD005 TV005 TA001 R001/R015 update-account updates only getUser returned user.id
+  ---
+  duration_ms: 0.3483
+  type: 'test'
+  ...
+# Subtest: TC-CB-333 TD085 TV085 TA017 R001/R015 update-account handles OPTIONS with CORS headers
+ok 175 - TC-CB-333 TD085 TV085 TA017 R001/R015 update-account handles OPTIONS with CORS headers
+  ---
+  duration_ms: 0.3325
+  type: 'test'
+  ...
+# Subtest: TC-CB-334 TD085 TV085 TA017 R001/R015 authentication failure returns generic Unauthorized 401
+ok 176 - TC-CB-334 TD085 TV085 TA017 R001/R015 authentication failure returns generic Unauthorized 401
+  ---
+  duration_ms: 0.4803
+  type: 'test'
+  ...
+# Subtest: TC-CB-335 TD085 TV085 TA017 R001/R015 invalid account update input returns controlled 400 errors before admin update
+ok 177 - TC-CB-335 TD085 TV085 TA017 R001/R015 invalid account update input returns controlled 400 errors before admin update
+  ---
+  duration_ms: 0.4116
+  type: 'test'
+  ...
+# Subtest: TC-CB-336 TD085 TV085 TA017 R001/R015 admin API failure returns HTTP 400 JSON response
+ok 178 - TC-CB-336 TD085 TV085 TA017 R001/R015 admin API failure returns HTTP 400 JSON response
+  ---
+  duration_ms: 0.33
+  type: 'test'
+  ...
+# Subtest: TC-CB-337 TD085 TV085 TA017 R001/R015 Edge Function source never serializes service role key in responses
+ok 179 - TC-CB-337 TD085 TV085 TA017 R001/R015 Edge Function source never serializes service role key in responses
+  ---
+  duration_ms: 0.4991
+  type: 'test'
+  ...
+# Subtest: TC-CB-345 TD093 TV093 TA018 R001/R015 missing Authorization is rejected before request body is used
+ok 180 - TC-CB-345 TD093 TV093 TA018 R001/R015 missing Authorization is rejected before request body is used
+  ---
+  duration_ms: 0.3713
+  type: 'test'
+  ...
+# Subtest: TC-CB-346 TD093 TV093 TA018 R001/R015 invalid token is rejected when getUser returns error or no user
+ok 181 - TC-CB-346 TD093 TV093 TA018 R001/R015 invalid token is rejected when getUser returns error or no user
+  ---
+  duration_ms: 0.4178
+  type: 'test'
+  ...
+# Subtest: TC-CB-347 TD093 TV093 TA018 R001/R015 valid token owner id is the only admin update target
+ok 182 - TC-CB-347 TD093 TV093 TA018 R001/R015 valid token owner id is the only admin update target
+  ---
+  duration_ms: 0.3273
+  type: 'test'
+  ...
+# Subtest: TC-CB-348 TD093 TV093 TA018 R001/R015 client sends current session access token as Bearer and does not send service role key
+ok 183 - TC-CB-348 TD093 TV093 TA018 R001/R015 client sends current session access token as Bearer and does not send service role key
+  ---
+  duration_ms: 0.2647
+  type: 'test'
+  ...
+# Subtest: TC-CB-325 TD083 TV083 TA017 service role key is absent from frontend source
+ok 184 - TC-CB-325 TD083 TV083 TA017 service role key is absent from frontend source
+  ---
+  duration_ms: 22.2458
+  type: 'test'
+  ...
+# Subtest: TC-CB-326 TD083 TV083 TA017 .env is git-ignored and example env exposes only VITE public values
+ok 185 - TC-CB-326 TD083 TV083 TA017 .env is git-ignored and example env exposes only VITE public values
+  ---
+  duration_ms: 0.5514
+  type: 'test'
+  ...
+# Subtest: TC-CB-327 TD083 TV083 TA017 service role key usage is isolated to Edge Function server code and documentation
+ok 186 - TC-CB-327 TD083 TV083 TA017 service role key usage is isolated to Edge Function server code and documentation
+  ---
+  duration_ms: 87.3357
+  type: 'test'
+  ...
+# Subtest: TC-CB-328 TD083 TV083 TA017 client auth requests send bearer token but never service role material
+ok 187 - TC-CB-328 TD083 TV083 TA017 client auth requests send bearer token but never service role material
+  ---
+  duration_ms: 0.225
+  type: 'test'
+  ...
+# Subtest: TC-CB-338 TD086 TV086 TA017 npm audit target is lockfile-pinned with npm lockfile v3
+ok 188 - TC-CB-338 TD086 TV086 TA017 npm audit target is lockfile-pinned with npm lockfile v3
+  ---
+  duration_ms: 0.1774
+  type: 'test'
+  ...
+# Subtest: TC-CB-339 TD086 TV086 TA017 dependency manifests do not contain audit bypass configuration
+ok 189 - TC-CB-339 TD086 TV086 TA017 dependency manifests do not contain audit bypass configuration
+  ---
+  duration_ms: 8.6044
+  type: 'test'
+  ...
+# Subtest: TC-CB-340 TD086 TV086 TA017 package declares bounded runtime and testable dependency sets for audit judgment
+ok 190 - TC-CB-340 TD086 TV086 TA017 package declares bounded runtime and testable dependency sets for audit judgment
+  ---
+  duration_ms: 0.4667
+  type: 'test'
+  ...
+# Subtest: TC-CB-349 TD065 TV065 TA012 package declares supported Node/npm engines
+ok 191 - TC-CB-349 TD065 TV065 TA012 package declares supported Node/npm engines
+  ---
+  duration_ms: 0.1655
+  type: 'test'
+  ...
+# Subtest: TC-CB-350 TD065 TV065 TA012 dependency installation is reproducible from package-lock
+ok 192 - TC-CB-350 TD065 TV065 TA012 dependency installation is reproducible from package-lock
+  ---
+  duration_ms: 0.3097
+  type: 'test'
+  ...
+# Subtest: TC-CB-351 TD065 TV065 TA012 build and typecheck scripts are explicit and non-interactive
+ok 193 - TC-CB-351 TD065 TV065 TA012 build and typecheck scripts are explicit and non-interactive
+  ---
+  duration_ms: 0.2652
+  type: 'test'
+  ...
+# Subtest: TC-CB-352 TD065 TV065 TA012 lint script is explicit and covers the repository
+ok 194 - TC-CB-352 TD065 TV065 TA012 lint script is explicit and covers the repository
+  ---
+  duration_ms: 0.117
+  type: 'test'
+  ...
+# Subtest: TC-CB-353 TD066 TV066 TA012 missing Supabase URL is diagnosed before createClient without echoing values
+ok 195 - TC-CB-353 TD066 TV066 TA012 missing Supabase URL is diagnosed before createClient without echoing values
+  ---
+  duration_ms: 0.181
+  type: 'test'
+  ...
+# Subtest: TC-CB-354 TD066 TV066 TA012 invalid Supabase URL is diagnosed without logging the invalid value
+ok 196 - TC-CB-354 TD066 TV066 TA012 invalid Supabase URL is diagnosed without logging the invalid value
+  ---
+  duration_ms: 0.2782
+  type: 'test'
+  ...
+# Subtest: TC-CB-355 TD066 TV066 TA012 missing Supabase anon key is diagnosed before client creation
+ok 197 - TC-CB-355 TD066 TV066 TA012 missing Supabase anon key is diagnosed before client creation
+  ---
+  duration_ms: 0.3687
+  type: 'test'
+  ...
+# Subtest: TC-CB-356 TD066 TV066 TA012 Supabase configuration diagnostics never include secret or runtime values
+ok 198 - TC-CB-356 TD066 TV066 TA012 Supabase configuration diagnostics never include secret or runtime values
+  ---
+  duration_ms: 0.543
+  type: 'test'
+  ...
+# Subtest: TC-CB-357 TD067 TV067 TA012 code and React test scripts are declared for normal successful completion
+ok 199 - TC-CB-357 TD067 TV067 TA012 code and React test scripts are declared for normal successful completion
+  ---
+  duration_ms: 0.1887
+  type: 'test'
+  ...
+# Subtest: TC-CB-358 TD067 TV067 TA012 test process is configured to exit non-zero on code-test assertion failure
+ok 200 - TC-CB-358 TD067 TV067 TA012 test process is configured to exit non-zero on code-test assertion failure
+  ---
+  duration_ms: 0.1939
+  type: 'test'
+  ...
+# Subtest: TC-CB-359 TD067 TV067 TA012 rerunnable local test commands avoid dedicated Supabase dependency
+ok 201 - TC-CB-359 TD067 TV067 TA012 rerunnable local test commands avoid dedicated Supabase dependency
+  ---
+  duration_ms: 0.3863
+  type: 'test'
+  ...
+1..201
+# tests 201
+# suites 0
+# pass 201
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 909.0767
+TAP version 13
+1..11
+ok 1 - tests/react/analyticsPage.dom.test.tsx # time=881.83ms {
+    1..1
+    ok 1 - AnalyticsPage React DOM # time=877.55ms {
+        1..3
+        ok 1 - TC-CB-084〜TC-CB-087 TD034 TV034 TA006 R006 表示時だけ時間小数第1位と割合整数に丸める # time=219.75ms
+        ok 2 - TC-CB-091〜TC-CB-092 TD035 TV035 TA006 R006 空データとカテゴリなしをゼロ/未入力として表示する # time=93.49ms
+        ok 3 - TC-CB-093〜TC-CB-096 TD036 TV036 TA006 R006 全期間・月別・日別表示を切り替えて同一データの合計を保つ # time=563.38ms
+    }
+}
+ok 2 - tests/react/authContext.provider.test.tsx # time=663.68ms {
+    1..1
+    ok 1 - AuthContext Provider authentication state # time=659.32ms {
+        1..8
+        ok 1 - TC-CB-189 TD002 TV002 TA001 R001/R007 未認証または誤認証はProviderのuserを作らずerrorを返す # time=103.69ms
+        ok 2 - TC-CB-190 TD002 TV002 TA001 R001/R007 認証済みユーザーAの初期sessionをProvider状態へ反映する # time=58.89ms
+        ok 3 - TC-CB-191 TD002 TV002 TA001 R001/R007 認証状態変更でユーザーBへ切り替わりユーザーAが残留しない # time=85.22ms
+        ok 4 - TC-CB-192 TD002 TV002 TA001 R001/R007 期限切れ相当のnull sessionは認証済み状態を残さない # time=78.12ms
+        ok 5 - TC-CB-269 TD094 TV094 TA018 R016 updateAccountは401応答をErrorとして返しBearer tokenを送る # time=95.17ms
+        ok 6 - TC-CB-268 TD094 TV094 TA018 R016 updateAccountは通信失敗をErrorとして返す # time=70.85ms
+        ok 7 - TC-CB-270 TD094 TV094 TA018 R016 updateAccountは400応答のerror本文を返す # time=82.71ms
+        ok 8 - TC-CB-271 TD094 TV094 TA018 R016 updateAccountは管理API失敗相当の応答を失敗として扱う # time=82.76ms
+    }
+}
+ok 3 - tests/react/browserApiMock.test.ts # time=23.15ms {
+    1..1
+    ok 1 - browser API test helpers # time=18.67ms {
+        1..3
+        ok 1 - records Notification constructor calls and mutable permission # time=6.22ms
+        ok 2 - provides clipboard spies # time=2.57ms
+        ok 3 - controls browser timers and Date.now # time=8.92ms
+    }
+}
+ok 4 - tests/react/phase4-login-app.dom.test.tsx # time=1739.29ms {
+    1..1
+    ok 1 - Phase4 LoginPage and protected App DOM # time=1735.77ms {
+        1..5
+        ok 1 - TC-CB-187 TD001 TV001 TA001 R001 valid login submits credentials # time=1048.19ms
+        ok 2 - TC-CB-188 TD001 TV001 TA001 R001 valid signup submits credentials # time=612.17ms
+        ok 3 - TC-CB-193 TD004 TV004 TA001 R001 unauthenticated App shows login only # time=29.58ms
+        ok 4 - TC-CB-194 TD004 TV004 TA001 R001 authenticated App shows protected page # time=41.70ms
+        ok 5 - TC-CB-195 TD004 TV004 TA001 R001 loading App hides both login and protected data # time=3.31ms
+    }
+}
+ok 5 - tests/react/phase4-recurrence.dom.test.tsx # time=3941.47ms {
+    1..1
+    ok 1 - Phase4 RecurrenceForm DOM boundaries # time=3936.90ms {
+        1..6
+        ok 1 - TC-CB-113 TD040 TV040 TA007 R004/R007 same-day end before start disables submit # time=1037.66ms
+        ok 2 - TC-CB-114 TD040 TV040 TA007 R004/R007 same-day equal start and end disables submit # time=595.58ms
+        ok 3 - TC-CB-115 TD040 TV040 TA007 R004/R007 same-day end after start can create group # time=638.34ms
+        ok 4 - TC-CB-116 TD040 TV040 TA007 R004/R007 next-day end allows earlier clock time # time=646.32ms
+        ok 5 - TC-CB-117 TD040 TV040 TA007 R004/R007 weekly recurrence with no day disables submit # time=340.34ms
+        ok 6 - TC-CB-118 TD040 TV040 TA007 R004/R007 date range endpoints are submitted inclusively # time=677.41ms
+    }
+}
+ok 6 - tests/react/phase4-tasklist.dom.test.tsx # time=4707.35ms {
+    1..1
+    ok 1 - Phase4 TaskListPage bulk selection DOM # time=4703.34ms {
+        1..6
+        ok 1 - TC-CB-272 TD095 TV095 TA019 R017 TaskListPage starts bulk delete with zero selected # time=1270.37ms
+        ok 2 - TC-CB-273 TD095 TV095 TA019 R017 TaskListPage updates count when one task is selected # time=662.24ms
+        ok 3 - TC-CB-274 TD095 TV095 TA019 R017 TaskListPage can select multiple visible tasks # time=736.64ms
+        ok 4 - TC-CB-278 TD096 TV096 TA019 R017 TaskListPage with zero tasks keeps delete confirmation disabled # time=437.14ms
+        ok 5 - TC-CB-280 TD096 TV096 TA019 R017 TaskListPage confirms only selected multiple tasks # time=994.94ms
+        ok 6 - TC-CB-281 TD096 TV096 TA019 R017 TaskListPage clears selection after cancelling bulk mode # time=600.95ms
+    }
+}
+ok 7 - tests/react/phase4-xss-display.dom.test.tsx # time=257.40ms {
+    1..1
+    ok 1 - Phase4 React escaped display # time=252.88ms {
+        1..3
+        ok 1 - TC-CB-322 TD082 TV082 TA017 R015 task title script-like text is displayed as text # time=144.61ms
+        ok 2 - TC-CB-323 TD082 TV082 TA017 R015 task memo html-like text is displayed as text # time=20.35ms
+        ok 3 - TC-CB-324 TD082 TV082 TA017 R015 category name html-like text is displayed as text # time=86.91ms
+    }
+}
+ok 8 - tests/react/settingsPage.dom.test.tsx # time=3429.46ms {
+    1..1
+    ok 1 - SettingsPage React DOM account and category states # time=3425.45ms {
+        1..20
+        ok 1 - TC-CB-140/TC-CB-183/TC-CB-266 TD042/TD092/TD091 TV042/TV092/TV091 TA007/TA018 R001/R016 6文字パスワードは更新APIへ渡す # time=173.13ms
+        ok 2 - TC-CB-182/TC-CB-265 TD092/TD091 TV092/TV091 TA018 R001/R016 5文字パスワードは更新APIを呼ばない # time=96.14ms
+        ok 3 - TC-CB-141/TC-CB-184/TC-CB-267 TD042/TD092/TD091 TV042/TV092/TV091 TA007/TA018 R001/R016 確認不一致は更新APIを呼ばない # time=53.61ms
+        ok 4 - TC-CB-143/TC-CB-186 TD042/TD092 TV042/TV092 TA007/TA018 R001 メール形式不正は更新APIを呼ばない # time=43.50ms
+        ok 5 - TC-CB-142/TC-CB-185 TD042/TD092 TV042/TV092 TA007/TA018 R001 変更なしでは更新APIを呼ばない # time=41.52ms
+        ok 6 - TC-CB-149 TD044 TV044 TA007 R007 空白カテゴリ名では作成APIを呼ばない # time=446.89ms
+        ok 7 - TC-CB-150 TD044 TV044 TA007 R007 カテゴリ保存失敗ではダイアログを閉じずエラーを表示する # time=129.81ms
+        ok 8 - TC-CB-151 TD044 TV044 TA007 R007 カテゴリ保存中の二重submitを防ぐ # time=127.93ms
+        ok 9 - TC-CB-255〜TC-CB-259 TD089 TV089 TA008 R008 10色パレットと色フィルタでカテゴリ表示を切り替える # time=145.75ms
+        ok 10 - TC-CB-260〜TC-CB-262 TD089 TV089 TA008 R008 カテゴリ名検索で一致カテゴリだけを表示する # time=168.07ms
+        ok 11 - TC-CB-263〜TC-CB-264 TD089 TV089 TA008 R008 カテゴリ編集で名称と色を更新APIへ渡す # time=185.29ms
+        ok 12 - TC-CB-124 TD041 TV041 TA007 R007 カテゴリ名文字数境界を作成payloadへ渡す # time=118.13ms
+        ok 13 - TC-CB-125 TD041 TV041 TA007 R007 カテゴリ名文字数境界を作成payloadへ渡す # time=135.64ms
+        ok 14 - TC-CB-126 TD041 TV041 TA007 R007 カテゴリ名文字数境界を作成payloadへ渡す # time=119.44ms
+        ok 15 - TC-CB-127 TD041 TV041 TA007 R007 カテゴリ名文字数境界を作成payloadへ渡す # time=131.54ms
+        ok 16 - TC-CB-128 TD041 TV041 TA007 R007 カテゴリ名文字数境界を作成payloadへ渡す # time=129.50ms
+        ok 17 - TC-CB-275 TD095 TV095 TA019 R017 SettingsPageはカテゴリ個別選択数を表示する # time=182.03ms
+        ok 18 - TC-CB-276 TD095 TV095 TA019 R017 SettingsPageは選択解除で0件に戻す # time=250.78ms
+        ok 19 - TC-CB-277 TD095 TV095 TA019 R017 SettingsPageは選択カテゴリだけを確定削除する # time=448.79ms
+        ok 20 - TC-CB-279 TD096 TV096 TA019 R017 SettingsPageは1件カテゴリの一括削除UIを有効化する # time=296.48ms
+    }
+}
+ok 9 - tests/react/smoke.test.tsx # time=328.60ms {
+    1..1
+    ok 1 - React test harness # time=324.24ms {
+        1..1
+        ok 1 - renders a component in jsdom # time=323.49ms
+    }
+}
+ok 10 - tests/react/taskContext.provider.test.tsx # time=2752.40ms {
+    1..1
+    ok 1 - TaskContext Provider state transitions # time=2748.59ms {
+        1..36
+        ok 1 - TC-CB-001 TD011 TV011 TA003 R003 開始操作相当のupdateTask/createSessionで進行中タスクと開放セッションを永続化する # time=111.22ms
+        ok 2 - TC-CB-002 TD011 TV011 TA003 R003 suspendTaskは開放セッションを閉じ、actual_timeを加算して中断状態を保存する # time=81.74ms
+        ok 3 - TC-CB-003 TD011 TV011 TA003 R003 resumeTaskは中断解除して新しい開放セッションを作成する # time=90.36ms
+        ok 4 - TC-CB-004 TD011 TV011 TA003 R003 resumeTaskは中断終了セッションが欠ける場合にactual_startからsuspended_atまで補完する # time=77.23ms
+        ok 5 - TC-CB-005 TD011 TV011 TA003 R003 完了操作相当のupdateTask/updateSessionで完了状態と終了済みセッションを保存する # time=83.16ms
+        ok 6 - TC-CB-201 TD021 TV021 TA004 R003/R006 ステータスnot_startedを保存してProvider状態へ反映する # time=83.78ms
+        ok 7 - TC-CB-202 TD021 TV021 TA004 R003/R006 ステータスin_progressを保存してProvider状態へ反映する # time=90.61ms
+        ok 8 - TC-CB-203 TD021 TV021 TA004 R003/R006 ステータスsuspendedを保存してProvider状態へ反映する # time=93.61ms
+        ok 9 - TC-CB-204 TD021 TV021 TA004 R003/R006 ステータスcompletedを保存してProvider状態へ反映する # time=100.16ms
+        ok 10 - TC-CB-205 TD022 TV022 TA004 R004 定常グループ削除は同一グループの生成タスクとグループだけを削除する # time=89.59ms
+        ok 11 - TC-CB-210 TD045 TV045 TA008 R007 deleteTaskは対象タスクと紐づくProvider内セッションだけを取り除く # time=98.81ms
+        ok 12 - TC-CB-196 TD009 TV009 TA002 R017 deleteTaskは単体削除対象だけを永続化テーブルとProvider状態から削除する # time=77.21ms
+        ok 13 - TC-CB-197 TD009 TV009 TA002 R017 削除確認が成立しないProvider呼び出し前はタスク状態を変更しない # time=79.23ms
+        ok 14 - TC-CB-198 TD009 TV009 TA002 R017 一括削除相当の複数deleteTaskは選択対象だけを削除する # time=71.86ms
+        ok 15 - TC-CB-199 TD009 TV009 TA002 R017 一括削除相当の空選択ではProvider削除を呼ばず状態を保持する # time=66.54ms
+        ok 16 - TC-CB-200 TD009 TV009 TA002 R017 一括削除相当で選択対象の通知とセッションだけを整理する # time=69.51ms
+        ok 17 - TC-CB-206 TD022 TV022 TA004 R004 定常グループ削除は同一グループの複数生成タスクを全て削除する # time=65.52ms
+        ok 18 - TC-CB-207 TD022 TV022 TA004 R004 定常グループ削除は他グループの生成タスクへ波及しない # time=65.03ms
+        ok 19 - TC-CB-208 TD022 TV022 TA004 R004 定常グループ削除は単独タスクを保持する # time=83.17ms
+        ok 20 - TC-CB-209 TD022 TV022 TA004 R004 タスクがない定常グループ削除でも対象グループだけを削除する # time=68.99ms
+        ok 21 - TC-CB-022 TD011 TV011 TA003 R003 中断時は開放セッションを中断時刻で閉じ、その時点までだけ実績へ加算する # time=81.10ms
+        ok 22 - TC-CB-023 TD011 TV011 TA003 R003 中断中の空白時間は再開時セッションに含めない # time=67.15ms
+        ok 23 - TC-CB-024 TD011 TV011 TA003 R003 再開後の完了更新は中断区間を含まない実績値でProviderへ保存する # time=67.09ms
+        ok 24 - TC-CB-211 TC-CB-212 TD048 TV048 TA008 R008 親タスク削除時は子を残しparent_task_idをProvider上でもnullへ同期する # time=80.55ms
+        ok 25 - TC-CB-213 TC-CB-214 TC-CB-215 TD049 TV049 TA008 R008 カテゴリ削除時はタスクと定常グループのカテゴリ参照をnullへ同期する # time=71.40ms
+        ok 26 - TC-CB-216 TC-CB-217 TD050 TV050 TA008 R008 全ての直接子が完了した時だけ親タスクを自動完了する # time=81.24ms
+        ok 27 - TC-CB-218 TC-CB-219 TD050 TV050 TA008 R008 未完了の子が残る場合と完了解除では親状態を自動変更しない # time=66.09ms
+        ok 28 - TC-CB-282 TC-CB-283 TD081 TV081 TA016 R008 選択中カテゴリ削除相当でもProviderはカテゴリ一覧から除外し既存タスクを未分類へ戻す # time=83.37ms
+        ok 29 - TC-CB-284 TC-CB-285 TD081 TV081 TA016 R008 定常グループ削除は生成タスクのセッションもProvider状態から取り除く # time=83.02ms
+        ok 30 - TC-CB-286 TD081 TV081 TA016 R008 複数削除が全件成功した場合は成功対象を全てProvider状態から除外する # time=68.77ms
+        ok 31 - TC-CB-287 TD081 TV081 TA016 R008 複数削除の一部失敗時は成功分だけ確定し失敗対象はProvider状態に残す # time=66.65ms
+        ok 32 - TC-CB-288 TD081 TV081 TA016 R008 複数削除が全件失敗した場合はProvider状態を維持する # time=65.04ms
+        ok 33 - TC-CB-341 TD087 TV087 TA017 R015 createTaskはlocalStorage履歴を変更せずSupabase側へ保存する # time=79.67ms
+        ok 34 - TC-CB-342 TD087 TV087 TA017 R015 refetchはuser_idでSupabase保存データを取得しProvider状態へ反映する # time=71.09ms
+        ok 35 - TC-CB-343 TD087 TV087 TA017 R015 deleteTaskはSupabase保存データを削除してlocalStorage履歴は保持する # time=65.72ms
+        ok 36 - TC-CB-344 TD087 TV087 TA017 R015 unmount時は通知だけを全消去しSupabase保存データとlocalStorage履歴は破壊しない # time=1.68ms
+    }
+}
+ok 11 - tests/react/taskForm.dom.test.tsx # time=23650.52ms {
+    1..1
+    ok 1 - TaskForm DOM input and UI state # time=23646.27ms {
+        1..33
+        ok 1 - TC-CB-097 TD037 TV037 TA007 R007/R015 空のタスク名では送信せず保存処理を呼ばない # time=554.00ms
+        ok 2 - TC-CB-098 TD037 TV037 TA007 R007/R015 空白だけのタスク名では送信せず保存処理を呼ばない # time=309.13ms
+        ok 3 - TC-CB-099 TD037 TV037 TA007 R007/R015 有効なタスク名をtrimして保存する # time=351.16ms
+        ok 4 - TC-CB-100 TD037 TV037 TA007 R007/R015 有効なタスク名をtrimして保存する # time=451.39ms
+        ok 5 - TC-CB-109 TD039 TV039 TA007 R003/R007 進行中で開始実績日時がない場合は保存しない # time=423.14ms
+        ok 6 - TC-CB-110 TD039 TV039 TA007 R003/R007 完了で終了実績日時がない場合は保存しない # time=661.62ms
+        ok 7 - TC-CB-111 TD039 TV039 TA007 R003/R007 中断で中断時刻がない場合は保存しない # time=684.41ms
+        ok 8 - TC-CB-112 TD039 TV039 TA007 R003/R007 中断入力行を追加しても中断時刻が空なら保存しない # time=680.71ms
+        ok 9 - TC-CB-220 TD048 TV048 TA008 R008 編集対象自身を親タスク候補に表示しない # time=117.40ms
+        ok 10 - TC-CB-221 TD048 TV048 TA008 R008 編集対象の直接子を親タスク候補に表示しない # time=114.47ms
+        ok 11 - TC-CB-222 TD048 TV048 TA008 R008 削除済み親IDが編集フォームに残っていても保存時にparent_task_idをnullへ正規化する # time=113.81ms
+        ok 12 - TC-CB-101 TD038 TV038 TA007 R007/R014 数量と所要時間のUI入力境界を検証する # time=599.80ms
+        ok 13 - TC-CB-102 TD038 TV038 TA007 R007/R014 数量と所要時間のUI入力境界を検証する # time=531.14ms
+        ok 14 - TC-CB-103 TD038 TV038 TA007 R007/R014 数量と所要時間のUI入力境界を検証する # time=537.11ms
+        ok 15 - TC-CB-104 TD038 TV038 TA007 R007/R014 数量と所要時間のUI入力境界を検証する # time=550.07ms
+        ok 16 - TC-CB-105 TD038 TV038 TA007 R007/R014 数量と所要時間のUI入力境界を検証する # time=616.44ms
+        ok 17 - TC-CB-106 TD038 TV038 TA007 R007/R014 数量と所要時間のUI入力境界を検証する # time=664.79ms
+        ok 18 - TC-CB-107 TD038 TV038 TA007 R007/R014 数量と所要時間のUI入力境界を検証する # time=534.58ms
+        ok 19 - TC-CB-108 TD038 TV038 TA007 R007/R014 数量と所要時間のUI入力境界を検証する # time=679.76ms
+        ok 20 - TC-CB-119 TD041 TV041 TA007 R007 タスク名文字数境界を保存時にtrimして扱う # time=79.57ms
+        ok 21 - TC-CB-120 TD041 TV041 TA007 R007 タスク名文字数境界を保存時にtrimして扱う # time=158.06ms
+        ok 22 - TC-CB-121 TD041 TV041 TA007 R007 タスク名文字数境界を保存時にtrimして扱う # time=514.42ms
+        ok 23 - TC-CB-122 TD041 TV041 TA007 R007 タスク名文字数境界を保存時にtrimして扱う # time=569.55ms
+        ok 24 - TC-CB-123 TD041 TV041 TA007 R007 タスク名文字数境界を保存時にtrimして扱う # time=579.61ms
+        ok 25 - TC-CB-129 TD041 TV041 TA007 R007 予定メモ文字数境界を保存payloadへ渡す # time=349.97ms
+        ok 26 - TC-CB-130 TD041 TV041 TA007 R007 予定メモ文字数境界を保存payloadへ渡す # time=401.09ms
+        ok 27 - TC-CB-131 TD041 TV041 TA007 R007 予定メモ文字数境界を保存payloadへ渡す # time=1697.97ms
+        ok 28 - TC-CB-132 TD041 TV041 TA007 R007 予定メモ文字数境界を保存payloadへ渡す # time=1696.80ms
+        ok 29 - TC-CB-133 TD041 TV041 TA007 R007 予定メモ文字数境界を保存payloadへ渡す # time=1772.41ms
+        ok 30 - TC-CB-134 TD041 TV041 TA007 R007 実績メモ文字数境界を保存payloadへ渡す # time=947.64ms
+        ok 31 - TC-CB-135 TD041 TV041 TA007 R007 実績メモ文字数境界を保存payloadへ渡す # time=1003.13ms
+        ok 32 - TC-CB-136 TD041 TV041 TA007 R007 実績メモ文字数境界を保存payloadへ渡す # time=2332.97ms
+        ok 33 - TC-CB-137 TD041 TV041 TA007 R007 実績メモ文字数境界を保存payloadへ渡す # time=2366.66ms
+    }
+}
+-ne : The term '-ne' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the s
+pelling of the name, or if a path was included, verify that the path is correct and try again.
+At line:1 char:150
++ ... e' --test --test-reporter=tap tests/code/*.test.mjs; if ( -ne 0) { ex ...
++                                                               ~~~
+    + CategoryInfo          : ObjectNotFound: (-ne:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
