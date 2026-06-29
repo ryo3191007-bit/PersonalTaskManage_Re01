@@ -1,4 +1,4 @@
-﻿# Playwright E2Eテストレビュー結果
+# Playwright E2Eテストレビュー結果
 
 ## 1. レビュー対象
 - playwright.config.cjs

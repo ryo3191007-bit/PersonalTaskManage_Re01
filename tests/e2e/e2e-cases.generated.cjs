@@ -1,4 +1,4 @@
-﻿// Generated from テスト成果物/テストケース_E2E自動.md. Do not edit IDs by hand.
+// Generated from テスト成果物/テストケース_E2E自動.md. Do not edit IDs by hand.
 module.exports = { e2eCases: [
     {
         "id":  "TC-E2E-001",

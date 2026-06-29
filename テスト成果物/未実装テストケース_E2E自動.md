@@ -1,4 +1,4 @@
-﻿# 未実装テストケース（E2E自動）
+# 未実装テストケース（E2E自動）
 
 ## 1. 対象
 - 対象URL: https://personal-task-manage-pcx2.bolt.host/

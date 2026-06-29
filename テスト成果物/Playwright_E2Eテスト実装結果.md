@@ -1,4 +1,4 @@
-﻿# Playwright E2Eテスト実装結果
+# Playwright E2Eテスト実装結果
 
 ## 1. 実装対象
 - 対象URL: https://personal-task-manage-pcx2.bolt.host/
